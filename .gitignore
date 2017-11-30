@@ -1,0 +1,6 @@
+*
+!.emacs
+!.config/i3/
+!.config/i3status/
+!*config
+!.gitignore

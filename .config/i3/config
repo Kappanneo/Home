@@ -1,0 +1,229 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up i
+set $down k
+set $left j
+set $right l
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+
+# start a terminal
+bindsym Mod1+Return split v; exec i3-sensible-terminal
+
+# kill focused window
+bindsym Mod1+F4 kill
+
+#screenshot
+bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
+bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
+
+# touchpad disabler/enabler
+bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+
+#volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
+bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
+
+# change focus
+bindsym Mod1+Tab focus right
+bindsym Mod1+backslash focus left
+
+bindsym Mod1+$left focus left
+bindsym Mod1+$down focus down
+bindsym Mod1+$up focus up
+bindsym Mod1+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Left focus left
+bindsym Mod1+Down focus down
+bindsym Mod1+Up focus up
+bindsym Mod1+Right focus right
+
+# move focused window
+bindsym Mod1+Shift+$left move left
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up
+bindsym Mod1+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
+
+#go to emacs
+bindsym Mod1+c [title="emacs"] focus
+
+#open emacs
+bindsym Mod1+e exec --no-startup-id emacs
+
+# Split in horizontal orientation.
+bindsym Mod1+h split h
+
+# Split in vertical orientation.
+bindsym Mod1+v split v
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym Mod1+comma layout toggle split
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+f fullscreen toggle
+
+# focus the parent container
+bindsym Mod1+a focus parent
+
+# focus the child container
+bindsym Mod1+z focus child
+
+#configs
+bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
+bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
+bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
+bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
+bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspace.json
+bindsym Mod1+control+g exec --no-startup-id "chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html"
+
+#workspaces
+set $w1 1nternet
+set $w2 2rectory
+set $w3 3code
+set $w4 4terminl
+set $w5 5team
+set $w6 6pack
+set $w7 7nani
+set $w8 8volante
+set $w9 9a
+set $w0 0z
+
+# switch to workspace
+bindsym Mod1+1 workspace $w1
+bindsym Mod1+2 workspace $w2
+bindsym Mod1+3 workspace $w3
+bindsym Mod1+4 workspace $w4
+bindsym Mod1+5 workspace $w5
+bindsym Mod1+6 workspace $w6
+bindsym Mod1+7 workspace $w7
+bindsym Mod1+8 workspace $w8
+bindsym Mod1+9 workspace $w9
+bindsym Mod1+0 workspace $w0
+
+# move focused container to workspace
+bindsym Mod1+control+1 move container to workspace $w1
+bindsym Mod1+control+2 move container to workspace $w2
+bindsym Mod1+control+3 move container to workspace $w3
+bindsym Mod1+control+4 move container to workspace $w4
+bindsym Mod1+control+5 move container to workspace $w5
+bindsym Mod1+control+6 move container to workspace $w6
+bindsym Mod1+control+7 move container to workspace $w7
+bindsym Mod1+control+8 move container to workspace $w8
+bindsym Mod1+control+9 move container to workspace $w9
+bindsym Mod1+control+0 move container to workspace $w0
+
+# move focused container to workspace and follow
+bindsym Mod1+Shift+1 move container to workspace $w1; workspace $w1
+bindsym Mod1+Shift+2 move container to workspace $w2; workspace $w2
+bindsym Mod1+Shift+3 move container to workspace $w3; workspace $w3
+bindsym Mod1+Shift+4 move container to workspace $w4; workspace $w4
+bindsym Mod1+Shift+5 move container to workspace $w5; workspace $w5
+bindsym Mod1+Shift+6 move container to workspace $w6; workspace $w6
+bindsym Mod1+Shift+7 move container to workspace $w7; workspace $w7
+bindsym Mod1+Shift+8 move container to workspace $w8; workspace $w8
+bindsym Mod1+Shift+9 move container to workspace $w9; workspace $w9
+bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
+
+# reload the configuration file
+bindsym Mod1+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+bindsym Mod1+minus         resize shrink width  1 px or 1 ppt
+bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
+bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
+bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
+
+mode "LOCK" {
+        #bindsym Mod1+x mode "default" exec --no-startup-id xinput --enable 13
+	bindsym Super_L mode "default" exec --no-startup-id xinput --enable 13
+	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+}
+
+bindsym Mod1+x mode "LOCK" exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000
+
+mode "EXEC" {
+        # back to normal: Enter or Escape
+        bindsym Escape mode "default" exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"
+	#bindsym Return mode "default" exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"
+	bindsym Alt_L  mode "default" exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"
+}
+
+# start dmenu (a program launcher)
+bindsym Mod1+d mode "EXEC" exec dmenu_run; exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+bindsym Super_L mode "EXEC" exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+         status_command i3status
+}
+
+#startup
+exec --no-startup-id nm-applet
+
+#steam
+assign [class="Steam"] $w5
+for_window [title="Steam - News"] kill
+for_window [title="Friends"] resize shrink width 34 px or 34 ppt
+for_window [title="Steam"] resize grow width 34 px or 34 ppt
+
+#code
+assign [title="Visual Studio Code"] $w3
+
+#nautilus confining
+assign [title="Desktop"] $w0
+
+#layout
+bindsym Mod1+y exec i3-save-tree > ~/workspace.json
+exec --no-startup-id "i3-msg 'workspace 5team; append_layout /home/claudio/5team.json'"
+exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
+exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
+exec --no-startup-id chromium-browser
+exec --no-startup-id chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+exec --no-startup-id nautilus .
+exec --no-startup-id nautilus Downloads
+exec --no-startup-id chromium-browser
+exec --no-startup-id redshift
