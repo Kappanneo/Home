@@ -173,12 +173,12 @@ bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
 bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
 
 mode "LOCK" {
-        #bindsym Mod1+x mode "default" exec --no-startup-id xinput --enable 13
+        bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13
 	bindsym Super_L mode "default" exec --no-startup-id xinput --enable 13
 	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
 }
 
-bindsym Mod1+x mode "LOCK" exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000
+bindsym Mod1+space mode "LOCK" exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000
 
 mode "EXEC" {
         # back to normal: Enter or Escape

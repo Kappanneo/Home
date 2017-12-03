@@ -25,4 +25,14 @@
 (global-set-key (kbd "C-f") 'find-file)
 (global-set-key (kbd "C-<") 'switch-to-prev-buffer)
 (global-set-key (kbd "C-k") 'kill-buffer)
+
+;; make cursor movement keys under right hand's home-row.
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-j") 'backward-char)
+(global-set-key (kbd "M-k") 'next-line)
+(global-set-key (kbd "M-l") 'forward-char)
+
+(global-set-key (kbd "M-u") 'backward-word)
+(global-set-key (kbd "M-o") 'forward-word)
+
 (prefer-coding-system 'utf-8)
