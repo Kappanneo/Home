@@ -21,18 +21,34 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(global-set-key (kbd "C-s") 'save-buffer) ; 【Ctrl+s】
-(global-set-key (kbd "C-f") 'find-file)
-(global-set-key (kbd "C-<") 'switch-to-prev-buffer)
-(global-set-key (kbd "C-k") 'kill-buffer)
 
-;; make cursor movement keys under right hand's home-row.
+;; melpa packages
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
+;; sanity preservers
+(global-set-key (kbd "C-x") 'xah-cut-line-or-region)
+(global-set-key (kbd "C-c") 'xah-copy-line-or-region)
+(global-set-key (kbd "C-v") 'yank)
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-y") 'redo)
+(global-set-key (kbd "C-s") 'save-buffer)
+
+;; personal preferences
+(global-set-key (kbd "C-f") 'find-file)
+(global-set-key (kbd "C-k") 'kill-buffer)
+(global-set-key (kbd "C-<") 'switch-to-prev-buffer)
+
+;; alternative arrows
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-j") 'backward-char)
 (global-set-key (kbd "M-k") 'next-line)
 (global-set-key (kbd "M-l") 'forward-char)
 
-(global-set-key (kbd "M-u") 'backward-word)
-(global-set-key (kbd "M-o") 'forward-word)
+(global-set-key (kbd "M-C-i") 'backward-paragraph)
+(global-set-key (kbd "M-C-j") 'backward-word)
+(global-set-key (kbd "M-C-k") 'forward-paragraph)
+(global-set-key (kbd "M-C-l") 'backward-word)
 
 (prefer-coding-system 'utf-8)
