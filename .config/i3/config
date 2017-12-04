@@ -215,7 +215,6 @@ bindsym Mod1+y exec i3-save-tree > ~/workspace.json
 #startup
 exec --no-startup-id nm-applet
 exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
-exec --no-startup-id "i3-msg 'workspace 5team; append_layout /home/claudio/5team.json'"
 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
 exec --no-startup-id chromium-browser
