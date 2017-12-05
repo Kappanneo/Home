@@ -27,6 +27,11 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
+;; normal undo-redo
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require 'undo-tree)
+(global-undo-tree-mode 1)
+
 ;; sanity preservers
 (global-set-key (kbd "C-x") 'xah-cut-line-or-region)
 (global-set-key (kbd "C-c") 'xah-copy-line-or-region)

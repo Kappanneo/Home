@@ -1,9 +1,10 @@
 *
 !.emacs
+!.emacs.d/lisp/
+!*.el
 !.config/i3/
 !.config/i3status/
 !1nternet.json
 !2rectory.json
-!5team.json
 !*config
 !.gitignore
