@@ -54,6 +54,6 @@
 (global-set-key (kbd "M-C-i") 'backward-paragraph)
 (global-set-key (kbd "M-C-j") 'backward-word)
 (global-set-key (kbd "M-C-k") 'forward-paragraph)
-(global-set-key (kbd "M-C-l") 'backward-word)
+(global-set-key (kbd "M-C-l") 'forward-word)
 
 (prefer-coding-system 'utf-8)
