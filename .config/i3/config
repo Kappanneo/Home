@@ -94,8 +94,14 @@ bindsym Mod1+v split v
 # Change container layout (stacked, tabbed, toggle split)
 bindsym Mod1+comma layout toggle split
 
+mode "FULL" {
+     	bindsym Mod1+f mode "default" fullscreen toggle
+	bindsym Mod1+F4 mode "default" kill
+	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+}
+
 # enter fullscreen mode for the focused container
-bindsym Mod1+f mode "LOCK" fullscreen toggle
+bindsym Mod1+f mode "FULL" fullscreen toggle
 
 # focus the parent container
 bindsym Mod1+a focus parent
@@ -176,7 +182,6 @@ mode "LOCK" {
      	bindsym Mod1+F4 mode "default" kill
         bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13
 	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
-	bindsym Mod1+f mode "default" fullscreen toggle
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
 }
 
