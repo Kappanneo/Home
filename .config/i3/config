@@ -34,90 +34,7 @@ set $right l
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 
-# start a terminal
-bindsym Mod1+Return split v; exec i3-sensible-terminal
-
-# kill focused window
-bindsym Mod1+F4 kill
-
-#screenshot
-bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
-bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
-
-# touchpad disabler/enabler
-bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
-
-#volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
-bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
-
-# change focus
-bindsym Mod1+Tab focus right
-bindsym Mod1+backslash focus left
-
-bindsym Mod1+$left focus left
-bindsym Mod1+$down focus down
-bindsym Mod1+$up focus up
-bindsym Mod1+$right focus right
-
-# alternatively, you can use the cursor keys:
-bindsym Mod1+Left focus left
-bindsym Mod1+Down focus down
-bindsym Mod1+Up focus up
-bindsym Mod1+Right focus right
-
-# move focused window
-bindsym Mod1+Shift+$left move left
-bindsym Mod1+Shift+$down move down
-bindsym Mod1+Shift+$up move up
-bindsym Mod1+Shift+$right move right
-
-# alternatively, you can use the cursor keys:
-bindsym Mod1+Shift+Left move left
-bindsym Mod1+Shift+Down move down
-bindsym Mod1+Shift+Up move up
-bindsym Mod1+Shift+Right move right
-
-#go to emacs
-bindsym Mod1+c [title="emacs"] focus
-
-#open emacs
-bindsym Mod1+e exec --no-startup-id emacs
-
-# Split in horizontal orientation.
-bindsym Mod1+h split h
-
-# Split in vertical orientation.
-bindsym Mod1+v split v
-
-# Change container layout (stacked, tabbed, toggle split)
-bindsym Mod1+comma layout toggle split
-
-mode "FULL" {
-     	bindsym Mod1+f mode "default" fullscreen toggle
-	bindsym Mod1+F4 mode "default" kill
-	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
-	bindsym F11 mode "default" fullscreen toggle
-}
-
-# enter fullscreen mode for the focused container
-bindsym Mod1+f mode "FULL" fullscreen toggle
-bindsym F11 mode "FULL" fullscreen toggle
-
-# focus the parent container
-bindsym Mod1+a focus parent
-
-# focus the child container
-bindsym Mod1+z focus child
-
-#configs
-bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
-bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
-bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
-bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
-bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspace.json
-bindsym Mod1+control+g exec --no-startup-id "chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html"
+################################WORKSPACES######################################
 
 #workspaces
 set $w1 1nternet
@@ -167,12 +84,71 @@ bindsym Mod1+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod1+Shift+9 move container to workspace $w9; workspace $w9
 #bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
 
-# reload the configuration file
-bindsym Mod1+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym Mod1+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+################################COMMANDS########################################
+
+# start a terminal
+bindsym Mod1+Return split v; exec i3-sensible-terminal
+
+# kill focused window
+bindsym Mod1+F4 kill
+
+#screenshot
+bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
+bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
+
+# touchpad disabler/enabler
+bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+
+#volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
+bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
+
+# change focus
+bindsym Mod1+Tab focus right
+bindsym Mod1+backslash focus left
+bindsym Mod1+q focus down
+
+bindsym Mod1+$left focus left
+bindsym Mod1+$down focus down
+bindsym Mod1+$up focus up
+bindsym Mod1+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Left focus left
+bindsym Mod1+Down focus down
+bindsym Mod1+Up focus up
+bindsym Mod1+Right focus right
+
+# move focused window
+bindsym Mod1+Shift+$left move left
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up
+bindsym Mod1+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
+
+# Split in horizontal orientation.
+bindsym Mod1+h split h
+
+# Split in vertical orientation.
+bindsym Mod1+v split v
+
+# focus the parent container
+bindsym Mod1+a focus parent
+
+# focus the child container
+bindsym Mod1+z focus child
+
+#open emacs
+bindsym Mod1+e exec --no-startup-id emacs
+
+#go to emacs
+bindsym Mod1+c [title="emacs"] focus
 
 # resize window (you can also use the mouse for that)
 bindsym Mod1+minus         resize shrink width  1 px or 1 ppt
@@ -180,18 +156,30 @@ bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
 bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
 bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
 
-mode "LOCK" {
-     	#bindsym Mod1+F4 mode "default" kill
-        bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13
-	bindsym Mod1+Escape mode "default"
-	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
-	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
-}
+#layout
+bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000  "Layout saved"
+bindsym Mod1+control+Shift+1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"; exec --no-startup-id chromium-browser; exec --no-startup-id chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+bindsym Mod1+control+Shift+2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"; exec --no-startup-id nautilus . ; exec --no-startup-id nautilus Downloads; exec --no-startup-id chromium-browser
 
-bindsym Mod1+space mode "LOCK" exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000
-bindsym Mod1+Escape mode "LOCK"
+#configs
+bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
+bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
+bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
+bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
+bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspace.json
+bindsym Mod1+control+g exec --no-startup-id "chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html"
 
-bindsym Super_L exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
+# reload the configuration file
+bindsym Mod1+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+
+################################ALERTS##########################################
+
+#alerts
+bindsym KP_Insert exec --no-startup-id notify-send --expire-time=2000 --urgency=critical NSRT
 bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
 
 # start dmenu (a program launcher)
@@ -202,11 +190,53 @@ bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=20
 # installed.
 bindsym Escape exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
 
+################################MODES###########################################
+
+mode "LOCK" {
+     	#exit
+        bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13
+	bindsym Mod1+Escape mode "default"
+	#alerts
+	#bindsym KP_Insert exec --no-startup-id notify-send --expire-time=2000 --urgency=critical NSRT #not working properly
+	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
+	#volume
+	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
+	bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
+	bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
+	#touchpad
+	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+
+	bindsym Mod1+F4 mode kill
+}
+
+bindsym Mod1+space mode "LOCK" exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000
+bindsym Mod1+Escape mode "LOCK"
+
+mode "FULL" {
+     	bindsym Mod1+f mode "default" fullscreen toggle
+	bindsym Mod1+F4 mode "default" kill
+	bindsym F11 mode "default" fullscreen toggle
+	#volume
+	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
+	bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
+	bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
+	#touchpad
+	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+}
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+f mode "FULL" fullscreen toggle
+bindsym F11 mode "FULL" fullscreen toggle
+
+################################BAR#############################################
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
          status_command i3status
 }
+
+################################ASSIGNS#########################################
 
 #steam
 assign [class="Steam"] $w5
@@ -220,17 +250,15 @@ assign [title="Visual Studio Code"] $w3
 #nautilus confining
 assign [title="Desktop"] $w0
 
-#layout
-bindsym Mod1+y exec i3-save-tree > ~/workspace.json
-
+################################STARTUP#########################################
 #startup
-exec --no-startup-id nm-applet
-exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
+exec --no-startup-id nm-applet #Network Manager
+exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" #For status bar toggle
 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
 exec --no-startup-id chromium-browser
-exec --no-startup-id chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+exec --no-startup-id chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki #Google Keep
 exec --no-startup-id nautilus .
 exec --no-startup-id nautilus Downloads
 exec --no-startup-id chromium-browser
-exec --no-startup-id redshift
+exec --no-startup-id redshift -O 4000K
