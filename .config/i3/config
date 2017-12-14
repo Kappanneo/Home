@@ -58,7 +58,7 @@ bindsym Mod1+6 workspace $w6
 bindsym Mod1+7 workspace $w7
 bindsym Mod1+8 workspace $w8
 bindsym Mod1+9 workspace $w9
-bindsym Mod1+0 workspace $w0
+#bindsym Mod1+0 workspace $w0
 
 # move focused container to workspace
 bindsym Mod1+control+1 move container to workspace $w1
@@ -144,6 +144,9 @@ bindsym Mod1+a focus parent
 # focus the child container
 bindsym Mod1+z focus child
 
+#fullscreen
+bindsym Mod1+f fullscreen toggle
+
 #open emacs
 bindsym Mod1+e exec --no-startup-id emacs
 
@@ -178,8 +181,6 @@ bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 
 
 ################################ALERTS##########################################
 
-#alerts
-bindsym KP_Insert exec --no-startup-id notify-send --expire-time=2000 --urgency=critical NSRT
 bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
 
 # start dmenu (a program launcher)
@@ -192,12 +193,13 @@ bindsym Escape exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id notif
 
 ################################MODES###########################################
 
-mode "LOCK" {
+set $lock "LOCK: alt+space to unlock"
+set $quit "QUIT: esc to resume  q to quit  r to restart  s to suspend  e to exit i3 "
+
+mode $lock {
      	#exit
-        bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13
-	bindsym Mod1+Escape mode "default"
+        bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13; exec --no-startup-id notify-send --expire-time=500 --urgency=critical UNLOCK
 	#alerts
-	#bindsym KP_Insert exec --no-startup-id notify-send --expire-time=2000 --urgency=critical NSRT #not working properly
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
 	#volume
 	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
@@ -209,24 +211,20 @@ mode "LOCK" {
 	bindsym Mod1+F4 mode kill
 }
 
-bindsym Mod1+space mode "LOCK" exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000
-bindsym Mod1+Escape mode "LOCK"
+bindsym Mod1+space mode $lock exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000;  exec --no-startup-id notify-send --expire-time=500 --urgency=critical $lock
 
-mode "FULL" {
-     	bindsym Mod1+f mode "default" fullscreen toggle
-	bindsym Mod1+F4 mode "default" kill
-	bindsym F11 mode "default" fullscreen toggle
-	#volume
-	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
-	bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
-	bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
-	#touchpad
-	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+mode $quit {
+        #exit
+     	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	bindsym q exec --no-startup-id shutdown -h now 
+	bindsym r exec --no-startup-id reboot
+	bindsym s mode "default" exec --no-startup-id systemctl suspend
+	bindsym e exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"; exec --no-startup-id "i3-msg exit"
+	bindsym XF86PowerOff exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-# enter fullscreen mode for the focused container
-bindsym Mod1+f mode "FULL" fullscreen toggle
-bindsym F11 mode "FULL" fullscreen toggle
+bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
+# to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
 
 ################################BAR#############################################
 
@@ -250,8 +248,11 @@ assign [title="Visual Studio Code"] $w3
 #nautilus confining
 assign [title="Desktop"] $w0
 
+#chromium profile error kill
+for_window [title="Profile error occurred"] kill
+
 ################################STARTUP#########################################
-#startup
+
 exec --no-startup-id nm-applet #Network Manager
 exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" #For status bar toggle
 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
