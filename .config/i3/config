@@ -84,6 +84,12 @@ bindsym Mod1+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod1+Shift+9 move container to workspace $w9; workspace $w9
 #bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
 
+#custom layouts
+set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
+set $fill_1 exec --no-startup-id chromium-browser & chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
+set $fill_2 exec --no-startup-id nautilus & nautilus Downloads & chromium-browser & i3-sensible-terminal
+
 ################################COMMANDS########################################
 
 # start a terminal
@@ -148,7 +154,7 @@ bindsym Mod1+z focus child
 bindsym Mod1+f fullscreen toggle
 
 #open emacs
-bindsym Mod1+e exec --no-startup-id emacs
+bindsym Mod1+e split h; exec --no-startup-id emacs
 
 #go to emacs
 bindsym Mod1+c [title="emacs"] focus
@@ -159,10 +165,10 @@ bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
 bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
 bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
 
-#layout
+#layouts
 bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000  "Layout saved"
-bindsym Mod1+control+Shift+1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"; exec --no-startup-id chromium-browser; exec --no-startup-id chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
-bindsym Mod1+control+Shift+2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"; exec --no-startup-id nautilus . ; exec --no-startup-id nautilus Downloads; exec --no-startup-id chromium-browser
+bindsym Mod1+control+Shift+1 $layout_1; $fill_1
+bindsym Mod1+control+Shift+2 $layout_2; $fill_2
 
 #configs
 bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
@@ -171,7 +177,7 @@ bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status
 bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
 bindsym Mod1+control+z exec --no-startup-id emacs /home/claudio/.zshrc
 bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspace.json
-bindsym Mod1+control+g exec --no-startup-id "chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html"
+bindsym Mod1+control+g exec --no-startup-id chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html
 
 # reload the configuration file
 bindsym Mod1+Shift+c reload
@@ -252,15 +258,16 @@ assign [title="Desktop"] $w0
 #chromium profile error kill
 for_window [title="Profile error occurred"] kill
 
+#no title-bars
+for_window [class="^.*"] border pixel 1
+
 ################################STARTUP#########################################
 
 exec --no-startup-id nm-applet #Network Manager
 exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" #For status bar toggle
-exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
-exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
-exec --no-startup-id chromium-browser
-exec --no-startup-id chromium-browser --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki #Google Keep
-exec --no-startup-id nautilus .
-exec --no-startup-id nautilus Downloads
-exec --no-startup-id chromium-browser
+$layout_2
+$layout_1
+$fill_1
+$fill_2
 exec --no-startup-id redshift -O 4000K
+exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute

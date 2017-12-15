@@ -1,21 +1,49 @@
 {
     "border": "normal",
-    "current_border_width": 2,
     "floating": "auto_off",
-    "geometry": {
-       "height": 1041,
-       "width": 1211,
-       "x": 356,
-       "y": 28
-    },
-    "name": "Chromium",
+    "layout": "splitv",
     "percent": 0.73,
-    "swallows": [
-       {
-       "class": "^Chromium\\-browser$"
-       }
-    ],
-    "type": "con"
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1041,
+               "width": 514,
+               "x": 1414,
+               "y": 28
+            },
+            "name": "Chromium",
+            "percent": 0.86,
+            "swallows": [
+               {
+               "class": "^Chromium\\-browser$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 431,
+               "width": 732,
+               "x": 0,
+               "y": 0
+            },
+            "name": "Terminal",
+            "percent": 0.14,
+            "swallows": [
+               {
+               "class": "^Gnome\\-terminal$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
 }
 
 {
@@ -35,11 +63,11 @@
                "x": 0,
                "y": 0
             },
-            "name": "Files",
+            "name": "Downloads",
             "percent": 0.5,
             "swallows": [
                {
-               "title": "Downloads"
+               "title": "^Downloads$"
                }
             ],
             "type": "con"
@@ -54,11 +82,11 @@
                "x": 0,
                "y": 0
             },
-            "name": "Files",
+            "name": "Home",
             "percent": 0.5,
             "swallows": [
                {
-               "title": "Home"
+               "title": "^Home$"
                }
             ],
             "type": "con"
