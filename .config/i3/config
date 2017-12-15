@@ -169,6 +169,7 @@ bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/confi
 bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
 bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
 bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
+bindsym Mod1+control+z exec --no-startup-id emacs /home/claudio/.zshrc
 bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspace.json
 bindsym Mod1+control+g exec --no-startup-id "chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html"
 
