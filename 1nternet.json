@@ -2,6 +2,7 @@
     "border": "normal",
     "current_border_width": 2,
     "floating": "auto_off",
+    "layout": "splitv",
     "geometry": {
        "height": 1041,
        "width": 1916,
@@ -22,6 +23,7 @@
     "border": "normal",
     "current_border_width": 2,
     "floating": "auto_off",
+    "layout": "splitv",
     "geometry": {
        "height": 1041,
        "width": 1629,
@@ -42,6 +44,7 @@
     "border": "normal",
     "current_border_width": 2,
     "floating": "auto_off",
+    "layout": "splitv",
     "geometry": {
        "height": 1041,
        "width": 636,
