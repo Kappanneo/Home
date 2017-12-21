@@ -1,6 +1,6 @@
 general
 {
-        colors          = false
+        colors          = true
 #      color_good      = "#00FF00"
 #      color_degraded  = "#0000FF"
 #      color_bad      = "#FF0000"
@@ -210,12 +210,12 @@ ddate
 volume master
 {
 #      %volume = volume
-        format          = "♪ %volume"
-	format_muted    = "Muted"
-        device          = "default"
+        format         = "♪ %volume"
+	format_muted   = "Muted"
+        device         = "default"
         mixer          = "Master"
         mixer_idx      = 0
-#      color_good      = "#00FF00"
-#      color_degraded  = "#0000FF"
-#      color_bad      = "#FF0000"
+        color_good     = "#FF0000"
+        color_degraded = "#FFFFFF"
+        color_bad      = "#FF0000"
 }
