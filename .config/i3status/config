@@ -216,6 +216,6 @@ volume master
         mixer          = "Master"
         mixer_idx      = 0
         color_good     = "#FF0000"
-        color_degraded = "#FFFFFF"
+        color_degraded = "#999999"
         color_bad      = "#FF0000"
 }
