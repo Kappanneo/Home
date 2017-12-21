@@ -58,7 +58,7 @@ bindsym Mod1+6 workspace $w6
 bindsym Mod1+7 workspace $w7
 bindsym Mod1+8 workspace $w8
 bindsym Mod1+9 workspace $w9
-#bindsym Mod1+0 workspace $w0
+bindsym Mod1+0 workspace $w0
 
 # move focused container to workspace
 bindsym Mod1+control+1 move container to workspace $w1
@@ -188,7 +188,7 @@ bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 
 
 ################################ALERTS##########################################
 
-bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
+bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 
 # start dmenu (a program launcher)
 bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
@@ -196,7 +196,8 @@ bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=20
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym Escape exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
+# Since it's slow as **** someone made an actually good one: sudo apt-get install j4-dmenu-desktop
+bindsym Escape exec --no-startup-id j4-dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
 
 ################################MODES###########################################
 
@@ -207,7 +208,7 @@ mode $lock {
      	#exit
         bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13; exec --no-startup-id notify-send --expire-time=500 --urgency=critical UNLOCK
 	#alerts
-	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=2000 --urgency=critical CAPS
+	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 	#volume
 	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
 	bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
@@ -218,7 +219,7 @@ mode $lock {
 	bindsym Mod1+F4 mode kill
 }
 
-bindsym Mod1+space mode $lock exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000;  exec --no-startup-id notify-send --expire-time=500 --urgency=critical $lock
+bindsym Mod1+space mode $lock exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000;  exec --no-startup-id notify-send --expire-time=2000 --urgency=critical $lock
 
 mode $quit {
         #exit
