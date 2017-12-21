@@ -1,63 +1,89 @@
 {
+    // splitv split container with 1 children
     "border": "normal",
-    "current_border_width": 2,
     "floating": "auto_off",
     "layout": "splitv",
-    "geometry": {
-       "height": 1041,
-       "width": 1916,
-       "x": 12,
-       "y": 28
-    },
-    "name": "Telegram",
     "percent": 0.179126574408699,
-    "swallows": [
-       {
-       "title": "Untitled"
-       }
-    ],
-    "type": "con"
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1041,
+               "width": 1916,
+               "x": 12,
+               "y": 28
+            },
+            "name": "Comunication",
+            "percent": null,
+            "swallows": [
+               {
+                "title": "Untitled"
+               }
+            ],
+            "type": "con"
+        }
+    ]
 }
 
 {
+    // splitv split container with 1 children
     "border": "normal",
-    "current_border_width": 2,
     "floating": "auto_off",
     "layout": "splitv",
-    "geometry": {
-       "height": 1041,
-       "width": 1629,
-       "x": 2,
-       "y": 18
-    },
-    "name": "Chromium",
     "percent": 0.63274789385347,
-    "swallows": [
-       {
-       "class": "^Chromium\\-browser$"
-       }
-    ],
-    "type": "con"
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1041,
+               "width": 1629,
+               "x": 2,
+               "y": 18
+            },
+            "name": "Chromium",
+            "percent": null,
+            "swallows": [
+               {
+                "class": "^Chromium\\-browser$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
 }
 
 {
+    // splitv split container with 1 children
     "border": "normal",
-    "current_border_width": 2,
     "floating": "auto_off",
     "layout": "splitv",
-    "geometry": {
-       "height": 1041,
-       "width": 636,
-       "x": 241,
-       "y": 18
-    },
-    "name": "Google Keep",
     "percent": 0.188125531737831,
-    "swallows": [
-       {
-       "title": "Keep"
-       }
-    ],
-    "type": "con"
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1041,
+               "width": 636,
+               "x": 241,
+               "y": 18
+            },
+            "name": "Google Keep",
+            "percent": null,
+            "swallows": [
+               {
+                "title": "Keep"
+               }
+            ],
+            "type": "con"
+        }
+    ]
 }
-
