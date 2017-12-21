@@ -202,7 +202,8 @@ bindsym Escape exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id notif
 ################################MODES###########################################
 
 set $lock "LOCK: alt+space to unlock"
-set $quit "QUIT: esc to resume  q to quit  r to restart  s to suspend  e to exit i3 "
+set $quit "QUIT: esc to resume  q to quit  r to restart  s to suspend  e to exit i3"
+set $rdsh "RDSH: alt+r to resume  0-9 to shift"
 
 mode $lock {
      	#exit
@@ -233,6 +234,23 @@ mode $quit {
 
 bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
+
+mode $rdsh {
+     	bindsym Mod1+r mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	bindsym 1 exec --no-startup-id redshift -O 2000K
+	bindsym 2 exec --no-startup-id redshift -O 2500K
+	bindsym 3 exec --no-startup-id redshift -O 3000K
+	bindsym 4 exec --no-startup-id redshift -O 3500K
+	bindsym 5 exec --no-startup-id redshift -O 4000K
+	bindsym 6 exec --no-startup-id redshift -O 4500K
+	bindsym 7 exec --no-startup-id redshift -O 5000K
+	bindsym 8 exec --no-startup-id redshift -O 5500K
+	bindsym 9 exec --no-startup-id redshift -O 6000K
+	bindsym 0 exec --no-startup-id redshift -O 6500K
+}
+
+bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh
 
 ################################BAR#############################################
 
@@ -270,5 +288,5 @@ $layout_2
 $layout_1
 $fill_1
 $fill_2
-exec --no-startup-id redshift -O 4000K
+exec --no-startup-id redshift -O 4500K
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
