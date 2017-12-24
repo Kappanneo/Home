@@ -102,8 +102,13 @@ bindsym Mod1+F4 kill
 bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
 bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
 
-# touchpad disabler/enabler
-bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+#touchpad enable/disable
+set $touchpad_on xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 1
+set $touchpad_off xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 0
+set $touchpad_toggle /home/claudio/.touchpad_toggle.sh
+
+#touchpad toggle
+bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
 
 #volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
@@ -207,7 +212,7 @@ set $rdsh "RDSH: alt+r to resume  0-9 to shift"
 
 mode $lock {
      	#exit
-        bindsym Mod1+space mode "default" exec --no-startup-id xinput --enable 13; exec --no-startup-id notify-send --expire-time=500 --urgency=critical UNLOCK
+        bindsym Mod1+space mode "default" exec --no-startup-id $touchpad_on & notify-send --expire-time=500 --urgency=critical UNLOCK
 	#alerts
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 	#volume
@@ -215,16 +220,17 @@ mode $lock {
 	bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
 	bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
 	#touchpad
-	bindsym XF86TouchpadToggle exec --no-startup-id /home/claudio/.disable.sh
+	bindsym XF86AudioMute exec --no-startup-id $touchpad_toggle
 	#panic
 	bindsym Mod1+F4 kill
+	bindsym XF86PowerOff mode $quit exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-bindsym Mod1+space mode $lock exec --no-startup-id xinput --disable 13; exec --no-startup-id xdotool mousemove 750 3000;  exec --no-startup-id notify-send --expire-time=2000 --urgency=critical $lock
+bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mousemove 750 3000 & notify-send --expire-time=2000 --urgency=critical $lock
 
 mode $quit {
         #exit
-     	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+     	bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	bindsym q exec --no-startup-id shutdown -h now 
 	bindsym r exec --no-startup-id reboot
 	bindsym s mode "default" exec --no-startup-id systemctl suspend
@@ -248,6 +254,8 @@ mode $rdsh {
 	bindsym 8 exec --no-startup-id redshift -O 5500K
 	bindsym 9 exec --no-startup-id redshift -O 6000K
 	bindsym 0 exec --no-startup-id redshift -O 6500K
+	#panic
+	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
 bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh
