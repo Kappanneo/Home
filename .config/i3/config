@@ -298,7 +298,8 @@ assign [title="Desktop"] $w0
 for_window [title="Profile error occurred"] kill
 
 #no title-bars
-for_window [class="^.*"] border pixel 0
+new_window none
+new_float normal
 
 ################################STARTUP#########################################
 

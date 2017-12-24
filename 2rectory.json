@@ -1,13 +1,10 @@
 {
-    "border": "normal",
     "floating": "auto_off",
     "layout": "splitv",
     "percent": 0.73,
     "type": "con",
     "nodes": [
         {
-            "border": "normal",
-            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
@@ -25,8 +22,6 @@
             "type": "con"
         },
         {
-            "border": "normal",
-            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 431,
@@ -47,15 +42,12 @@
 }
 
 {
-    "border": "normal",
     "floating": "auto_off",
     "layout": "splitv",
     "percent": 0.27,
     "type": "con",
     "nodes": [
         {
-            "border": "normal",
-            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
@@ -73,8 +65,6 @@
             "type": "con"
         },
         {
-            "border": "normal",
-            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
