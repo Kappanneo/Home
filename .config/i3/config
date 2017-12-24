@@ -34,7 +34,7 @@ set $right l
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 
-################################WORKSPACES######################################
+############################### WORKSPACES #####################################
 
 #workspaces
 set $w1 1nternet
@@ -84,13 +84,7 @@ bindsym Mod1+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod1+Shift+9 move container to workspace $w9; workspace $w9
 #bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
 
-#custom layouts
-set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
-set $fill_1 exec --no-startup-id chromium-browser --profile-directory=Default & chromium-browser --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
-set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
-set $fill_2 exec --no-startup-id nautilus & nautilus Downloads & chromium-browser --profile-directory=Default & i3-sensible-terminal
-
-################################COMMANDS########################################
+############################### COMMANDS #######################################
 
 # start a terminal
 bindsym Mod1+Return split v; exec i3-sensible-terminal
@@ -164,16 +158,14 @@ bindsym Mod1+e exec --no-startup-id emacs
 #go to emacs
 bindsym Mod1+c [title="emacs"] focus
 
+#save layout
+bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
+
 # resize window (you can also use the mouse for that)
 bindsym Mod1+minus         resize shrink width  1 px or 1 ppt
 bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
 bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
 bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
-
-#layouts
-bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000  "Layout saved"
-bindsym Mod1+control+Shift+1 $layout_1; $fill_1
-bindsym Mod1+control+Shift+2 $layout_2; $fill_2
 
 #configs
 bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
@@ -189,11 +181,13 @@ bindsym Mod1+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym Mod1+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
 
-################################ALERTS##########################################
+############################### ALERTS #########################################
 
 bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
+
+############################### LAUNCERS #######################################
 
 # start dmenu (a program launcher)
 bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
@@ -204,16 +198,32 @@ bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=20
 # Since it's slow as **** someone made an actually good one: sudo apt-get install j4-dmenu-desktop
 bindsym Escape exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
 
-################################MODES###########################################
+################################LAYOUTS#########################################
+
+#chromium bookmarks and apps
+#set $chr_com chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/
+#set $chr_mail chromium-browser --new-window --profile-directory=Default https://mail.google.com/ https://outlook.office.com/ https://mail.libero.it/
+#set $chr_gh chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo
+#set $chr_keep chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+
+#custom layouts
+set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
+set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/ & chromium-browser --new-window --profile-directory=Default https://mail.google.com/ https://outlook.office.com/ https://mail.libero.it/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+
+set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
+set $fill_2 exec --no-startup-id nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal
+
+############################### MODES ##########################################
 
 set $lock "LOCK: alt+space to unlock"
 set $quit "QUIT: esc to resume  q to quit  r to restart  s to suspend  e to exit i3"
 set $rdsh "RDSH: alt+r to resume  0-9 to shift"
+set $strt "STRT: alt+s to resume  1 2 layouts"
 
 mode $lock {
      	#exit
         bindsym Mod1+space mode "default" exec --no-startup-id $touchpad_on & notify-send --expire-time=500 --urgency=critical UNLOCK
-	#alerts
+	#alert
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 	#volume
 	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
@@ -231,10 +241,12 @@ bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mouse
 mode $quit {
         #exit
      	bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	#options
 	bindsym q exec --no-startup-id shutdown -h now 
 	bindsym r exec --no-startup-id reboot
 	bindsym s mode "default" exec --no-startup-id systemctl suspend
 	bindsym e exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"; exec --no-startup-id "i3-msg exit"
+	#alert
 	bindsym XF86PowerOff exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
@@ -242,8 +254,10 @@ bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=
 # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
 
 mode $rdsh {
+        #exit
      	bindsym Mod1+r mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	#options
 	bindsym 1 exec --no-startup-id redshift -O 2000K
 	bindsym 2 exec --no-startup-id redshift -O 2500K
 	bindsym 3 exec --no-startup-id redshift -O 3000K
@@ -260,7 +274,20 @@ mode $rdsh {
 
 bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh
 
-################################BAR#############################################
+mode $strt {
+        #exit
+     	bindsym Mod1+s mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	#options
+	bindsym 1 mode "default" $layout_1; $fill_1
+	bindsym 2 mode "default" $layout_2; $fill_2
+	#panic
+	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit	
+}
+
+bindsym Mod1+s mode $strt; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $strt
+
+############################### BAR ############################################
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -280,7 +307,7 @@ bar {
     	       }
     }
 
-################################ASSIGNS#########################################
+############################### ASSIGNS ########################################
 
 #steam
 assign [class="Steam"] $w5
@@ -301,13 +328,11 @@ for_window [title="Profile error occurred"] kill
 new_window none
 new_float normal
 
-################################STARTUP#########################################
+############################### STARTUP ########################################
 
 exec --no-startup-id nm-applet #Network Manager
 exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" #For status bar toggle
-$layout_2
-$layout_1
-$fill_1
-$fill_2
 exec --no-startup-id redshift -O 4500K
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
+$layout_2
+$fill_2

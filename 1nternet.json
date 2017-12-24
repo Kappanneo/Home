@@ -11,11 +11,11 @@
                "x": 12,
                "y": 28
             },
-            "name": "Comunication",
+            "name": "Communication",
             "percent": null,
             "swallows": [
                {
-                "title": "(Untitled)|(Telegram)|(Whatsapp)"
+                   "title": "Untitled"
                }
             ],
             "type": "con"
@@ -37,11 +37,11 @@
                "x": 2,
                "y": 18
             },
-            "name": "Chromium",
+            "name": "Mail",
             "percent": null,
             "swallows": [
                {
-                   "title":"New Tab"
+                   "class": "^Chromium\\-browser$"
                }
             ],
             "type": "con"
@@ -67,7 +67,7 @@
             "percent": null,
             "swallows": [
                {
-                "title": "Keep"
+                   "title": "Keep"
                }
             ],
             "type": "con"
