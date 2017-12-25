@@ -41,7 +41,7 @@
             "percent": null,
             "swallows": [
                {
-                   "class": "^Chromium\\-browser$"
+                   "title": "Untitled"
                }
             ],
             "type": "con"

@@ -90,3 +90,4 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias grappolo="nodejs Desktop/Git/Algo-rhythmic/uva/server.js"
+alias ciao="echo ciao"

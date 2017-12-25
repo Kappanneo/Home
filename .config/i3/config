@@ -158,6 +158,9 @@ bindsym Mod1+e exec --no-startup-id emacs
 #go to emacs
 bindsym Mod1+c [title="emacs"] focus
 
+#exile
+bindsym Mod1+x move container to workspace $w9
+
 #save layout
 bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
 
@@ -196,19 +199,19 @@ bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=20
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # Since it's slow as **** someone made an actually good one: sudo apt-get install j4-dmenu-desktop
-bindsym Escape exec --no-startup-id i3-dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
+bindsym Escape exec --no-startup-id j4-dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
 
 ################################LAYOUTS#########################################
 
 #chromium bookmarks and apps
 #set $chr_com chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/
-#set $chr_mail chromium-browser --new-window --profile-directory=Default https://mail.google.com/ https://outlook.office.com/ https://mail.libero.it/
+set $chr_mail chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/
 #set $chr_gh chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo
 #set $chr_keep chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
 #custom layouts
 set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
-set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/ & chromium-browser --new-window --profile-directory=Default https://mail.google.com/ https://outlook.office.com/ https://mail.libero.it/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
 set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
 set $fill_2 exec --no-startup-id nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal
@@ -279,7 +282,7 @@ mode $strt {
      	bindsym Mod1+s mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	#options
-	bindsym 1 mode "default" $layout_1; $fill_1
+	bindsym 1 mode "default" $layout_1; $fill_1; exec --no-startup-id $chr_mail
 	bindsym 2 mode "default" $layout_2; $fill_2
 	#panic
 	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit	
