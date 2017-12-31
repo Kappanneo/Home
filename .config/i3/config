@@ -99,7 +99,7 @@ bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
 #touchpad enable/disable
 set $touchpad_on xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 1
 set $touchpad_off xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 0
-set $touchpad_toggle /home/claudio/.touchpad_toggle.sh
+set $touchpad_toggle /home/claudio/touchpad_toggle.sh
 
 #touchpad toggle
 bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
@@ -261,15 +261,15 @@ mode $rdsh {
      	bindsym Mod1+r mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	#options
-	bindsym 1 exec --no-startup-id redshift -O 2000K
-	bindsym 2 exec --no-startup-id redshift -O 2500K
-	bindsym 3 exec --no-startup-id redshift -O 3000K
-	bindsym 4 exec --no-startup-id redshift -O 3500K
-	bindsym 5 exec --no-startup-id redshift -O 4000K
-	bindsym 6 exec --no-startup-id redshift -O 4500K
-	bindsym 7 exec --no-startup-id redshift -O 5000K
-	bindsym 8 exec --no-startup-id redshift -O 5500K
-	bindsym 9 exec --no-startup-id redshift -O 6000K
+	bindsym 1 exec --no-startup-id redshift -O 2300K
+	bindsym 2 exec --no-startup-id redshift -O 2400K
+	bindsym 3 exec --no-startup-id redshift -O 2500K
+	bindsym 4 exec --no-startup-id redshift -O 2700K
+	bindsym 5 exec --no-startup-id redshift -O 3000K
+	bindsym 6 exec --no-startup-id redshift -O 3500K
+	bindsym 7 exec --no-startup-id redshift -O 4000K
+	bindsym 8 exec --no-startup-id redshift -O 4500K
+	bindsym 9 exec --no-startup-id redshift -O 5000K
 	bindsym 0 exec --no-startup-id redshift -O 6500K
 	#panic
 	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
