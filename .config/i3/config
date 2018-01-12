@@ -49,27 +49,27 @@ set $w9 9a
 set $w0 0z
 
 # switch to workspace
-bindsym Mod1+1 workspace $w1
-bindsym Mod1+2 workspace $w2
-bindsym Mod1+3 workspace $w3
-bindsym Mod1+4 workspace $w4
-bindsym Mod1+5 workspace $w5
-bindsym Mod1+6 workspace $w6
-bindsym Mod1+7 workspace $w7
-bindsym Mod1+8 workspace $w8
-bindsym Mod1+9 workspace $w9
-bindsym Mod1+0 workspace $w0
+bindsym Mod1+1 workspace $w1; exec killall -USR1 i3status
+bindsym Mod1+2 workspace $w2; exec killall -USR1 i3status
+bindsym Mod1+3 workspace $w3; exec killall -USR1 i3status
+bindsym Mod1+4 workspace $w4; exec killall -USR1 i3status
+bindsym Mod1+5 workspace $w5; exec killall -USR1 i3status
+bindsym Mod1+6 workspace $w6; exec killall -USR1 i3status
+bindsym Mod1+7 workspace $w7; exec killall -USR1 i3status
+bindsym Mod1+8 workspace $w8; exec killall -USR1 i3status
+bindsym Mod1+9 workspace $w9; exec killall -USR1 i3status
+bindsym Mod1+0 workspace $w0; exec killall -USR1 i3status
 
 # move focused container to workspace
-bindsym Mod1+control+1 move container to workspace $w1
-bindsym Mod1+control+2 move container to workspace $w2
-bindsym Mod1+control+3 move container to workspace $w3
-bindsym Mod1+control+4 move container to workspace $w4
-bindsym Mod1+control+5 move container to workspace $w5
-bindsym Mod1+control+6 move container to workspace $w6
-bindsym Mod1+control+7 move container to workspace $w7
-bindsym Mod1+control+8 move container to workspace $w8
-bindsym Mod1+control+9 move container to workspace $w9
+bindsym Mod1+control+1 move container to workspace $w1; exec killall -USR1 i3status
+bindsym Mod1+control+2 move container to workspace $w2; exec killall -USR1 i3status
+bindsym Mod1+control+3 move container to workspace $w3; exec killall -USR1 i3status
+bindsym Mod1+control+4 move container to workspace $w4; exec killall -USR1 i3status
+bindsym Mod1+control+5 move container to workspace $w5; exec killall -USR1 i3status
+bindsym Mod1+control+6 move container to workspace $w6; exec killall -USR1 i3status
+bindsym Mod1+control+7 move container to workspace $w7; exec killall -USR1 i3status
+bindsym Mod1+control+8 move container to workspace $w8; exec killall -USR1 i3status
+bindsym Mod1+control+9 move container to workspace $w9; exec killall -USR1 i3status
 #bindsym Mod1+control+0 move container to workspace $w0
 
 # move focused container to workspace and follow
@@ -114,16 +114,16 @@ bindsym Mod1+Tab focus right
 bindsym Mod1+backslash focus left
 bindsym Mod1+q focus down
 
-bindsym Mod1+$left focus left
-bindsym Mod1+$down focus down
-bindsym Mod1+$up focus up
-bindsym Mod1+$right focus right
+bindsym Mod1+$left focus left; exec killall -USR1 i3status
+bindsym Mod1+$down focus down; exec killall -USR1 i3status
+bindsym Mod1+$up focus up; exec killall -USR1 i3status
+bindsym Mod1+$right focus right; exec killall -USR1 i3status
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+Left focus left
-bindsym Mod1+Down focus down
-bindsym Mod1+Up focus up
-bindsym Mod1+Right focus right
+bindsym Mod1+Left focus left; exec killall -USR1 i3status
+bindsym Mod1+Down focus down; exec killall -USR1 i3status
+bindsym Mod1+Up focus up; exec killall -USR1 i3status
+bindsym Mod1+Right focus right; exec killall -USR1 i3status
 
 # move focused window
 bindsym Mod1+Shift+$left move left
@@ -237,7 +237,7 @@ mode $lock {
 	#touchpad
 	bindsym XF86AudioMute exec --no-startup-id $touchpad_toggle
 	#panic
-	bindsym Mod1+F4 kill
+	bindsym Mod1+F4 kill; exec killall -USR1 i3status
 	bindsym XF86PowerOff mode $quit exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
