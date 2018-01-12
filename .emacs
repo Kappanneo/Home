@@ -44,6 +44,7 @@
 (global-set-key (kbd "C-f") 'find-file)
 (global-set-key (kbd "C-k") 'kill-buffer)
 (global-set-key (kbd "C-<") 'switch-to-prev-buffer)
+(global-set-key (kbd "C-a") 'keyboard-quit)
 
 ;; alternative arrows
 (global-set-key (kbd "M-i") 'previous-line)
