@@ -36,7 +36,7 @@ floating_modifier Mod1
 
 ############################### WORKSPACES #####################################
 
-#workspaces
+# workspaces
 set $w1 1nternet
 set $w2 2rectory
 set $w3 3code
@@ -92,19 +92,19 @@ bindsym Mod1+Return split v; exec i3-sensible-terminal
 # kill focused window
 bindsym Mod1+F4 kill
 
-#screenshot
+# screenshot
 bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
 bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
 
-#touchpad enable/disable
+# touchpad enable/disable
 set $touchpad_on xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 1
 set $touchpad_off xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 0
 set $touchpad_toggle /home/claudio/touchpad_toggle.sh
 
-#touchpad toggle
+# touchpad toggle
 bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
 
-#volume
+# volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
 bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
@@ -149,19 +149,20 @@ bindsym Mod1+a focus parent
 # focus the child container
 bindsym Mod1+z focus child
 
-#fullscreen
+# fullscreen
 bindsym Mod1+f fullscreen toggle
 
-#open emacs
+# open emacs
 bindsym Mod1+e exec --no-startup-id emacs
 
-#go to emacs
+# go to emacs
 bindsym Mod1+c [title="emacs"] focus
 
-#exile
-bindsym Mod1+x move container to workspace $w9
+# exile
+bindsym Mod1+x move container to workspace $w9; exec killall -USR1 i3status
+bindsym Mod1+Shift+x workspace $w9
 
-#save layout
+# save layout
 bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
 
 # resize window (you can also use the mouse for that)
@@ -170,7 +171,7 @@ bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
 bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
 bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
 
-#configs
+# configs
 bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
 bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
 bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
@@ -190,7 +191,7 @@ bindsym Mod1+Shift+r restart
 
 bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 
-############################### LAUNCERS #######################################
+############################### LAUNCHERS ######################################
 
 # start dmenu (a program launcher)
 bindsym Mod1+d exec dmenu_run; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
@@ -203,17 +204,17 @@ set $dmenu-desktop i3-dmenu-desktop  #/home/claudio/k5-dmenu-desktop
 
 bindsym Escape exec --no-startup-id $dmenu-desktop; exec --no-startup-id notify-send --expire-time=2000 --urgency=critical EXEC
 
-################################LAYOUTS#########################################
+############################### LAYOUTS ########################################
 
-#chromium bookmarks and apps
+# chromium bookmarks and apps
 #set $chr_com chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/
-set $chr_mail chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/
+set $chr_mail chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/
 #set $chr_gh chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo
 #set $chr_keep chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
-#custom layouts
+# custom layouts
 set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
-set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
+set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
 set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
 set $fill_2 exec --no-startup-id nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal
@@ -226,17 +227,17 @@ set $rdsh "RDSH: alt+r to resume  0-9 to shift"
 set $strt "STRT: alt+s to resume  1 2 layouts"
 
 mode $lock {
-     	#exit
+     	# exit
         bindsym Mod1+space mode "default" exec --no-startup-id $touchpad_on & notify-send --expire-time=500 --urgency=critical UNLOCK
-	#alert
+	# alert
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
-	#volume
+	# volume
 	bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
 	bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB-
 	bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
-	#touchpad
-	bindsym XF86AudioMute exec --no-startup-id $touchpad_toggle
-	#panic
+	# touchpad
+	bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
+	# panic
 	bindsym Mod1+F4 kill; exec killall -USR1 i3status
 	bindsym XF86PowerOff mode $quit exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
@@ -244,14 +245,14 @@ mode $lock {
 bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mousemove 750 3000 & notify-send --expire-time=2000 --urgency=critical $lock
 
 mode $quit {
-        #exit
+        # exit
      	bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
-	#options
+	# options
 	bindsym q exec --no-startup-id shutdown -h now 
 	bindsym r exec --no-startup-id reboot
 	bindsym s mode "default" exec --no-startup-id systemctl suspend
 	bindsym e exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"; exec --no-startup-id "i3-msg exit"
-	#alert
+	# alert
 	bindsym XF86PowerOff exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
@@ -259,10 +260,10 @@ bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=
 # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
 
 mode $rdsh {
-        #exit
+        # exit
      	bindsym Mod1+r mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
-	#options
+	# options
 	bindsym 1 exec --no-startup-id redshift -O 2300K
 	bindsym 2 exec --no-startup-id redshift -O 2400K
 	bindsym 3 exec --no-startup-id redshift -O 2500K
@@ -273,20 +274,20 @@ mode $rdsh {
 	bindsym 8 exec --no-startup-id redshift -O 4500K
 	bindsym 9 exec --no-startup-id redshift -O 5000K
 	bindsym 0 exec --no-startup-id redshift -O 6500K
-	#panic
+	# panic
 	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
 bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh
 
 mode $strt {
-        #exit
+        # exit
      	bindsym Mod1+s mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
-	#options
+	# options
 	bindsym 1 mode "default" $layout_1; $fill_1; exec --no-startup-id $chr_mail
 	bindsym 2 mode "default" $layout_2; $fill_2
-	#panic
+	# panic
 	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit	
 }
 
@@ -312,31 +313,35 @@ bar {
     	       }
     }
 
-############################### ASSIGNS ########################################
+############################### SETTINGS #######################################
 
-#steam
+# steam
 assign [class="Steam"] $w5
 for_window [title="Steam - News"] kill
 for_window [title="Friends"] resize shrink width 34 px or 34 ppt
 for_window [title="Steam"] resize grow width 34 px or 34 ppt
 
-#code
+# code
 assign [title="Visual Studio Code"] $w3
 
-#nautilus confining
+# nautilus confining
 assign [title="Desktop"] $w0
 
-#chromium profile error kill
+# chromium profile error kill
 for_window [title="Profile error occurred"] kill
 
-#no title-bars
+# no title-bars
 new_window none
 new_float normal
 
+# go back to previous workspace if you try to go to the current one (so good)
+workspace_auto_back_and_forth no
+
 ############################### STARTUP ########################################
 
-exec --no-startup-id nm-applet #Network Manager
-exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" #For status bar toggle
+exec --no-startup-id classicmenu-indicator
+exec --no-startup-id nm-applet # network manager
+exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" # status bar toggle
 exec --no-startup-id redshift -O 4500K
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
 $layout_2
