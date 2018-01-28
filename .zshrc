@@ -91,3 +91,6 @@ source $ZSH/oh-my-zsh.sh
 
 alias grappolo="nodejs Desktop/Git/Algo-rhythmic/uva/server.js"
 alias ciao="echo ciao"
+
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go

@@ -70,7 +70,7 @@ bindsym Mod1+control+6 move container to workspace $w6; exec killall -USR1 i3sta
 bindsym Mod1+control+7 move container to workspace $w7; exec killall -USR1 i3status
 bindsym Mod1+control+8 move container to workspace $w8; exec killall -USR1 i3status
 bindsym Mod1+control+9 move container to workspace $w9; exec killall -USR1 i3status
-#bindsym Mod1+control+0 move container to workspace $w0
+bindsym Mod1+control+0 move container to workspace $w0; exec killall -USR1 i3status
 
 # move focused container to workspace and follow
 bindsym Mod1+Shift+1 move container to workspace $w1; workspace $w1
@@ -82,7 +82,11 @@ bindsym Mod1+Shift+6 move container to workspace $w6; workspace $w6
 bindsym Mod1+Shift+7 move container to workspace $w7; workspace $w7
 bindsym Mod1+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod1+Shift+9 move container to workspace $w9; workspace $w9
-#bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
+bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
+
+# exile
+bindsym Mod1+x move container to workspace $w9; exec killall -USR1 i3status
+bindsym Mod1+Shift+x workspace $w9; exec killall -USR1 i3status
 
 ############################### COMMANDS #######################################
 
@@ -158,10 +162,6 @@ bindsym Mod1+e exec --no-startup-id emacs
 # go to emacs
 bindsym Mod1+c [title="emacs"] focus
 
-# exile
-bindsym Mod1+x move container to workspace $w9; exec killall -USR1 i3status
-bindsym Mod1+Shift+x workspace $w9
-
 # save layout
 bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
 
@@ -217,7 +217,7 @@ set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /h
 set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
 set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
-set $fill_2 exec --no-startup-id nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal
+set $fill_2 exec --no-startup-id emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal
 
 ############################### MODES ##########################################
 
@@ -330,17 +330,21 @@ assign [title="Desktop"] $w0
 # chromium profile error kill
 for_window [title="Profile error occurred"] kill
 
+# skype
+assign [class="Skype"] $w6
+
 # no title-bars
 new_window none
 new_float normal
 
-# go back to previous workspace if you try to go to the current one (so good)
+# go back to previous workspace if you try to go to the current one (not so good)
 workspace_auto_back_and_forth no
+
+focus_follows_mouse yes
 
 ############################### STARTUP ########################################
 
-exec --no-startup-id classicmenu-indicator
-exec --no-startup-id nm-applet # network manager
+exec --no-startup-id classicmenu-indicator & nm-applet # network manager and menu
 exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" # status bar toggle
 exec --no-startup-id redshift -O 4500K
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
