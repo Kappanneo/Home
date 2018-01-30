@@ -94,3 +94,7 @@ alias ciao="echo ciao"
 
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
+
+export PATH=/home/claudio/Desktop/Git/iroha/build/bin:$PATH
+
+export PATH=/home/claudio/bin:$PATH

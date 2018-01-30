@@ -1,13 +1,15 @@
 /*
 
+!.gitignore
+!.zshrc
 !.emacs
+
 !.emacs.d/
 .emacs.d/*
 !.emacs.d/lisp/
 
 !.config/
 .config/*
-
 !.config/i3/
 .config/i3/*
 !.config/i3/config
@@ -16,8 +18,12 @@
 .config/i3status/*
 !.config/i3status/config
 
-!1nternet.json
-!2rectory.json
-!*.sh
-!.zshrc
-!.gitignore
+!bin/
+bin/*
+!bin/my_status.sh
+!bin/touchpad_toggle.sh
+
+!workspaces/
+workspaces/*
+!workspaces/1nternet.json
+!workspaces/2rectory.json

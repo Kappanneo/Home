@@ -92,6 +92,7 @@ bindsym Mod1+Shift+x workspace $w9; exec killall -USR1 i3status
 
 # start a terminal
 bindsym Mod1+Return split v; exec i3-sensible-terminal
+bindsym Mod1+Shift+Return split h; exec i3-sensible-terminal
 
 # kill focused window
 bindsym Mod1+F4 kill
@@ -103,7 +104,7 @@ bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
 # touchpad enable/disable
 set $touchpad_on xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 1
 set $touchpad_off xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 0
-set $touchpad_toggle /home/claudio/touchpad_toggle.sh
+set $touchpad_toggle /home/claudio/bin/touchpad_toggle.sh
 
 # touchpad toggle
 bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
@@ -114,9 +115,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB
 bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
 
 # change focus
-bindsym Mod1+Tab focus right
-bindsym Mod1+backslash focus left
-bindsym Mod1+q focus down
+bindsym Mod1+Tab focus right; exec killall -USR1 i3status
+bindsym Mod1+backslash focus left; exec killall -USR1 i3status
+bindsym Mod1+q focus down; exec killall -USR1 i3status
 
 bindsym Mod1+$left focus left; exec killall -USR1 i3status
 bindsym Mod1+$down focus down; exec killall -USR1 i3status
@@ -157,13 +158,14 @@ bindsym Mod1+z focus child
 bindsym Mod1+f fullscreen toggle
 
 # open emacs
-bindsym Mod1+e exec --no-startup-id emacs
+bindsym Mod1+e split h; exec --no-startup-id emacs
+bindsym Mod1+Shift+e split v; exec --no-startup-id emacs
 
 # go to emacs
 bindsym Mod1+c [title="emacs"] focus
 
 # save layout
-bindsym Mod1+y exec i3-save-tree > ~/workspace.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
+bindsym Mod1+y exec i3-save-tree > ~/workspaces/stamp.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
 
 # resize window (you can also use the mouse for that)
 bindsym Mod1+minus         resize shrink width  1 px or 1 ppt
@@ -177,7 +179,7 @@ bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
 bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
 bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
 bindsym Mod1+control+z exec --no-startup-id emacs /home/claudio/.zshrc
-bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspace.json
+bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspaces/stamp.json
 bindsym Mod1+control+g exec --no-startup-id chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html
 
 # reload the configuration file
@@ -213,10 +215,10 @@ set $chr_mail chromium-browser --new-window --profile-directory=Default https://
 #set $chr_keep chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
 # custom layouts
-set $layout_1 exec --no-startup-id "i3-msg 'workspace 1nternet; append_layout /home/claudio/1nternet.json'"
+set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; append_layout /home/claudio/workspaces/1nternet.json'"
 set $fill_1 exec --no-startup-id chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
 
-set $layout_2 exec --no-startup-id "i3-msg 'workspace 2rectory; append_layout /home/claudio/2rectory.json'"
+set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; append_layout /home/claudio/workspaces/2rectory.json'"
 set $fill_2 exec --no-startup-id emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal
 
 ############################### MODES ##########################################
@@ -298,7 +300,7 @@ bindsym Mod1+s mode $strt; exec --no-startup-id notify-send --expire-time=5000 -
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command    ./my_status.sh
+        status_command    ./bin/my_status.sh
     	position          bottom
     	mode              dock
     	workspace_buttons yes
@@ -324,7 +326,7 @@ for_window [title="Steam"] resize grow width 34 px or 34 ppt
 # code
 assign [title="Visual Studio Code"] $w3
 
-# nautilus confining
+# nautilus desktop confining
 assign [title="Desktop"] $w0
 
 # chromium profile error kill
@@ -337,8 +339,8 @@ assign [class="Skype"] $w6
 new_window none
 new_float normal
 
-# go back to previous workspace if you try to go to the current one (not so good)
-workspace_auto_back_and_forth no
+# go back to previous workspace if you try to go to the current one (maybe is good)
+workspace_auto_back_and_forth yes
 
 focus_follows_mouse yes
 

@@ -23,6 +23,7 @@
         },
         {
             "floating": "auto_off",
+	    "layout": "splith",
             "geometry": {
                "height": 431,
                "width": 732,
