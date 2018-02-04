@@ -257,7 +257,6 @@ mode $lock {
 
 bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & notify-send --expire-time=2000 --urgency=critical $lock; [tiling] border none
 
-
 mode $quit {
         # exit
         bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
@@ -265,7 +264,7 @@ mode $quit {
 	bindsym q exec --no-startup-id shutdown -h now
 	bindsym r exec --no-startup-id reboot
 	bindsym s mode "default" exec --no-startup-id systemctl suspend
-	bindsym e exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"; exec --no-startup-id "i3-msg exit"
+	bindsym e exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L" & setxkbmap -option; exec --no-startup-id "i3-msg exit"
 	# alert
 	bindsym XF86PowerOff exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
@@ -364,13 +363,15 @@ focus_follows_mouse yes
 
 ############################### STARTUP ########################################
 
+# settings
 exec --no-startup-id $touchpad_off
-exec --no-startup-id classicmenu-indicator & nm-applet # network manager and menu
-exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" # status bar toggle
-exec --no-startup-id redshift -O 4500K
+exec --no-startup-id setxkbmap -option ctrl:nocaps
+exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
+
+# applications
+exec --no-startup-id classicmenu-indicator & nm-applet # network manager and menu
+exec --no-startup-id redshift -O 4500K
 $layout_2
 $fill_2
 
-#TODO
-#CAPS as Ctrl
