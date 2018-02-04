@@ -34,6 +34,16 @@ set $right l
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 
+################################  COLORS  ######################################
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #4CC97E #4CC97E #ffffff #4CC97E   #4CC97E
+client.focused_inactive #222222 #222222 #ffffff #222222   #222222
+client.unfocused        #222222 #222222 #888888 #222222   #222222
+client.urgent           #222222 #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #222222 #ffffff #000000   #222222
+
+client.background       #222222
 ############################### WORKSPACES #####################################
 
 # workspaces
@@ -108,6 +118,7 @@ set $touchpad_toggle /home/claudio/bin/touchpad_toggle.sh
 
 # touchpad toggle
 bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
+bindsym Mod1+t exec --no-startup-id $touchpad_toggle
 
 # volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB+
@@ -230,7 +241,7 @@ set $strt "STRT: alt+s to resume  1 2 layouts"
 
 mode $lock {
      	# exit
-        bindsym Mod1+space mode "default" exec --no-startup-id $touchpad_on & notify-send --expire-time=500 --urgency=critical UNLOCK; [tiling] border pixel 4
+        bindsym Mod1+space mode "default" exec --no-startup-id & notify-send --expire-time=500 --urgency=critical UNLOCK; [tiling] border pixel 3
 	# alert
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 	# volume
@@ -244,11 +255,12 @@ mode $lock {
 	bindsym XF86PowerOff mode $quit exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mousemove 750 3000 & notify-send --expire-time=2000 --urgency=critical $lock; [tiling] border none
+bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & notify-send --expire-time=2000 --urgency=critical $lock; [tiling] border none
+
 
 mode $quit {
         # exit
-     	bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+        bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
 	# options
 	bindsym q exec --no-startup-id shutdown -h now
 	bindsym r exec --no-startup-id reboot
@@ -258,13 +270,14 @@ mode $quit {
 	bindsym XF86PowerOff exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
+bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit; [tiling] border none
 # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
 
 mode $rdsh {
         # exit
-     	bindsym Mod1+r mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
-	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	set $resume exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
+        bindsym Mod1+r mode "default"; $resume
+	bindsym Escape mode "default"; $resume
 	# options
 	bindsym 1 exec --no-startup-id redshift -O 2300K
 	bindsym 2 exec --no-startup-id redshift -O 2400K
@@ -280,12 +293,13 @@ mode $rdsh {
 	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh
+bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh; [tiling] border none
 
 mode $strt {
         # exit
-     	bindsym Mod1+s mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
-	bindsym Escape mode "default"; exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
+	set $resume exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
+        bindsym Mod1+s mode "default"; $resume
+	bindsym Escape mode "default"; $resume
 	# options
 	bindsym 1 mode "default" $layout_1; $fill_1; exec --no-startup-id $chr_mail
 	bindsym 2 mode "default" $layout_2; $fill_2
@@ -293,7 +307,7 @@ mode $strt {
 	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit	
 }
 
-bindsym Mod1+s mode $strt; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $strt
+bindsym Mod1+s mode $strt; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $strt; [tiling] border none
 
 ############################### BAR ############################################
 
@@ -339,16 +353,18 @@ assign [class="Skype"] $w6
 assign [title="Texmaker"] $w7
 
 # no title-bars
-new_window none
+new_window pixel 3
 new_float normal
 
 # go back to previous workspace if you try to go to the current one (maybe is good)
 workspace_auto_back_and_forth yes
 
+# focus on mouse
 focus_follows_mouse yes
 
 ############################### STARTUP ########################################
 
+exec --no-startup-id $touchpad_off
 exec --no-startup-id classicmenu-indicator & nm-applet # network manager and menu
 exec --no-startup-id xmodmap -e "keycode 0x85 = Escape" # status bar toggle
 exec --no-startup-id redshift -O 4500K

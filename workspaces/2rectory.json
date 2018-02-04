@@ -1,10 +1,12 @@
 {
     "floating": "auto_off",
     "layout": "splitv",
-    "percent": 0.76,
+    "percent": 0.75,
     "type": "con",
     "nodes": [
         {
+	    "border": "pixel",
+            "current_border_width": 3,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
@@ -22,6 +24,8 @@
             "type": "con"
         },
         {
+	    "border": "pixel",
+            "current_border_width": 3,
             "floating": "auto_off",
 	    "layout": "splith",
             "geometry": {
@@ -45,12 +49,12 @@
 {
     "floating": "auto_off",
     "layout": "splitv",
-    "percent": 0.24,
+    "percent": 0.25,
     "type": "con",
     "nodes": [
         {
-            "border": "none",
-            "current_border_width": 0,
+            "border": "pixel",
+            "current_border_width": 3,
             "floating": "auto_off",
             "geometry": {
                "height": 651,
@@ -68,6 +72,8 @@
             "type": "con"
         },
         {
+	    "border": "pixel",
+            "current_border_width": 3,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
@@ -85,6 +91,8 @@
             "type": "con"
         },
         {
+	    "border": "pixel",
+            "current_border_width": 3,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
