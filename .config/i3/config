@@ -42,7 +42,7 @@ set $w2 2rectory
 set $w3 3code
 set $w4 4terminl
 set $w5 5team
-set $w6 6pack
+set $w6 6kype
 set $w7 7nani
 set $w8 8volante
 set $w9 9a
@@ -180,7 +180,7 @@ bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status
 bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
 bindsym Mod1+control+z exec --no-startup-id emacs /home/claudio/.zshrc
 bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspaces/stamp.json
-bindsym Mod1+control+g exec --no-startup-id chromium-browser --new-window file:///home/claudio/i3%20User%E2%80%99s%20Guide.html
+bindsym Mod1+control+g exec --no-startup-id chromium-browser --new-window file:///home/claudio/i3_User_Guide.html # from https://i3wm.org/docs/userguide.html
 
 # reload the configuration file
 bindsym Mod1+Shift+c reload
@@ -230,7 +230,7 @@ set $strt "STRT: alt+s to resume  1 2 layouts"
 
 mode $lock {
      	# exit
-        bindsym Mod1+space mode "default" exec --no-startup-id $touchpad_on & notify-send --expire-time=500 --urgency=critical UNLOCK
+        bindsym Mod1+space mode "default" exec --no-startup-id $touchpad_on & notify-send --expire-time=500 --urgency=critical UNLOCK; [tiling] border pixel 4
 	# alert
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 	# volume
@@ -244,13 +244,13 @@ mode $lock {
 	bindsym XF86PowerOff mode $quit exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mousemove 750 3000 & notify-send --expire-time=2000 --urgency=critical $lock
+bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mousemove 750 3000 & notify-send --expire-time=2000 --urgency=critical $lock; [tiling] border none
 
 mode $quit {
         # exit
      	bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME
 	# options
-	bindsym q exec --no-startup-id shutdown -h now 
+	bindsym q exec --no-startup-id shutdown -h now
 	bindsym r exec --no-startup-id reboot
 	bindsym s mode "default" exec --no-startup-id systemctl suspend
 	bindsym e exec --no-startup-id xmodmap -e "keycode 0x85 = Super_L"; exec --no-startup-id "i3-msg exit"
@@ -335,6 +335,9 @@ for_window [title="Profile error occurred"] kill
 # skype
 assign [class="Skype"] $w6
 
+# texmaker
+assign [title="Texmaker"] $w7
+
 # no title-bars
 new_window none
 new_float normal
@@ -352,3 +355,6 @@ exec --no-startup-id redshift -O 4500K
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
 $layout_2
 $fill_2
+
+#TODO
+#CAPS as Ctrl
