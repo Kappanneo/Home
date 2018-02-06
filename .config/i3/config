@@ -44,6 +44,7 @@ client.urgent           #222222 #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #222222 #ffffff #000000   #222222
 
 client.background       #222222
+
 ############################### WORKSPACES #####################################
 
 # workspaces
@@ -70,53 +71,40 @@ bindsym Mod1+8 workspace $w8; exec killall -USR1 i3status
 bindsym Mod1+9 workspace $w9; exec killall -USR1 i3status
 bindsym Mod1+0 workspace $w0; exec killall -USR1 i3status
 
-# move focused container to workspace
-bindsym Mod1+control+1 move container to workspace $w1; exec killall -USR1 i3status
-bindsym Mod1+control+2 move container to workspace $w2; exec killall -USR1 i3status
-bindsym Mod1+control+3 move container to workspace $w3; exec killall -USR1 i3status
-bindsym Mod1+control+4 move container to workspace $w4; exec killall -USR1 i3status
-bindsym Mod1+control+5 move container to workspace $w5; exec killall -USR1 i3status
-bindsym Mod1+control+6 move container to workspace $w6; exec killall -USR1 i3status
-bindsym Mod1+control+7 move container to workspace $w7; exec killall -USR1 i3status
-bindsym Mod1+control+8 move container to workspace $w8; exec killall -USR1 i3status
-bindsym Mod1+control+9 move container to workspace $w9; exec killall -USR1 i3status
-bindsym Mod1+control+0 move container to workspace $w0; exec killall -USR1 i3status
-
 # move focused container to workspace and follow
-bindsym Mod1+Shift+1 move container to workspace $w1; workspace $w1
-bindsym Mod1+Shift+2 move container to workspace $w2; workspace $w2
-bindsym Mod1+Shift+3 move container to workspace $w3; workspace $w3
-bindsym Mod1+Shift+4 move container to workspace $w4; workspace $w4
-bindsym Mod1+Shift+5 move container to workspace $w5; workspace $w5
-bindsym Mod1+Shift+6 move container to workspace $w6; workspace $w6
-bindsym Mod1+Shift+7 move container to workspace $w7; workspace $w7
-bindsym Mod1+Shift+8 move container to workspace $w8; workspace $w8
-bindsym Mod1+Shift+9 move container to workspace $w9; workspace $w9
-bindsym Mod1+Shift+0 move container to workspace $w0; workspace $w0
+bindsym Mod1+control+1 move container to workspace $w1; workspace $w1
+bindsym Mod1+control+2 move container to workspace $w2; workspace $w2
+bindsym Mod1+control+3 move container to workspace $w3; workspace $w3
+bindsym Mod1+control+4 move container to workspace $w4; workspace $w4
+bindsym Mod1+control+5 move container to workspace $w5; workspace $w5
+bindsym Mod1+control+6 move container to workspace $w6; workspace $w6
+bindsym Mod1+control+7 move container to workspace $w7; workspace $w7
+bindsym Mod1+control+8 move container to workspace $w8; workspace $w8
+bindsym Mod1+control+9 move container to workspace $w9; workspace $w9
+bindsym Mod1+control+0 move container to workspace $w0; workspace $w0
 
 # exile
 bindsym Mod1+x move container to workspace $w9; exec killall -USR1 i3status
-bindsym Mod1+Shift+x workspace $w9; exec killall -USR1 i3status
+bindsym Mod1+control+x workspace $w9; exec killall -USR1 i3status
 
 ############################### COMMANDS #######################################
 
-# start a terminal
-bindsym Mod1+Return split v; exec i3-sensible-terminal
-bindsym Mod1+Shift+Return split h; exec i3-sensible-terminal
-
 # kill focused window
 bindsym Mod1+F4 kill
+bindsym Mod1+w kill
 
-# screenshot
-bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
-bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
+# start a terminal
+bindsym Mod1+Return split v; exec i3-sensible-terminal
+bindsym Mod1+control+Return split h; exec i3-sensible-terminal
 
-# touchpad enable/disable
+# open emacs
+bindsym Mod1+e split h; exec --no-startup-id emacs
+bindsym Mod1+control+e split v; exec --no-startup-id emacs
+
+# touchpad toggle
 set $touchpad_on xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 1
 set $touchpad_off xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 0
 set $touchpad_toggle /home/claudio/bin/touchpad_toggle.sh
-
-# touchpad toggle
 bindsym XF86TouchpadToggle exec --no-startup-id $touchpad_toggle
 bindsym Mod1+t exec --no-startup-id $touchpad_toggle
 
@@ -126,10 +114,6 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 1 -q sset Master 1dB
 bindsym XF86AudioMute exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ toggle
 
 # change focus
-bindsym Mod1+Tab focus right; exec killall -USR1 i3status
-bindsym Mod1+backslash focus left; exec killall -USR1 i3status
-bindsym Mod1+q focus down; exec killall -USR1 i3status
-
 bindsym Mod1+$left focus left; exec killall -USR1 i3status
 bindsym Mod1+$down focus down; exec killall -USR1 i3status
 bindsym Mod1+$up focus up; exec killall -USR1 i3status
@@ -142,41 +126,35 @@ bindsym Mod1+Up focus up; exec killall -USR1 i3status
 bindsym Mod1+Right focus right; exec killall -USR1 i3status
 
 # move focused window
-bindsym Mod1+Shift+$left move left
-bindsym Mod1+Shift+$down move down
-bindsym Mod1+Shift+$up move up
-bindsym Mod1+Shift+$right move right
+bindsym Mod1+control+$left move left
+bindsym Mod1+control+$down move down
+bindsym Mod1+control+$up move up
+bindsym Mod1+control+$right move right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+Shift+Left move left
-bindsym Mod1+Shift+Down move down
-bindsym Mod1+Shift+Up move up
-bindsym Mod1+Shift+Right move right
+bindsym Mod1+control+Left move left
+bindsym Mod1+control+Down move down
+bindsym Mod1+control+Up move up
+bindsym Mod1+control+Right move right
 
-# Split in horizontal orientation.
+# split orientatio
 bindsym Mod1+h split h
-
-# Split in vertical orientation.
 bindsym Mod1+v split v
 
-# focus the parent container
-bindsym Mod1+a focus parent
-
-# focus the child container
-bindsym Mod1+z focus child
-
-# fullscreen
+# fulscreen
 bindsym Mod1+f fullscreen toggle
 
-# open emacs
-bindsym Mod1+e split h; exec --no-startup-id emacs
-bindsym Mod1+Shift+e split v; exec --no-startup-id emacs
+# focus tree
+bindsym Mod1+a focus parent
+bindsym Mod1+z focus child
 
-# go to emacs
-bindsym Mod1+c [title="emacs"] focus
+# screenshot
+bindsym --release Print exec --no-startup-id import /tmp/latest-screenshot.png
+bindsym Mod1+p exec --no-startup-id emacs /tmp/latest-screenshot.png
 
 # save layout
 bindsym Mod1+y exec i3-save-tree > ~/workspaces/stamp.json; exec --no-startup-id notify-send --expire-time=2000 "Layout saved"
+bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspaces/stamp.json
 
 # resize window (you can also use the mouse for that)
 bindsym Mod1+minus         resize shrink width  1 px or 1 ppt
@@ -184,21 +162,12 @@ bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
 bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
 bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
 
-# configs
-bindsym Mod1+control+c exec --no-startup-id emacs /home/claudio/.config/i3/config
-bindsym Mod1+control+e exec --no-startup-id emacs /home/claudio/.emacs
-bindsym Mod1+control+s exec --no-startup-id emacs /home/claudio/.config/i3status/config
-bindsym Mod1+control+b exec --no-startup-id emacs /home/claudio/.bashrc
-bindsym Mod1+control+z exec --no-startup-id emacs /home/claudio/.zshrc
-bindsym Mod1+control+y exec --no-startup-id emacs /home/claudio/workspaces/stamp.json
-bindsym Mod1+control+g exec --no-startup-id chromium-browser --new-window file:///home/claudio/i3_User_Guide.html # from https://i3wm.org/docs/userguide.html
-
 # reload the configuration file
-bindsym Mod1+Shift+c reload
+bindsym Mod1+control+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym Mod1+Shift+r restart
+bindsym Mod1+control+r restart
 # exit i3 (logs you out of your X session)
-#bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym Mod1+control+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
 
 ############################### ALERTS #########################################
 
@@ -236,12 +205,14 @@ set $fill_2 exec --no-startup-id emacs & nautilus & nautilus Downloads & chromiu
 
 set $lock "LOCK: alt+space to unlock"
 set $quit "QUIT: esc to resume  q to quit  r to restart  s to suspend  e to exit i3"
-set $rdsh "RDSH: alt+r to resume  0-9 to shift"
-set $strt "STRT: alt+s to resume  1 2 layouts"
+set $rdsh "RDSH: alt+r to resume  0-9 to adjust"
+Set $strt "STRT: alt+s to resume  1-2 layouts"
+set $cnfg "CNFG: alt+c to resume  c to i3config  e to emacs  s to statusbar  z to zsh  g to guide  1-2 layouts"
+set $full "FULL: alt+f to exit"
 
 mode $lock {
-     	# exit
-        bindsym Mod1+space mode "default" exec --no-startup-id & notify-send --expire-time=500 --urgency=critical UNLOCK; [tiling] border pixel 3
+	# exit
+	bindsym Mod1+space mode "default" exec --no-startup-id & notify-send --expire-time=500 --urgency=critical UNLOCK; [tiling] border pixel 3
 	# alert
 	bindsym Caps_Lock exec --no-startup-id notify-send --expire-time=20000 --urgency=critical CAPS
 	# volume
@@ -255,11 +226,14 @@ mode $lock {
 	bindsym XF86PowerOff mode $quit exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
-bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & notify-send --expire-time=2000 --urgency=critical $lock; [tiling] border none
+bindsym Mod1+space mode $lock exec --no-startup-id $touchpad_off & xdotool mousemove 750 3000 & notify-send --expire-time=2000 --urgency=critical $lock; [tiling] border none
+bindsym --border --whole-window $mod+button1 mode $lock exec --no-startup-id $touchpad_off & notify-send --expire-time=2000 --urgency=critical $lock; exec killall -USR1 i3status; [tiling] border none
+
+set $resume mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
 
 mode $quit {
-        # exit
-        bindsym Escape mode "default" exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
+	# exit
+	bindsym Escape $resume
 	# options
 	bindsym q exec --no-startup-id shutdown -h now
 	bindsym r exec --no-startup-id reboot
@@ -273,10 +247,9 @@ bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=
 # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
 
 mode $rdsh {
-        # exit
-	set $resume exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
-        bindsym Mod1+r mode "default"; $resume
-	bindsym Escape mode "default"; $resume
+	# exit
+	bindsym Mod1+r $resume
+	bindsym Escape $resume
 	# options
 	bindsym 1 exec --no-startup-id redshift -O 2300K
 	bindsym 2 exec --no-startup-id redshift -O 2400K
@@ -295,18 +268,35 @@ mode $rdsh {
 bindsym Mod1+r mode $rdsh; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $rdsh; [tiling] border none
 
 mode $strt {
-        # exit
-	set $resume exec --no-startup-id notify-send --expire-time=500 --urgency=critical RESUME; [tiling] border pixel 3
-        bindsym Mod1+s mode "default"; $resume
-	bindsym Escape mode "default"; $resume
+	# exit
+	bindsym Mod1+s $resume
+	bindsym Escape $resume
 	# options
 	bindsym 1 mode "default" $layout_1; $fill_1; exec --no-startup-id $chr_mail
 	bindsym 2 mode "default" $layout_2; $fill_2
 	# panic
-	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit	
+	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
 }
 
 bindsym Mod1+s mode $strt; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $strt; [tiling] border none
+
+mode $cnfg {
+	# exit
+	bindsym Mod1+c $resume
+	bindsym Escape $resume
+	# options
+	bindsym c mode "default" exec --no-startup-id emacs /home/claudio/.config/i3/config
+	bindsym e mode "default" exec --no-startup-id emacs /home/claudio/.emacs
+	bindsym s mode "default" exec --no-startup-id emacs /home/claudio/.config/i3status/config
+	bindsym z mode "default" exec --no-startup-id emacs /home/claudio/.zshrc
+	bindsym g mode "default" exec --no-startup-id chromium-browser --new-window file:///home/claudio/i3_User_Guide.html # from https://i3wm.org/docs/userguide.html
+	bindsym 1 mode "default" exec --no-startup-id emacs /home/claudio/workspaces/1nternet.json
+	bindsym 2 mode "default" exec --no-startup-id emacs /home/claudio/workspaces/2rectory.json
+	# panic
+	bindsym XF86PowerOff mode $quit; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $quit
+}
+
+bindsym Mod1+c mode $cnfg; exec --no-startup-id notify-send --expire-time=5000 --urgency=critical $cnfg; [tiling] border none
 
 ############################### BAR ############################################
 
@@ -365,8 +355,7 @@ focus_follows_mouse yes
 
 # settings
 exec --no-startup-id $touchpad_off
-exec --no-startup-id setxkbmap -option ctrl:nocaps
-exec --no-startup-id xmodmap -e "keycode 0x85 = Escape"
+exec --no-startup-id setxkbmap -option ctrl:nocaps; xmodmap -e "keycode 0x85 = Escape"
 exec --no-startup-id amixer -c 1 -q -D pulse set Master 1+ mute
 
 # applications
@@ -374,4 +363,3 @@ exec --no-startup-id classicmenu-indicator & nm-applet # network manager and men
 exec --no-startup-id redshift -O 4500K
 $layout_2
 $fill_2
-

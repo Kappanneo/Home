@@ -20,8 +20,7 @@
 
 !bin/
 bin/*
-!bin/my_status.sh
-!bin/touchpad_toggle.sh
+!*.sh
 
 !workspaces/
 workspaces/*
