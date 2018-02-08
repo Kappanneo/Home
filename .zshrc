@@ -89,7 +89,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias grappolo="nodejs Desktop/Git/Algo-rhythmic/uva/server.js &"
+alias grappolo="nodejs Desktop/Git/Algo-rhythmic/uva/server.js"
 alias ciao="echo ciao"
 
 export PATH=$PATH:/usr/local/go/bin
