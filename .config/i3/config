@@ -269,6 +269,7 @@ mode $rdsh {
 	bindsym Escape $resume
 	bindsym Mod1+space $resume
 	# options
+	bindsym backslash $exec redshift -O 2200K
 	bindsym 1 $exec redshift -O 2300K
 	bindsym 2 $exec redshift -O 2400K
 	bindsym 3 $exec redshift -O 2500K
