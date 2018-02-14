@@ -116,6 +116,10 @@ bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
 bindsym XF86AudioLowerVolume $exec amixer -c 1 -q sset Master 1dB-
 bindsym XF86AudioMute $exec amixer -c 1 -q -D pulse set Master 1+ toggle
 
+# screenshot
+bindsym --release Print $exec "import /tmp/latest-screenshot.png; emacs /tmp/latest-screenshot.png"
+bindsym Mod1+p $exec emacs /tmp/latest-screenshot.png
+
 # change focus
 bindsym Mod1+$left focus left; exec killall -USR1 i3status #status-bar reset
 bindsym Mod1+$down focus down; exec killall -USR1 i3status
@@ -129,16 +133,16 @@ bindsym Mod1+Up focus up; exec killall -USR1 i3status
 bindsym Mod1+Right focus right; exec killall -USR1 i3status
 
 # move focused window
-bindsym Mod1+control+$left move left
-bindsym Mod1+control+$down move down
-bindsym Mod1+control+$up move up
-bindsym Mod1+control+$right move right
+bindsym Mod1+Shift+$left move left
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up
+bindsym Mod1+Shift+$right move right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+control+Left move left
-bindsym Mod1+control+Down move down
-bindsym Mod1+control+Up move up
-bindsym Mod1+control+Right move right
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
 
 # split orientation
 bindsym Mod1+h split h
@@ -150,10 +154,6 @@ bindsym Mod1+f fullscreen toggle
 # focus tree
 bindsym Mod1+a focus parent
 bindsym Mod1+z focus child
-
-# screenshot
-bindsym --release Print $exec import /tmp/latest-screenshot.png
-bindsym Mod1+p $exec emacs /tmp/latest-screenshot.png
 
 # save layout
 bindsym Mod1+y exec i3-save-tree > ~/workspaces/stamp.json; $exec notify-send --expire-time=2000 "Layout saved"
@@ -233,6 +233,8 @@ mode $lock {
 	bindsym XF86AudioMute $exec amixer -c 1 -q -D pulse set Master 1+ toggle
 	# touchpad
 	bindsym XF86TouchpadToggle $exec $touchpad_toggle
+	#stamp
+	bindsym --release Print $exec "import /tmp/latest-screenshot.png; emacs /tmp/latest-screenshot.png"
 	# panic
 	bindsym Mod1+F4 kill; exec killall -USR1 i3status
 	bindsym XF86PowerOff mode $quit $exec notify-send --expire-time=5000 --urgency=critical $quit
@@ -351,6 +353,10 @@ bar {
     	       	   inactive_workspace #888888 #000000
     	       	   urgent_workspace   #ffffff #000000
     	       }
+
+        # disable scrolling on status bar
+        bindsym button4 nop # scroll wheel up
+        bindsym button5 nop # scroll wheel down
     }
 
 ############################### SETTINGS #######################################
@@ -384,14 +390,14 @@ new_float normal
 workspace_auto_back_and_forth yes
 
 # focus on mouse
-focus_follows_mouse yes
+focus_follows_mouse no
 
 ############################### STARTUP ########################################
 
 # settings
 $exec $touchpad_off
 $exec setxkbmap -option ctrl:nocaps; xmodmap -e "keycode 0x85 = Escape"
-$exec amixer -c 1 -q -D pulse set Master 1+ mute
+$exec amixer set -c 1 Speaker set mute
 
 # applications
 $exec classicmenu-indicator & nm-applet
