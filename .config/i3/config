@@ -118,7 +118,6 @@ bindsym XF86AudioMute $exec amixer -c 1 -q -D pulse set Master 1+ toggle
 
 # screenshot
 bindsym --release Print $exec "import /tmp/latest-screenshot.png; emacs /tmp/latest-screenshot.png"
-bindsym Mod1+p $exec emacs /tmp/latest-screenshot.png
 
 # change focus
 bindsym Mod1+$left focus left; exec killall -USR1 i3status #status-bar reset
@@ -133,16 +132,16 @@ bindsym Mod1+Up focus up; exec killall -USR1 i3status
 bindsym Mod1+Right focus right; exec killall -USR1 i3status
 
 # move focused window
-bindsym Mod1+Shift+$left move left
-bindsym Mod1+Shift+$down move down
-bindsym Mod1+Shift+$up move up
-bindsym Mod1+Shift+$right move right
+bindsym Mod1+control+$left move left
+bindsym Mod1+control+$down move down
+bindsym Mod1+control+$up move up
+bindsym Mod1+control+$right move right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+Shift+Left move left
-bindsym Mod1+Shift+Down move down
-bindsym Mod1+Shift+Up move up
-bindsym Mod1+Shift+Right move right
+bindsym Mod1+control+Left move left
+bindsym Mod1+control+Down move down
+bindsym Mod1+control+Up move up
+bindsym Mod1+control+Right move right
 
 # split orientation
 bindsym Mod1+h split h
@@ -160,10 +159,14 @@ bindsym Mod1+y exec i3-save-tree > ~/workspaces/stamp.json; $exec notify-send --
 bindsym Mod1+control+y $exec emacs /home/claudio/workspaces/stamp.json
 
 # resize window (you can also use the mouse for that)
-bindsym Mod1+minus         resize shrink width  1 px or 1 ppt
-bindsym Mod1+control+minus resize shrink height 1 px or 1 ppt
-bindsym Mod1+plus          resize grow   width  1 px or 1 ppt
-bindsym Mod1+control+plus  resize grow   height 1 px or 1 ppt
+bindsym Mod1+minus         resize shrink height 5 px or 1 ppt
+bindsym Mod1+control+minus resize shrink width  5 px or 1 ppt
+bindsym Mod1+m             resize shrink height 5 px or 1 ppt
+bindsym Mod1+control+m     resize shrink width  5 px or 1 ppt
+bindsym Mod1+plus          resize grow   height 5 px or 1 ppt
+bindsym Mod1+control+plus  resize grow   width  5 px or 1 ppt
+bindsym Mod1+p             resize grow   height 5 px or 1 ppt
+bindsym Mod1+control+p     resize grow   width  5 px or 1 ppt
 
 # reload the configuration file
 bindsym Mod1+control+c reload
@@ -202,7 +205,7 @@ bindsym Escape $exec $dmenu-desktop; $exec notify-send --expire-time=2000 --urge
 
 # custom layouts
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki; sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/"
+set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki; sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/"
 
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/2rectory.json'"
 set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
@@ -398,6 +401,7 @@ focus_follows_mouse no
 $exec $touchpad_off
 $exec setxkbmap -option ctrl:nocaps; xmodmap -e "keycode 0x85 = Escape"
 $exec amixer set -c 1 Speaker set mute
+$exec amixer set -c 1 Headphone set unmute
 
 # applications
 $exec classicmenu-indicator & nm-applet
