@@ -46,6 +46,7 @@
 (global-set-key (kbd "C-<") 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 (global-set-key (kbd "C-w") 'quit-window)
+(global-set-key (kbd "C-r") 'search-forward-regexp)
 
 ;; alternative arrows
 (global-set-key (kbd "M-i") 'previous-line)
