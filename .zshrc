@@ -98,5 +98,6 @@ export GOPATH=$HOME/go
 export PATH=/home/claudio/Desktop/Git/iroha/build/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/home/claudio/bin:$PATH
+export WINEPREFIX="/home/claudio/prefix32"
 
 eval $(thefuck --alias)
