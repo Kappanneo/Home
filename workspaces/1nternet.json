@@ -69,11 +69,11 @@
                "x": 241,
                "y": 18
             },
-            "name": "Google Keep",
+            "name": "Memo",
             "percent": null,
             "swallows": [
                {
-                   "title": "Keep"
+                   "title": "Untitled"
                }
             ],
             "type": "con"
