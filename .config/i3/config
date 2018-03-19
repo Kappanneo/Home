@@ -434,7 +434,7 @@ focus_follows_mouse no
 ############################### STARTUP ########################################
 
 # settings
-$exec $disable_Caps & $disable_Super_L
+$exec $disable_Caps; $disable_Super_L # order matters
 $exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
 
 # applications
