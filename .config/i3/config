@@ -92,6 +92,9 @@ bindsym Mod1+control+x workspace $w9; exec killall -USR1 i3status
 
 ############################### COMMANDS #######################################
 
+# mouse enter
+bindsym --whole-window Shift+button2 $exec xdotool key Return
+
 # kill focused window
 bindsym Mod1+F4 kill
 bindsym Mod1+w kill
@@ -133,6 +136,10 @@ bindsym Mod1+Down focus down  ; exec killall -USR1 i3status
 bindsym Mod1+Up focus up      ; exec killall -USR1 i3status
 bindsym Mod1+Right focus right; exec killall -USR1 i3status
 
+# one hand alternative to the other alternative
+bindsym Mod1+Tab focus right; exec killall -USR1 i3status
+bindsym Mod1+q focus down         ; exec killall -USR1 i3status
+
 # move focused window
 bindsym Mod1+control+$left move left
 bindsym Mod1+control+$down move down
@@ -144,6 +151,12 @@ bindsym Mod1+control+Left move left
 bindsym Mod1+control+Down move down
 bindsym Mod1+control+Up move up
 bindsym Mod1+control+Right move right
+
+# one hand alternative to the other alternative
+bindsym Mod1+control+a move left
+bindsym Mod1+control+s move down
+bindsym Mod1+control+w move up
+bindsym Mod1+control+d move right
 
 # split orientation
 bindsym Mod1+h split h
@@ -261,7 +274,7 @@ mode $lock {
 }
 
 bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
-bindsym Mod1+Tab mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
+bindsym Mod1+backslash mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
 bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
 bindsym --whole-window Mod1+button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
 
