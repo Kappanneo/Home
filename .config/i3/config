@@ -102,18 +102,21 @@ bindsym Mod1+w kill
 # start a terminal
 bindsym Mod1+Return split v; exec i3-sensible-terminal
 bindsym Mod1+control+Return split h; exec i3-sensible-terminal
+bindsym Mod1+t split v; exec i3-sensible-terminal
+bindsym Mod1+control+t split h; exec i3-sensible-terminal
+bindsym --whole-window Mod1+Shift+button2 split v; exec i3-sensible-terminal
+bindsym --whole-window Mod1+Shift+control+button2 split h; exec i3-sensible-terminal
 
 # open emacs
 bindsym Mod1+e split h; $exec emacs
 bindsym Mod1+control+e split v; $exec emacs
 
 # touchpad toggle
-set $touchpad_on xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 1
-set $touchpad_off xinput set-prop "FocalTechPS/2 FocalTech FocalTech Touchpad" "Device Enabled" 0
+set $touchpad_on /home/claudio/bin/touchpad_toggle.sh 1
+set $touchpad_off /home/claudio/bin/touchpad_toggle.sh 0
 set $touchpad_toggle /home/claudio/bin/touchpad_toggle.sh
 set $hide_cursor xdotool mousemove 750 3000
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
-bindsym Mod1+t $exec $touchpad_toggle
 
 # volume
 bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
@@ -136,9 +139,11 @@ bindsym Mod1+Down focus down  ; exec killall -USR1 i3status
 bindsym Mod1+Up focus up      ; exec killall -USR1 i3status
 bindsym Mod1+Right focus right; exec killall -USR1 i3status
 
-# one hand alternative to the other alternative
-bindsym Mod1+Tab focus right; exec killall -USR1 i3status
-bindsym Mod1+q focus down         ; exec killall -USR1 i3status
+# alternative to the other alternative
+bindsym Mod1+Tab focus right     ; exec killall -USR1 i3status
+bindsym Mod1+q focus down        ; exec killall -USR1 i3status
+bindSym Mod1+Shift+Tab focus left; exec killall -USR1 i3status
+bindSym Mod1+Shift+q focus up    ; exec killall -USR1 i3status
 
 # move focused window
 bindsym Mod1+control+$left move left
@@ -152,11 +157,11 @@ bindsym Mod1+control+Down move down
 bindsym Mod1+control+Up move up
 bindsym Mod1+control+Right move right
 
-# one hand alternative to the other alternative
-bindsym Mod1+control+a move left
-bindsym Mod1+control+s move down
-bindsym Mod1+control+w move up
-bindsym Mod1+control+d move right
+# alternative to the other alternative
+bindsym Mod1+control+Tab move right
+bindsym Mod1+control+q move down
+bindSym Mod1+control+Shift+Tab move left
+bindSym Mod1+control+Shift+q move up
 
 # split orientation
 bindsym Mod1+h split h
@@ -449,6 +454,7 @@ focus_follows_mouse no
 # settings
 $exec $disable_Caps; $disable_Super_L # order matters
 $exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
+$exec /home/claudio/bin/autoscroll.sh
 
 # applications
 $exec classicmenu-indicator & nm-applet
