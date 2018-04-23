@@ -91,6 +91,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias grappolo="nodejs Desktop/Git/Algo-rhythmic/uva/server.js"
 alias ciao="echo ciao"
+alias etcher="sudo /home/claudio/etcher-1.3.1-x86_64.AppImage"
 
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go

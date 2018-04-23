@@ -1,2 +1,2 @@
 #!/bin/bash
-i3-msg "workspace 1nternet"
+i3-msg "workspace 2rectory"

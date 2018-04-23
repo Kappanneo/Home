@@ -88,7 +88,7 @@ bindsym Mod1+control+0 move container to workspace $w0; workspace $w0
 
 # exile (I use the last workspace for windows such terminals running programs)
 bindsym Mod1+x move container to workspace $w9; exec killall -USR1 i3status
-bindsym Mod1+control+x workspace $w9; exec killall -USR1 i3status
+bindsym Mod1+Shift+x workspace $w9; exec killall -USR1 i3status
 
 ############################### COMMANDS #######################################
 
@@ -96,8 +96,8 @@ bindsym Mod1+control+x workspace $w9; exec killall -USR1 i3status
 bindsym --whole-window Shift+button2 $exec xdotool key Return
 
 # kill focused window
-bindsym Mod1+F4 kill
-bindsym Mod1+w kill
+bindsym Mod1+F4 kill; exec killall -USR1 i3status
+bindsym Mod1+w kill; exec killall -USR1 i3status
 
 # start a terminal
 bindsym Mod1+Return split v; exec i3-sensible-terminal
@@ -108,8 +108,7 @@ bindsym --whole-window Mod1+Shift+button2 split v; exec i3-sensible-terminal
 bindsym --whole-window Mod1+Shift+control+button2 split h; exec i3-sensible-terminal
 
 # open emacs
-bindsym Mod1+e split h; $exec emacs
-bindsym Mod1+control+e split v; $exec emacs
+bindsym Mod1+e $exec emacs
 
 # touchpad toggle
 set $touchpad_on /home/claudio/bin/touchpad_toggle.sh 1
@@ -117,6 +116,9 @@ set $touchpad_off /home/claudio/bin/touchpad_toggle.sh 0
 set $touchpad_toggle /home/claudio/bin/touchpad_toggle.sh
 set $hide_cursor xdotool mousemove 750 3000
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+# autoscroll
+bindsym Mod1+Shift+a $exec /home/claudio/bin/autoscroll.sh
 
 # volume
 bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
@@ -281,7 +283,6 @@ mode $lock {
 bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
 bindsym Mod1+backslash mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
 bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
-bindsym --whole-window Mod1+button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
 
 # quit menu
 mode $quit {
@@ -438,6 +439,9 @@ assign [class="Skype"] $w6
 # texmaker
 assign [title="Texmaker"] $w7
 
+# matlab
+assign [class="MATLAB"] $w7
+
 # no title-bars
 new_window pixel 3
 new_float normal
@@ -449,12 +453,14 @@ workspace_auto_back_and_forth yes
 # focus on mouse (is a pain if you happen to have a mouse)
 focus_follows_mouse no
 
+# smart|ignore|leave_fullscreen
+popup_during_fullscreen leave_fullscreen
+
 ############################### STARTUP ########################################
 
 # settings
 $exec $disable_Caps; $disable_Super_L # order matters
 $exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
-$exec /home/claudio/bin/autoscroll.sh
 
 # applications
 $exec classicmenu-indicator & nm-applet
