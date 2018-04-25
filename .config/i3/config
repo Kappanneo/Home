@@ -24,29 +24,33 @@ font pango:monospace 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-# use these keys for focus, movement, and resize directions when reaching for
-# the arrows is not convenient
-set $up i
-set $down k
-set $left j
-set $right l
-
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 
 # for brevity
 set $exec exec --no-startup-id
+set $alert notify-send --expire-time=4200 --urgency=critical
 
-################################  COLORS  ######################################
+############################### LAYOUTS ########################################
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #4CC97E #4CC97E #ffffff #4CC97E   #4CC97E
-client.focused_inactive #222222 #222222 #ffffff #222222   #222222
-client.unfocused        #222222 #222222 #888888 #222222   #222222
-client.urgent           #222222 #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #222222 #ffffff #000000   #222222
+# custom layouts
+set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/1nternet.json'"
+set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 
-client.background       #222222
+set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/2rectory.json'"
+set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
+
+############################### KEYBINDINGS ####################################
+
+set $enable_Caps setxkbmap -option
+set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
+set $disable_Caps setxkbmap -option ctrl:nocaps
+
+$exec $disable_Caps; $disable_Super_L # order matters
+
+# if you see one of this there is there is a keybinding error
+bindsym Caps_Lock $exec $alert CAPS
+bindsym Super_L $exec $alert SUPER
 
 ############################### WORKSPACES #####################################
 
@@ -63,62 +67,41 @@ set $w9 9a
 set $w0 0z
 
 # switch to workspace (killall forces statusbar update, I use it on every command that changes focus)
-bindsym Mod1+1 workspace $w1; exec killall -USR1 i3status
-bindsym Mod1+2 workspace $w2; exec killall -USR1 i3status
-bindsym Mod1+3 workspace $w3; exec killall -USR1 i3status
-bindsym Mod1+4 workspace $w4; exec killall -USR1 i3status
-bindsym Mod1+5 workspace $w5; exec killall -USR1 i3status
-bindsym Mod1+6 workspace $w6; exec killall -USR1 i3status
-bindsym Mod1+7 workspace $w7; exec killall -USR1 i3status
-bindsym Mod1+8 workspace $w8; exec killall -USR1 i3status
-bindsym Mod1+9 workspace $w9; exec killall -USR1 i3status
-bindsym Mod1+0 workspace $w0; exec killall -USR1 i3status
+bindsym 1 workspace $w1; exec killall -USR1 i3status
+bindsym 2 workspace $w2; exec killall -USR1 i3status
+bindsym 3 workspace $w3; exec killall -USR1 i3status
+bindsym 4 workspace $w4; exec killall -USR1 i3status
+bindsym 5 workspace $w5; exec killall -USR1 i3status
+bindsym 6 workspace $w6; exec killall -USR1 i3status
+bindsym 7 workspace $w7; exec killall -USR1 i3status
+bindsym 8 workspace $w8; exec killall -USR1 i3status
+bindsym 9 workspace $w9; exec killall -USR1 i3status
+bindsym 0 workspace $w0; exec killall -USR1 i3status
 
 # move focused container to workspace and follow (no need for not following with auto back and forth)
-bindsym Mod1+control+1 move container to workspace $w1; workspace $w1
-bindsym Mod1+control+2 move container to workspace $w2; workspace $w2
-bindsym Mod1+control+3 move container to workspace $w3; workspace $w3
-bindsym Mod1+control+4 move container to workspace $w4; workspace $w4
-bindsym Mod1+control+5 move container to workspace $w5; workspace $w5
-bindsym Mod1+control+6 move container to workspace $w6; workspace $w6
-bindsym Mod1+control+7 move container to workspace $w7; workspace $w7
-bindsym Mod1+control+8 move container to workspace $w8; workspace $w8
-bindsym Mod1+control+9 move container to workspace $w9; workspace $w9
-bindsym Mod1+control+0 move container to workspace $w0; workspace $w0
+bindsym control+1 move container to workspace $w1; workspace $w1
+bindsym control+2 move container to workspace $w2; workspace $w2
+bindsym control+3 move container to workspace $w3; workspace $w3
+bindsym control+4 move container to workspace $w4; workspace $w4
+bindsym control+5 move container to workspace $w5; workspace $w5
+bindsym control+6 move container to workspace $w6; workspace $w6
+bindsym control+7 move container to workspace $w7; workspace $w7
+bindsym control+8 move container to workspace $w8; workspace $w8
+bindsym control+9 move container to workspace $w9; workspace $w9
+bindsym control+0 move container to workspace $w0; workspace $w0
 
 # exile (I use the last workspace for windows such terminals running programs)
-bindsym Mod1+x move container to workspace $w9; exec killall -USR1 i3status
-bindsym Mod1+Shift+x workspace $w9; exec killall -USR1 i3status
+bindsym x move container to workspace $w9; exec killall -USR1 i3status
+bindsym Shift+x workspace $w9; exec killall -USR1 i3status
 
-############################### COMMANDS #######################################
-
-# mouse enter
-bindsym --whole-window Shift+button2 $exec xdotool key Return
-
-# kill focused window
-bindsym Mod1+F4 kill; exec killall -USR1 i3status
-bindsym Mod1+w kill; exec killall -USR1 i3status
-
-# start a terminal
-bindsym Mod1+Return split v; exec i3-sensible-terminal
-bindsym Mod1+control+Return split h; exec i3-sensible-terminal
-bindsym Mod1+t split v; exec i3-sensible-terminal
-bindsym Mod1+control+t split h; exec i3-sensible-terminal
-bindsym --whole-window Mod1+Shift+button2 split v; exec i3-sensible-terminal
-bindsym --whole-window Mod1+Shift+control+button2 split h; exec i3-sensible-terminal
-
-# open emacs
-bindsym Mod1+e $exec emacs
+############################# TOP-COMMANDS #####################################
 
 # touchpad toggle
 set $touchpad_on /home/claudio/bin/touchpad_toggle.sh 1
-set $touchpad_off /home/claudio/bin/touchpad_toggle.sh 0
+set $touchpad_off xdotool mousemove 750 3000 && /home/claudio/bin/touchpad_toggle.sh 0
+set $touchpad_off_2 /home/claudio/bin/touchpad_toggle.sh 0
 set $touchpad_toggle /home/claudio/bin/touchpad_toggle.sh
-set $hide_cursor xdotool mousemove 750 3000
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
-# autoscroll
-bindsym Mod1+Shift+a $exec /home/claudio/bin/autoscroll.sh
 
 # volume
 bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
@@ -129,141 +112,92 @@ bindsym XF86AudioMute $exec amixer -c 1 -q -D pulse set Master 1+ toggle
 set $print "import /tmp/latest-screenshot.png; eog /tmp/latest-screenshot.png"
 bindsym --release Print $exec $print
 
+# display
+#  ...
+
+############################ BASIC-COMMANDS ####################################
+
 # change focus
-bindsym Mod1+$left focus left  ; exec killall -USR1 i3status
-bindsym Mod1+$down focus down  ; exec killall -USR1 i3status
-bindsym Mod1+$up focus up      ; exec killall -USR1 i3status
-bindsym Mod1+$right focus right; exec killall -USR1 i3status
+bindsym i focus up   ; exec killall -USR1 i3status
+bindsym j focus left ; exec killall -USR1 i3status
+bindsym k focus down ; exec killall -USR1 i3status
+bindsym l focus right; exec killall -USR1 i3status
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+Left focus left  ; exec killall -USR1 i3status
-bindsym Mod1+Down focus down  ; exec killall -USR1 i3status
-bindsym Mod1+Up focus up      ; exec killall -USR1 i3status
-bindsym Mod1+Right focus right; exec killall -USR1 i3status
+bindsym Up    focus up   ; exec killall -USR1 i3status
+bindsym Left  focus left ; exec killall -USR1 i3status
+bindsym Down  focus down ; exec killall -USR1 i3status
+bindsym Right focus right; exec killall -USR1 i3status
 
 # alternative to the other alternative
-bindsym Mod1+Tab focus right     ; exec killall -USR1 i3status
-bindsym Mod1+q focus down        ; exec killall -USR1 i3status
-bindSym Mod1+Shift+Tab focus left; exec killall -USR1 i3status
-bindSym Mod1+Shift+q focus up    ; exec killall -USR1 i3status
+bindsym w focus up   ; exec killall -USR1 i3status
+bindsym a focus left ; exec killall -USR1 i3status
+bindsym s focus down ; exec killall -USR1 i3status
+bindsym d focus right; exec killall -USR1 i3status
+
+# also Tab
+bindsym Tab focus right; exec killall -USR1 i3status
+bindsym Shift+Tab focus left; exec killall -URS1 i3status
 
 # move focused window
-bindsym Mod1+control+$left move left
-bindsym Mod1+control+$down move down
-bindsym Mod1+control+$up move up
-bindsym Mod1+control+$right move right
+bindsym control+i move up
+bindsym control+j move left
+bindsym control+k move down
+bindsym control+l move right
 
 # alternatively, you can use the cursor keys:
-bindsym Mod1+control+Left move left
-bindsym Mod1+control+Down move down
-bindsym Mod1+control+Up move up
-bindsym Mod1+control+Right move right
+bindsym control+Up    move up
+bindsym control+Left  move left
+bindsym control+Down  move down
+bindsym control+Right move right
 
 # alternative to the other alternative
-bindsym Mod1+control+Tab move right
-bindsym Mod1+control+q move down
-bindSym Mod1+control+Shift+Tab move left
-bindSym Mod1+control+Shift+q move up
+bindsym Shift+w move up
+bindsym Shift+a move left
+bindsym Shift+s move down
+bindsym Shift+d move right
 
 # split orientation
-bindsym Mod1+h split h
-bindsym Mod1+v split v
-bindsym Mod1+g split toggle
+bindsym h split h
+bindsym v split v
+bindsym g split toggle
 
 # fullscreen
-bindsym Mod1+f fullscreen toggle
+bindsym f fullscreen toggle
 
 # focus tree
-bindsym Mod1+a focus parent
-bindsym Mod1+z focus child
-
-# save layout
-bindsym Mod1+y exec i3-save-tree > ~/workspaces/stamp.json; $exec notify-send --expire-time=2000 "Layout saved" "alt+ctrl+y to open"
-bindsym Mod1+control+y $exec emacs /home/claudio/workspaces/stamp.json
+bindsym q focus parent
+bindsym less focus child
 
 # resize window (you can also use the mouse for that)
-bindsym Mod1+minus         resize shrink height 5 px or 1 ppt
-bindsym Mod1+control+minus resize shrink width  5 px or 1 ppt
-bindsym Mod1+m             resize shrink height 5 px or 1 ppt
-bindsym Mod1+control+m     resize shrink width  5 px or 1 ppt
-bindsym Mod1+plus          resize grow   height 5 px or 1 ppt
-bindsym Mod1+control+plus  resize grow   width  5 px or 1 ppt
-bindsym Mod1+p             resize grow   height 5 px or 1 ppt
-bindsym Mod1+control+p     resize grow   width  5 px or 1 ppt
-
-# reload the configuration file
-bindsym Mod1+control+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym Mod1+control+r restart
-# exit i3 (logs you out of your X session)
-#bindsym Mod1+control+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
-
-############################### ALERTS #########################################
-
-set $alert notify-send --expire-time=4200 --urgency=critical
-
-# if you see one of this there is there is a problem
-bindsym Caps_Lock $exec $alert CAPS
-bindsym Super_L $exec $alert SUPER
-
-############################### LAUNCHERS ######################################
-
-# start dmenu (a program launcher)
-bindsym Mod1+d exec dmenu_run; $exec $alert EXEC
-
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# Since it's slow as **** someone made an actually good one: https://github.com/matteoalessiocarrara/k5-dmenu-desktop
-set $dmenu-desktop i3-dmenu-desktop  #/home/claudio/k5-dmenu-desktop
-
-# Super_L is an escape
-bindsym Escape $exec $dmenu-desktop; $exec $alert EXEC
-
-############################### LAYOUTS ########################################
-
-# chromium bookmarks and apps
-#set $chr_com chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ https://b1-hq.slack.com/
-#set $chr_mail chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/
-#set $chr_gh chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo
-#set $chr_keep chromium-browser --new-window --profile-directory=Default --app-id=hmjkmjkepdijhoojdojkdfohbdgmmhki
-
-# custom layouts
-set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/; sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/; sleep 1; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
-
-set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/2rectory.json'"
-set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
-
-############################### KEYBINDINGS ####################################
-
-set $enable_Caps setxkbmap -option
-set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
-set $disable_Caps setxkbmap -option ctrl:nocaps
+bindsym minus         resize shrink height 5 px or 1 ppt
+bindsym m             resize shrink width  5 px or 1 ppt
+bindsym plus          resize  grow  height 5 px or 1 ppt
+bindsym p             resize  grow  width  5 px or 1 ppt
 
 ############################### MODES ##########################################
 
 # functional modes
 set $super "default"
-set $lock "LOCK:   super to unlock"
-set $quit "QUIT:   esc to resume  q to quit  r to restart  s to suspend  e to exit"
+set $lock "LOCK:  super to unlock i3"
+set $quit "QUIT:  esc to resume   q to quit  r to restart  s to suspen  e to exit"
 
 # standardized modes referred as 'mode'
-set $rdsh "RDSH:   alt+r or esc to resume  0-9 to adjust"
-set $strt "STRT:   alt+s or esc to resume  1-2 layouts"
-set $cnfg "CNFG:   alt+c or esc to resume  c config  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or y layouts  p stamp"
+set $rdsh "RDSH:  esc to resume  0-9 to adjust"
+set $strt "STRT:  esc to resume  1-2 layouts"
+set $cnfg "CNFG:  esc to resume  c config  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or y layouts  p stamp"
 
 set $lock_style  [tiling] border none
 set $super_style [tiling] border pixel 3
 set $quit_style  [tiling] border pixel 7
 set $mode_style  [tiling] border pixel 7
 
-set $alert_super notify-send --expire-time=2000 --urgency=critical RESUME
+set $alert_super notify-send --expire-time=2000 --urgency=critical "UNLOCK:  alt to relock i3"
 
 # disable touchpad and i3 functionalities except basic ones
 mode $lock {
 	# super
-	bindsym Escape mode $super $super_style $exec $touchpad_on & $alert UNLOCK
+	bindsym Escape mode $super $super_style $exec $touchpad_on & $alert_super
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# alert
@@ -280,14 +214,22 @@ mode $lock {
 	bindsym Mod1+F4 kill; exec killall -USR1 i3status
 }
 
-bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
-bindsym Mod1+backslash mode $lock $lock_style $exec $touchpad_off & $hide_cursor & $alert $lock
-bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock # bottom-left ctrl
+bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
+bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
+bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 
 # quit menu
 mode $quit {
 	# lock
 	bindsym Escape mode $lock $lock_style $exec $alert RESUME
+	bindsym space mode $lock $lock_style $exec $alert RESUME
+	bindsym backslash mode $lock $lock_style $exec $alert RESUME
+	bindsym Alt_L mode $lock $lock_style $exec $alert RESUME
+	bindcode 37 mode $lock $lock_style $exec $alert RESUME
+	bindcode 66 mode $lock $lock_style $exec $alert RESUME
+	bindsym --border button2 mode $lock $lock_style $exec $alert RESUME
 	# options
 	bindsym q $exec shutdown -h now
 	bindsym r $exec reboot
@@ -303,18 +245,19 @@ bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 # redshift menu
 mode $rdsh {
 	# super
-	bindsym Mod1+r mode $super $super_style $exec $alert_super
-	bindsym Mod1+F4 mode $super $super_style $exec $alert_super
 	bindsym Escape mode $super $super_style $exec $alert_super
 	# lock
-	bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# options
-	bindsym backslash $exec redshift -O 2200K
-	bindsym 1 $exec redshift -O 2300K
-	bindsym 2 $exec redshift -O 2400K
+	bindsym 1 $exec redshift -O 2100K
+	bindsym 2 $exec redshift -O 2300K
 	bindsym 3 $exec redshift -O 2500K
 	bindsym 4 $exec redshift -O 2700K
 	bindsym 5 $exec redshift -O 3000K
@@ -325,51 +268,55 @@ mode $rdsh {
 	bindsym 0 $exec redshift -O 6500K
 }
 
-bindsym Mod1+r mode $rdsh $mode_style $exec $alert $rdsh
+bindsym r mode $rdsh $mode_style $exec $alert $rdsh
 
-# layout launcher
+# move
 mode $strt {
 	# super
-	bindsym Mod1+s mode $super $super_style $exec $alert_super
-	bindsym Mod1+F4 mode $super $super_style $exec $alert_super
 	bindsym Escape mode $super $super_style $exec $alert_super
 	# lock
-	bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# options
-	bindsym 1 mode $super $super_style $layout_1; $fill_1
-	bindsym 2 mode $super $super_style $layout_2; $fill_2
+	bindsym 1 mode $lock $lock_style $layout_1; $fill_1
+	bindsym 2 mode $lock $lock_style $layout_2; $fill_2
 }
 
-bindsym Mod1+s mode $strt $mode_style $exec $alert $strt
+bindsym z mode $strt $mode_style $exec $alert $strt
 
 # configuration files launcher
 mode $cnfg {
 	# super
-	bindsym Mod1+c mode $super $super_style $exec $alert_super
-	bindsym Mod1+F4 mode $super $super_style $exec $alert_super
 	bindsym Escape mode $super $super_style $exec $alert_super
 	# lock
-	bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# options
-	bindsym c mode $super $super_style $exec emacs /home/claudio/.config/i3/config
-	bindsym a mode $super $super_style $exec emacs /sudo::/usr/share/applications/
-	bindsym e mode $super $super_style $exec emacs /home/claudio/.emacs
-	bindsym s mode $super $super_style $exec emacs /home/claudio/.config/i3status/config
-	bindsym z mode $super $super_style $exec emacs /home/claudio/.zshrc
-	bindsym g mode $super $super_style $exec chromium-browser --new-window file:///home/claudio/i3_User_Guide.html # from https://i3wm.org/docs/userguide.html
-	bindsym y mode $super $super_style $exec emacs /home/claudio/workspaces/stamp.json
-	bindsym 1 mode $super $super_style $exec emacs /home/claudio/workspaces/1nternet.json
-	bindsym 2 mode $super $super_style $exec emacs /home/claudio/workspaces/2rectory.json
-	bindsym p mode $super $super_style $exec eog /tmp/latest-screenshot.png
+	bindsym c mode $lock $lock_style $exec emacs /home/claudio/.config/i3/config & $touchpad_off & $alert $lock
+	bindsym a mode $lock $lock_style $exec emacs /sudo::/usr/share/applications/ & $touchpad_off & $alert $lock
+	bindsym e mode $lock $lock_style $exec emacs /home/claudio/.emacs & $touchpad_off & $alert $lock
+	bindsym s mode $lock $lock_style $exec emacs /home/claudio/.config/i3status/config & $touchpad_off & $alert $lock
+	bindsym z mode $lock $lock_style $exec emacs /home/claudio/.zshrc & $touchpad_off & $alert $lock
+	bindsym g mode $lock $lock_style $exec chromium-browser --new-window file:///home/claudio/i3_User_Guide.html & $touchpad_off & $alert $lock # from https://i3wm.org/docs/userguide.html
+	bindsym y mode $lock $lock_style $exec emacs /home/claudio/workspaces/stamp.json & $touchpad_off & $alert $lock
+	bindsym 1 mode $lock $lock_style $exec emacs /home/claudio/workspaces/1nternet.json & $touchpad_off & $alert $lock
+	bindsym 2 mode $lock $lock_style $exec emacs /home/claudio/workspaces/2rectory.json & $touchpad_off & $alert $lock
+	bindsym p mode $lock $lock_style $exec eog /tmp/latest-screenshot.png & $touchpad_off & $alert $lock
 }
 
-bindsym Mod1+c mode $cnfg $mode_style $exec $alert $cnfg
+bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 
 # mode model:
 
@@ -377,19 +324,53 @@ bindsym Mod1+c mode $cnfg $mode_style $exec $alert $cnfg
 #
 # mode $<name> {
 #	# super
-# 	bindsym Mod1+<key> mode $super $super_style $exec $alert_super
-#	bindsym Mod1+F4 mode $super $super_style $exec $alert_super
 #	bindsym Escape mode $super $super_style $exec $alert_super
 #	# lock
-#	bindsym Mod1+space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 #	# quit
 #	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 #	# options
 #         ...
 # }
 #
-# bindsym Mod1+<key> mode $<name> $mode_style $exec $alert $<name>
+# bindsym <key> mode $<name> $mode_style $exec $alert $<name>
+
+############################# LOCK-COMMANDS ####################################
+
+# start a terminal
+bindsym Return mode $lock $lock_style $exec i3-sensible-terminal & $touchpad_off & $alert $lock
+
+# open emacs
+bindsym e mode $lock $lock_style $exec emacs & $touchpad_off & $alert $lock
+
+# kill
+bindsym control+w mode $lock $lock_style kill; $exec $touchpad_off & $alert $lock # kill all for some reason
+
+# enable autoscroll
+bindsym control+a mode $lock $lock_style $exec /home/claudio/bin/autoscroll.sh & $touchpad_off & $alert $lock
+
+# save layout
+bindsym control+s mode $lock $lock_style exec i3-save-tree > ~/workspaces/stamp.json; $exec $touchpad_off & $alert $lock & emacs /home/claudio/workspaces/stamp.json
+
+# start dmenu (a program launcher)
+bindsym control+d mode $lock $lock_style $exec dmenu_run; $exec $touchpad_off & $alert $lock
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# Since it's slow as **** someone made an actually good one: https://github.com/matteoalessiocarrara/k5-dmenu-desktop
+set $dmenu-desktop i3-dmenu-desktop  #/home/claudio/k5-dmenu-desktop
+
+# Super_L is an escape
+bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $touchpad_off & $alert $lock
+
+# reload the configuration file
+bindsym control+r $lock_style reload; $exec $touchpad_off & $alert $lock & i3-msg 'mode $lock'
 
 ############################### BAR ############################################
 
@@ -415,35 +396,46 @@ bar {
         bindsym button5 nop # scroll wheel down
     }
 
+################################  COLORS  ######################################
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #4CC97E #4CC97E #ffffff #4CC97E   #4CC97E
+client.focused_inactive #222222 #222222 #ffffff #222222   #222222
+client.unfocused        #222222 #222222 #888888 #222222   #222222
+client.urgent           #222222 #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #222222 #ffffff #000000   #222222
+
+client.background       #222222
+
 ############################### SETTINGS #######################################
 
 # steam
-assign [class="Steam"] $w5
-assign [class="Wine"] $w5
+assign [class="Steam"]    $w5
+assign [class="Wine"]     $w5
 for_window [title="Steam - News"] kill
 for_window [title="Friends"] resize shrink width 34 px or 34 ppt
-for_window [title="Steam"] resize grow width 34 px or 34 ppt
+for_window [title="Steam"]   resize grow width 34 px or 34 ppt
 
 # code
 assign [title="Visual Studio Code"] $w3
 
 # nautilus desktop confining
-assign [title="Desktop"] $w0
+assign [title="Desktop"]  $w0
 
 # chromium profile error kill
 for_window [title="Profile error occurred"] kill
 
 # skype
-assign [class="Skype"] $w6
+assign [class="Skype"]    $w6
 
 # texmaker
 assign [title="Texmaker"] $w7
 
 # matlab
-assign [class="MATLAB"] $w7
+assign [class="MATLAB"]   $w7
 
 # no title-bars
-new_window pixel 3
+new_window pixel 0
 new_float normal
 
 # go back to previous workspace if you try to go to the current one
@@ -459,8 +451,8 @@ popup_during_fullscreen leave_fullscreen
 ############################### STARTUP ########################################
 
 # settings
-$exec $disable_Caps; $disable_Super_L # order matters
 $exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
+$exec /home/claudio/bin/autoscroll.sh
 
 # applications
 $exec classicmenu-indicator & nm-applet
