@@ -1,17 +1,3 @@
-# i3 config file (v4)
-#
-# Please see https://i3wm.org/docs/userguide.html for a complete reference!
-#
-# This config file uses keycodes (bindsym) and was written for the QWERTY
-# layout.
-#
-# To get a config file with the same key positions, but for your current
-# layout, use the i3-config-wizard
-#
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -30,15 +16,6 @@ floating_modifier Mod1
 # for brevity
 set $exec exec --no-startup-id
 set $alert notify-send --expire-time=4200 --urgency=critical
-
-############################### LAYOUTS ########################################
-
-# custom layouts
-set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
-
-set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/2rectory.json'"
-set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
 
 ############################### KEYBINDINGS ####################################
 
@@ -93,6 +70,15 @@ bindsym control+0 move container to workspace $w0; workspace $w0
 # exile (I use the last workspace for windows such terminals running programs)
 bindsym x move container to workspace $w9; exec killall -USR1 i3status
 bindsym Shift+x workspace $w9; exec killall -USR1 i3status
+
+############################### LAYOUTS ########################################
+
+# custom layouts
+set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/1nternet.json'"
+set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
+
+set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/2rectory.json'"
+set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
 
 ############################# TOP-COMMANDS #####################################
 
@@ -192,7 +178,7 @@ set $super_style [tiling] border pixel 3
 set $quit_style  [tiling] border pixel 7
 set $mode_style  [tiling] border pixel 7
 
-set $alert_super notify-send --expire-time=2000 --urgency=critical "UNLOCK:  alt to relock i3"
+set $alert_super notify-send --expire-time=6000 --urgency=critical "UNLOCK:  space to lock i3"
 
 # disable touchpad and i3 functionalities except basic ones
 mode $lock {
@@ -214,10 +200,10 @@ mode $lock {
 	bindsym Mod1+F4 kill; exec killall -USR1 i3status
 }
 
-bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock # bottom-left ctrl
 bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock # only bottom-left ctrl
 bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 
 # quit menu
@@ -227,8 +213,7 @@ mode $quit {
 	bindsym space mode $lock $lock_style $exec $alert RESUME
 	bindsym backslash mode $lock $lock_style $exec $alert RESUME
 	bindsym Alt_L mode $lock $lock_style $exec $alert RESUME
-	bindcode 37 mode $lock $lock_style $exec $alert RESUME
-	bindcode 66 mode $lock $lock_style $exec $alert RESUME
+	bindsym Control_L mode $lock $lock_style $exec $alert RESUME
 	bindsym --border button2 mode $lock $lock_style $exec $alert RESUME
 	# options
 	bindsym q $exec shutdown -h now
@@ -250,8 +235,7 @@ mode $rdsh {
 	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
@@ -278,14 +262,13 @@ mode $strt {
 	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# options
-	bindsym 1 mode $lock $lock_style $layout_1; $fill_1
-	bindsym 2 mode $lock $lock_style $layout_2; $fill_2
+	bindsym 1 mode $lock $lock_style $exec $touchpad_off & $alert $lock; $layout_1; $fill_1
+	bindsym 2 mode $lock $lock_style $exec $touchpad_off & $alert $lock; $layout_2; $fill_2
 }
 
 bindsym z mode $strt $mode_style $exec $alert $strt
@@ -298,8 +281,7 @@ mode $cnfg {
 	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
@@ -328,9 +310,8 @@ bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 #	# lock
 #	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 #	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindcode 66 mode $lock $lock_style $exec $touchpad_off & $alert $lock
 #	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
+#	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
 #	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 #	# quit
 #	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
