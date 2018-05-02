@@ -26,15 +26,12 @@ set $alert notify-send --expire-time=4200
 
 ############################### KEYBINDINGS ####################################
 
-set $enable_Caps setxkbmap -option
 set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
 set $disable_Caps setxkbmap -option ctrl:nocaps
+set $enable_Caps setxkbmap -option
+set $enable_autoscroll /home/claudio/bin/autoscroll.sh
 
 $exec $disable_Caps; $disable_Super_L # order matters
-
-# if you see one of this there is there is a keybinding error
-bindsym Caps_Lock $exec $alert CAPS
-bindsym Super_L $exec $alert SUPER
 
 ############################### WORKSPACES #####################################
 
@@ -49,34 +46,6 @@ set $w7 7nani
 set $w8 8volante
 set $w9 9a
 set $w0 0z
-
-# switch to workspace (killall forces statusbar update, I use it on every command that changes focus)
-bindsym 1 workspace $w1; exec killall -USR1 i3status
-bindsym 2 workspace $w2; exec killall -USR1 i3status
-bindsym 3 workspace $w3; exec killall -USR1 i3status
-bindsym 4 workspace $w4; exec killall -USR1 i3status
-bindsym 5 workspace $w5; exec killall -USR1 i3status
-bindsym 6 workspace $w6; exec killall -USR1 i3status
-bindsym 7 workspace $w7; exec killall -USR1 i3status
-bindsym 8 workspace $w8; exec killall -USR1 i3status
-bindsym 9 workspace $w9; exec killall -USR1 i3status
-bindsym 0 workspace $w0; exec killall -USR1 i3status
-
-# move focused container to workspace and follow (no need for not following with auto back and forth)
-bindsym control+1 move container to workspace $w1; workspace $w1
-bindsym control+2 move container to workspace $w2; workspace $w2
-bindsym control+3 move container to workspace $w3; workspace $w3
-bindsym control+4 move container to workspace $w4; workspace $w4
-bindsym control+5 move container to workspace $w5; workspace $w5
-bindsym control+6 move container to workspace $w6; workspace $w6
-bindsym control+7 move container to workspace $w7; workspace $w7
-bindsym control+8 move container to workspace $w8; workspace $w8
-bindsym control+9 move container to workspace $w9; workspace $w9
-bindsym control+0 move container to workspace $w0; workspace $w0
-
-# exile (I use the last workspace for windows such terminals running programs)
-bindsym x move container to workspace $w9; exec killall -USR1 i3status
-bindsym Shift+x workspace $w9; exec killall -USR1 i3status
 
 ############################### LAYOUTS ########################################
 
@@ -108,91 +77,57 @@ bindsym --release Print $exec $print
 # display
 #  ...
 
-############################ BASIC-COMMANDS ####################################
+# quit
+bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
+# to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
 
-# change focus
-bindsym i focus up   ; exec killall -USR1 i3status
-bindsym j focus left ; exec killall -USR1 i3status
-bindsym k focus down ; exec killall -USR1 i3status
-bindsym l focus right; exec killall -USR1 i3status
+############################ MOD-COMMANDS #######################################
 
-# alternatively, you can use the cursor keys:
-bindsym Up    focus up   ; exec killall -USR1 i3status
-bindsym Left  focus left ; exec killall -USR1 i3status
-bindsym Down  focus down ; exec killall -USR1 i3status
-bindsym Right focus right; exec killall -USR1 i3status
-
-# alternative to the other alternative
-bindsym w focus up   ; exec killall -USR1 i3status
-bindsym a focus left ; exec killall -USR1 i3status
-bindsym s focus down ; exec killall -USR1 i3status
-bindsym d focus right; exec killall -USR1 i3status
-
-# also Tab
-bindsym Tab focus right; exec killall -USR1 i3status
-bindsym Shift+Tab focus left; exec killall -URS1 i3status
-
-# move focused window
-bindsym control+i move up
-bindsym control+j move left
-bindsym control+k move down
-bindsym control+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym control+Up    move up
-bindsym control+Left  move left
-bindsym control+Down  move down
-bindsym control+Right move right
-
-# alternative to the other alternative
-bindsym Shift+w move up
-bindsym Shift+a move left
-bindsym Shift+s move down
-bindsym Shift+d move right
-
-# split orientation
-bindsym h split h
-bindsym v split v
-bindsym g split toggle
-
-# focus tree
-bindsym q focus parent
-bindsym less focus child
-
-# resize window (you can also use the mouse for that)
-bindsym minus         resize shrink height 5 px or 1 ppt
-bindsym m             resize shrink width  5 px or 1 ppt
-bindsym plus          resize  grow  height 5 px or 1 ppt
-bindsym p             resize  grow  width  5 px or 1 ppt
+# kill
+bindsym Mod1+F4 kill; exec killall -USR1 i3status
+# fullscreen
+bindsym Mod4+f fullscreen toggle
+# start a terminal
 
 ############################### MODES ##########################################
 
 # functional modes
-set $super "default"
-set $lock "LOCK:  super to unlock i3"
-set $quit "QUIT:  esc to resume   q to quit  r to restart  s to suspen  e to exit"
+set $super "SUPER: space to lock i3"
+set $lock "default"
+set $quit "QUIT: esc to resume   q to quit  r to restart  s to suspen  e to exit"
 
 # standardized modes referred as 'mode'
-set $rdsh "RDSH:  esc to resume  0-9 to adjust"
-set $strt "STRT:  esc to resume  1-2 layouts"
-set $cnfg "CNFG:  esc to resume  c config  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or y layouts  p stamp"
+set $rdsh "RDSH: esc to resume  0-9 to adjust"
+set $strt "STRT: esc to resume  1-2 layouts"
+set $cnfg "CNFG: esc to resume  c config  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or y layouts  p stamp"
 
 set $lock_style  [tiling] border none
 set $super_style [tiling] border pixel 3
 set $quit_style  [tiling] border pixel 7
 set $mode_style  [tiling] border pixel 7
 
-set $alert_super notify-send --expire-time=6000 "UNLOCK:  space to lock i3"
+set $alert_lock notify-send --expire-time=6000 "LOCK: super to unlock i3"
 
 # disable touchpad and i3 functionalities except basic ones
-mode $lock {
-	# super
-	bindsym Escape mode $super $super_style $exec $touchpad_on & $alert_super
+mode $super {
+	# lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert_lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym Super_L $exec $alert SUPER
+
+	############ SUB-MODES ###########
+
+	bindsym r mode $rdsh $mode_style $exec $alert $rdsh
+	bindsym z mode $strt $mode_style $exec $alert $strt
+	bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 
 	########## TOP-COMMANDS ##########
 
@@ -204,35 +139,135 @@ mode $lock {
 	bindsym XF86TouchpadToggle $exec $touchpad_toggle
 	# stamp
 	bindsym --release Print $exec $print
-	# kill
-	bindsym Mod1+F4 kill; exec killall -USR1 i3status
 
-	######## ILLEGAL COMMANDS ########
+	########### WORKSPACES ###########
 
+	# switch to workspace (killall forces statusbar update, I use it on every command that changes focus)
+	bindsym 1 workspace $w1; exec killall -USR1 i3status
+	bindsym 2 workspace $w2; exec killall -USR1 i3status
+	bindsym 3 workspace $w3; exec killall -USR1 i3status
+	bindsym 4 workspace $w4; exec killall -USR1 i3status
+	bindsym 5 workspace $w5; exec killall -USR1 i3status
+	bindsym 6 workspace $w6; exec killall -USR1 i3status
+	bindsym 7 workspace $w7; exec killall -USR1 i3status
+	bindsym 8 workspace $w8; exec killall -USR1 i3status
+	bindsym 9 workspace $w9; exec killall -USR1 i3status
+	bindsym 0 workspace $w0; exec killall -USR1 i3status
+
+	# move focused container to workspace and follow (no need for not following with auto back and forth)
+	bindsym control+1 move container to workspace $w1; workspace $w1
+	bindsym control+2 move container to workspace $w2; workspace $w2
+	bindsym control+3 move container to workspace $w3; workspace $w3
+	bindsym control+4 move container to workspace $w4; workspace $w4
+	bindsym control+5 move container to workspace $w5; workspace $w5
+	bindsym control+6 move container to workspace $w6; workspace $w6
+	bindsym control+7 move container to workspace $w7; workspace $w7
+	bindsym control+8 move container to workspace $w8; workspace $w8
+	bindsym control+9 move container to workspace $w9; workspace $w9
+	bindsym control+0 move container to workspace $w0; workspace $w0
+
+	# exile (I use the last workspace for windows such terminals running programs)
+	bindsym x move container to workspace $w9; exec killall -USR1 i3status
+	bindsym Shift+x workspace $w9; exec killall -USR1 i3status
+
+	######### BASIC-COMMANDS #########
+
+	# change focus
+	bindsym i focus up   ; exec killall -USR1 i3status
+	bindsym j focus left ; exec killall -USR1 i3status
+	bindsym k focus down ; exec killall -USR1 i3status
+	bindsym l focus right; exec killall -USR1 i3status
+
+	# alternatively, you can use the cursor keys:
+	bindsym Up    focus up   ; exec killall -USR1 i3status
+	bindsym Left  focus left ; exec killall -USR1 i3status
+	bindsym Down  focus down ; exec killall -USR1 i3status
+	bindsym Right focus right; exec killall -USR1 i3status
+
+	# alternative to the other alternative
+	bindsym w focus up   ; exec killall -USR1 i3status
+	bindsym a focus left ; exec killall -USR1 i3status
+	bindsym s focus down ; exec killall -USR1 i3status
+	bindsym d focus right; exec killall -USR1 i3status
+
+	# also Tab
+	bindsym Tab focus right; exec killall -USR1 i3status
+	bindsym Shift+Tab focus left; exec killall -URS1 i3status
+
+	# move focused window
+	bindsym control+i move up
+	bindsym control+j move left
+	bindsym control+k move down
+	bindsym control+l move right
+
+	# alternatively, you can use the cursor keys:
+	bindsym control+Up    move up
+	bindsym control+Left  move left
+	bindsym control+Down  move down
+	bindsym control+Right move right
+
+	# alternative to the other alternative
+	bindsym Shift+w move up
+	bindsym Shift+a move left
+	bindsym Shift+s move down
+	bindsym Shift+d move right
+
+	# split orientation
+	bindsym h split h
+	bindsym v split v
+	bindsym g split toggle
+	
+	# focus tree
+	bindsym control+a focus parent;
+	bindsym control+z focus child;
+	
+	# resize window (you can also use the mouse for that)
+	bindsym minus         resize shrink height 5 px or 1 ppt
+	bindsym m             resize shrink width  5 px or 1 ppt
+	bindsym plus          resize  grow  height 5 px or 1 ppt
+	bindsym p             resize  grow  width  5 px or 1 ppt
+
+	########## LOCK-COMMANDS #########
 	# fullscreen
-	bindsym Mod1+f fullscreen toggle
+	bindsym Mod4+f mode $lock $lock_style fullscreen toggle; $exec $touchpad_off & $alert_lock
+	
 	# start a terminal
-	bindsym Mod1+Return $exec i3-sensible-terminal
+	bindsym Mod4+Return mode $lock $lock_style $exec i3-sensible-terminal & $touchpad_off & $alert_lock
+	
 	# open emacs
-	bindsym Mod1+e $exec emacs
-	# open command menu
-	bindsym Mod1+control+d $exec dmenu_run
+	bindsym Mod4+e mode $lock $lock_style $exec emacs & $touchpad_off & $alert_lock
+	
 	# open application menu
-	bindsym Mod1+Menu $exec $dmenu-desktop
+	bindsym Mod4+Menu mode $lock $lock_style $exec $dmenu-desktop & $touchpad_off & $alert_lock
+	
+	# kill all
+	bindsym control+w mode $lock $lock_style kill; $exec $touchpad_off & $alert_lock # kill all windows for some reason
+
+	# enable autoscroll
+	bindsym control+e mode $lock $lock_style $exec $enable_autoscroll $touchpad_off_2 & $alert_lock
+
+	# save layout
+	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/workspaces/stamp.json; emacs /home/claudio/workspaces/stamp.json"; $exec $touchpad_off & $alert_lock
+
+	# start dmenu (a program launcher)
+	bindsym control+d mode $lock $lock_style $exec dmenu_run; $exec $touchpad_off & $alert_lock
+
+	# application menu
+	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $touchpad_off & $alert_lock
+
+	# reload i3
+	bindsym control+r $lock_style reload; $exec $touchpad_off & $alert_lock & i3-msg 'mode $lock'
+
 }
 
-bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
-bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
-bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-bindcode 37 mode $lock $lock_style $exec $touchpad_off & $alert $lock # only bottom-left ctrl
-bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
+bindsym Escape mode $super $super_style $exec $touchpad_on & $alert $super
 
 # quit menu
 mode $quit {
 	# lock
 	bindsym Return mode $lock $lock_style $exec $alert RESUME
 	bindsym Escape mode $lock $lock_style $exec $alert RESUME
+	bindsym Super_L mode $lock $lock_style $exec $alert RESUME
 	bindsym space mode $lock $lock_style $exec $alert RESUME
 	bindsym backslash mode $lock $lock_style $exec $alert RESUME
 	bindsym Alt_L mode $lock $lock_style $exec $alert RESUME
@@ -243,24 +278,24 @@ mode $quit {
 	bindsym r $exec reboot
 	bindsym s mode $lock $lock_style $exec systemctl suspend
 	bindsym e $exec $enable_Caps; exit
+	bindsym c $super_style $exec '$alert_lock; i3-msg restart'
 	# re-notify
 	bindsym XF86PowerOff $exec $alert $quit
 }
 
-bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
-# to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
+############################### SUB-MODES #######################################
 
 # redshift menu
 mode $rdsh {
 	# super
-	bindsym Escape mode $super $super_style $exec $alert_super
+	bindsym Escape mode $super $super_style $exec $disable_Super_L $alert $super
 	# lock
-	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert_lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# alert
@@ -279,76 +314,70 @@ mode $rdsh {
 	bindsym 0 $exec redshift -O 6500K
 }
 
-bindsym r mode $rdsh $mode_style $exec $alert $rdsh
-
 # start layout
 mode $strt {
 	# super
-	bindsym Escape mode $super $super_style $exec $alert_super
+	bindsym Escape mode $super $super_style $exec $alert $super
 	# lock
-	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert_lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym Super_L $exec $alert SUPER
 	# options
-	bindsym 1 mode $lock $lock_style $exec $touchpad_off & $alert $lock; $layout_1; $fill_1
-	bindsym 2 mode $lock $lock_style $exec $touchpad_off & $alert $lock; $layout_2; $fill_2
+	bindsym 1 mode $lock $lock_style $exec $touchpad_off & $alert_lock; $layout_1; $fill_1
+	bindsym 2 mode $lock $lock_style $exec $touchpad_off & $alert_lock; $layout_2; $fill_2
 }
-
-bindsym z mode $strt $mode_style $exec $alert $strt
 
 # configuration files launcher
 mode $cnfg {
 	# super
-	bindsym Escape mode $super $super_style $exec $alert_super
+	bindsym Escape mode $super $super_style $exec $alert $super
 	# lock
-	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert_lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym Super_L $exec $alert SUPER
 	# options
-	bindsym c mode $lock $lock_style $exec emacs /home/claudio/.config/i3/config & $touchpad_off & $alert $lock
-	bindsym a mode $lock $lock_style $exec emacs /sudo::/usr/share/applications/ & $touchpad_off & $alert $lock
-	bindsym e mode $lock $lock_style $exec emacs /home/claudio/.emacs & $touchpad_off & $alert $lock
-	bindsym s mode $lock $lock_style $exec emacs /home/claudio/.config/i3status/config & $touchpad_off & $alert $lock
-	bindsym z mode $lock $lock_style $exec emacs /home/claudio/.zshrc & $touchpad_off & $alert $lock
-	bindsym g mode $lock $lock_style $exec chromium-browser --new-window file:///home/claudio/i3_User_Guide.html & $touchpad_off & $alert $lock # from https://i3wm.org/docs/userguide.html
-	bindsym y mode $lock $lock_style $exec emacs /home/claudio/workspaces/stamp.json & $touchpad_off & $alert $lock
-	bindsym 1 mode $lock $lock_style $exec emacs /home/claudio/workspaces/1nternet.json & $touchpad_off & $alert $lock
-	bindsym 2 mode $lock $lock_style $exec emacs /home/claudio/workspaces/2rectory.json & $touchpad_off & $alert $lock
-	bindsym p mode $lock $lock_style $exec eog /tmp/latest-screenshot.png & $touchpad_off & $alert $lock
+	bindsym c mode $lock $lock_style $exec emacs /home/claudio/.config/i3/config & $touchpad_off & $alert_lock
+	bindsym a mode $lock $lock_style $exec emacs /sudo::/usr/share/applications/ & $touchpad_off & $alert_lock
+	bindsym e mode $lock $lock_style $exec emacs /home/claudio/.emacs & $touchpad_off & $alert_lock
+	bindsym s mode $lock $lock_style $exec emacs /home/claudio/.config/i3status/config & $touchpad_off & $alert_lock
+	bindsym z mode $lock $lock_style $exec emacs /home/claudio/.zshrc & $touchpad_off & $alert_lock
+	bindsym g mode $lock $lock_style $exec chromium-browser --new-window file:///home/claudio/i3_User_Guide.html & $touchpad_off & $alert_lock # from https://i3wm.org/docs/userguide.html
+	bindsym y mode $lock $lock_style $exec emacs /home/claudio/workspaces/stamp.json & $touchpad_off & $alert_lock
+	bindsym 1 mode $lock $lock_style $exec emacs /home/claudio/workspaces/1nternet.json & $touchpad_off & $alert_lock
+	bindsym 2 mode $lock $lock_style $exec emacs /home/claudio/workspaces/2rectory.json & $touchpad_off & $alert_lock
+	bindsym p mode $lock $lock_style $exec eog /tmp/latest-screenshot.png & $touchpad_off & $alert_lock
 }
 
-bindsym c mode $cnfg $mode_style $exec $alert $cnfg
-
-# mode model:
+# sub-mode model:
 
 # set $<name> "<NAME>: alt+<key> to resume  ...  "
 #
 # mode $<name> {
 #	# super
-#	bindsym Escape mode $super $super_style $exec $alert_super
+#	bindsym Escape mode $super $super_style $exec $alert $super
 #	# lock
-#	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
-#	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
+#	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert_lock
+#	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert_lock
+#	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert_lock
+#	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+#	bindsym Control_L mode $lock $lock_style $exec $touchpad_off & $alert_lock
+#	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert_lock
 #	# quit
 #	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 #	# alert
@@ -357,28 +386,6 @@ bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 #	# options
 #         ...
 # }
-#
-# bindsym <key> mode $<name> $mode_style $exec $alert $<name>
-
-############################# LOCK-COMMANDS ####################################
-
-# kill all
-bindsym control+w mode $lock $lock_style kill; $exec $touchpad_off & $alert $lock # kill all windows for some reason
-
-# enable autoscroll
-bindsym control+a mode $lock $lock_style $exec /home/claudio/bin/autoscroll.sh & $touchpad_off_2 & $alert $lock
-
-# save layout
-bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/workspaces/stamp.json; emacs /home/claudio/workspaces/stamp.json"; $exec $touchpad_off & $alert $lock
-
-# start dmenu (a program launcher)
-bindsym control+d mode $lock $lock_style $exec dmenu_run; $exec $touchpad_off & $alert $lock
-
-# application menu
-bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $touchpad_off & $alert $lock
-
-# reload the configuration file
-bindsym control+r $lock_style reload; $exec $touchpad_off & $alert $lock & i3-msg 'mode $lock'
 
 ############################### BAR ############################################
 
@@ -459,7 +466,7 @@ popup_during_fullscreen leave_fullscreen
 
 # settings
 $exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
-$exec /home/claudio/bin/autoscroll.sh
+$exec $enable_autoscroll
 
 # applications
 $exec classicmenu-indicator & nm-applet
