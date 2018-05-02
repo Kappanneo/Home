@@ -85,9 +85,21 @@ bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 
 # kill
 bindsym Mod1+F4 kill; exec killall -USR1 i3status
+
 # fullscreen
 bindsym Mod4+f fullscreen toggle
-# start a terminal
+
+# switch to workspace (killall forces statusbar update, I use it on every command that changes focus)
+bindsym Mod4+1 workspace $w1; exec killall -USR1 i3status
+bindsym Mod4+2 workspace $w2; exec killall -USR1 i3status
+bindsym Mod4+3 workspace $w3; exec killall -USR1 i3status
+bindsym Mod4+4 workspace $w4; exec killall -USR1 i3status
+bindsym Mod4+5 workspace $w5; exec killall -USR1 i3status
+bindsym Mod4+6 workspace $w6; exec killall -USR1 i3status
+bindsym Mod4+7 workspace $w7; exec killall -USR1 i3status
+bindsym Mod4+8 workspace $w8; exec killall -USR1 i3status
+bindsym Mod4+9 workspace $w9; exec killall -USR1 i3status
+bindsym Mod4+0 workspace $w0; exec killall -USR1 i3status
 
 ############################### MODES ##########################################
 
@@ -216,7 +228,10 @@ mode $super {
 	bindsym h split h
 	bindsym v split v
 	bindsym g split toggle
-	
+
+	# fullscreen
+	bindsym f fullscreen toggle
+
 	# focus tree
 	bindsym control+a focus parent;
 	bindsym control+z focus child;
@@ -228,6 +243,37 @@ mode $super {
 	bindsym p             resize  grow  width  5 px or 1 ppt
 
 	########## LOCK-COMMANDS #########
+
+	# switch to workspace (killall forces statusbar update, I use it on every command that changes focus)
+	bindsym Mod4+1 mode $lock $lock_style workspace $w1; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+2 mode $lock $lock_style workspace $w2; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+3 mode $lock $lock_style workspace $w3; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+4 mode $lock $lock_style workspace $w4; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+5 mode $lock $lock_style workspace $w5; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+6 mode $lock $lock_style workspace $w6; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+7 mode $lock $lock_style workspace $w7; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+8 mode $lock $lock_style workspace $w8; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+9 mode $lock $lock_style workspace $w9; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+0 mode $lock $lock_style workspace $w0; exec killall -USR1 i3status; $exec $touchpad_off & $alert_lock
+
+	# change focus
+	bindsym Mod4+i mode $lock $lock_style focus up   ; exec killall -USR1 i3status
+	bindsym Mod4+j mode $lock $lock_style focus left ; exec killall -USR1 i3status
+	bindsym Mod4+k mode $lock $lock_style focus down ; exec killall -USR1 i3status
+	bindsym Mod4+l mode $lock $lock_style focus right; exec killall -USR1 i3status
+
+	# alternatively, you can use the cursor keys:
+	bindsym Mod4+Up    mode $lock $lock_style focus up   ; exec killall -USR1 i3status
+	bindsym Mod4+Left  mode $lock $lock_style focus left ; exec killall -USR1 i3status
+	bindsym Mod4+Down  mode $lock $lock_style focus down ; exec killall -USR1 i3status
+	bindsym Mod4+Right mode $lock $lock_style focus right; exec killall -USR1 i3status
+
+	# alternative to the other alternative
+	bindsym Mod4+w mode $lock $lock_style focus up   ; exec killall -USR1 i3status
+	bindsym Mod4+a mode $lock $lock_style focus left ; exec killall -USR1 i3status
+	bindsym Mod4+s mode $lock $lock_style focus down ; exec killall -USR1 i3status
+	bindsym Mod4+d mode $lock $lock_style focus right; exec killall -USR1 i3status
+
 	# fullscreen
 	bindsym Mod4+f mode $lock $lock_style fullscreen toggle; $exec $touchpad_off & $alert_lock
 	
@@ -239,9 +285,6 @@ mode $super {
 	
 	# open application menu
 	bindsym Mod4+Menu mode $lock $lock_style $exec $dmenu-desktop & $touchpad_off & $alert_lock
-	
-	# kill all
-	bindsym control+w mode $lock $lock_style kill; $exec $touchpad_off & $alert_lock # kill all windows for some reason
 
 	# enable autoscroll
 	bindsym control+e mode $lock $lock_style $exec $enable_autoscroll $touchpad_off_2 & $alert_lock
@@ -250,7 +293,7 @@ mode $super {
 	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/workspaces/stamp.json; emacs /home/claudio/workspaces/stamp.json"; $exec $touchpad_off & $alert_lock
 
 	# start dmenu (a program launcher)
-	bindsym control+d mode $lock $lock_style $exec dmenu_run; $exec $touchpad_off & $alert_lock
+	bindsym Mod4+d mode $lock $lock_style $exec dmenu_run; $exec $touchpad_off & $alert_lock
 
 	# application menu
 	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $touchpad_off & $alert_lock
@@ -278,7 +321,6 @@ mode $quit {
 	bindsym r $exec reboot
 	bindsym s mode $lock $lock_style $exec systemctl suspend
 	bindsym e $exec $enable_Caps; exit
-	bindsym c $super_style $exec '$alert_lock; i3-msg restart'
 	# re-notify
 	bindsym XF86PowerOff $exec $alert $quit
 }
