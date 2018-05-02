@@ -1,7 +1,8 @@
+################################# START ########################################
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -13,9 +14,15 @@
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 
+# There is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# Since it's slow as **** someone made an actually good one: https://github.com/matteoalessiocarrara/k5-dmenu-desktop
+set $dmenu-desktop i3-dmenu-desktop  #/home/claudio/k5-dmenu-desktop
+
 # for brevity
 set $exec exec --no-startup-id
-set $alert notify-send --expire-time=4200 --urgency=critical
+set $alert notify-send --expire-time=4200
 
 ############################### KEYBINDINGS ####################################
 
@@ -75,7 +82,7 @@ bindsym Shift+x workspace $w9; exec killall -USR1 i3status
 
 # custom layouts
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
+set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 2; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout /home/claudio/workspaces/2rectory.json'"
 set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
@@ -148,9 +155,6 @@ bindsym h split h
 bindsym v split v
 bindsym g split toggle
 
-# fullscreen
-bindsym f fullscreen toggle
-
 # focus tree
 bindsym q focus parent
 bindsym less focus child
@@ -178,7 +182,7 @@ set $super_style [tiling] border pixel 3
 set $quit_style  [tiling] border pixel 7
 set $mode_style  [tiling] border pixel 7
 
-set $alert_super notify-send --expire-time=6000 --urgency=critical "UNLOCK:  space to lock i3"
+set $alert_super notify-send --expire-time=6000 "UNLOCK:  space to lock i3"
 
 # disable touchpad and i3 functionalities except basic ones
 mode $lock {
@@ -188,6 +192,10 @@ mode $lock {
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
+	bindsym Super_L $exec $alert SUPER
+
+	########## TOP-COMMANDS ##########
+
 	# volume
 	bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
 	bindsym XF86AudioLowerVolume $exec amixer -c 1 -q sset Master 1dB-
@@ -198,8 +206,22 @@ mode $lock {
 	bindsym --release Print $exec $print
 	# kill
 	bindsym Mod1+F4 kill; exec killall -USR1 i3status
+
+	######## ILLEGAL COMMANDS ########
+
+	# fullscreen
+	bindsym Mod1+f fullscreen toggle
+	# start a terminal
+	bindsym Mod1+Return $exec i3-sensible-terminal
+	# open emacs
+	bindsym Mod1+e $exec emacs
+	# open command menu
+	bindsym Mod1+control+d $exec dmenu_run
+	# open application menu
+	bindsym Mod1+Menu $exec $dmenu-desktop
 }
 
+bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
 bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
@@ -209,6 +231,7 @@ bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $
 # quit menu
 mode $quit {
 	# lock
+	bindsym Return mode $lock $lock_style $exec $alert RESUME
 	bindsym Escape mode $lock $lock_style $exec $alert RESUME
 	bindsym space mode $lock $lock_style $exec $alert RESUME
 	bindsym backslash mode $lock $lock_style $exec $alert RESUME
@@ -232,6 +255,7 @@ mode $rdsh {
 	# super
 	bindsym Escape mode $super $super_style $exec $alert_super
 	# lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
@@ -239,6 +263,9 @@ mode $rdsh {
 	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
+	# alert
+	bindsym Caps_Lock $exec $alert CAPS
+	bindsym Super_L $exec $alert SUPER
 	# options
 	bindsym 1 $exec redshift -O 2100K
 	bindsym 2 $exec redshift -O 2300K
@@ -254,11 +281,12 @@ mode $rdsh {
 
 bindsym r mode $rdsh $mode_style $exec $alert $rdsh
 
-# move
+# start layout
 mode $strt {
 	# super
 	bindsym Escape mode $super $super_style $exec $alert_super
 	# lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
@@ -266,6 +294,9 @@ mode $strt {
 	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
+	# alert
+	bindsym Caps_Lock $exec $alert CAPS
+	bindsym Super_L $exec $alert SUPER
 	# options
 	bindsym 1 mode $lock $lock_style $exec $touchpad_off & $alert $lock; $layout_1; $fill_1
 	bindsym 2 mode $lock $lock_style $exec $touchpad_off & $alert $lock; $layout_2; $fill_2
@@ -278,6 +309,7 @@ mode $cnfg {
 	# super
 	bindsym Escape mode $super $super_style $exec $alert_super
 	# lock
+	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
@@ -285,6 +317,9 @@ mode $cnfg {
 	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 	# quit
 	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
+	# alert
+	bindsym Caps_Lock $exec $alert CAPS
+	bindsym Super_L $exec $alert SUPER
 	# options
 	bindsym c mode $lock $lock_style $exec emacs /home/claudio/.config/i3/config & $touchpad_off & $alert $lock
 	bindsym a mode $lock $lock_style $exec emacs /sudo::/usr/share/applications/ & $touchpad_off & $alert $lock
@@ -308,6 +343,7 @@ bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 #	# super
 #	bindsym Escape mode $super $super_style $exec $alert_super
 #	# lock
+#	bindsym Return mode $lock $lock_style $exec $touchpad_off & $alert $lock
 #	bindsym space mode $lock $lock_style $exec $touchpad_off & $alert $lock
 #	bindsym backslash mode $lock $lock_style $exec $touchpad_off & $alert $lock
 #	bindsym Alt_L mode $lock $lock_style $exec $touchpad_off & $alert $lock
@@ -315,6 +351,9 @@ bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 #	bindsym --border button2 mode $lock $lock_style $exec $touchpad_off_2 & $alert $lock
 #	# quit
 #	bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
+#	# alert
+#	bindsym Caps_Lock $exec $alert CAPS
+#	bindsym Super_L $exec $alert SUPER
 #	# options
 #         ...
 # }
@@ -323,31 +362,19 @@ bindsym c mode $cnfg $mode_style $exec $alert $cnfg
 
 ############################# LOCK-COMMANDS ####################################
 
-# start a terminal
-bindsym Return mode $lock $lock_style $exec i3-sensible-terminal & $touchpad_off & $alert $lock
-
-# open emacs
-bindsym e mode $lock $lock_style $exec emacs & $touchpad_off & $alert $lock
-
-# kill
-bindsym control+w mode $lock $lock_style kill; $exec $touchpad_off & $alert $lock # kill all for some reason
+# kill all
+bindsym control+w mode $lock $lock_style kill; $exec $touchpad_off & $alert $lock # kill all windows for some reason
 
 # enable autoscroll
-bindsym control+a mode $lock $lock_style $exec /home/claudio/bin/autoscroll.sh & $touchpad_off & $alert $lock
+bindsym control+a mode $lock $lock_style $exec /home/claudio/bin/autoscroll.sh & $touchpad_off_2 & $alert $lock
 
 # save layout
-bindsym control+s mode $lock $lock_style exec i3-save-tree > ~/workspaces/stamp.json; $exec $touchpad_off & $alert $lock & emacs /home/claudio/workspaces/stamp.json
+bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/workspaces/stamp.json; emacs /home/claudio/workspaces/stamp.json"; $exec $touchpad_off & $alert $lock
 
 # start dmenu (a program launcher)
 bindsym control+d mode $lock $lock_style $exec dmenu_run; $exec $touchpad_off & $alert $lock
 
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# Since it's slow as **** someone made an actually good one: https://github.com/matteoalessiocarrara/k5-dmenu-desktop
-set $dmenu-desktop i3-dmenu-desktop  #/home/claudio/k5-dmenu-desktop
-
-# Super_L is an escape
+# application menu
 bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $touchpad_off & $alert $lock
 
 # reload the configuration file
@@ -355,8 +382,7 @@ bindsym control+r $lock_style reload; $exec $touchpad_off & $alert $lock & i3-ms
 
 ############################### BAR ############################################
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
         status_command    ./bin/my_status.sh
     	position          bottom
@@ -420,7 +446,7 @@ new_window pixel 0
 new_float normal
 
 # go back to previous workspace if you try to go to the current one
-# (i like it becouse it allow for fast window movement to a workspace and back)
+# (allow for fast window movement to a workspace and back)
 workspace_auto_back_and_forth yes
 
 # focus on mouse (is a pain if you happen to have a mouse)
@@ -429,7 +455,7 @@ focus_follows_mouse no
 # smart|ignore|leave_fullscreen
 popup_during_fullscreen leave_fullscreen
 
-############################### STARTUP ########################################
+################################ STARTUP #######################################
 
 # settings
 $exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
@@ -442,3 +468,5 @@ $exec redshift -O 4500K
 # layout
 $layout_2
 $fill_2
+
+################################# END ##########################################

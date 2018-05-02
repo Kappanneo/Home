@@ -15,7 +15,7 @@
                "y": 28
             },
             "name": "Chromium",
-            "percent": 0.86,
+            "percent": 0.833768444948922,
             "swallows": [
                {
                "class": "^Chromium\\-browser$"
@@ -35,7 +35,7 @@
                "y": 0
             },
             "name": "Terminal",
-            "percent": 0.14,
+            "percent": 0.166231555051078,
             "swallows": [
                {
                "class": "^Gnome\\-terminal$"
