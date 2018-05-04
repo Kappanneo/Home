@@ -17,7 +17,7 @@
             "percent": null,
             "swallows": [
                {
-                   "title": "Untitled"
+               "class": "^Chromium\\-browser$"
                }
             ],
             "type": "con"
@@ -45,7 +45,7 @@
             "percent": null,
             "swallows": [
                {
-                   "title": "Untitled"
+               "class": "^Chromium\\-browser$"
                }
             ],
             "type": "con"
@@ -73,7 +73,7 @@
             "percent": null,
             "swallows": [
                {
-                   "title": "Untitled"
+               "class": "^Chromium\\-browser$"
                }
             ],
             "type": "con"

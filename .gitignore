@@ -18,11 +18,11 @@
 .config/i3status/*
 !.config/i3status/config
 
-!bin/
-bin/*
+!.bin/
+.bin/*
 !*.sh
 
-!workspaces/
-workspaces/*
-!workspaces/1nternet.json
-!workspaces/2rectory.json
+!.workspaces/
+.workspaces/*
+!.workspaces/1nternet.json
+!.workspaces/2rectory.json

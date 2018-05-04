@@ -100,5 +100,6 @@ export PATH=/home/claudio/Desktop/Git/iroha/build/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/home/claudio/bin:$PATH
 export WINEPREFIX="/home/claudio/prefix32"
+export XDG_CURRENT_DESKTOP=GNOME
 
 eval $(thefuck --alias)
