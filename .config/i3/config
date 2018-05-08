@@ -52,6 +52,9 @@ set $exec exec --no-startup-id
 set $alert notify-send --expire-time=4200
 set $refresh exec killall -USR1 i3status # statusbar update
 
+# default audio
+set $audio_reset "amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute"
+
 ############################### KEYBINDINGS ####################################
 
 set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
@@ -78,9 +81,9 @@ set $wx X
 ############################### LAYOUTS ########################################
 
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 2; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
+set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 2; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'"
-set $fill_2 exec --no-startup-id "emacs & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
+set $fill_2 exec --no-startup-id "emacs ~/memo & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/kappanneo & i3-sensible-terminal"
 
 ################################ MODES #########################################
 
@@ -137,8 +140,8 @@ bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 # kill
 bindsym Mod1+F4 kill; $refresh
 
-# super mode (remember that Super_L is an Escape)
-bindsym Escape mode $super $super_style $exec $touchpad_on & $alert $super
+# super mode (code for Super_L)
+bindcode 133 mode $super $super_style $exec $touchpad_on & $alert $super
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -156,8 +159,8 @@ bindsym Mod4+0 workspace $w0; $refresh
 bindsym Mod4+x workspace $wx; $refresh
 
 # also Tab
-bindsym Mod4+Tab workspace next;     $refresh
-bindsym Mod4+q   workspace previous; $refresh
+bindsym Mod4+Tab workspace next; $refresh
+bindsym Mod4+q   workspace prev; $refresh
 
 # change focus
 bindsym Mod4+i focus up   ; $refresh
@@ -269,8 +272,8 @@ mode $super {
 	bindsym control+0 move container to workspace $w0; workspace $w0
 
 	# also Tab
-	bindsym Tab workspace next;     $refresh
-	bindsym q   workspace previous; $refresh
+	bindsym Tab workspace next; $refresh
+	bindsym q   workspace prev; $refresh
 
 	# change focus
 	bindsym i focus up   ; $refresh
@@ -308,7 +311,15 @@ mode $super {
 	bindsym Shift+s move down
 	bindsym Shift+d move right
 
+	# resize window (you can also use the mouse for that)
+	bindsym minus resize shrink height 5 px or 1 ppt
+	bindsym m     resize shrink width  5 px or 1 ppt
+	bindsym plus  resize  grow  height 5 px or 1 ppt
+	bindsym p     resize  grow  width  5 px or 1 ppt
+
 	# split orientation
+	bindsym h split h
+	bindsym v split v
 	bindsym less split toggle
 
 	# focus tree
@@ -317,7 +328,7 @@ mode $super {
 
 	# kill
 	bindsym control+w kill; $refresh
-	
+
 	# save layout
 	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"; $exec $alert_lock & $touchpad_off
 
@@ -327,23 +338,20 @@ mode $super {
 
 	# reload i3
 	bindsym control+r reload; $lock_style $exec $alert_lock & $touchpad_off & $alert RELOAD
-	bindsym control+c $lock_style restart
-	
+	bindsym control+c $lock_style $exec $enable_autoscroll; $exec  $audio_reset; restart
+
 	# start dmenu (a program launcher)
 	bindsym control+e mode $lock $lock_style $exec dmenu_run; $exec $alert_lock & $touchpad_off % $alert EXEC
 
 	# application menu
-	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop &  $alert_lock & $touchpad_off $ $alert EXEC
-	
-	# resize window (you can also use the mouse for that)
-	bindsym minus resize shrink height 5 px or 1 ppt
-	bindsym m     resize shrink width  5 px or 1 ppt
-	bindsym plus  resize  grow  height 5 px or 1 ppt
-	bindsym p     resize  grow  width  5 px or 1 ppt
+	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop & $alert_lock & $touchpad_off $ $alert EXEC
+
+	# autoscroll
+	bindsym --whole-window --border control+button2 $exec $enable_autoscroll
 
 	########## CHAIN-COMMANDS ########
 
-	# switch workspace 
+	# switch workspace
 	bindsym Mod4+1 workspace $w1; $refresh
 	bindsym Mod4+2 workspace $w2; $refresh
 	bindsym Mod4+3 workspace $w3; $refresh
@@ -354,11 +362,12 @@ mode $super {
 	bindsym Mod4+8 workspace $w8; $refresh
 	bindsym Mod4+9 workspace $w9; $refresh
 	bindsym Mod4+0 workspace $w0; $refresh
-	
+	bindsym Mod4+x workspace $wx; $refresh
+
 	# also Tab
 	bindsym Mod4+Tab workspace next;     $refresh
 	bindsym Mod4+q   workspace previous; $refresh
-	
+
 	# change focus
 	bindsym Mod4+i focus up   ; $refresh
 	bindsym Mod4+j focus left ; $refresh
@@ -399,11 +408,12 @@ mode $super {
 	bindsym --release Mod4+8     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+9     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+0     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	
+	bindsym --release Mod4+x     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
 	# also Tab
 	bindsym --release Mod4+Tab   mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+q     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	
+
 	# change focus
 	bindsym --release Mod4+i     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+j     mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -430,12 +440,12 @@ mode $super {
 	bindsym --release Mod4+m     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+plus  mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+p     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	
+
 	######### INSTA-COMMANDS #########
 
 	# start a terminal
 	bindsym Mod4+Return mode $lock $lock_style $exec i3-sensible-terminal & $alert_lock & $touchpad_off
-	
+
 	# open emacs
 	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
 
@@ -620,7 +630,7 @@ assign [class="MATLAB"]   $w7
 $exec $disable_Caps; $disable_Super_L # order matters
 
 # settings
-$exec amixer set -c 1 Speaker set mute; amixer set -c 1 Headphone set unmute
+$exec $audio_reset
 $exec $enable_autoscroll
 
 # applications
