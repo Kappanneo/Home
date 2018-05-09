@@ -22,15 +22,19 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; melpa packages
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-;; normal undo-redo
+
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+
 (require 'undo-tree)
 (global-undo-tree-mode 1)
+
+;(require 'xah-fly-keys)
+;(xah-fly-keys-set-layout "qwerty")
+;(xah-fly-keys 1)
 
 ;; sanity preservers
 (global-set-key (kbd "C-x") 'xah-cut-line-or-region)
@@ -42,11 +46,11 @@
 
 ;; personal preferences
 (global-set-key (kbd "C-f") 'find-file)
-(global-set-key (kbd "C-k") 'kill-buffer)
-(global-set-key (kbd "C-<") 'switch-to-prev-buffer)
+(global-set-key (kbd "C-d") 'delete-other-windows)
+(global-set-key (kbd "C-w") 'kill-this-buffer)
+(global-set-key (kbd "C-q") 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
-(global-set-key (kbd "C-w") 'quit-window)
-(global-set-key (kbd "C-r") 'search-forward-regexp)
+(global-set-key (kbd "M-f") 'search-forward-regexp)
 
 ;; alternative arrows
 (global-set-key (kbd "M-i") 'previous-line)

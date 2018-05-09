@@ -72,8 +72,8 @@ set $w5 5team
 set $w6 6kype
 set $w7 7nani
 set $w8 8volante
-set $w9 9a
-set $w0 0z
+set $w9 9
+set $w0 0
 
 # this one is for cut & paste or exiled containers (I use the last workspace)
 set $wx X
@@ -197,15 +197,15 @@ mode $quit {
 	# lock
 	bindsym Return	         mode $lock $lock_style $exec $alert RESUME
 	bindsym Escape           mode $lock $lock_style $exec $alert RESUME
-	bindsym Super_L          mode $lock $lock_style $exec $alert RESUME
+	bindsym "Super_L"        mode $lock $lock_style $exec $alert RESUME
 	bindsym space            mode $lock $lock_style $exec $alert RESUME
 	bindsym backslash        mode $lock $lock_style $exec $alert RESUME
-	bindsym Alt_L          	 mode $lock $lock_style $exec $alert RESUME
-	bindsym Control_L        mode $lock $lock_style $exec $alert RESUME
+	bindsym "Alt_L"        	 mode $lock $lock_style $exec $alert RESUME
+	bindsym "Control_L"      mode $lock $lock_style $exec $alert RESUME
 	bindsym --border button2 mode $lock $lock_style $exec $alert RESUME
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
-	bindsym Super_L   $exec $alert SUPR
+	bindsym "Super_L" $exec $alert SUPR
 	# options
 	bindsym q $exec shutdown -h now
 	bindsym r $exec reboot
@@ -220,14 +220,13 @@ mode $super {
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Alt_L            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Control_L        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
-	bindsym Super_L   $exec $alert SUPR
+	bindsym "Super_L" $exec $alert SUPR
 
 	############ SUB-MODES ###########
 
@@ -274,6 +273,7 @@ mode $super {
 	# also Tab
 	bindsym Tab workspace next; $refresh
 	bindsym q   workspace prev; $refresh
+	bindsym Shift+Tab  workspace prev; $refresh
 
 	# change focus
 	bindsym i focus up   ; $refresh
@@ -292,6 +292,9 @@ mode $super {
 	bindsym a focus left ; $refresh
 	bindsym s focus down ; $refresh
 	bindsym d focus right; $refresh
+
+	# fullscreen
+	bindsym f fullscreen toggle
 
 	# move focused window
 	bindsym control+i move up
@@ -318,8 +321,8 @@ mode $super {
 	bindsym p     resize  grow  width  5 px or 1 ppt
 
 	# split orientation
-	bindsym h split h
-	bindsym v split v
+	bindsym h split horizontal
+	bindsym v split vertical
 	bindsym less split toggle
 
 	# focus tree
@@ -328,6 +331,7 @@ mode $super {
 
 	# kill
 	bindsym control+w kill; $refresh
+	bindsym --release control+w mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# save layout
 	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"; $exec $alert_lock & $touchpad_off
@@ -338,16 +342,16 @@ mode $super {
 
 	# reload i3
 	bindsym control+r reload; $lock_style $exec $alert_lock & $touchpad_off & $alert RELOAD
-	bindsym control+c $lock_style $exec $enable_autoscroll; $exec  $audio_reset; restart
+	bindsym Mod4+control+r $lock_style $exec $enable_autoscroll; $exec  $audio_reset; restart
+
+	# files
+	bindsym control+f mode $lock $lock_style $exec nautilus & $alert_lock & $touchpad_off
 
 	# start dmenu (a program launcher)
-	bindsym control+e mode $lock $lock_style $exec dmenu_run; $exec $alert_lock & $touchpad_off % $alert EXEC
+	bindsym control+e mode $lock $lock_style $exec dmenu_run; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	# application menu
-	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop & $alert_lock & $touchpad_off $ $alert EXEC
-
-	# autoscroll
-	bindsym --whole-window --border control+button2 $exec $enable_autoscroll
+	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	########## CHAIN-COMMANDS ########
 
@@ -444,7 +448,7 @@ mode $super {
 	######### INSTA-COMMANDS #########
 
 	# start a terminal
-	bindsym Mod4+Return mode $lock $lock_style $exec i3-sensible-terminal & $alert_lock & $touchpad_off
+	bindsym Mod4+Return split v; mode $lock $lock_style $exec i3-sensible-terminal & $alert_lock & $touchpad_off
 
 	# open emacs
 	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
@@ -467,14 +471,14 @@ mode $rdsh {
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Alt_L            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Control_L        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
-	bindsym Super_L   $exec $alert SUPR
+	bindsym "Super_L" $exec $alert SUPR
 	# options
 	bindsym 1 $exec redshift -O 2100K
 	bindsym 2 $exec redshift -O 2300K
@@ -496,14 +500,14 @@ mode $strt {
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Alt_L            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Control_L        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
-	bindsym Super_L   $exec $alert SUPR
+	bindsym "Super_L" $exec $alert SUPR
 	# options
 	bindsym 1 mode $lock $lock_style $exec $alert_lock & $touchpad_off; $layout_1; $fill_1
 	bindsym 2 mode $lock $lock_style $exec $alert_lock & $touchpad_off; $layout_2; $fill_2
@@ -517,14 +521,14 @@ mode $cnfg {
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Alt_L            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Control_L        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
-	bindsym Super_L   $exec $alert SUPR
+	bindsym "Super_L" $exec $alert SUPR
 	# options
 	bindsym c mode $lock $lock_style $exec emacs ~/.config/i3/config & $alert_lock & $touchpad_off
 	bindsym i mode $lock $lock_style $exec emacs ~/.gitignore
@@ -555,14 +559,14 @@ mode $cnfg {
 #	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Alt_L            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Control_L        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 #	# quit
 #	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
 #	# alert
 #	bindsym Caps_Lock $exec $alert CAPS
-#	bindsym Super_L   $exec $alert SUPR
+#	bindsym "Super_L" $exec $alert SUPR
 #	# options
 #         ...
 # }

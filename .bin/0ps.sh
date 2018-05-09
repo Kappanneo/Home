@@ -1,2 +1,2 @@
 #!/bin/bash
-i3-msg "workspace 0z"
+i3-msg "workspace 0"
