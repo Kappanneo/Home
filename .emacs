@@ -50,17 +50,20 @@
 (global-set-key (kbd "C-w") 'kill-this-buffer)
 (global-set-key (kbd "C-q") 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
+
 (global-set-key (kbd "M-f") 'search-forward-regexp)
+(global-set-key (kbd "M-c") 'delete-forward-char)
+(global-set-key (kbd "M-d") 'delete-backward-char)
 
 ;; alternative arrows
-(global-set-key (kbd "M-i") 'previous-line)
-(global-set-key (kbd "M-j") 'backward-char)
-(global-set-key (kbd "M-k") 'next-line)
-(global-set-key (kbd "M-l") 'forward-char)
+(global-set-key (kbd "M-o") 'previous-line)
+(global-set-key (kbd "M-k") 'backward-char)
+(global-set-key (kbd "M-l") 'next-line)
+(global-set-key (kbd "M-ò") 'forward-char)
 
-(global-set-key (kbd "M-C-i") 'backward-paragraph)
-(global-set-key (kbd "M-C-j") 'backward-word)
-(global-set-key (kbd "M-C-k") 'forward-paragraph)
-(global-set-key (kbd "M-C-l") 'forward-word)
+(global-set-key (kbd "M-C-o") 'backward-paragraph)
+(global-set-key (kbd "M-C-k") 'backward-word)
+(global-set-key (kbd "M-C-l") 'forward-paragraph)
+(global-set-key (kbd "M-C-ò") 'forward-word)
 
 (prefer-coding-system 'utf-8)
