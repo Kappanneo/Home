@@ -12,8 +12,9 @@ floating_modifier Mod1
 # no title-bars nor border
 new_window pixel 0
 
-# except in floating windows
-new_float normal
+# no floating
+for_window [title="."] floating disable split v
+new_float pixel 0
 
 # go back to previous workspace if you try to go to the current one
 # (allow for fast window movement to a workspace and back)
@@ -183,6 +184,12 @@ bindsym Mod4+d      focus right; $refresh
 # fullscreen
 bindsym Mod4+f fullscreen toggle
 
+# split orientation
+bindsym Mod4+g layout toggle splitv splith
+
+# floating
+bindsym Mod4+t floating toggle
+
 # resize window (you can also use the mouse for that)
 bindsym Mod4+minus resize shrink height 5 px or 1 ppt
 bindsym Mod4+m     resize shrink width  5 px or 1 ppt
@@ -197,11 +204,14 @@ mode $quit {
 	# lock
 	bindsym Return	         mode $lock $lock_style $exec $alert RESUME
 	bindsym Escape           mode $lock $lock_style $exec $alert RESUME
+	bindsym Delete           mode $lock $lock_style $exec $alert RESUME
 	bindsym "Super_L"        mode $lock $lock_style $exec $alert RESUME
 	bindsym space            mode $lock $lock_style $exec $alert RESUME
 	bindsym backslash        mode $lock $lock_style $exec $alert RESUME
+	bindsym BackSpace        mode $lock $lock_style $exec $alert RESUME
 	bindsym "Alt_L"        	 mode $lock $lock_style $exec $alert RESUME
 	bindsym "Control_L"      mode $lock $lock_style $exec $alert RESUME
+	bindsym --release Escape mode $lock $lock_style $exec $alert RESUME
 	bindsym --border button2 mode $lock $lock_style $exec $alert RESUME
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
@@ -218,10 +228,14 @@ mode $quit {
 mode $super {
 	# lock
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
 	# alert
@@ -275,7 +289,7 @@ mode $super {
 	bindsym q   workspace prev; $refresh
 	bindsym Shift+Tab   workspace prev; $refresh
 	bindsym control+Tab workspace next; $refresh
-	bindsym control+q   workspace next; $refresh
+	bindsym control+q   workspace prev; $refresh
 
 	# change focus
 	bindsym o      focus up   ; $refresh
@@ -323,9 +337,12 @@ mode $super {
 	bindsym p     resize  grow  width  5 px or 1 ppt
 
 	# split orientation
-	bindsym h split horizontal
-	bindsym v split vertical
-	bindsym less split toggle
+	bindsym v split v
+	bindsym h split h
+	bindsym g layout toggle splitv splith
+
+	# floating
+	bindsym t floating toggle
 
 	# focus tree
 	bindsym control+a focus parent;
@@ -343,7 +360,6 @@ mode $super {
 
 	# reload i3
 	bindsym control+r reload; $lock_style $exec $alert_lock & $touchpad_off & $alert RELOAD
-	bindsym Mod4+control+r $lock_style $exec $enable_autoscroll; $exec  $audio_reset; restart
 
 	# files
 	bindsym control+f mode $lock $lock_style $exec nautilus & $alert_lock & $touchpad_off
@@ -397,6 +413,12 @@ mode $super {
 	# fullscreen
 	bindsym Mod4+f fullscreen toggle
 
+	# split orientation
+	bindsym Mod4+g layout toggle splitv splith
+
+	# floating
+	bindsym Mod4+t floating toggle
+
 	# resize window (you can also use the mouse for that)
 	bindsym Mod4+minus  resize shrink height 5 px or 1 ppt
 	bindsym Mod4+m      resize shrink width  5 px or 1 ppt
@@ -443,6 +465,12 @@ mode $super {
 	# fullscreen
 	bindsym --release Mod4+f      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
+	# split orientation
+	bindsym --release Mod4+g      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# floating
+	bindsym --release Mod4+t      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
 	# resize window (you can also use the mouse for that)
 	bindsym --release Mod4+minus  mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+m      mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -453,19 +481,22 @@ mode $super {
 
 	# start a terminal
 	bindsym Mod4+control+w kill; $refresh
-	bindsym --release control+w mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+w mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# start a terminal
 	bindsym Mod4+Return mode $lock $lock_style $exec i3-sensible-terminal & $alert_lock & $touchpad_off
 
+	# start a terminal
+	bindsym Mod4+space mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
 	# open emacs
 	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
 
+	# hard reload
+	bindsym Mod4+control+r $lock_style $exec $enable_autoscroll; $exec $audio_reset; restart
+
 	# open application menu
 	bindsym Mod4+Menu mode $lock $lock_style $exec $dmenu-desktop & $alert_lock & $touchpad_off $ $alert EXEC
-
-	# enable autoscroll
-	bindsym Mod4+button2 mode $lock $lock_style $exec $enable_autoscroll & $alert_lock & $touchpad_off
 
 }
 
@@ -477,10 +508,13 @@ mode $rdsh {
 	bindsym Escape mode $super $super_style $exec $disable_Super_L $alert $super
 	# lock
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
@@ -506,10 +540,13 @@ mode $strt {
 	bindsym Escape mode $super $super_style $exec $alert $super
 	# lock
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
@@ -527,10 +564,13 @@ mode $cnfg {
 	bindsym Escape mode $super $super_style $exec $alert $super
 	# lock
 	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# quit
 	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
@@ -544,7 +584,7 @@ mode $cnfg {
 	bindsym e mode $lock $lock_style $exec emacs ~/.emacs & $alert_lock & $touchpad_off
 	bindsym s mode $lock $lock_style $exec emacs ~/.config/i3status/config & $alert_lock & $touchpad_off
 	bindsym z mode $lock $lock_style $exec emacs ~/.zshrc & $alert_lock & $touchpad_off
-	bindsym g mode $lock $lock_style $exec chromium-browser --new-window file://~/i3_User_Guide.html & $alert_lock & $touchpad_off # from https://i3wm.org/docs/userguide.html
+	bindsym g mode $lock $lock_style $exec chromium-browser --new-window i3wm.org/docs/userguide.html & $alert_lock & $touchpad_off
 	bindsym y mode $lock $lock_style $exec emacs ~/.workspaces/stamp.json & $alert_lock & $touchpad_off
 	bindsym 1 mode $lock $lock_style $exec emacs ~/.workspaces/$w1.json & $alert_lock & $touchpad_off
 	bindsym 2 mode $lock $lock_style $exec emacs ~/.workspaces/$w2.json & $alert_lock & $touchpad_off
@@ -565,10 +605,13 @@ mode $cnfg {
 #	bindsym Escape mode $super $super_style $exec $alert $super
 #	# lock
 #	bindsym Return           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Delete           mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym space            mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym backslash        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym BackSpace        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym "Alt_L"          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym "Control_L"      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym --release Escape mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 #	# quit
 #	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
