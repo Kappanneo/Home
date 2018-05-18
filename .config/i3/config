@@ -13,7 +13,7 @@ floating_modifier Mod1
 new_window pixel 0
 
 # no floating
-for_window [title="."] floating disable split v
+for_window [title="."] floating disable split toggle
 new_float pixel 0
 
 # go back to previous workspace if you try to go to the current one
@@ -185,10 +185,7 @@ bindsym Mod4+d      focus right; $refresh
 bindsym Mod4+f fullscreen toggle
 
 # split orientation
-bindsym Mod4+g layout toggle splitv splith
-
-# floating
-bindsym Mod4+t floating toggle
+bindsym Mod4+g focus parent; layout toggle split; focus child
 
 # resize window (you can also use the mouse for that)
 bindsym Mod4+minus resize shrink height 5 px or 1 ppt
@@ -337,12 +334,7 @@ mode $super {
 	bindsym p     resize  grow  width  5 px or 1 ppt
 
 	# split orientation
-	bindsym v split v
-	bindsym h split h
-	bindsym g layout toggle splitv splith
-
-	# floating
-	bindsym t floating toggle
+	bindsym g focus parent; layout toggle split; focus child
 
 	# focus tree
 	bindsym control+a focus parent;
@@ -414,10 +406,7 @@ mode $super {
 	bindsym Mod4+f fullscreen toggle
 
 	# split orientation
-	bindsym Mod4+g layout toggle splitv splith
-
-	# floating
-	bindsym Mod4+t floating toggle
+	bindsym Mod4+g focus parent; layout toggle split; focus child
 
 	# resize window (you can also use the mouse for that)
 	bindsym Mod4+minus  resize shrink height 5 px or 1 ppt
@@ -467,9 +456,6 @@ mode $super {
 
 	# split orientation
 	bindsym --release Mod4+g      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# floating
-	bindsym --release Mod4+t      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# resize window (you can also use the mouse for that)
 	bindsym --release Mod4+minus  mode $lock $lock_style $exec $alert_lock & $touchpad_off
