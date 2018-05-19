@@ -334,11 +334,16 @@ mode $super {
 	bindsym p     resize  grow  width  5 px or 1 ppt
 
 	# split orientation
+	bindsym h split h
+	bindsym v split v
 	bindsym g focus parent; layout toggle split; focus child
 
 	# focus tree
-	bindsym control+a focus parent;
-	bindsym control+z focus child;
+	bindsym less          focus child
+	bindsym Shift+greater focus parent
+	bindsym control+a     focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
+	bindsym control+z     focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
+	bindsym --release control+z mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# kill
 	bindsym control+w kill; $refresh
@@ -355,6 +360,9 @@ mode $super {
 
 	# files
 	bindsym control+f mode $lock $lock_style $exec nautilus & $alert_lock & $touchpad_off
+
+	# alternative esc
+	bindsym control+g $exec xdotool key Escape
 
 	# start dmenu (a program launcher)
 	bindsym control+e mode $lock $lock_style $exec dmenu_run; $exec $alert_lock & $touchpad_off & $alert EXEC
@@ -642,8 +650,8 @@ bar {
 assign [class="Steam"]    $w5
 assign [class="Wine"]     $w5
 for_window [title="Steam - News"] kill
-for_window [title="Friends"] resize shrink width 34 px or 34 ppt
-for_window [title="Steam"]   resize grow width 34 px or 34 ppt
+for_window [title="Friends"] resize shrink width 34 px or 34 ppt; split h
+for_window [title="Steam"] split h;
 
 # code
 assign [title="Visual Studio Code"] $w3
