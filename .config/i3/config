@@ -14,6 +14,7 @@ new_window pixel 0
 
 # no floating
 for_window [title="."] floating disable split toggle
+
 new_float pixel 0
 
 # go back to previous workspace if you try to go to the current one
@@ -22,6 +23,9 @@ workspace_auto_back_and_forth yes
 
 # focus on mouse (is a pain if you happen to have a mouse)
 focus_follows_mouse no
+
+# I like the original snake better
+focus_wrapping no
 
 # smart|ignore|leave_fullscreen
 popup_during_fullscreen leave_fullscreen
@@ -158,6 +162,7 @@ bindsym Mod4+8 workspace $w8; $refresh
 bindsym Mod4+9 workspace $w9; $refresh
 bindsym Mod4+0 workspace $w0; $refresh
 bindsym Mod4+x workspace $wx; $refresh
+bindsym Mod4+d workspace $w0; $refresh
 
 # also Tab
 bindsym Mod4+Tab workspace next; $refresh
@@ -174,12 +179,6 @@ bindsym Mod4+Up     focus up   ; $refresh
 bindsym Mod4+Left   focus left ; $refresh
 bindsym Mod4+Down   focus down ; $refresh
 bindsym Mod4+Right  focus right; $refresh
-
-# alternative to the other alternative
-bindsym Mod4+w      focus up   ; $refresh
-bindsym Mod4+a      focus left ; $refresh
-bindsym Mod4+s      focus down ; $refresh
-bindsym Mod4+d      focus right; $refresh
 
 # fullscreen
 bindsym Mod4+f fullscreen toggle
@@ -355,6 +354,9 @@ mode $super {
 	bindsym control+x move container to workspace $wx; $refresh
 	bindsym control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
+	# desktop
+	bindsym control+d move container to workspace $w0; workspace $w0
+
 	# reload i3
 	bindsym control+r reload; $lock_style $exec $alert_lock & $touchpad_off & $alert RELOAD
 
@@ -369,7 +371,7 @@ mode $super {
 
 	# start dmenu (a program launcher)
 	bindsym control+t mode $lock $lock_style $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
-
+	
 	# application menu
 	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
 
@@ -387,6 +389,7 @@ mode $super {
 	bindsym Mod4+9 workspace $w9; $refresh
 	bindsym Mod4+0 workspace $w0; $refresh
 	bindsym Mod4+x workspace $wx; $refresh
+	bindsym Mod4+d workspace $w0; $refresh
 
 	# also Tab
 	bindsym Mod4+Tab workspace next;     $refresh
@@ -403,12 +406,6 @@ mode $super {
 	bindsym Mod4+Left   focus left ; $refresh
 	bindsym Mod4+Down   focus down ; $refresh
 	bindsym Mod4+Right  focus right; $refresh
-
-	# alternative to the other alternative
-	bindsym Mod4+w      focus up   ; $refresh
-	bindsym Mod4+a      focus left ; $refresh
-	bindsym Mod4+s      focus down ; $refresh
-	bindsym Mod4+d      focus right; $refresh
 
 	# fullscreen
 	bindsym Mod4+f fullscreen toggle
@@ -436,7 +433,8 @@ mode $super {
 	bindsym --release Mod4+9      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+0      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+x      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
+	bindsym --release Mod4+d      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	
 	# also Tab
 	bindsym --release Mod4+Tab    mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+q      mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -453,11 +451,8 @@ mode $super {
 	bindsym --release Mod4+Down   mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+Right  mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	# alternative to the other alternative
-	bindsym --release Mod4+w      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+a      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+s      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+d      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	# desktop
+	
 
 	# fullscreen
 	bindsym --release Mod4+f      mode $lock $lock_style $exec $alert_lock & $touchpad_off
