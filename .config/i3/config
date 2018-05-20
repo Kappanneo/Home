@@ -13,7 +13,7 @@ floating_modifier Mod1
 new_window pixel 0
 
 # no floating
-for_window [title="."] floating disable split toggle
+for_window [title="."] floating disable split toggle; focus parent; fullscreen disable
 
 new_float pixel 0
 
