@@ -112,8 +112,8 @@ set $submode_style [tiling] border pixel 7
 ############################ FUNCTIONALITIES ###################################
 
 # touchpad toggle
-set $touchpad_on  xdotool mousemove 750  350 && ~/.bin/touchpad_toggle.sh 1
-set $touchpad_off xdotool mousemove 750 1200 && ~/.bin/touchpad_toggle.sh 0
+set $touchpad_on  xdotool mousemove  750  350 && ~/.bin/touchpad_toggle.sh 1
+set $touchpad_off xdotool mousemove 2500 1200 && ~/.bin/touchpad_toggle.sh 0
 set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
 set $touchpad_toggle ~/.bin/touchpad_toggle.sh
 
@@ -410,7 +410,21 @@ mode $super {
 	# fullscreen
 	bindsym Mod4+f fullscreen toggle
 
-	# split orientation
+	# move focused window
+	bindsym Mod4+control+o      move up
+	bindsym Mod4+control+k      move left
+	bindsym Mod4+control+l      move down
+	bindsym Mod4+control+ograve move right
+
+	# alternatively, you can use the cursor keys:
+	bindsym Mod4+control+Up     move up
+	bindsym Mod4+control+Left   move left
+	bindsym Mod4+control+Down   move down
+	bindsym Mod4+control+Right  move right
+
+	# split
+	bindsym Mod4+h split h
+	bindsym Mod4+v split v
 	bindsym Mod4+g focus parent; layout toggle split; focus child
 
 	# resize window (you can also use the mouse for that)
@@ -451,13 +465,24 @@ mode $super {
 	bindsym --release Mod4+Down   mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+Right  mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	# desktop
-	
-
 	# fullscreen
 	bindsym --release Mod4+f      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
+	# move focused window
+	bindsym --release Mod4+control+o      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+k      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+l      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+ograve mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# alternatively, you can use the cursor keys:
+	bindsym --release Mod4+control+Up     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+Left   mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+Down   mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+Right  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
 	# split orientation
+	bindsym --release Mod4+h      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+v      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+g      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# resize window (you can also use the mouse for that)
