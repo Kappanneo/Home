@@ -65,7 +65,22 @@ set $audio_reset "amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; a
 set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
 set $disable_Caps setxkbmap -option ctrl:nocaps
 set $enable_Caps setxkbmap -option
-set $enable_autoscroll ~/.bin/autoscroll.sh
+
+############################ FUNCTIONALITIES ###################################
+
+# touchpad toggle
+set $touchpad_on  xdotool mousemove  750  350 && ~/.bin/touchpad_toggle.sh 1
+set $touchpad_off xdotool mousemove 2500 1200 && ~/.bin/touchpad_toggle.sh 0
+set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
+set $touchpad_toggle ~/.bin/touchpad_toggle.sh
+
+#autoscroll
+set $enable_autoscroll ~/.bin/autoscroll.sh 1
+set $disable_autoscroll ~/.bin/autoscroll.sh 0
+set $autoscroll_toggle ~/.bin/autoscroll.sh
+
+# screenshot
+set $print "import /tmp/latest-screenshot.png; eog /tmp/latest-screenshot.png"
 
 ############################### WORKSPACES #####################################
 
@@ -77,7 +92,7 @@ set $w5 5team
 set $w6 6kype
 set $w7 7nani
 set $w8 8volante
-set $w9 9
+set $w9 9imp
 set $w0 0
 
 # this one is for cut & paste or exiled containers (I use the last workspace)
@@ -105,20 +120,9 @@ set $cnfg "CNFG: esc to resume  c config  i gitignore  a applications  e emacs  
 set $alert_lock notify-send --expire-time=6000 "LOCK: super to unlock i3"
 
 set $lock_style    [tiling] border none
-set $super_style   [tiling] border pixel 3
+set $super_style   [tiling] border pixel 5
 set $quit_style    [tiling] border pixel 7
 set $submode_style [tiling] border pixel 7
-
-############################ FUNCTIONALITIES ###################################
-
-# touchpad toggle
-set $touchpad_on  xdotool mousemove  750  350 && ~/.bin/touchpad_toggle.sh 1
-set $touchpad_off xdotool mousemove 2500 1200 && ~/.bin/touchpad_toggle.sh 0
-set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
-set $touchpad_toggle ~/.bin/touchpad_toggle.sh
-
-# screenshot
-set $print "import /tmp/latest-screenshot.png; eog /tmp/latest-screenshot.png"
 
 ################################################################################
 #                               COMMANDS                                       #
@@ -182,8 +186,11 @@ bindsym Mod4+Right  focus right; $refresh
 
 # fullscreen
 bindsym Mod4+f fullscreen toggle
+bindsym Mod4+Shift+Tab   workspace prev; $refresh
+bindsym Mod4+control+Tab workspace next; $refresh
+bindsym Mod4+control+q   workspace prev; $refresh
 
-# split orientation
+# split
 bindsym Mod4+g focus parent; layout toggle split; focus child
 
 # resize window (you can also use the mouse for that)
@@ -332,7 +339,7 @@ mode $super {
 	bindsym plus  resize  grow  height 5 px or 1 ppt
 	bindsym p     resize  grow  width  5 px or 1 ppt
 
-	# split orientation
+	# split
 	bindsym h split h
 	bindsym v split v
 	bindsym g focus parent; layout toggle split; focus child
@@ -341,8 +348,7 @@ mode $super {
 	bindsym less          focus child
 	bindsym Shift+greater focus parent
 	bindsym control+a     focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
-	bindsym control+z     focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
-	bindsym --release control+z mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym control+z     mode $lock $lock_style focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child; $exec $alert_lock & $touchpad_off
 
 	# kill
 	bindsym control+w kill; $refresh
@@ -394,6 +400,9 @@ mode $super {
 	# also Tab
 	bindsym Mod4+Tab workspace next;     $refresh
 	bindsym Mod4+q   workspace previous; $refresh
+	bindsym Mod4+Shift+Tab   workspace prev; $refresh
+	bindsym Mod4+control+Tab workspace next; $refresh
+	bindsym Mod4+control+q   workspace prev; $refresh
 
 	# change focus
 	bindsym Mod4+o      focus up   ; $refresh
@@ -427,6 +436,10 @@ mode $super {
 	bindsym Mod4+v split v
 	bindsym Mod4+g focus parent; layout toggle split; focus child
 
+	# focus
+	bindsym Mod4+a focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
+	bindsym Mod4+z focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
+
 	# resize window (you can also use the mouse for that)
 	bindsym Mod4+minus  resize shrink height 5 px or 1 ppt
 	bindsym Mod4+m      resize shrink width  5 px or 1 ppt
@@ -435,38 +448,50 @@ mode $super {
 
 	############## LOCKS #############
 
+	# unused keys
+	bindsym  e                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym  t                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym  y                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym  u                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym  i                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym  b                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym  n                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
 	# switch workspace
-	bindsym --release Mod4+1      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+2      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+3      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+4      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+5      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+6      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+7      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+8      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+9      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+0      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+x      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+d      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+1              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+2              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+3              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+4              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+5              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+6              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+7              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+8              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+9              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+0              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+x              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+d              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	
 	# also Tab
-	bindsym --release Mod4+Tab    mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+q      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Tab            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+q              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+Tab      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+Tab    mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+q      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# change focus
-	bindsym --release Mod4+o      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+k      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+l      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+ograve mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+o              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+k              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+l              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+ograve         mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# alternatively, you can use the cursor keys:
-	bindsym --release Mod4+Up     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Left   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Down   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Right  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Up             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Left           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Down           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Right          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# fullscreen
-	bindsym --release Mod4+f      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+f              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# move focused window
 	bindsym --release Mod4+control+o      mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -480,22 +505,26 @@ mode $super {
 	bindsym --release Mod4+control+Down   mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --release Mod4+control+Right  mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	# split orientation
-	bindsym --release Mod4+h      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+v      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+g      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	# split
+	bindsym --release Mod4+h              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+v              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+g              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# focus
+	bindsym --release Mod4+a              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+z              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# resize window (you can also use the mouse for that)
-	bindsym --release Mod4+minus  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+m      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+plus   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+p      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+minus          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+m              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+plus           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+p              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	######### INSTA-COMMANDS #########
 
 	# start a terminal
 	bindsym Mod4+control+w kill; $refresh
-	bindsym --release Mod4+control+w mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+control+w  mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# start a terminal
 	bindsym Mod4+Return mode $lock $lock_style $exec i3-sensible-terminal & $alert_lock & $touchpad_off
@@ -690,6 +719,12 @@ assign [title="Texmaker"] $w7
 
 # matlab
 assign [class="MATLAB"]   $w7
+
+# gimp
+assign [class="Gimp-2.8"] $w9
+
+# discord
+assign [class="discord"]  $w6
 
 ################################################################################
 #                                STARTUP                                       #
