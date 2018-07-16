@@ -580,7 +580,7 @@ mode $super {
 #	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym "Control_L"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym "Super_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert_lock & $touchpad_off # (alt gr)
 #	bindsym Menu                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
