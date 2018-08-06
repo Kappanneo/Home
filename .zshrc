@@ -89,16 +89,17 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias grappolo="nodejs /home/claudio/Desktop/Git/Algo-rhythmic/uva/server.js"
+alias grappolo="docker run --publish 8000:8000 claudio/grappolo"
+
 alias ciao="echo ciao"
 alias etcher="sudo /home/claudio/etcher-1.3.1-x86_64.AppImage"
 
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 
-export PATH=/home/claudio/Desktop/Git/iroha/build/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/home/claudio/bin:$PATH
+
 export WINEPREFIX="/home/claudio/prefix32"
 export XDG_CURRENT_DESKTOP=GNOME
 

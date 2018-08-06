@@ -48,7 +48,7 @@
 (global-set-key (kbd "C-f") 'find-file)
 (global-set-key (kbd "C-d") 'delete-other-windows)
 (global-set-key (kbd "C-w") 'kill-this-buffer)
-(global-set-key (kbd "C-q") 'switch-to-prev-buffer)
+(global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 
 (global-set-key (kbd "M-f") 'search-forward-regexp)

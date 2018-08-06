@@ -13,7 +13,7 @@ floating_modifier Mod1
 new_window pixel 0
 
 # no floating
-for_window [title="."] floating disable split toggle; focus parent; fullscreen disable
+for_window [title="."] floating disable split toggle; focus parent; fullscreen disable; focus child
 
 new_float pixel 0
 
@@ -31,7 +31,7 @@ focus_wrapping no
 popup_during_fullscreen leave_fullscreen
 
 # smart|urgent|focus|none
-focus_on_window_activation none
+focus_on_window_activation smart
 
 ################################  COLORS  ######################################
 
@@ -106,7 +106,7 @@ set $wx X
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'"
 set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 1.75; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'"
-set $fill_2 exec --no-startup-id "emacs ~/memo & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://gitlab.com/kappanneo & i3-sensible-terminal"
+set $fill_2 exec --no-startup-id "emacs ~/memo & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & i3-sensible-terminal"
 
 ################################ MODES #########################################
 
@@ -313,16 +313,16 @@ mode $super {
 	bindsym x workspace $wx; $refresh
 
 	# move focused container to workspace and follow
-	bindsym control+1 move container to workspace $w1; workspace $w1
-	bindsym control+2 move container to workspace $w2; workspace $w2
-	bindsym control+3 move container to workspace $w3; workspace $w3
-	bindsym control+4 move container to workspace $w4; workspace $w4
-	bindsym control+5 move container to workspace $w5; workspace $w5
-	bindsym control+6 move container to workspace $w6; workspace $w6
-	bindsym control+7 move container to workspace $w7; workspace $w7
-	bindsym control+8 move container to workspace $w8; workspace $w8
-	bindsym control+9 move container to workspace $w9; workspace $w9
-	bindsym control+0 move container to workspace $w0; workspace $w0
+	bindsym Shift+1 move container to workspace $w1; workspace $w1
+	bindsym Shift+2 move container to workspace $w2; workspace $w2
+	bindsym Shift+3 move container to workspace $w3; workspace $w3
+	bindsym Shift+4 move container to workspace $w4; workspace $w4
+	bindsym Shift+5 move container to workspace $w5; workspace $w5
+	bindsym Shift+6 move container to workspace $w6; workspace $w6
+	bindsym Shift+7 move container to workspace $w7; workspace $w7
+	bindsym Shift+8 move container to workspace $w8; workspace $w8
+	bindsym Shift+9 move container to workspace $w9; workspace $w9
+	bindsym Shift+0 move container to workspace $w0; workspace $w0
 
 	# also Tab
 	bindsym Tab                 workspace next; $refresh
@@ -352,16 +352,16 @@ mode $super {
 	bindsym f fullscreen toggle
 
 	# move focused window
-	bindsym control+o      move up
-	bindsym control+k      move left
-	bindsym control+l      move down
-	bindsym control+ograve move right
+	bindsym Shift+o      move up
+	bindsym Shift+k      move left
+	bindsym Shift+l      move down
+	bindsym Shift+ograve move right
 
 	# alternatively, you can use the cursor keys:
-	bindsym control+Up     move up
-	bindsym control+Left   move left
-	bindsym control+Down   move down
-	bindsym control+Right  move right
+	bindsym Shift+Up     move up
+	bindsym Shift+Left   move left
+	bindsym Shift+Down   move down
+	bindsym Shift+Right  move right
 
 	# alternative to the other alternative
 	bindsym Shift+w        move up
@@ -410,13 +410,13 @@ mode $super {
 	bindsym control+g $exec xdotool key Escape
 
 	# start dmenu (a program launcher)
-	bindsym control+e mode $lock $lock_style $exec dmenu_run; $exec $alert_lock & $touchpad_off & $alert EXEC
+	bindsym control+e mode $lock $lock_style focus parent; $exec dmenu_run; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	# start dmenu (a program launcher)
-	bindsym control+t mode $lock $lock_style $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
+	bindsym control+t mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	# application menu
-	bindsym Menu mode $lock $lock_style $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
+	bindsym Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	########## CHAIN-COMMANDS ########
 
@@ -454,16 +454,16 @@ mode $super {
 	bindsym Mod4+f fullscreen toggle
 
 	# move focused window
-	bindsym Mod4+control+o      move up
-	bindsym Mod4+control+k      move left
-	bindsym Mod4+control+l      move down
-	bindsym Mod4+control+ograve move right
+	bindsym Mod4+Shift+o      move up
+	bindsym Mod4+Shift+k      move left
+	bindsym Mod4+Shift+l      move down
+	bindsym Mod4+Shift+ograve move right
 
 	# alternatively, you can use the cursor keys:
-	bindsym Mod4+control+Up     move up
-	bindsym Mod4+control+Left   move left
-	bindsym Mod4+control+Down   move down
-	bindsym Mod4+control+Right  move right
+	bindsym Mod4+Shift+Up     move up
+	bindsym Mod4+Shift+Left   move left
+	bindsym Mod4+Shift+Down   move down
+	bindsym Mod4+Shift+Right  move right
 
 	# split
 	bindsym Mod4+h split h
@@ -591,19 +591,19 @@ mode $super {
 #	bindsym Right                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# also Shift+ (since Shift is not locked)
-	bindsym Shift+bar                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+exclam                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+quotedbl                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+sterling                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+dollar                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+percent                 mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+ampersand               mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+slash                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+parenleft               mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+parenright              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+equal                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+question                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+asciicircum             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+bar                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+exclam                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+quotedbl                mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+sterling                mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+dollar                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+percent                 mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+ampersand               mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+slash                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+parenleft               mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+parenright              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+equal                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+question                mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+asciicircum             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym Shift+q                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym Shift+w                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym Shift+e                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -1097,7 +1097,7 @@ bar {
 assign [class="Steam"]    $w5
 assign [class="Wine"]     $w5
 for_window [title="Steam - News"] kill
-for_window [title="Friends"] resize shrink width 34 px or 34 ppt; split h
+for_window [title="Friends"] resize shrink width 24 px or 24 ppt; split h
 for_window [title="Steam"] split h
 
 # code
