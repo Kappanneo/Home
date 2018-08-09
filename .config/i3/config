@@ -312,6 +312,19 @@ mode $super {
 	bindsym 0 workspace $w0; $refresh
 	bindsym x workspace $wx; $refresh
 
+	# move focused container to workspace
+	bindsym control+1 move container to workspace $w1; $refresh
+	bindsym control+2 move container to workspace $w2; $refresh
+	bindsym control+3 move container to workspace $w3; $refresh
+	bindsym control+4 move container to workspace $w4; $refresh
+	bindsym control+5 move container to workspace $w5; $refresh
+	bindsym control+6 move container to workspace $w6; $refresh
+	bindsym control+7 move container to workspace $w7; $refresh
+	bindsym control+8 move container to workspace $w8; $refresh
+	bindsym control+9 move container to workspace $w9; $refresh
+	bindsym control+0 move container to workspace $w0; $refresh
+	bindsym control+x move container to workspace $wx; $refresh # cut
+
 	# move focused container to workspace and follow
 	bindsym Shift+1 move container to workspace $w1; workspace $w1
 	bindsym Shift+2 move container to workspace $w2; workspace $w2
@@ -393,8 +406,7 @@ mode $super {
 	# save layout
 	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"; $exec $alert_lock & $touchpad_off
 
-	# cut & paste
-	bindsym control+x move container to workspace $wx; $refresh
+	# paste
 	bindsym control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
 	# desktop
@@ -1097,7 +1109,7 @@ bar {
 assign [class="Steam"]    $w5
 assign [class="Wine"]     $w5
 for_window [title="Steam - News"] kill
-for_window [title="Friends"] resize shrink width 24 px or 24 ppt; split h
+for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
 for_window [title="Steam"] split h
 
 # code
