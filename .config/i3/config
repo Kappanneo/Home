@@ -93,7 +93,7 @@ set $w3 3code
 set $w4 4terminl
 set $w5 5team
 set $w6 6kype
-set $w7 7nani
+set $w7 7atex
 set $w8 8volante
 set $w9 9imp
 set $w0 0
@@ -506,7 +506,7 @@ mode $super {
 	bindsym Mod4+control+r $lock_style $exec $enable_autoscroll; $exec $audio_reset; restart
 
 	# open application menu
-	bindsym Mod4+Menu mode $lock $lock_style $exec $dmenu-desktop & $alert_lock & $touchpad_off $ $alert EXEC
+	bindsym Mod4+Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	############# ALERTS #############
 
@@ -1100,39 +1100,36 @@ bar {
 #                              APPLICATIONS                                    #
 ################################################################################
 
-# steam
-assign [class="Steam"]    $w5
-assign [class="Wine"]     $w5
-for_window [title="Steam - News"] kill
-for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
-for_window [title="Steam"] split h
+# desktop
+assign [title="Desktop"] $w0
 
 # code
 assign [title="Visual Studio Code"] $w3
 
 # android studio
-assign [class="jetbrains-studio"]   $w3
+assign [class="jetbrains-studio"] $w3
 
-# nautilus desktop confining
-assign [title="Desktop"]  $w0
+# system monitor
+assign [title="System Monitor"] $w4
 
-# chromium profile error kill
-for_window [title="Profile error occurred"] kill
+# steam
+assign [class="Steam"] $w5
+assign [class="Wine"] $w5
+for_window [title="Steam - News"] kill
+for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
+for_window [title="Steam"] split h
 
 # skype
-assign [class="Skype"]    $w6
+assign [class="Skype"] $w6
+
+# discord
+assign [class="discord"] $w6
 
 # texmaker
 assign [title="Texmaker"] $w7
 
-# matlab
-assign [class="MATLAB"]   $w7
-
 # gimp
 assign [class="Gimp-2.8"] $w9
-
-# discord
-assign [class="discord"]  $w6
 
 ################################################################################
 #                                STARTUP                                       #
