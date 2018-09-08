@@ -104,7 +104,7 @@ set $wx X
 ############################### LAYOUTS ########################################
 
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 1.75; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
+set $fill_1 exec --no-startup-id "chromium-browser --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium-browser --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium-browser --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'"
 set $fill_2 exec --no-startup-id "emacs ~/memo & nautilus & nautilus Downloads & chromium-browser --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & i3-sensible-terminal"
 

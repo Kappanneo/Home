@@ -89,7 +89,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias grappolo="docker run --publish 8000:8000 claudio/grappolo"
+alias grappolo="docker run --publish 8000:8000 disorganizzazione/grappolo"
 
 alias ciao="echo ciao"
 alias etcher="sudo /home/claudio/etcher-1.3.1-x86_64.AppImage"
