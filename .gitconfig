@@ -1,3 +1,8 @@
 [user]
 	email = pannacciclaudio@gmail.com
-	name = kappanneo
+	name = Kappanneo
+[core]
+	editor = emacs
+	autocrlf = input
+[push]
+	default = simple
