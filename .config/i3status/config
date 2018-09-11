@@ -1,0 +1,221 @@
+general
+{
+        colors          = true
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+#      color_separator = "#FF00FF"
+        interval        = 1
+#      output_format  = "i3bar"
+}
+
+#order                  += "ipv6"
+#order                  += "disk /"
+#order                  += "disk /home"
+#order                  += "disk /boot"
+#order                  += "disk /root"
+#order                  += "disk /var"
+#order                  += "disk /mnt/usb"
+#order                  += "run_watch DHCP"
+#order                  += "run_watch VPN"
+#order                  += "wireless wlan0"
+#order                  += "ethernet enp4s0"
+order                  += "battery 0"
+order                  += "cpu_usage"
+order                  += "cpu_temperature 0"
+#order                  += "load"
+order                  += "volume master"
+order                  += "time"
+#order                  += "tztime berlin"
+#order                  += "ddate"
+
+ipv6
+{
+#      %ip = ipv6 address
+        format_up      = "IPv6: %ip"
+        format_down    = "IPv6: none"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+disk "/"
+{
+#      %free = free space; %avail = availble space; %used = used space; %total = total space; %percentage_free = percent free; %percentage_avail = percent avail; %percentage_used = percent used
+        format          = "/: %used/%total"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+disk "/home"
+{
+#      %free; %used = used space; %total = total space; %percentage_free = percent free; %percentage_avail = percent avail; %percentage_used = percent used
+        format          = "/home: %used/%total"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+disk "/boot"
+{
+#      %free = free space; %avail = availble space; %used = used space; %total = total space; %percentage_free = percent free; %percentage_avail = percent avail; %percentage_used = percent used
+        format          = "/boot: %used/%total"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+disk "/root"
+{
+#      %free = free space; %avail = availble space; %used = used space; %total = total space; %percentage_free = percent free; %percentage_avail = percent avail; %percentage_used = percent used
+        format          = "/root: %used/%total"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+disk "/var"
+{
+#      %free = free space; %avail = availble space; %used = used space; %total = total space; %percentage_free = percent free; %percentage_avail = percent avail; %percentage_used = percent used
+        format          = "/var: %used/%total"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+disk "/mnt/usb"
+{
+#      %free = free space; %avail = availble space; %used = used space; %total = total space; %percentage_free = percent free; %percentage_avail = percent avail; %percentage_used = percent used
+        format          = "usb: %used/%total"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+run_watch DHCP
+{
+#      %title; %status
+        pidfile        = "/var/run/dhclient*.pid"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+run_watch VPN
+{
+#      %title; %status
+        pidfile        = "/var/run/vpnc/pid"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+wireless wlan0
+{
+#      %quality = quality; %essid = network name; %bitrate = speed; %ip = ip address
+        format_up      = "W: (%quality at %essid) %ip"
+        format_down    = "W: down"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+ethernet enp4s0
+{
+#      %ip = ip address; %speed = speed
+#      if you use %speed, i3status requires root privileges : "setcap cap_net_admin=ep $(which i3status)"
+        format_up      = "E: %ip (%speed)"
+        format_down    = "E: down"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+battery 0
+{
+#      %status = charging, discharging, or running; %remaining = percent left; %emptytime = time left; %consumption = speed of usage
+        format          = "%status %percentage %remaining"
+	format_down = "No battery"
+        status_chr = "⚡ CHR"
+        status_bat = "🔋 BAT"
+        status_unk = "? UNK"
+        status_full = "☻ FULL"
+        last_full_capacity = true
+        integer_battery_capacity = false
+        threshold_type  = "time"
+        low_threshold  = 15
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+cpu_temperature 0
+{
+#      %degrees = temapture in Celcius
+        format          = "%degrees °C"
+#      max_threshold  = 75
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+cpu_usage
+{
+#      %usage = usage
+        format          = "CPU %usage"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+load
+{
+#      %1min = number of waiting prosseses in last minute; %5min = number of waiting prosseses; %15min = number of waiting prosseses
+        format          = "%1min"
+#      max_threshold  = 5
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+time
+{
+#      %Y = year; %m = month; %d = day; %H = hours; %M = minutes; %S = Seconds
+        format          = "%Y-%m-%d %H:%M:%S"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+tztime berlin
+{
+#      %Y = year; %m = month; %d = day; %H = hours; %M = minutes; %S = Seconds;
+        format          = "%d-%m-%Y %H:%M"
+        timezone        = "Europe/Berlin"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+ddate
+{
+#      %a; %b; %d; %Y; %N; %H
+        format          = "%{%a, %b %d%}, %Y%N - %H"
+#      color_good      = "#00FF00"
+#      color_degraded  = "#0000FF"
+#      color_bad      = "#FF0000"
+}
+
+volume master
+{
+#      %volume = volume
+        format         = "♪ %volume"
+	format_muted   = "Muted"
+        device         = "default"
+        mixer          = "Master"
+        mixer_idx      = 0
+        color_good     = "#FF0000"
+        color_degraded = "#999999"
+        color_bad      = "#FF0000"
+}
