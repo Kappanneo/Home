@@ -19,6 +19,7 @@
             "swallows": [
                {
                "class": "^Chromium$"
+
                }
             ],
             "type": "con"
