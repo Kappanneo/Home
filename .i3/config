@@ -105,7 +105,7 @@ set $wx X
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'"
 set $fill_1 exec --no-startup-id "chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'"
-set $fill_2 exec --no-startup-id "emacs ~/memo & pcmanfm -n ~ & pcmanfm -n Downloads & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal"
+set $fill_2 exec --no-startup-id "emacs ~/memo & pcmanfm & pcmanfm -n Downloads & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal"
 
 ################################ MODES #########################################
 
@@ -137,6 +137,10 @@ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
 bindsym XF86AudioLowerVolume $exec amixer -c 1 -q sset Master 1dB-
 bindsym XF86AudioMute $exec amixer -c 1 -q -D pulse set Master 1+ toggle
+
+# Screen brightness controls #TODO: not working
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
 
 # screenshot
 bindsym --release Print $exec $print
@@ -713,16 +717,16 @@ mode $super {
 # redshift menu
 mode $rdsh {
 	# options
-	bindsym 1 $exec redshift -O 2100K
-	bindsym 2 $exec redshift -O 2300K
-	bindsym 3 $exec redshift -O 2500K
-	bindsym 4 $exec redshift -O 2700K
-	bindsym 5 $exec redshift -O 3000K
-	bindsym 6 $exec redshift -O 3500K
-	bindsym 7 $exec redshift -O 4000K
-	bindsym 8 $exec redshift -O 4500K
-	bindsym 9 $exec redshift -O 5000K
-	bindsym 0 $exec redshift -O 6500K
+	bindsym 1 $exec redshift -P -O 2100K
+	bindsym 2 $exec redshift -P -O 2300K
+	bindsym 3 $exec redshift -P -O 2500K
+	bindsym 4 $exec redshift -P -O 2700K
+	bindsym 5 $exec redshift -P -O 3000K
+	bindsym 6 $exec redshift -P -O 3500K
+	bindsym 7 $exec redshift -P -O 4000K
+	bindsym 8 $exec redshift -P -O 4500K
+	bindsym 9 $exec redshift -P -O 5000K
+	bindsym 0 $exec redshift -P -O 6500K
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
@@ -893,7 +897,7 @@ mode $cnfg {
 	bindsym i mode $lock $lock_style $exec emacs ~/.gitignore
 	bindsym a mode $lock $lock_style $exec emacs /sudo::/usr/share/applications/ & $alert_lock & $touchpad_off
 	bindsym e mode $lock $lock_style $exec emacs ~/.emacs & $alert_lock & $touchpad_off
-	bindsym s mode $lock $lock_style $exec emacs ~/.i3status/config & $alert_lock & $touchpad_off
+	bindsym s mode $lock $lock_style $exec emacs ~/.config/i3status/config & $alert_lock & $touchpad_off
 	bindsym z mode $lock $lock_style $exec emacs ~/.zshrc & $alert_lock & $touchpad_off
 	bindsym g mode $lock $lock_style $exec chromium --new-window i3wm.org/docs/userguide.html & $alert_lock & $touchpad_off
 	bindsym y mode $lock $lock_style $exec emacs ~/.workspaces/stamp.json & $alert_lock & $touchpad_off
@@ -1144,6 +1148,13 @@ $exec $enable_autoscroll
 # applications
 $exec classicmenu-indicator & nm-applet
 $exec redshift -O 4500K
+$exec volumeicon
+$exec clipit
+$exec pamac-tray
+$exec xautolock -time 10 -locker dm-tool
+
+# desktop background
+exec_always --no-startup-id nitrogen --restore
 
 # layout
 $layout_2

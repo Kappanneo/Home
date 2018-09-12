@@ -21,10 +21,10 @@ general
 #order                  += "wireless wlan0"
 #order                  += "ethernet enp4s0"
 order                  += "battery 0"
-order                  += "cpu_usage"
-order                  += "cpu_temperature 0"
+#order                  += "cpu_usage"
+#order                  += "cpu_temperature 0"
 #order                  += "load"
-order                  += "volume master"
+#order                  += "volume master"
 order                  += "time"
 #order                  += "tztime berlin"
 #order                  += "ddate"
@@ -138,7 +138,7 @@ battery 0
         format          = "%status %percentage %remaining"
 	format_down = "No battery"
         status_chr = "⚡ CHR"
-        status_bat = "🔋 BAT"
+        status_bat = " BAT"
         status_unk = "? UNK"
         status_full = "☻ FULL"
         last_full_capacity = true
@@ -210,12 +210,12 @@ ddate
 volume master
 {
 #      %volume = volume
-        format         = "♪ %volume"
-	format_muted   = "Muted"
-        device         = "default"
-        mixer          = "Master"
-        mixer_idx      = 0
-        color_good     = "#FF0000"
-        color_degraded = "#999999"
-        color_bad      = "#FF0000"
+        format         = " %volume"
+#	format_muted   = "Muted"
+#        device         = "default"
+#        mixer          = "Master"
+#        mixer_idx      = 0
+#        color_good     = "#FF0000"
+#        color_degraded = "#999999"
+#        color_bad      = "#FF0000"
 }
