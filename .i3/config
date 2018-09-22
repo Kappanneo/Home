@@ -102,7 +102,8 @@ set $w0 0
 set $wx X
 
 ############################### LAYOUTS ########################################
-set $fill_0 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 0; pcmanfm --desktop'" #TODO
+ 
+set $fill_0 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 0'; pcmanfm --desktop"
 set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'"
 set $fill_1 exec --no-startup-id "chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
 set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'"
@@ -134,7 +135,7 @@ set $submode_style [tiling] border pixel 7
 # touchpad toggle
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
-# Screen brightness controls #TODO: not working
+# Screen brightness controls: not working
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'"
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
 
@@ -1101,9 +1102,6 @@ bar {
 #                              APPLICATIONS                                    #
 ################################################################################
 
-# desktop
-assign [title="Desktop"] $w0
-
 # code
 assign [class=".*code.*"] $w3
 
@@ -1157,7 +1155,7 @@ $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 $exec_always nitrogen --restore
 
 # layout
-$fill_0 #TODO: fix
+$fill_0
 $layout_2
 $fill_2
 

@@ -66,4 +66,6 @@
 (global-set-key (kbd "M-C-l") 'forward-paragraph)
 (global-set-key (kbd "M-C-ò") 'forward-word)
 
+(global-set-key (kbd "C-r") 'isearch-forward-regexp)
+
 (prefer-coding-system 'utf-8)
