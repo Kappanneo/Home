@@ -57,11 +57,12 @@ set $dmenu-desktop i3-dmenu-desktop   # ~/k5-dmenu-desktop
 
 # for brevity
 set $exec exec --no-startup-id
+set $exec_always exec_always --no-startup-id
 set $alert notify-send --expire-time=4200
 set $refresh exec killall -USR1 i3status # statusbar update
 
-# default audio
-set $audio_reset "amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute"
+# audio reset
+set $pulseaudio_restart "pulseaudio --kill; pulseaudio --start; amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute"
 
 ############################### KEYBINDINGS ####################################
 
@@ -117,7 +118,7 @@ set $quit  "QUIT: esc to resume   q to quit  r to restart  s to suspen  e to exi
 # submodes (standardized, model below)
 set $rdsh "RDSH: esc to resume  0-9 to adjust"
 set $strt "STRT: esc to resume  1-2 layouts"
-set $cnfg "CNFG: esc to resume  c config  i gitignore  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or y layouts  p stamp"
+set $cnfg "CNFG: esc to resume  c config  i gitignore  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or l layouts  y yaourt   p stamp"
 
 set $alert_lock notify-send --expire-time=6000 "LOCK: super to unlock i3"
 
@@ -501,7 +502,7 @@ mode $super {
 	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
 
 	# hard reload
-	bindsym Mod4+control+r $lock_style $exec $enable_autoscroll; $exec $audio_reset; restart
+	bindsym Mod4+control+r $lock_style restart
 
 	# open application menu
 	bindsym Mod4+Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
@@ -722,6 +723,7 @@ mode $rdsh {
 	bindsym 8 $exec redshift -P -O 4500K
 	bindsym 9 $exec redshift -P -O 5000K
 	bindsym 0 $exec redshift -P -O 6500K
+	bindsym plus $exec redshift -O 6400K # do not question
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
@@ -760,7 +762,7 @@ mode $rdsh {
 	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -895,20 +897,21 @@ mode $cnfg {
 	bindsym s mode $lock $lock_style $exec emacs ~/.config/i3status/config & $alert_lock & $touchpad_off
 	bindsym z mode $lock $lock_style $exec emacs ~/.zshrc & $alert_lock & $touchpad_off
 	bindsym g mode $lock $lock_style $exec chromium --new-window i3wm.org/docs/userguide.html & $alert_lock & $touchpad_off
-	bindsym y mode $lock $lock_style $exec emacs ~/.workspaces/stamp.json & $alert_lock & $touchpad_off
+	bindsym l mode $lock $lock_style $exec emacs ~/.workspaces/stamp.json & $alert_lock & $touchpad_off
 	bindsym 1 mode $lock $lock_style $exec emacs ~/.workspaces/$w1.json & $alert_lock & $touchpad_off
 	bindsym 2 mode $lock $lock_style $exec emacs ~/.workspaces/$w2.json & $alert_lock & $touchpad_off
+	bindsym y mode $lock $lock_style $exec emacs /sudo::/etc/yaourtrc & $alert_lock & $touchpad_off
 	bindsym p mode $lock $lock_style $exec xdg-open /tmp/latest-screenshot.png & $alert_lock & $touchpad_off
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
 	# quit
-	bindsym XF86PowerOff     mode $quit $quit_style $exec $alert $quit
+	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
 	# super
-	bindsym Escape mode $super $super_style $exec $alert $super
+	bindsym Escape                        mode $super $super_style $exec $alert $super
 	# lock
-	bindsym --release Escape mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2 mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 	# unused keys (lock)
 	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym backslash                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -948,7 +951,7 @@ mode $cnfg {
 	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym k                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym ograve                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym agrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -1127,7 +1130,7 @@ assign [class="discord"] $w6
 assign [title="Texmaker"] $w7
 
 # gimp
-assign [class="Gimp-2.8"] $w9
+assign [class="Gimp.*"] $w9
 
 ################################################################################
 #                                STARTUP                                       #
@@ -1137,23 +1140,24 @@ assign [class="Gimp-2.8"] $w9
 $exec $disable_Caps; $disable_Super_L # order matters
 
 # settings
-$exec $audio_reset
-$exec $enable_autoscroll
+$exec_always $enable_autoscroll
+$exec_always $pulseaudio_restart
 
-# applications
-$exec classicmenu-indicator & nm-applet
-$exec redshift -O 4500K
-$exec pulseaudio
-$exec pa-applet
+# bar applications
+$exec nm-applet
+$exec 'pulseaudio; pa-applet'
 $exec pamac-tray
+
+# background applications
+$exec redshift -O 4500K
 $exec xautolock -time 10 -locker dm-tool
 $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # desktop background
-exec_always --no-startup-id nitrogen --restore
+$exec_always nitrogen --restore
 
 # layout
-$fill_0
+$fill_0 #TODO: fix
 $layout_2
 $fill_2
 
