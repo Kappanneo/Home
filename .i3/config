@@ -62,7 +62,7 @@ set $alert notify-send --expire-time=4200
 set $refresh exec killall -USR1 i3status # statusbar update
 
 # audio reset
-set $pulseaudio_restart "pulseaudio --kill; pulseaudio --start; amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute"
+set $pulseaudio_restart pulseaudio --kill; pulseaudio --start; amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute
 
 ############################### KEYBINDINGS ####################################
 
@@ -73,8 +73,8 @@ set $enable_Caps setxkbmap -option
 ############################ FUNCTIONALITIES ###################################
 
 # touchpad toggle
-set $touchpad_on  xdotool mousemove  750  350 && ~/.bin/touchpad_toggle.sh 1
-set $touchpad_off xdotool mousemove 2500 1200 && ~/.bin/touchpad_toggle.sh 0
+set $touchpad_on ~/.bin/touchpad_toggle.sh 1 & xdotool mousemove  750  350
+set $touchpad_off ~/.bin/touchpad_toggle.sh 0 & xdotool mousemove 2500 1200
 set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
 set $touchpad_toggle ~/.bin/touchpad_toggle.sh
 
@@ -98,23 +98,25 @@ set $w8 8volante
 set $w9 9imp
 set $w0 0
 
-# this one is for cut & paste or exiled containers (I use the last workspace)
+# this one is for cut & paste
 set $wx X
 
 ############################### LAYOUTS ########################################
- 
-set $fill_0 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 0'; pcmanfm --desktop"
-set $layout_1 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'"
-set $fill_1 exec --no-startup-id "chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/"
-set $layout_2 exec --no-startup-id "i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'"
-set $fill_2 exec --no-startup-id "emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal & pcmanfm -n ~ & pcmanfm -n Downloads"
+
+set $layout_0 i3-msg 'workspace --no-auto-back-and-forth 0; append_layout ~/.workspaces/0.json'
+set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
+set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
+
+set $fill_0 pcmanfm --desktop &
+set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
+set $fill_2 pcmanfm -n ~; pcmanfm -n Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
 ################################ MODES #########################################
 
 # main modes
-set $lock  "default"
-set $super "SUPR: space to lock i3"
-set $quit  "QUIT: esc to resume   q to quit  r to restart  s to suspen  e to exit"
+set $lock "default"
+set $supr "SUPR: space to lock i3"
+set $quit "QUIT: esc to resume   q to quit  r to restart  s to suspen  e to exit"
 
 # submodes (standardized, model below)
 set $rdsh "RDSH: esc to resume  0-9 to adjust"
@@ -123,10 +125,10 @@ set $cnfg "CNFG: esc to resume  c config  i gitignore  a applications  e emacs  
 
 set $alert_lock notify-send --expire-time=6000 "LOCK: super to unlock i3"
 
-set $lock_style    [tiling] border none
-set $super_style   [tiling] border pixel 5
-set $quit_style    [tiling] border pixel 7
-set $submode_style [tiling] border pixel 7
+set $lock_style [tiling] border none
+set $supr_style [tiling] border pixel 5
+set $quit_style [tiling] border pixel 7
+set $subm_style [tiling] border pixel 7
 
 ################################################################################
 #                               COMMANDS                                       #
@@ -153,11 +155,11 @@ bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 bindsym Mod1+F4 kill; $refresh
 
 # super mode (code for Super_L)
-bindcode 133 mode $super $super_style $exec $touchpad_on & $alert $super
+bindcode 133 mode $supr $supr_style $exec $touchpad_on & $alert $supr
 
 ############################# CHAIN-COMMANDS ###################################
 
-# switch workspace
+# switch workspacelayout_1
 bindsym Mod4+1 workspace $w1; $refresh
 bindsym Mod4+2 workspace $w2; $refresh
 bindsym Mod4+3 workspace $w3; $refresh
@@ -205,7 +207,7 @@ bindsym Mod4+p     resize  grow  width  5 px or 1 ppt
 
 mode $quit {
 	# options
-	bindsym q $exec shutdown -h now
+	bindsym q $exec poweroff
 	bindsym r $exec reboot
 	bindsym s mode $lock $lock_style $exec systemctl suspend
 	bindsym e $exec $enable_Caps; exit
@@ -286,7 +288,7 @@ mode $quit {
 	bindsym Right                         mode $lock $lock_style $exec $alert RESUME
 }
 
-mode $super {
+mode $supr {
 
 	############ COMMANDS ############
 
@@ -322,6 +324,7 @@ mode $super {
 	bindsym control+7 move container to workspace $w7; $refresh
 	bindsym control+8 move container to workspace $w8; $refresh
 	bindsym control+9 move container to workspace $w9; $refresh
+	bindsym control+d move container to workspace $w0; $refresh # desktop
 	bindsym control+x move container to workspace $wx; $refresh # cut
 
 	# move focused container to workspace and follow
@@ -523,9 +526,9 @@ mode $super {
 
 	############ SUB-MODES ###########
 
-	bindsym Mod4+r                        mode $rdsh $submode_style $exec $alert $rdsh
-	bindsym Mod4+s                        mode $strt $submode_style $exec $alert $strt
-	bindsym Mod4+c                        mode $cnfg $submode_style $exec $alert $cnfg
+	bindsym Mod4+r                        mode $rdsh $subm_style $exec $alert $rdsh
+	bindsym Mod4+s                        mode $strt $subm_style $exec $alert $strt
+	bindsym Mod4+c                        mode $cnfg $subm_style $exec $alert $cnfg
 
 	############## LOCKS #############
 
@@ -731,7 +734,7 @@ mode $rdsh {
 	# quit
 	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
 	# super
-	bindsym Escape                        mode $super $super_style $exec $disable_Super_L $alert $super
+	bindsym Escape                        mode $supr $supr_style $exec $disable_Super_L $alert $supr
 	# lock
 	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
@@ -807,15 +810,15 @@ mode $rdsh {
 # start layout
 mode $strt {
 	# options
-	bindsym 1 mode $lock $lock_style $exec $alert_lock & $touchpad_off; $layout_1; $fill_1
-	bindsym 2 mode $lock $lock_style $exec $alert_lock & $touchpad_off; $layout_2; $fill_2
+	bindsym 1 mode $lock $lock_style $exec $alert_lock & $touchpad_off; $exec "$layout_1; $fill_1"
+	bindsym 2 mode $lock $lock_style $exec $alert_lock & $touchpad_off; $exec "$layout_2; $fill_2"
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
 	# quit
 	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
 	# super
-	bindsym Escape                        mode $super $super_style $exec $alert $super
+	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
 	# lock
 	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
@@ -909,7 +912,7 @@ mode $cnfg {
 	# quit
 	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
 	# super
-	bindsym Escape                        mode $super $super_style $exec $alert $super
+	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
 	# lock
 	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
@@ -1000,7 +1003,7 @@ mode $cnfg {
 #	# quit
 #	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
 #	# super
-#	bindsym Escape                        mode $super $super_style $exec $alert $super
+#	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
 #	# lock
 #	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
@@ -1137,27 +1140,25 @@ assign [class="Gimp.*"] $w9
 # keybinding
 $exec $disable_Caps; $disable_Super_L # order matters
 
-# settings
-$exec_always $enable_autoscroll
-$exec_always $pulseaudio_restart
-
 # bar applications
 $exec nm-applet
-$exec 'pulseaudio; pa-applet'
+$exec pa-applet
 $exec pamac-tray
 
 # background applications
-$exec redshift -O 4500K
+$exec redshift
 $exec xautolock -time 10 -locker dm-tool
 $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# settings
+$exec_always $enable_autoscroll
+$exec_always "$pulseaudio_restart"
 
 # desktop background
 $exec_always nitrogen --restore
 
-# layout
-$fill_0
-$layout_2
-$fill_2
+# layouts
+$exec "$layout_0; $fill_0"
 
 ################################################################################
 #                                  FIN                                         #

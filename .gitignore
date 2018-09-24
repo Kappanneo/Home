@@ -18,9 +18,14 @@
 
 !.config/
 .config/*
+
 !.config/i3status/
 .config/i3status/*
 !.config/i3status/config
+
+!.config/redshift/
+.config/redshift/*
+!.config/redshift/redshift.conf
 
 !.workspaces/
 .workspaces/*
