@@ -62,7 +62,7 @@ set $alert notify-send --expire-time=4200
 set $refresh exec killall -USR1 i3status # statusbar update
 
 # audio reset
-set $pulseaudio_restart pulseaudio --kill; pulseaudio --start; amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute
+set $pulseaudio_restart 'pulseaudio --kill; pulseaudio --start; amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute'
 
 ############################### KEYBINDINGS ####################################
 
@@ -83,7 +83,7 @@ set $enable_autoscroll ~/.bin/autoscroll.sh 1
 set $disable_autoscroll ~/.bin/autoscroll.sh 0
 
 # screenshot
-set $print "import /tmp/latest-screenshot.png; xdg-open /tmp/latest-screenshot.png"
+set $print "import ~/Pictures/latest-screenshot.png; xdg-open ~/Pictures/latest-screenshot.png"
 
 ############################### WORKSPACES #####################################
 
@@ -901,7 +901,6 @@ mode $cnfg {
 	bindsym 1 mode $lock $lock_style $exec emacs ~/.workspaces/$w1.json & $alert_lock & $touchpad_off
 	bindsym 2 mode $lock $lock_style $exec emacs ~/.workspaces/$w2.json & $alert_lock & $touchpad_off
 	bindsym y mode $lock $lock_style $exec emacs /sudo::/etc/yaourtrc & $alert_lock & $touchpad_off
-	bindsym p mode $lock $lock_style $exec xdg-open /tmp/latest-screenshot.png & $alert_lock & $touchpad_off
 	bindsym r mode $lock $lock_style $exec emacs ~/.config/redshift/redshift.conf
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
@@ -939,7 +938,7 @@ mode $cnfg {
 	bindsym u                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym i                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -1149,7 +1148,7 @@ $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # settings
 $exec_always $enable_autoscroll
-$exec_always "$pulseaudio_restart"
+$exec_always $pulseaudio_restart
 
 # reshift
 $exec redshift -o
