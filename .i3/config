@@ -138,13 +138,13 @@ set $subm_style [tiling] border pixel 7
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
 # Screen brightness controls: not working
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" #TODO: fix
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
 
 # screenshot
 bindsym --release Print $exec $print
 
-# display
+# display #TODO
 # binsym XF86Display ...
 
 # quit
@@ -292,10 +292,6 @@ mode $supr {
 
 	############ COMMANDS ############
 
-	# volume
-	bindsym XF86AudioRaiseVolume $exec amixer -c 1 -q sset Master 1dB+
-	bindsym XF86AudioLowerVolume $exec amixer -c 1 -q sset Master 1dB-
-	bindsym XF86AudioMute $exec amixer -c 1 -q -D pulse set Master 1+ toggle
 	# touchpad
 	bindsym XF86TouchpadToggle $exec $touchpad_toggle
 	# stamp
@@ -339,10 +335,10 @@ mode $supr {
 	bindsym Shift+9 move container to workspace $w9; workspace $w9
 
 	# also Tab
-	bindsym Tab                 workspace next; $refresh
-	bindsym Shift+Tab           workspace prev; $refresh
-	bindsym control+Tab         workspace next; $refresh
-	bindsym control+Shift+Tab   workspace prev; $refresh
+	bindsym Tab                      workspace next; $refresh
+	bindsym Shift+Tab                workspace prev; $refresh
+	bindsym control+Tab              workspace next; $refresh
+	bindsym control+Shift+Tab        workspace prev; $refresh
 
 	# change focus
 	bindsym o      focus up   ; $refresh
@@ -378,10 +374,10 @@ mode $supr {
 	bindsym Shift+Right  move right
 
 	# alternative to the other alternative
-	bindsym Shift+w        move up
-	bindsym Shift+a        move left
-	bindsym Shift+s        move down
-	bindsym Shift+d        move right
+	bindsym Shift+w      move up
+	bindsym Shift+a      move left
+	bindsym Shift+s      move down
+	bindsym Shift+d      move right
 
 	# resize window (you can also use the mouse for that)
 	bindsym minus resize shrink height 5 px or 1 ppt
@@ -906,6 +902,7 @@ mode $cnfg {
 	bindsym 2 mode $lock $lock_style $exec emacs ~/.workspaces/$w2.json & $alert_lock & $touchpad_off
 	bindsym y mode $lock $lock_style $exec emacs /sudo::/etc/yaourtrc & $alert_lock & $touchpad_off
 	bindsym p mode $lock $lock_style $exec xdg-open /tmp/latest-screenshot.png & $alert_lock & $touchpad_off
+	bindsym r mode $lock $lock_style $exec emacs ~/.config/redshift/redshift.conf
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
@@ -1144,15 +1141,18 @@ $exec $disable_Caps; $disable_Super_L # order matters
 $exec nm-applet
 $exec pa-applet
 $exec pamac-tray
+$exec pulseaudio
 
 # background applications
-$exec redshift
 $exec xautolock -time 10 -locker dm-tool
 $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # settings
 $exec_always $enable_autoscroll
 $exec_always "$pulseaudio_restart"
+
+# reshift
+$exec redshift -o
 
 # desktop background
 $exec_always nitrogen --restore
