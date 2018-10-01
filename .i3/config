@@ -31,7 +31,7 @@ focus_wrapping no
 popup_during_fullscreen leave_fullscreen
 
 # smart|urgent|focus|none
-focus_on_window_activation smart
+focus_on_window_activation none
 
 ################################  COLORS  ######################################
 
@@ -60,9 +60,8 @@ set $exec exec --no-startup-id
 set $exec_always exec_always --no-startup-id
 set $alert notify-send --expire-time=4200
 set $refresh exec killall -USR1 i3status # statusbar update
-
-# audio reset
-set $pulseaudio_restart 'pulseaudio --kill; pulseaudio --start; amixer -c 1 set Master unmute; amixer -c 1 set Speaker mute; amixer -c 1 set Headphone unmute'
+set $focus_all focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
+set $focus_one focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
 
 ############################### KEYBINDINGS ####################################
 
@@ -104,12 +103,12 @@ set $wx X
 ############################### LAYOUTS ########################################
 
 set $layout_0 i3-msg 'workspace --no-auto-back-and-forth 0; append_layout ~/.workspaces/0.json'
-set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
-set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
+set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
+set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
 set $fill_0 pcmanfm --desktop &
 set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
-set $fill_2 pcmanfm -n ~; pcmanfm -n Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo & gnome-terminal
+set $fill_2 pcmanfm -n ~; pcmanfm -n Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal
 
 ################################ MODES #########################################
 
@@ -292,8 +291,11 @@ mode $supr {
 
 	############ COMMANDS ############
 
+	bindsym Escape $supr_style $focus_one
+
 	# touchpad
 	bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
 	# stamp
 	bindsym --release Print $exec $print
 
@@ -393,9 +395,7 @@ mode $supr {
 	# focus tree
 	bindsym less          focus child
 	bindsym Shift+greater focus parent
-	bindsym control+a     focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
-	bindsym z             focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child;
-	bindsym control+z     mode $lock $lock_style focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child; $exec $alert_lock & $touchpad_off
+	bindsym control+a     $focus_all
 
 	# kill
 	bindsym control+w kill; $refresh
@@ -475,10 +475,6 @@ mode $supr {
 	bindsym Mod4+h split h
 	bindsym Mod4+v split v
 	bindsym Mod4+g focus parent; layout toggle split; focus child
-
-	# focus
-	bindsym Mod4+a focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
-	bindsym Mod4+z focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
 
 	# resize window (you can also use the mouse for that)
 	bindsym Mod4+minus  resize shrink height 5 px or 1 ppt
@@ -573,7 +569,7 @@ mode $supr {
 	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym less                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym x                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym c                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym v                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
@@ -1138,9 +1134,8 @@ $exec $disable_Caps; $disable_Super_L # order matters
 
 # bar applications
 $exec nm-applet
-$exec pa-applet
 $exec pamac-tray
-$exec pulseaudio
+$exec pa-applet
 
 # background applications
 $exec xautolock -time 10 -locker dm-tool
@@ -1148,7 +1143,6 @@ $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # settings
 $exec_always $enable_autoscroll
-$exec_always $pulseaudio_restart
 
 # reshift
 $exec redshift -o
