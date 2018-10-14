@@ -95,10 +95,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias grappolo="docker run --publish 8000:8000 disorganizzazione/grappolo"
 alias ciao="echo ciao"
-alias etcher="sudo /home/claudio/etcher-1.3.1-x86_64.AppImage"
 alias yogurt="yaourt"
+alias grappolo="docker restart grappolo || docker run -d --publish 8000:8000 --name grappolo disorganizzazione/grappolo"
 
 export PATH=/home/claudio/bin:$PATH
 
