@@ -95,20 +95,17 @@ set $w6 6kype
 set $w7 7atex
 set $w8 8volante
 set $w9 9imp
-set $w0 0
 
 # this one is for cut & paste
 set $wx X
 
 ############################### LAYOUTS ########################################
 
-set $layout_0 i3-msg 'workspace --no-auto-back-and-forth 0; append_layout ~/.workspaces/0.json'
 set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
-set $fill_0 pcmanfm --desktop &
 set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
-set $fill_2 pcmanfm -n ~; pcmanfm -n Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal
+set $fill_2 nautilus -n ~ & nautilus -n Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal
 
 ################################ MODES #########################################
 
@@ -168,9 +165,18 @@ bindsym Mod4+6 workspace $w6; $refresh
 bindsym Mod4+7 workspace $w7; $refresh
 bindsym Mod4+8 workspace $w8; $refresh
 bindsym Mod4+9 workspace $w9; $refresh
-bindsym Mod4+0 workspace $w0; $refresh
 bindsym Mod4+x workspace $wx; $refresh
-bindsym Mod4+d workspace $w0; $refresh
+
+# move focused container to workspace and follow
+bindsym Mod4+Shift+1 move container to workspace $w1; workspace $w1
+bindsym Mod4+Shift+2 move container to workspace $w2; workspace $w2
+bindsym Mod4+Shift+3 move container to workspace $w3; workspace $w3
+bindsym Mod4+Shift+4 move container to workspace $w4; workspace $w4
+bindsym Mod4+Shift+5 move container to workspace $w5; workspace $w5
+bindsym Mod4+Shift+6 move container to workspace $w6; workspace $w6
+bindsym Mod4+Shift+7 move container to workspace $w7; workspace $w7
+bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
+bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
 
 # also Tab
 bindsym Mod4+Tab       workspace next; $refresh
@@ -188,6 +194,30 @@ bindsym Mod4+Left   focus left ; $refresh
 bindsym Mod4+Down   focus down ; $refresh
 bindsym Mod4+Right  focus right; $refresh
 
+# alternative to the other alternative
+bindsym Mod4+w      focus up   ; $refresh
+bindsym Mod4+a      focus left ; $refresh
+bindsym Mod4+s      focus down ; $refresh
+bindsym Mod4+d      focus right; $refresh
+
+# move focused window
+bindsym Mod4+Shift+o      move up
+bindsym Mod4+Shift+k      move left
+bindsym Mod4+Shift+l      move down
+bindsym Mod4+Shift+ograve move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod4+Shift+Up     move up
+bindsym Mod4+Shift+Left   move left
+bindsym Mod4+Shift+Down   move down
+bindsym Mod4+Shift+Right  move right
+
+# alternative to the other alternative
+bindsym Mod4+Shift+w      move up
+bindsym Mod4+Shift+a      move left
+bindsym Mod4+Shift+s      move down
+bindsym Mod4+Shift+d      move right
+
 # fullscreen
 bindsym Mod4+f fullscreen toggle
 
@@ -195,102 +225,41 @@ bindsym Mod4+f fullscreen toggle
 bindsym Mod4+g focus parent; layout toggle split; focus child
 
 # resize window (you can also use the mouse for that)
-bindsym Mod4+minus resize shrink height 5 px or 1 ppt
-bindsym Mod4+m     resize shrink width  5 px or 1 ppt
-bindsym Mod4+plus  resize  grow  height 5 px or 1 ppt
-bindsym Mod4+p     resize  grow  width  5 px or 1 ppt
+bindsym Mod4+m        resize shrink width  5 px or 1 ppt
+bindsym Mod4+p        resize  grow  width  5 px or 1 ppt
+bindsym Mod4+Shift+m  resize shrink height 5 px or 1 ppt
+bindsym Mod4+Shift+p  resize  grow  height 5 px or 1 ppt
+bindsym Mod4+minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+bindsym Mod4+plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 ################################################################################
 #                                MODES                                         #
 ################################################################################
 
-mode $quit {
-	# options
-	bindsym q $exec poweroff
-	bindsym r $exec reboot
-	bindsym s mode $lock $lock_style $exec systemctl suspend
-	bindsym e $exec $enable_Caps; exit
-	# re-notify
-	bindsym XF86PowerOff $exec $alert $quit
-	# alert
+mode $supr {
+
+	############# ALERTS #############
+
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
-	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert RESUME
-	bindsym --border button2              mode $lock $lock_style $exec $alert RESUME
-	# unused keys (lock)
-	bindsym Delete                        mode $lock $lock_style $exec $alert RESUME
-	bindsym backslash                     mode $lock $lock_style $exec $alert RESUME
-	bindsym 1                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 2                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 3                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 4                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 5                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 6                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 7                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 8                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 9                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 0                             mode $lock $lock_style $exec $alert RESUME
-	bindsym aphostrophe                   mode $lock $lock_style $exec $alert RESUME
-	bindsym igrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert RESUME
-	bindsym Tab                           mode $lock $lock_style $exec $alert RESUME
-#	bindsym q                             mode $lock $lock_style $exec $alert RESUME
-	bindsym w                             mode $lock $lock_style $exec $alert RESUME
-#	bindsym e                             mode $lock $lock_style $exec $alert RESUME
-#	bindsym r                             mode $lock $lock_style $exec $alert RESUME
-	bindsym t                             mode $lock $lock_style $exec $alert RESUME
-	bindsym y                             mode $lock $lock_style $exec $alert RESUME
-	bindsym u                             mode $lock $lock_style $exec $alert RESUME
-	bindsym i                             mode $lock $lock_style $exec $alert RESUME
-	bindsym o                             mode $lock $lock_style $exec $alert RESUME
-	bindsym p                             mode $lock $lock_style $exec $alert RESUME
-	bindsym egrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym plus                          mode $lock $lock_style $exec $alert RESUME
-	bindsym Return                        mode $lock $lock_style $exec $alert RESUME
-#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert RESUME
-	bindsym a                             mode $lock $lock_style $exec $alert RESUME
-#	bindsym s                             mode $lock $lock_style $exec $alert RESUME
-	bindsym d                             mode $lock $lock_style $exec $alert RESUME
-	bindsym f                             mode $lock $lock_style $exec $alert RESUME
-	bindsym g                             mode $lock $lock_style $exec $alert RESUME
-	bindsym h                             mode $lock $lock_style $exec $alert RESUME
-	bindsym j                             mode $lock $lock_style $exec $alert RESUME
-	bindsym k                             mode $lock $lock_style $exec $alert RESUME
-	bindsym l                             mode $lock $lock_style $exec $alert RESUME
-	bindsym ograve                        mode $lock $lock_style $exec $alert RESUME
-	bindsym agrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym ugrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert RESUME
-	bindsym less                          mode $lock $lock_style $exec $alert RESUME
-	bindsym z                             mode $lock $lock_style $exec $alert RESUME
-	bindsym x                             mode $lock $lock_style $exec $alert RESUME
-	bindsym c                             mode $lock $lock_style $exec $alert RESUME
-	bindsym v                             mode $lock $lock_style $exec $alert RESUME
-	bindsym b                             mode $lock $lock_style $exec $alert RESUME
-	bindsym n                             mode $lock $lock_style $exec $alert RESUME
-	bindsym m                             mode $lock $lock_style $exec $alert RESUME
-	bindsym comma                         mode $lock $lock_style $exec $alert RESUME
-	bindsym period                        mode $lock $lock_style $exec $alert RESUME
-	bindsym minus                         mode $lock $lock_style $exec $alert RESUME
-	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert RESUME
-	bindsym "Control_L"                   mode $lock $lock_style $exec $alert RESUME
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert RESUME
-	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert RESUME
-	bindsym space                         mode $lock $lock_style $exec $alert RESUME
-	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert RESUME # (alt gr)
-	bindsym Menu                          mode $lock $lock_style $exec $alert RESUME
-	bindsym "Control_R"                   mode $lock $lock_style $exec $alert RESUME
-	bindsym Up                            mode $lock $lock_style $exec $alert RESUME
-	bindsym Left                          mode $lock $lock_style $exec $alert RESUME
-	bindsym Down                          mode $lock $lock_style $exec $alert RESUME
-	bindsym Right                         mode $lock $lock_style $exec $alert RESUME
-}
 
-mode $supr {
+	############## MODES #############
+
+	# lock
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	# quit
+	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
+
+	############ SUB-MODES ###########
+
+	bindsym Mod4+r                        mode $rdsh $subm_style $exec $alert $rdsh
+	bindsym Mod4+z                        mode $strt $subm_style $exec $alert $strt
+	bindsym Mod4+c                        mode $cnfg $subm_style $exec $alert $cnfg
 
 	############ COMMANDS ############
 
+	# back to square one
 	bindsym Escape $supr_style $focus_one
 
 	# touchpad
@@ -309,21 +278,10 @@ mode $supr {
 	bindsym 7 workspace $w7; $refresh
 	bindsym 8 workspace $w8; $refresh
 	bindsym 9 workspace $w9; $refresh
-	bindsym 0 workspace $w0; $refresh
 	bindsym x workspace $wx; $refresh
 
-	# move focused container to workspace
-	bindsym control+1 move container to workspace $w1; $refresh
-	bindsym control+2 move container to workspace $w2; $refresh
-	bindsym control+3 move container to workspace $w3; $refresh
-	bindsym control+4 move container to workspace $w4; $refresh
-	bindsym control+5 move container to workspace $w5; $refresh
-	bindsym control+6 move container to workspace $w6; $refresh
-	bindsym control+7 move container to workspace $w7; $refresh
-	bindsym control+8 move container to workspace $w8; $refresh
-	bindsym control+9 move container to workspace $w9; $refresh
-	bindsym control+d move container to workspace $w0; $refresh # desktop
-	bindsym control+x move container to workspace $wx; $refresh # cut
+	# cut
+	bindsym control+x move container to workspace $wx; $refresh
 
 	# move focused container to workspace and follow
 	bindsym Shift+1 move container to workspace $w1; workspace $w1
@@ -382,10 +340,12 @@ mode $supr {
 	bindsym Shift+d      move right
 
 	# resize window (you can also use the mouse for that)
-	bindsym minus resize shrink height 5 px or 1 ppt
-	bindsym m     resize shrink width  5 px or 1 ppt
-	bindsym plus  resize  grow  height 5 px or 1 ppt
-	bindsym p     resize  grow  width  5 px or 1 ppt
+	bindsym m        resize shrink width  5 px or 1 ppt
+	bindsym p        resize  grow  width  5 px or 1 ppt
+	bindsym Shift+m  resize shrink height 5 px or 1 ppt
+	bindsym Shift+p  resize  grow  height 5 px or 1 ppt
+	bindsym minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+	bindsym plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 	# split
 	bindsym h split h
@@ -410,7 +370,7 @@ mode $supr {
 	bindsym control+r reload; $lock_style $exec $alert_lock & $touchpad_off & $alert RELOAD
 
 	# files
-	bindsym control+f mode $lock $lock_style $exec pcmanfm -n & $alert_lock & $touchpad_off
+	bindsym control+f mode $lock $lock_style $exec nautilus -n & $alert_lock & $touchpad_off
 
 	# alternative esc
 	bindsym control+g $exec xdotool key Escape
@@ -436,9 +396,21 @@ mode $supr {
 	bindsym Mod4+7 workspace $w7; $refresh
 	bindsym Mod4+8 workspace $w8; $refresh
 	bindsym Mod4+9 workspace $w9; $refresh
-	bindsym Mod4+0 workspace $w0; $refresh
 	bindsym Mod4+x workspace $wx; $refresh
-	bindsym Mod4+d workspace $w0; $refresh
+
+	# move focused container to workspace and follow
+	bindsym Mod4+Shift+1 move container to workspace $w1; workspace $w1
+	bindsym Mod4+Shift+2 move container to workspace $w2; workspace $w2
+	bindsym Mod4+Shift+3 move container to workspace $w3; workspace $w3
+	bindsym Mod4+Shift+4 move container to workspace $w4; workspace $w4
+	bindsym Mod4+Shift+5 move container to workspace $w5; workspace $w5
+	bindsym Mod4+Shift+6 move container to workspace $w6; workspace $w6
+	bindsym Mod4+Shift+7 move container to workspace $w7; workspace $w7
+	bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
+	bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
+
+	# cut
+	bindsym Mod4+control+x move container to workspace $wx; $refresh
 
 	# also Tab
 	bindsym Mod4+Tab       workspace next; $refresh
@@ -456,8 +428,11 @@ mode $supr {
 	bindsym Mod4+Down   focus down ; $refresh
 	bindsym Mod4+Right  focus right; $refresh
 
-	# fullscreen
-	bindsym Mod4+f fullscreen toggle
+	# alternative to the other alternative
+	bindsym Mod4+w      focus up   ; $refresh
+	bindsym Mod4+a      focus left ; $refresh
+	bindsym Mod4+s      focus down ; $refresh
+	bindsym Mod4+d      focus right; $refresh
 
 	# move focused window
 	bindsym Mod4+Shift+o      move up
@@ -471,16 +446,25 @@ mode $supr {
 	bindsym Mod4+Shift+Down   move down
 	bindsym Mod4+Shift+Right  move right
 
+	# alternative to the other alternative
+	bindsym Mod4+Shift+w      move up
+	bindsym Mod4+Shift+a      move left
+	bindsym Mod4+Shift+s      move down
+	bindsym Mod4+Shift+d      move right
+
+	# fullscreen
+	bindsym Mod4+f fullscreen toggle
+
 	# split
-	bindsym Mod4+h split h
-	bindsym Mod4+v split v
 	bindsym Mod4+g focus parent; layout toggle split; focus child
 
 	# resize window (you can also use the mouse for that)
-	bindsym Mod4+minus  resize shrink height 5 px or 1 ppt
-	bindsym Mod4+m      resize shrink width  5 px or 1 ppt
-	bindsym Mod4+plus   resize  grow  height 5 px or 1 ppt
-	bindsym Mod4+p      resize  grow  width  5 px or 1 ppt
+	bindsym Mod4+m        resize shrink width  5 px or 1 ppt
+	bindsym Mod4+p        resize  grow  width  5 px or 1 ppt
+	bindsym Mod4+Shift+m  resize shrink height 5 px or 1 ppt
+	bindsym Mod4+Shift+p  resize  grow  height 5 px or 1 ppt
+	bindsym Mod4+minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+	bindsym Mod4+plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 	######### INSTA-COMMANDS #########
 
@@ -503,24 +487,89 @@ mode $supr {
 	# exit with touchpad on
 	bindsym Mod4+space mode $lock $lock_style $exec $touchpad_on; $exec $alert_lock
 
-	############# ALERTS #############
+	########### CHAIN-LOCKS ##########
 
-	bindsym Caps_Lock $exec $alert CAPS
-	bindsym "Super_L" $exec $alert SUPR
+	# switch workspace
+	bindsym --release Mod4+1              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+2              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+3              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+4              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+5              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+6              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+7              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+8              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+9              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+0              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+x              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+d              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	############## MODES #############
+	# move focused container to workspace and follow
+	bindsym --release Mod4+Shift+1        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+2        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+3        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+4        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+5        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+6        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+7        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+8        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+9        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
-	# quit
-	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
+	# cut
+	bindsym --release Mod4+control+x      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	############ SUB-MODES ###########
+	# also Tab
+	bindsym --release Mod4+Tab            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+Tab      mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	bindsym Mod4+r                        mode $rdsh $subm_style $exec $alert $rdsh
-	bindsym Mod4+s                        mode $strt $subm_style $exec $alert $strt
-	bindsym Mod4+c                        mode $cnfg $subm_style $exec $alert $cnfg
+	# change focus
+	bindsym --release Mod4+o              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+k              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+l              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+ograve         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# alternatively, you can use the cursor keys:
+	bindsym --release Mod4+Up             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Left           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Down           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Right          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# alternative to the other alternative
+	bindsym --release Mod4+w              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+a              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+s              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+d              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# move focused window
+	bindsym --release Mod4+Shift+o        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+k        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+l        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+ograve   mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# alternatively, you can use the cursor keys:
+	bindsym --release Mod4+Shift+Up       mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+Left     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+Down     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+Right    mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# alternative to the other alternative
+	bindsym --release Mod4+Shift+w        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+a        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+s        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+d        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# fullscreen
+	bindsym --release Mod4+f              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# split
+	bindsym --release Mod4+g              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# resize window (you can also use the mouse for that)
+	bindsym --release Mod4+minus          mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+m              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+plus           mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+p              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+m        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Mod4+Shift+p        mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	############## LOCKS #############
 
@@ -642,66 +691,91 @@ mode $supr {
 	bindsym Shift+colon                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym Shift+underscore              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	# switch workspace
-	bindsym --release Mod4+1              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+2              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+3              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+4              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+5              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+6              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+7              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+8              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+9              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+0              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+x              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+d              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+}
 
-	# also Tab
-	bindsym --release Mod4+Tab            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Shift+Tab      mode $lock $lock_style $exec $alert_lock & $touchpad_off
+############################### QUIT-MODE #######################################
 
-	# change focus
-	bindsym --release Mod4+o              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+k              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+l              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+ograve         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# alternatively, you can use the cursor keys:
-	bindsym --release Mod4+Up             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Left           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Down           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Right          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# fullscreen
-	bindsym --release Mod4+f              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# move focused window
-	bindsym --release Mod4+control+o      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+control+k      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+control+l      mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+control+ograve mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# alternatively, you can use the cursor keys:
-	bindsym --release Mod4+control+Up     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+control+Left   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+control+Down   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+control+Right  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# split
-	bindsym --release Mod4+h              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+v              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+g              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# focus
-	bindsym --release Mod4+a              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+z              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# resize window (you can also use the mouse for that)
-	bindsym --release Mod4+minus          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+m              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+plus           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+p              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
+mode $quit {
+	# options
+	bindsym q $exec poweroff
+	bindsym r $exec reboot
+	bindsym s mode $lock $lock_style $exec systemctl suspend
+	bindsym e $exec $enable_Caps; exit
+	# re-notify
+	bindsym XF86PowerOff $exec $alert $quit
+	# alert
+	bindsym Caps_Lock $exec $alert CAPS
+	bindsym "Super_L" $exec $alert SUPR
+	# lock
+	bindsym --release Escape              mode $lock $lock_style $exec $alert RESUME
+	bindsym --border button2              mode $lock $lock_style $exec $alert RESUME
+	# unused keys (lock)
+	bindsym Delete                        mode $lock $lock_style $exec $alert RESUME
+	bindsym backslash                     mode $lock $lock_style $exec $alert RESUME
+	bindsym 1                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 2                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 3                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 4                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 5                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 6                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 7                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 8                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 9                             mode $lock $lock_style $exec $alert RESUME
+	bindsym 0                             mode $lock $lock_style $exec $alert RESUME
+	bindsym aphostrophe                   mode $lock $lock_style $exec $alert RESUME
+	bindsym igrave                        mode $lock $lock_style $exec $alert RESUME
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert RESUME
+	bindsym Tab                           mode $lock $lock_style $exec $alert RESUME
+#	bindsym q                             mode $lock $lock_style $exec $alert RESUME
+	bindsym w                             mode $lock $lock_style $exec $alert RESUME
+#	bindsym e                             mode $lock $lock_style $exec $alert RESUME
+#	bindsym r                             mode $lock $lock_style $exec $alert RESUME
+	bindsym t                             mode $lock $lock_style $exec $alert RESUME
+	bindsym y                             mode $lock $lock_style $exec $alert RESUME
+	bindsym u                             mode $lock $lock_style $exec $alert RESUME
+	bindsym i                             mode $lock $lock_style $exec $alert RESUME
+	bindsym o                             mode $lock $lock_style $exec $alert RESUME
+	bindsym p                             mode $lock $lock_style $exec $alert RESUME
+	bindsym egrave                        mode $lock $lock_style $exec $alert RESUME
+	bindsym plus                          mode $lock $lock_style $exec $alert RESUME
+	bindsym Return                        mode $lock $lock_style $exec $alert RESUME
+#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert RESUME
+	bindsym a                             mode $lock $lock_style $exec $alert RESUME
+#	bindsym s                             mode $lock $lock_style $exec $alert RESUME
+	bindsym d                             mode $lock $lock_style $exec $alert RESUME
+	bindsym f                             mode $lock $lock_style $exec $alert RESUME
+	bindsym g                             mode $lock $lock_style $exec $alert RESUME
+	bindsym h                             mode $lock $lock_style $exec $alert RESUME
+	bindsym j                             mode $lock $lock_style $exec $alert RESUME
+	bindsym k                             mode $lock $lock_style $exec $alert RESUME
+	bindsym l                             mode $lock $lock_style $exec $alert RESUME
+	bindsym ograve                        mode $lock $lock_style $exec $alert RESUME
+	bindsym agrave                        mode $lock $lock_style $exec $alert RESUME
+	bindsym ugrave                        mode $lock $lock_style $exec $alert RESUME
+	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert RESUME
+	bindsym less                          mode $lock $lock_style $exec $alert RESUME
+	bindsym z                             mode $lock $lock_style $exec $alert RESUME
+	bindsym x                             mode $lock $lock_style $exec $alert RESUME
+	bindsym c                             mode $lock $lock_style $exec $alert RESUME
+	bindsym v                             mode $lock $lock_style $exec $alert RESUME
+	bindsym b                             mode $lock $lock_style $exec $alert RESUME
+	bindsym n                             mode $lock $lock_style $exec $alert RESUME
+	bindsym m                             mode $lock $lock_style $exec $alert RESUME
+	bindsym comma                         mode $lock $lock_style $exec $alert RESUME
+	bindsym period                        mode $lock $lock_style $exec $alert RESUME
+	bindsym minus                         mode $lock $lock_style $exec $alert RESUME
+	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert RESUME
+	bindsym "Control_L"                   mode $lock $lock_style $exec $alert RESUME
+#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert RESUME
+	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert RESUME
+	bindsym space                         mode $lock $lock_style $exec $alert RESUME
+	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert RESUME # (alt gr)
+	bindsym Menu                          mode $lock $lock_style $exec $alert RESUME
+	bindsym "Control_R"                   mode $lock $lock_style $exec $alert RESUME
+	bindsym Up                            mode $lock $lock_style $exec $alert RESUME
+	bindsym Left                          mode $lock $lock_style $exec $alert RESUME
+	bindsym Down                          mode $lock $lock_style $exec $alert RESUME
+	bindsym Right                         mode $lock $lock_style $exec $alert RESUME
 }
 
 ############################### SUB-MODES #######################################
