@@ -97,6 +97,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias ciao="echo ciao"
 alias yogurt="yaourt"
+alias update="yaourt -Syu --aur && pkill pamac-tray"
 alias grappolo="docker restart grappolo || docker run -d --publish 8000:8000 --name grappolo disorganizzazione/grappolo"
 
 export PATH=/home/claudio/bin:$PATH
