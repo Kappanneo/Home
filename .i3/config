@@ -151,7 +151,7 @@ bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 bindsym Mod1+F4 kill; $refresh
 
 # super mode (code for Super_L)
-bindcode 133 mode $supr $supr_style $exec $touchpad_on & $alert $supr
+bindcode 133 mode $supr $supr_style fullscreen disable; $exec $touchpad_on & $alert $supr
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -319,7 +319,7 @@ mode $supr {
 	bindsym d      focus right; $refresh
 
 	# fullscreen
-	bindsym f fullscreen toggle
+#	bindsym f fullscreen toggle
 
 	# move focused window
 	bindsym Shift+o      move up
