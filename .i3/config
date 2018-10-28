@@ -111,13 +111,14 @@ set $fill_2 nautilus -n ~ & nautilus -n Downloads & emacs ~/memo & chromium --ne
 
 # main modes
 set $lock "default"
-set $supr "SUPR: space to lock i3"
-set $quit "QUIT: esc to resume   q to quit  r to restart  s to suspen  e to exit"
+set $supr "SUPR: alt|esc to lock"
+set $quit "QUIT: alt|esc to lock   q to quit  r to restart  s to suspen  e to exit"
 
 # submodes (standardized, model below)
-set $rdsh "RDSH: esc to resume  0-9 to adjust"
-set $strt "STRT: esc to resume  1-2 layouts"
-set $cnfg "CNFG: esc to resume  c config  i gitignore  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or l layouts  y yaourt   p stamp"
+set $rdsh "RDSH: alt|esc to lock  0-9 to adjust"
+set $strt "STRT: alt|esc to lock  1-2 layouts"
+set $cnfg "CNFG: alt|esc to lock  c config  i gitignore  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or l layouts  y yaourt   p stamp"
+set $tpad "TPAD: alt|esc to disable touchpad and lock"
 
 set $alert_lock notify-send --expire-time=6000 "LOCK: super to unlock i3"
 
@@ -151,7 +152,7 @@ bindsym XF86PowerOff mode $quit $quit_style $exec $alert $quit
 bindsym Mod1+F4 kill; $refresh
 
 # super mode (code for Super_L)
-bindcode 133 mode $supr $supr_style fullscreen disable; $exec $touchpad_on & $alert $supr
+bindcode 133 mode $supr $supr_style fullscreen disable; $exec $alert $supr
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -225,12 +226,12 @@ bindsym Mod4+f fullscreen toggle
 bindsym Mod4+g focus parent; layout toggle split; focus child
 
 # resize window (you can also use the mouse for that)
-bindsym Mod4+m        resize shrink width  5 px or 1 ppt
-bindsym Mod4+p        resize  grow  width  5 px or 1 ppt
-bindsym Mod4+Shift+m  resize shrink height 5 px or 1 ppt
-bindsym Mod4+Shift+p  resize  grow  height 5 px or 1 ppt
-bindsym Mod4+minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-bindsym Mod4+plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+bindsym Mod4+m             resize shrink width  5 px or 1 ppt
+bindsym Mod4+p             resize  grow  width  5 px or 1 ppt
+bindsym Mod4+Shift+m       resize shrink height 5 px or 1 ppt
+bindsym Mod4+Shift+p       resize  grow  height 5 px or 1 ppt
+bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 ################################################################################
 #                                MODES                                         #
@@ -245,17 +246,21 @@ mode $supr {
 
 	############## MODES #############
 
-	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
-	# quit
 	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
-
-	############ SUB-MODES ###########
-
 	bindsym Mod4+r                        mode $rdsh $subm_style $exec $alert $rdsh
 	bindsym Mod4+z                        mode $strt $subm_style $exec $alert $strt
 	bindsym Mod4+c                        mode $cnfg $subm_style $exec $alert $cnfg
+	bindsym Mod4+space                    mode $tpad $lock_style $exec $touchpad_on & $alert TOUCHPAD
+
+	############# LOCKS ##############
+
+	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 
 	############ COMMANDS ############
 
@@ -337,12 +342,12 @@ mode $supr {
 	bindsym Shift+d      move right
 
 	# resize window (you can also use the mouse for that)
-	bindsym m        resize shrink width  5 px or 1 ppt
-	bindsym p        resize  grow  width  5 px or 1 ppt
-	bindsym Shift+m  resize shrink height 5 px or 1 ppt
-	bindsym Shift+p  resize  grow  height 5 px or 1 ppt
-	bindsym minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-	bindsym plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+	bindsym m             resize shrink width  5 px or 1 ppt
+	bindsym p             resize  grow  width  5 px or 1 ppt
+	bindsym Shift+m       resize shrink height 5 px or 1 ppt
+	bindsym Shift+p       resize  grow  height 5 px or 1 ppt
+	bindsym control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+	bindsym control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 	# split
 	bindsym h split h
@@ -357,28 +362,6 @@ mode $supr {
 	# kill
 	bindsym control+w kill; $refresh
 
-	# fullscreen
-	bindsym f mode $lock $lock_style fullscreen toggle; $exec $alert_lock & $touchpad_off
-
-	# start a terminal
-	bindsym Mod4+control+w kill; $refresh
-	bindsym --release Mod4+control+w  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# start a terminal
-	bindsym Mod4+Return mode $lock $lock_style $exec gnome-terminal & $alert_lock & $touchpad_off
-
-	# open emacs
-	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
-
-	# hard reload
-	bindsym Mod4+control+r $lock_style restart
-
-	# open application menu
-	bindsym Mod4+Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
-
-	# exit with touchpad on
-	bindsym Mod4+space mode $lock $lock_style $exec $touchpad_on; $exec $alert_lock
-
 	# save layout
 	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"; $exec $alert_lock & $touchpad_off
 
@@ -391,17 +374,26 @@ mode $supr {
 	# files
 	bindsym control+f mode $lock $lock_style $exec nautilus -n & $alert_lock & $touchpad_off
 
-	# alternative esc
-	bindsym control+g $exec xdotool key Escape
-
 	# start dmenu (a program launcher)
 	bindsym control+e mode $lock $lock_style focus parent; $exec dmenu_run; $exec $alert_lock & $touchpad_off & $alert EXEC
 
 	# start dmenu (a program launcher)
 	bindsym control+t mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
+	bindsym Menu      mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
+	bindsym Mod4+Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
 
-	# application menu
-	bindsym Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
+	# fullscreen
+	bindsym f mode $lock $lock_style fullscreen toggle; $exec $alert_lock & $touchpad_off
+
+	# start a terminal
+	bindsym Mod4+Return mode $lock $lock_style $exec gnome-terminal & $alert_lock & $touchpad_off
+
+	# open emacs
+	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
+
+	# hard reload
+	bindsym Mod4+control+r $lock_style restart
+
 
 	########## CHAIN-COMMANDS ########
 
@@ -478,12 +470,12 @@ mode $supr {
 	bindsym Mod4+g focus parent; layout toggle split; focus child
 
 	# resize window (you can also use the mouse for that)
-	bindsym Mod4+m        resize shrink width  5 px or 1 ppt
-	bindsym Mod4+p        resize  grow  width  5 px or 1 ppt
-	bindsym Mod4+Shift+m  resize shrink height 5 px or 1 ppt
-	bindsym Mod4+Shift+p  resize  grow  height 5 px or 1 ppt
-	bindsym Mod4+minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-	bindsym Mod4+plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+	bindsym Mod4+m             resize shrink width  5 px or 1 ppt
+	bindsym Mod4+p             resize  grow  width  5 px or 1 ppt
+	bindsym Mod4+Shift+m       resize shrink height 5 px or 1 ppt
+	bindsym Mod4+Shift+p       resize  grow  height 5 px or 1 ppt
+	bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+	bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 	########### CHAIN-LOCKS ##########
 
@@ -562,133 +554,198 @@ mode $supr {
 	bindsym --release Mod4+g              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
 	# resize window (you can also use the mouse for that)
-	bindsym --release Mod4+minus          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+m              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+plus           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+p              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Shift+m        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Mod4+Shift+p        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Mod4+m                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Mod4+p                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Mod4+Shift+m                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Mod4+Shift+p                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Mod4+control+minus            mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Mod4+control+plus             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 
-	############## LOCKS #############
+	########### UNUSED KEYS ############
 
-	# unused keys
-	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym backslash                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 1                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 2                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 3                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 4                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 5                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 6                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 7                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 8                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 9                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 0                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym aphostrophe                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym igrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Tab                           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym q                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym w                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym e                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym r                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym t                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym y                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym u                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym i                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym s                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym d                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym g                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym k                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym ograve                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym agrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym less                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym x                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym c                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym v                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym b                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym n                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym m                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym comma                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym period                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym minus                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Control_L"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert_lock & $touchpad_off # (alt gr)
-#	bindsym Menu                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Control_R"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Up                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Left                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Down                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Right                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Delete                        nop
+	bindsym backslash                     nop
+#	bindsym 1                             nop
+#	bindsym 2                             nop
+#	bindsym 3                             nop
+#	bindsym 4                             nop
+#	bindsym 5                             nop
+#	bindsym 6                             nop
+#	bindsym 7                             nop
+#	bindsym 8                             nop
+#	bindsym 9                             nop
+#	bindsym 0                             nop
+	bindsym aphostrophe                   nop
+	bindsym igrave                        nop
+#	bindsym BackSpace                     nop
+#	bindsym Tab                           nop
+	bindsym q                             nop
+#	bindsym w                             nop
+	bindsym e                             nop
+	bindsym r                             nop
+	bindsym t                             nop
+	bindsym y                             nop
+	bindsym u                             nop
+	bindsym i                             nop
+#	bindsym o                             nop
+	bindsym p                             nop
+	bindsym egrave                        nop
+#	bindsym plus                          nop
+#	bindsym Return                        nop
+#	bindsym Caps_Lock                     nop
+#	bindsym a                             nop
+#	bindsym s                             nop
+#	bindsym d                             nop
+	bindsym f                             nop
+#	bindsym g                             nop
+#	bindsym h                             nop
+	bindsym j                             nop
+#	bindsym k                             nop
+#	bindsym l                             nop
+#	bindsym ograve                        nop
+	bindsym agrave                        nop
+	bindsym ugrave                        nop
+#	bindsym "Shift_L"                     nop
+#	bindsym less                          nop
+	bindsym z                             nop
+#	bindsym x                             nop
+	bindsym c                             nop
+#	bindsym v                             nop
+	bindsym b                             nop
+	bindsym n                             nop
+#	bindsym m                             nop
+	bindsym comma                         nop
+	bindsym period                        nop
+#	bindsym minus                         nop
+#	bindsym "Shift_R"                     nop
+#	bindsym "Control_L"                   nop
+#	bindsym "Super_L"                     nop
+#	bindsym "Alt_L"                       nop
+#	bindsym space                         nop
+	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#	bindsym Menu                          nop
+#	bindsym "Control_R"                   nop
+#	bindsym Up                            nop
+#	bindsym Left                          nop
+#	bindsym Down                          nop
+#	bindsym Right                         nop
 
 	# also Shift+ (since Shift is not locked)
-#	bindsym Shift+bar                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+exclam                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+quotedbl                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+sterling                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+dollar                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+percent                 mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+ampersand               mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+slash                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+parenleft               mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+parenright              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+equal                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+question                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+asciicircum             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+q                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+w                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+e                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+r                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+t                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+y                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+u                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+i                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+o                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+p                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+eacute                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+asterisk                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+a                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+s                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+d                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+f                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+g                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+h                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+j                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+k                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+l                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+ccedilla                mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+degree                  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+section                 mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+greater                 mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Shift+z                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+x                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+c                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+v                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+b                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+n                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+m                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+semicolon               mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+colon                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Shift+underscore              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Shift+bar                     nop
+#	bindsym Shift+exclam                  nop
+#	bindsym Shift+quotedbl                nop
+#	bindsym Shift+sterling                nop
+#	bindsym Shift+dollar                  nop
+#	bindsym Shift+percent                 nop
+#	bindsym Shift+ampersand               nop
+#	bindsym Shift+slash                   nop
+#	bindsym Shift+parenleft               nop
+#	bindsym Shift+parenright              nop
+#	bindsym Shift+equal                   nop
+#	bindsym Shift+question                nop
+#	bindsym Shift+asciicircum             nop
+	bindsym Shift+q                       nop
+#	bindsym Shift+w                       nop
+	bindsym Shift+e                       nop
+	bindsym Shift+r                       nop
+	bindsym Shift+t                       nop
+	bindsym Shift+y                       nop
+	bindsym Shift+u                       nop
+	bindsym Shift+i                       nop
+	bindsym Shift+o                       nop
+	bindsym Shift+p                       nop
+	bindsym Shift+eacute                  nop
+	bindsym Shift+asterisk                nop
+#	bindsym Shift+a                       nop
+#	bindsym Shift+s                       nop
+#	bindsym Shift+d                       nop
+	bindsym Shift+f                       nop
+	bindsym Shift+g                       nop
+	bindsym Shift+h                       nop
+	bindsym Shift+j                       nop
+	bindsym Shift+k                       nop
+	bindsym Shift+l                       nop
+	bindsym Shift+ccedilla                nop
+	bindsym Shift+degree                  nop
+	bindsym Shift+section                 nop
+#	bindsym Shift+greater                 nop
+#	bindsym Shift+z                       nop
+	bindsym Shift+x                       nop
+	bindsym Shift+c                       nop
+	bindsym Shift+v                       nop
+	bindsym Shift+b                       nop
+	bindsym Shift+n                       nop
+	bindsym Shift+m                       nop
+	bindsym Shift+semicolon               nop
+	bindsym Shift+colon                   nop
+	bindsym Shift+underscore              nop
 
+	# also control+ (since control is not locked)
+	bindsym control+Delete                nop
+	bindsym control+backslash             nop
+	bindsym control+1                     nop
+	bindsym control+2                     nop
+	bindsym control+3                     nop
+	bindsym control+4                     nop
+	bindsym control+5                     nop
+	bindsym control+6                     nop
+	bindsym control+7                     nop
+	bindsym control+8                     nop
+	bindsym control+9                     nop
+	bindsym control+0                     nop
+	bindsym control+aphostrophe           nop
+	bindsym control+igrave                nop
+	bindsym control+BackSpace             nop
+#	bindsym control+Tab                   nop
+	bindsym control+q                     nop
+#	bindsym control+w                     nop
+	bindsym control+e                     nop
+#	bindsym control+r                     nop
+#	bindsym control+t                     nop
+	bindsym control+y                     nop
+	bindsym control+u                     nop
+	bindsym control+i                     nop
+	bindsym control+o                     nop
+	bindsym control+p                     nop
+	bindsym control+egrave                nop
+#	bindsym control+plus                  nop
+	bindsym control+Return                nop
+#	bindsym control+a                     nop
+#	bindsym control+s                     nop
+	bindsym control+d                     nop
+#	bindsym control+f                     nop
+	bindsym control+g                     nop
+	bindsym control+h                     nop
+	bindsym control+j                     nop
+#	bindsym control+k                     nop
+#	bindsym control+l                     nop
+#	bindsym control+ograve                nop
+	bindsym control+agrave                nop
+	bindsym control+ugrave                nop
+#	bindsym control+"Shift_L"             nop
+#	bindsym control+less                  nop
+	bindsym control+z                     nop
+#	bindsym control+x                     nop
+	bindsym control+c                     nop
+#	bindsym control+v                     nop
+	bindsym control+b                     nop
+	bindsym control+n                     nop
+#	bindsym control+m                     nop
+	bindsym control+comma                 nop
+	bindsym control+period                nop
+#	bindsym control+minus                 nop
+#	bindsym control+"Shift_R"             nop
+#	bindsym control+"Control_L"           nop
+#	bindsym control+"Super_L"             nop
+#	bindsym control+"Alt_L"               nop
+#	bindsym control+space                 nop
+	bindsym control+"ISO_Level3_Shift"    nop # (alt gr)
+#	bindsym control+Menu                  nop
+#	bindsym control+"Control_R"           nop
+#	bindsym control+Up                    nop
+#	bindsym control+Left                  nop
+#	bindsym control+Down                  nop
+#	bindsym control+Right                 nop
 }
 
 ############################### QUIT-MODE #######################################
@@ -705,75 +762,80 @@ mode $quit {
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
 	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert RESUME
-	bindsym --border button2              mode $lock $lock_style $exec $alert RESUME
-	# unused keys (lock)
-	bindsym Delete                        mode $lock $lock_style $exec $alert RESUME
-	bindsym backslash                     mode $lock $lock_style $exec $alert RESUME
-	bindsym 1                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 2                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 3                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 4                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 5                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 6                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 7                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 8                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 9                             mode $lock $lock_style $exec $alert RESUME
-	bindsym 0                             mode $lock $lock_style $exec $alert RESUME
-	bindsym aphostrophe                   mode $lock $lock_style $exec $alert RESUME
-	bindsym igrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert RESUME
-	bindsym Tab                           mode $lock $lock_style $exec $alert RESUME
-#	bindsym q                             mode $lock $lock_style $exec $alert RESUME
-	bindsym w                             mode $lock $lock_style $exec $alert RESUME
-#	bindsym e                             mode $lock $lock_style $exec $alert RESUME
-#	bindsym r                             mode $lock $lock_style $exec $alert RESUME
-	bindsym t                             mode $lock $lock_style $exec $alert RESUME
-	bindsym y                             mode $lock $lock_style $exec $alert RESUME
-	bindsym u                             mode $lock $lock_style $exec $alert RESUME
-	bindsym i                             mode $lock $lock_style $exec $alert RESUME
-	bindsym o                             mode $lock $lock_style $exec $alert RESUME
-	bindsym p                             mode $lock $lock_style $exec $alert RESUME
-	bindsym egrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym plus                          mode $lock $lock_style $exec $alert RESUME
-	bindsym Return                        mode $lock $lock_style $exec $alert RESUME
-#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert RESUME
-	bindsym a                             mode $lock $lock_style $exec $alert RESUME
-#	bindsym s                             mode $lock $lock_style $exec $alert RESUME
-	bindsym d                             mode $lock $lock_style $exec $alert RESUME
-	bindsym f                             mode $lock $lock_style $exec $alert RESUME
-	bindsym g                             mode $lock $lock_style $exec $alert RESUME
-	bindsym h                             mode $lock $lock_style $exec $alert RESUME
-	bindsym j                             mode $lock $lock_style $exec $alert RESUME
-	bindsym k                             mode $lock $lock_style $exec $alert RESUME
-	bindsym l                             mode $lock $lock_style $exec $alert RESUME
-	bindsym ograve                        mode $lock $lock_style $exec $alert RESUME
-	bindsym agrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym ugrave                        mode $lock $lock_style $exec $alert RESUME
-	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert RESUME
-	bindsym less                          mode $lock $lock_style $exec $alert RESUME
-	bindsym z                             mode $lock $lock_style $exec $alert RESUME
-	bindsym x                             mode $lock $lock_style $exec $alert RESUME
-	bindsym c                             mode $lock $lock_style $exec $alert RESUME
-	bindsym v                             mode $lock $lock_style $exec $alert RESUME
-	bindsym b                             mode $lock $lock_style $exec $alert RESUME
-	bindsym n                             mode $lock $lock_style $exec $alert RESUME
-	bindsym m                             mode $lock $lock_style $exec $alert RESUME
-	bindsym comma                         mode $lock $lock_style $exec $alert RESUME
-	bindsym period                        mode $lock $lock_style $exec $alert RESUME
-	bindsym minus                         mode $lock $lock_style $exec $alert RESUME
-	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert RESUME
-	bindsym "Control_L"                   mode $lock $lock_style $exec $alert RESUME
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert RESUME
-	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert RESUME
-	bindsym space                         mode $lock $lock_style $exec $alert RESUME
-	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert RESUME # (alt gr)
-	bindsym Menu                          mode $lock $lock_style $exec $alert RESUME
-	bindsym "Control_R"                   mode $lock $lock_style $exec $alert RESUME
-	bindsym Up                            mode $lock $lock_style $exec $alert RESUME
-	bindsym Left                          mode $lock $lock_style $exec $alert RESUME
-	bindsym Down                          mode $lock $lock_style $exec $alert RESUME
-	bindsym Right                         mode $lock $lock_style $exec $alert RESUME
+	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	# unused keys
+	bindsym Delete                        nop
+	bindsym backslash                     nop
+	bindsym 1                             nop
+	bindsym 2                             nop
+	bindsym 3                             nop
+	bindsym 4                             nop
+	bindsym 5                             nop
+	bindsym 6                             nop
+	bindsym 7                             nop
+	bindsym 8                             nop
+	bindsym 9                             nop
+	bindsym 0                             nop
+	bindsym aphostrophe                   nop
+	bindsym igrave                        nop
+	bindsym BackSpace                     nop
+	bindsym Tab                           nop
+#	bindsym q                             nop
+	bindsym w                             nop
+#	bindsym e                             nop
+#	bindsym r                             nop
+	bindsym t                             nop
+	bindsym y                             nop
+	bindsym u                             nop
+	bindsym i                             nop
+	bindsym o                             nop
+	bindsym p                             nop
+	bindsym egrave                        nop
+	bindsym plus                          nop
+	bindsym Return                        nop
+#	bindsym Caps_Lock                     nop
+	bindsym a                             nop
+#	bindsym s                             nop
+	bindsym d                             nop
+	bindsym f                             nop
+	bindsym g                             nop
+	bindsym h                             nop
+	bindsym j                             nop
+	bindsym k                             nop
+	bindsym l                             nop
+	bindsym ograve                        nop
+	bindsym agrave                        nop
+	bindsym ugrave                        nop
+	bindsym "Shift_L"                     nop
+	bindsym less                          nop
+	bindsym z                             nop
+	bindsym x                             nop
+	bindsym c                             nop
+	bindsym v                             nop
+	bindsym b                             nop
+	bindsym n                             nop
+	bindsym m                             nop
+	bindsym comma                         nop
+	bindsym period                        nop
+	bindsym minus                         nop
+	bindsym "Shift_R"                     nop
+	bindsym "Control_L"                   nop
+#	bindsym "Super_L"                     nop
+#	bindsym "Alt_L"                       nop
+#	bindsym space                         nop
+	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+	bindsym Menu                          nop
+	bindsym "Control_R"                   nop
+	bindsym Up                            nop
+	bindsym Left                          nop
+	bindsym Down                          nop
+	bindsym Right                         nop
 }
 
 ############################### SUB-MODES #######################################
@@ -800,75 +862,80 @@ mode $rdsh {
 	# super
 	bindsym Escape                        mode $supr $supr_style $exec $disable_Super_L $alert $supr
 	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
-	# unused keys (lock)
-	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym backslash                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 1                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 2                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 3                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 4                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 5                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 6                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 7                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 8                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 9                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 0                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym aphostrophe                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym igrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Tab                           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym q                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym w                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym e                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym r                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym t                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym y                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym u                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym i                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym s                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym d                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym g                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym k                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ograve                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym agrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym less                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym x                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym c                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym v                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym b                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym n                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym m                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym comma                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym period                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym minus                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Control_L"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert_lock & $touchpad_off # (alt gr)
-	bindsym Menu                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Control_R"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Up                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Left                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Down                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Right                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	# unused keys
+#	bindsym Delete                        nop
+	bindsym backslash                     nop
+#	bindsym 1                             nop
+#	bindsym 2                             nop
+#	bindsym 3                             nop
+#	bindsym 4                             nop
+#	bindsym 5                             nop
+#	bindsym 6                             nop
+#	bindsym 7                             nop
+#	bindsym 8                             nop
+#	bindsym 9                             nop
+#	bindsym 0                             nop
+	bindsym aphostrophe                   nop
+	bindsym igrave                        nop
+#	bindsym BackSpace                     nop
+	bindsym Tab                           nop
+	bindsym q                             nop
+	bindsym w                             nop
+	bindsym e                             nop
+	bindsym r                             nop
+	bindsym t                             nop
+	bindsym y                             nop
+	bindsym u                             nop
+	bindsym i                             nop
+	bindsym o                             nop
+	bindsym p                             nop
+	bindsym egrave                        nop
+#	bindsym plus                          nop
+#	bindsym Return                        nop
+#	bindsym Caps_Lock                     nop
+	bindsym a                             nop
+	bindsym s                             nop
+	bindsym d                             nop
+	bindsym f                             nop
+	bindsym g                             nop
+	bindsym h                             nop
+	bindsym j                             nop
+	bindsym k                             nop
+	bindsym l                             nop
+	bindsym ograve                        nop
+	bindsym agrave                        nop
+	bindsym ugrave                        nop
+	bindsym "Shift_L"                     nop
+	bindsym less                          nop
+	bindsym z                             nop
+	bindsym x                             nop
+	bindsym c                             nop
+	bindsym v                             nop
+	bindsym b                             nop
+	bindsym n                             nop
+	bindsym m                             nop
+	bindsym comma                         nop
+	bindsym period                        nop
+	bindsym minus                         nop
+	bindsym "Shift_R"                     nop
+	bindsym "Control_L"                   nop
+#	bindsym "Super_L"                     nop
+#	bindsym "Alt_L"                       nop
+#	bindsym space                         nop
+	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+	bindsym Menu                          nop
+	bindsym "Control_R"                   nop
+	bindsym Up                            nop
+	bindsym Left                          nop
+	bindsym Down                          nop
+	bindsym Right                         nop
 }
 
 # start layout
@@ -884,81 +951,86 @@ mode $strt {
 	# super
 	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
 	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
-	# unused keys (lock)
-	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym backslash                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 1                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 2                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 3                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 4                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 5                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 6                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 7                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 8                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 9                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 0                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym aphostrophe                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym igrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Tab                           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym q                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym w                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym e                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym r                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym t                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym y                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym u                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym i                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym s                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym d                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym g                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym k                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ograve                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym agrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym less                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym x                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym c                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym v                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym b                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym n                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym m                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym comma                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym period                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym minus                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Control_L"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert_lock & $touchpad_off # (alt gr)
-	bindsym Menu                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Control_R"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Up                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Left                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Down                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Right                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	# unused keys
+#	bindsym Delete                        nop
+	bindsym backslash                     nop
+#	bindsym 1                             nop
+#	bindsym 2                             nop
+	bindsym 3                             nop
+	bindsym 4                             nop
+	bindsym 5                             nop
+	bindsym 6                             nop
+	bindsym 7                             nop
+	bindsym 8                             nop
+	bindsym 9                             nop
+	bindsym 0                             nop
+	bindsym aphostrophe                   nop
+	bindsym igrave                        nop
+#	bindsym BackSpace                     nop
+	bindsym Tab                           nop
+	bindsym q                             nop
+	bindsym w                             nop
+	bindsym e                             nop
+	bindsym r                             nop
+	bindsym t                             nop
+	bindsym y                             nop
+	bindsym u                             nop
+	bindsym i                             nop
+	bindsym o                             nop
+	bindsym p                             nop
+	bindsym egrave                        nop
+	bindsym plus                          nop
+#	bindsym Return                        nop
+#	bindsym Caps_Lock                     nop
+	bindsym a                             nop
+	bindsym s                             nop
+	bindsym d                             nop
+	bindsym f                             nop
+	bindsym g                             nop
+	bindsym h                             nop
+	bindsym j                             nop
+	bindsym k                             nop
+	bindsym l                             nop
+	bindsym ograve                        nop
+	bindsym agrave                        nop
+	bindsym ugrave                        nop
+	bindsym "Shift_L"                     nop
+	bindsym less                          nop
+	bindsym z                             nop
+	bindsym x                             nop
+	bindsym c                             nop
+	bindsym v                             nop
+	bindsym b                             nop
+	bindsym n                             nop
+	bindsym m                             nop
+	bindsym comma                         nop
+	bindsym period                        nop
+	bindsym minus                         nop
+	bindsym "Shift_R"                     nop
+	bindsym "Control_L"                   nop
+#	bindsym "Super_L"                     nop
+#	bindsym "Alt_L"                       nop
+#	bindsym space                         nop
+	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+	bindsym Menu                          nop
+	bindsym "Control_R"                   nop
+	bindsym Up                            nop
+	bindsym Left                          nop
+	bindsym Down                          nop
+	bindsym Right                         nop
 }
 
 # configuration files launcher
 mode $cnfg {
 	# options
-	bindsym c mode $lock $lock_style $exec emacs ~/.i3/config & $alert_lock & $touchpad_off
+	bindsym c mode $lock $lock_style $exec code-git ~/.i3/config & $alert_lock & $touchpad_off
 	bindsym i mode $lock $lock_style $exec emacs ~/.gitignore
 	bindsym a mode $lock $lock_style $exec emacs /sudo::/usr/share/applications/ & $alert_lock & $touchpad_off
 	bindsym e mode $lock $lock_style $exec emacs ~/.emacs & $alert_lock & $touchpad_off
@@ -978,76 +1050,167 @@ mode $cnfg {
 	# super
 	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
 	# lock
-	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
-	# unused keys (lock)
-	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym backslash                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 1                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 2                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 3                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 4                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 5                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 6                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 7                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 8                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 9                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym 0                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym aphostrophe                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym igrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Tab                           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym q                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym w                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym e                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym r                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym t                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym y                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym u                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym i                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Caps_Lock                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym s                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym d                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym g                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym k                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ograve                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym agrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym less                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym x                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym c                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym v                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym b                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym n                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym m                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym comma                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym period                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym minus                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Control_L"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert_lock & $touchpad_off # (alt gr)
-	bindsym Menu                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym "Control_R"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Up                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Left                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Down                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Right                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	# unused keys
+	bindsym Delete                        nop
+	bindsym backslash                     nop
+#	bindsym 1                             nop
+#	bindsym 2                             nop
+	bindsym 3                             nop
+	bindsym 4                             nop
+	bindsym 5                             nop
+	bindsym 6                             nop
+	bindsym 7                             nop
+	bindsym 8                             nop
+	bindsym 9                             nop
+	bindsym 0                             nop
+	bindsym aphostrophe                   nop
+	bindsym igrave                        nop
+#	bindsym BackSpace                     nop
+	bindsym Tab                           nop
+	bindsym q                             nop
+	bindsym w                             nop
+#	bindsym e                             nop
+	bindsym r                             nop
+	bindsym t                             nop
+#	bindsym y                             nop
+	bindsym u                             nop
+#	bindsym i                             nop
+	bindsym o                             nop
+	bindsym p                             nop
+	bindsym egrave                        nop
+	bindsym plus                          nop
+#	bindsym Return                        nop
+#	bindsym Caps_Lock                     nop
+#	bindsym a                             nop
+#	bindsym s                             nop
+	bindsym d                             nop
+	bindsym f                             nop
+#	bindsym g                             nop
+	bindsym h                             nop
+	bindsym j                             nop
+	bindsym k                             nop
+#	bindsym l                             nop
+	bindsym ograve                        nop
+	bindsym agrave                        nop
+	bindsym ugrave                        nop
+	bindsym "Shift_L"                     nop
+	bindsym less                          nop
+#	bindsym z                             nop
+	bindsym x                             nop
+#	bindsym c                             nop
+	bindsym v                             nop
+	bindsym b                             nop
+	bindsym n                             nop
+	bindsym m                             nop
+	bindsym comma                         nop
+	bindsym period                        nop
+	bindsym minus                         nop
+	bindsym "Shift_R"                     nop
+	bindsym "Control_L"                   nop
+#	bindsym "Super_L"                     nop
+#	bindsym "Alt_L"                       nop
+#	bindsym space                         nop
+	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+	bindsym Menu                          nop
+	bindsym "Control_R"                   nop
+	bindsym Up                            nop
+	bindsym Left                          nop
+	bindsym Down                          nop
+	bindsym Right                         nop
 }
+
+# touchpad enabled + can write
+mode $tpad {
+	# alert
+	bindsym Caps_Lock $exec $alert CAPS
+	bindsym "Super_L" $exec $alert SUPR
+	# quit
+	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
+	# super
+	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
+	# lock
+	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	# unused keys
+#	bindsym Delete                        nop
+	bindsym backslash                     nop
+	bindsym 1                             nop
+	bindsym 2                             nop
+	bindsym 3                             nop
+	bindsym 4                             nop
+	bindsym 5                             nop
+	bindsym 6                             nop
+	bindsym 7                             nop
+	bindsym 8                             nop
+	bindsym 9                             nop
+	bindsym 0                             nop
+	bindsym aphostrophe                   nop
+	bindsym igrave                        nop
+#	bindsym BackSpace                     nop
+	bindsym Tab                           nop
+	bindsym q                             nop
+	bindsym w                             nop
+	bindsym e                             nop
+	bindsym r                             nop
+	bindsym t                             nop
+	bindsym y                             nop
+	bindsym u                             nop
+	bindsym i                             nop
+	bindsym o                             nop
+	bindsym p                             nop
+	bindsym egrave                        nop
+	bindsym plus                          nop
+#	bindsym Return                        nop
+#	bindsym Caps_Lock                     nop
+	bindsym a                             nop
+	bindsym s                             nop
+	bindsym d                             nop
+	bindsym f                             nop
+	bindsym g                             nop
+	bindsym h                             nop
+	bindsym j                             nop
+	bindsym k                             nop
+	bindsym l                             nop
+	bindsym ograve                        nop
+	bindsym agrave                        nop
+	bindsym ugrave                        nop
+	bindsym "Shift_L"                     nop
+	bindsym less                          nop
+	bindsym z                             nop
+	bindsym x                             nop
+	bindsym c                             nop
+	bindsym v                             nop
+	bindsym b                             nop
+	bindsym n                             nop
+	bindsym m                             nop
+	bindsym comma                         nop
+	bindsym period                        nop
+	bindsym minus                         nop
+	bindsym "Shift_R"                     nop
+	bindsym "Control_L"                   nop
+#	bindsym "Super_L"                     nop
+#	bindsym "Alt_L"                       nop
+#	bindsym space                         nop
+	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+	bindsym Menu                          nop
+	bindsym "Control_R"                   nop
+	bindsym Up                            nop
+	bindsym Left                          nop
+	bindsym Down                          nop
+	bindsym Right                         nop
+	}
 
 ########################### SUB-MODE MODEL #####################################
 
@@ -1069,74 +1232,80 @@ mode $cnfg {
 #	# super
 #	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
 #	# lock
+#	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+#	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
 #	# unused keys
-#	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym backslash                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 1                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 2                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 3                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 4                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 5                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 6                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 7                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 8                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 9                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym 0                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym aphostrophe                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym igrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Tab                           mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym q                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym w                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym e                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym r                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym t                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym y                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym u                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym i                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym o                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym p                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym egrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym plus                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Control_L"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym s                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym d                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym g                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym k                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym l                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym ograve                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym agrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym ugrave                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Shift_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym less                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym z                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym x                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym c                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym v                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym b                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym n                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym m                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym comma                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym period                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym minus                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Shift_R"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Super_L"                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "ISO_Level3_Shift"            mode $lock $lock_style $exec $alert_lock & $touchpad_off # (alt gr)
-#	bindsym Menu                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym "Control_R"                   mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Up                            mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Left                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Down                          mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym Right                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
+# #	bindsym Delete                        nop
+# 	bindsym backslash                     nop
+#	bindsym 1                             nop
+#	bindsym 2                             nop
+# 	bindsym 3                             nop
+# 	bindsym 4                             nop
+# 	bindsym 5                             nop
+# 	bindsym 6                             nop
+# 	bindsym 7                             nop
+# 	bindsym 8                             nop
+# 	bindsym 9                             nop
+# 	bindsym 0                             nop
+# 	bindsym aphostrophe                   nop
+# 	bindsym igrave                        nop
+# #	bindsym BackSpace                     nop
+# 	bindsym Tab                           nop
+# 	bindsym q                             nop
+# 	bindsym w                             nop
+# 	bindsym e                             nop
+# 	bindsym r                             nop
+# 	bindsym t                             nop
+# 	bindsym y                             nop
+# 	bindsym u                             nop
+# 	bindsym i                             nop
+# 	bindsym o                             nop
+# 	bindsym p                             nop
+# 	bindsym egrave                        nop
+# 	bindsym plus                          nop
+# #	bindsym Return                        nop
+# #	bindsym Caps_Lock                     nop
+# 	bindsym a                             nop
+# 	bindsym s                             nop
+# 	bindsym d                             nop
+# 	bindsym f                             nop
+# 	bindsym g                             nop
+# 	bindsym h                             nop
+# 	bindsym j                             nop
+# 	bindsym k                             nop
+# 	bindsym l                             nop
+# 	bindsym ograve                        nop
+# 	bindsym agrave                        nop
+# 	bindsym ugrave                        nop
+# 	bindsym "Shift_L"                     nop
+# 	bindsym less                          nop
+# 	bindsym z                             nop
+# 	bindsym x                             nop
+# 	bindsym c                             nop
+# 	bindsym v                             nop
+# 	bindsym b                             nop
+# 	bindsym n                             nop
+# 	bindsym m                             nop
+# 	bindsym comma                         nop
+# 	bindsym period                        nop
+# 	bindsym minus                         nop
+# 	bindsym "Shift_R"                     nop
+# 	bindsym "Control_L"                   nop
+# #	bindsym "Super_L"                     nop
+# #	bindsym "Alt_L"                       nop
+# #	bindsym space                         nop
+# 	bindsym "ISO_Level3_Shift"            nop # (alt gr)
+# 	bindsym Menu                          nop
+# 	bindsym "Control_R"                   nop
+# 	bindsym Up                            nop
+# 	bindsym Left                          nop
+# 	bindsym Down                          nop
+# 	bindsym Right                         nop
 # }
 
 ################################################################################
@@ -1201,8 +1370,8 @@ assign [class="Gimp.*"] $w9
 #                                STARTUP                                       #
 ################################################################################
 
-# keybinding
-$exec $disable_Caps; $disable_Super_L # order matters
+# keybinding (order matters)
+$exec $disable_Caps; $disable_Super_L
 
 # bar applications
 $exec nm-applet
@@ -1220,11 +1389,8 @@ $exec_always $enable_autoscroll
 # reshift
 $exec redshift -o
 
-# desktop background
+# background
 $exec_always nitrogen --restore
-
-# layouts
-$exec "$layout_0; $fill_0"
 
 ################################################################################
 #                                  FIN                                         #
