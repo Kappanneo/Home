@@ -318,9 +318,6 @@ mode $supr {
 	bindsym s      focus down ; $refresh
 	bindsym d      focus right; $refresh
 
-	# fullscreen
-#	bindsym f fullscreen toggle
-
 	# move focused window
 	bindsym Shift+o      move up
 	bindsym Shift+k      move left
@@ -359,6 +356,28 @@ mode $supr {
 
 	# kill
 	bindsym control+w kill; $refresh
+
+	# fullscreen
+	bindsym f mode $lock $lock_style fullscreen toggle; $exec $alert_lock & $touchpad_off
+
+	# start a terminal
+	bindsym Mod4+control+w kill; $refresh
+	bindsym --release Mod4+control+w  mode $lock $lock_style $exec $alert_lock & $touchpad_off
+
+	# start a terminal
+	bindsym Mod4+Return mode $lock $lock_style $exec gnome-terminal & $alert_lock & $touchpad_off
+
+	# open emacs
+	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
+
+	# hard reload
+	bindsym Mod4+control+r $lock_style restart
+
+	# open application menu
+	bindsym Mod4+Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
+
+	# exit with touchpad on
+	bindsym Mod4+space mode $lock $lock_style $exec $touchpad_on; $exec $alert_lock
 
 	# save layout
 	bindsym control+s mode $lock $lock_style exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"; $exec $alert_lock & $touchpad_off
@@ -465,27 +484,6 @@ mode $supr {
 	bindsym Mod4+Shift+p  resize  grow  height 5 px or 1 ppt
 	bindsym Mod4+minus    resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 	bindsym Mod4+plus     resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
-
-	######### INSTA-COMMANDS #########
-
-	# start a terminal
-	bindsym Mod4+control+w kill; $refresh
-	bindsym --release Mod4+control+w  mode $lock $lock_style $exec $alert_lock & $touchpad_off
-
-	# start a terminal
-	bindsym Mod4+Return mode $lock $lock_style $exec gnome-terminal & $alert_lock & $touchpad_off
-
-	# open emacs
-	bindsym Mod4+e mode $lock $lock_style $exec emacs & $alert_lock & $touchpad_off
-
-	# hard reload
-	bindsym Mod4+control+r $lock_style restart
-
-	# open application menu
-	bindsym Mod4+Menu mode $lock $lock_style focus parent; $exec $dmenu-desktop; $exec $alert_lock & $touchpad_off & $alert EXEC
-
-	# exit with touchpad on
-	bindsym Mod4+space mode $lock $lock_style $exec $touchpad_on; $exec $alert_lock
 
 	########### CHAIN-LOCKS ##########
 
@@ -607,7 +605,7 @@ mode $supr {
 #	bindsym a                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym s                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym d                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
-#	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
+	bindsym f                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym g                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 #	bindsym h                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
 	bindsym j                             mode $lock $lock_style $exec $alert_lock & $touchpad_off
