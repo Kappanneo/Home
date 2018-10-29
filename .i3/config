@@ -68,6 +68,8 @@ set $focus_one focus child ; focus child ; focus child ; focus child ; focus chi
 set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
 set $disable_Caps setxkbmap -option ctrl:nocaps
 set $enable_Caps setxkbmap -option
+set $write_mode_on ~/.bin/arrows.sh 0
+set $write_mode_off ~/.bin/arrows.sh 1
 
 ############################ FUNCTIONALITIES ###################################
 
@@ -117,8 +119,8 @@ set $quit "QUIT: alt|esc to lock   q to quit  r to restart  s to suspen  e to ex
 # submodes (standardized, model below)
 set $rdsh "RDSH: alt|esc to lock  0-9 to adjust"
 set $strt "STRT: alt|esc to lock  1-2 layouts"
-set $cnfg "CNFG: alt|esc to lock  c config  i gitignore  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or l layouts  y yaourt   p stamp"
-set $tpad "TPAD: alt|esc to disable touchpad and lock"
+set $cnfg "CNFG: alt|esc to lock  c config  i gitignore  a applications  e emacs  s statusbar  z zsh  g guide  1-2 or l layouts  y yaourt  p stamp"
+set $move "MOVE: alt|esc to disable touchpad and lock"
 
 set $alert_lock notify-send --expire-time=6000 "LOCK: super to unlock i3"
 
@@ -247,10 +249,12 @@ mode $supr {
 	############## MODES #############
 
 	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
+
 	bindsym Mod4+r                        mode $rdsh $subm_style $exec $alert $rdsh
 	bindsym Mod4+z                        mode $strt $subm_style $exec $alert $strt
 	bindsym Mod4+c                        mode $cnfg $subm_style $exec $alert $cnfg
-	bindsym Mod4+space                    mode $tpad $lock_style $exec $touchpad_on & $alert TOUCHPAD
+
+	bindsym Mod4+space                    mode $move $lock_style $exec $touchpad_on & $write_mode_off & $alert TOUCHPAD
 
 	############# LOCKS ##############
 
@@ -1126,23 +1130,23 @@ mode $cnfg {
 	bindsym Right                         nop
 }
 
-# touchpad enabled + can write
-mode $tpad {
+# enable touchpad and arrows (also alternative ones)
+mode $move {
 	# alert
 	bindsym Caps_Lock $exec $alert CAPS
 	bindsym "Super_L" $exec $alert SUPR
 	# quit
-	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit
+	bindsym XF86PowerOff                  mode $quit $quit_style $exec $alert $quit & $write_mode_on & $touchpad_off
 	# super
-	bindsym Escape                        mode $supr $supr_style $exec $alert $supr
+	bindsym Escape                        mode $supr $supr_style $exec $alert $supr & $write_mode_on & $touchpad_off
 	# lock
-	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym space                         mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $touchpad_off
-	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $touchpad_off_2
+	bindsym "Alt_L"                       mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off
+	bindsym space                         mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off
+	bindsym Return                        mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off
+	bindsym BackSpace                     mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off
+	bindsym Delete                        mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off
+	bindsym --release Escape              mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off
+	bindsym --border button2              mode $lock $lock_style $exec $alert_lock & $write_mode_on & $touchpad_off_2
 	# unused keys
 #	bindsym Delete                        nop
 	bindsym backslash                     nop
@@ -1206,10 +1210,10 @@ mode $tpad {
 	bindsym "ISO_Level3_Shift"            nop # (alt gr)
 	bindsym Menu                          nop
 	bindsym "Control_R"                   nop
-	bindsym Up                            nop
-	bindsym Left                          nop
-	bindsym Down                          nop
-	bindsym Right                         nop
+#	bindsym Up                            nop
+#	bindsym Left                          nop
+#	bindsym Down                          nop
+#	bindsym Right                         nop
 	}
 
 ########################### SUB-MODE MODEL #####################################
