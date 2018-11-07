@@ -101,7 +101,7 @@
             "name": "Home",
             "percent": 1,
             "swallows": [{
-                "class": "^Nautilus$"
+                "class": "^Pcmanfm$"
             }],
             "type": "con"
         }]

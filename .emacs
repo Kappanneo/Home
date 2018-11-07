@@ -51,9 +51,7 @@
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 
-(global-set-key (kbd "M-f") 'search-forward-regexp)
-(global-set-key (kbd "M-c") 'delete-forward-char)
-(global-set-key (kbd "M-d") 'delete-backward-char)
+(global-set-key [M-Delete] 'delete-backward-char)
 
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
 

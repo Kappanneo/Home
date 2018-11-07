@@ -36,8 +36,5 @@ stamp.json
 !.bin/
 .bin/*
 
-!.oh-my-zsh/
-.oh-my-zsh/*
-
 !*.sh
 

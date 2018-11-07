@@ -6,12 +6,13 @@
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 8
 
+# Use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+
 # no title-bars nor border
 new_window pixel 0
 
-# no floating
-for_window [title="."] floating disable split toggle; focus parent; fullscreen disable; focus child
-
+# no floating border
 new_float pixel 0
 
 # go back to previous workspace if you try to go to the current one
@@ -64,6 +65,7 @@ set $border [tiling] border pixel 5
 
 ############################### KEYBINDINGS ####################################
 
+set $disable_Super_L xmodmap -e "keycode 0x85 = Escape"
 set $disable_Caps setxkbmap -option ctrl:nocaps
 set $enable_Caps setxkbmap -option
 set $disable_hover_mode ~/.bin/hover.sh 0
@@ -105,33 +107,37 @@ set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focu
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
 set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
-set $fill_2 nautilus -w ~ & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal
+set $fill_2 nautilus & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal & pcmanfm -n menu://applications/
 
 ################################ MODES #########################################
 
 # [(poweroff)]
 set $pow "POWER: [q]uit  [r]estart  [s]uspend  [e]xit  [esc]"
 
-# [(A)lt]er text (default)
-set $alt "ALTER: writing enabled  [super] select container [super+space] hover mode"
+# [(A)lt]er text
+set $alt "ALTER: writing enabled  [super] select container  [super+space] hover mode"
 set $def "default"
 
 # [super+space] (B)ack to hovering mode
-set $hov "HOVER: writing disabled  [wasd|oklò] move cursor [alt|esc] write mode"
+set $hov "HOVER: writing disabled  [wasd|oklò] move cursor  [space|esc] exit mode"
 
 # [super] (select) container
-set $sup "SUPER: [wasd|oklò] select  [shift] move  [123] workspace  [space] write mode"
+set $sup "SUPER: [wasd|oklò] select  [shift] move  [123] workspace  [space|esc] exit mode"
 
 ############################### SUB-MODES ######################################
 
-# [z] (start) layout
-set $str "START: [1|2] layouts"
+# [super+z] (start) layout
+set $str "START: [1|2] layouts  [space|esc] exit mode"
 
-# [r] redshift
-set $red "REDSH: [123] shift red level  [+] increase"
+# [super+r] redshift
+set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
 
-# [c] configuration
-set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [y]aourt  [r]edshift"
+# [super+c] configuration
+set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [y]aourt  [r]edshift  [space|esc] exit mode"
+
+############################## ON-NEW-WINDOW ###################################
+
+for_window [title="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $alt & touchpad_off_2
 
 ################################################################################
 #                               COMMANDS                                       #
@@ -153,14 +159,12 @@ bindsym --release Print $exec $stamp
 # display #TODO
 # binsym XF86Display ...
 
-# kill
+# a must
 bindsym Mod1+F4 kill; $refresh_status_bar
 
-################################## MODES #######################################
+################################## SUPER #######################################
 
-bindsym "Super_L" mode $sup $border fullscreen disable $exec $alert $sup
-
-bindsym Mod4+space mode $hov $exec $enable_hover_mode & $alert $hov
+bindcode 133 $border mode $sup $exec $alert $sup; fullscreen disable
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -188,8 +192,9 @@ bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
 
 # also Tab
-bindsym Mod4+Tab       workspace next; $refresh_status_bar
-bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+bindsym Mod4+Tab         workspace next; $refresh_status_bar
+bindsym Mod4+control+Tab workspace next; $refresh_status_bar
+bindsym Mod4+Shift+Tab   workspace prev; $refresh_status_bar
 
 # change focus
 bindsym Mod4+o      focus up   ; $refresh_status_bar
@@ -227,9 +232,6 @@ bindsym Mod4+Shift+a      move left
 bindsym Mod4+Shift+s      move down
 bindsym Mod4+Shift+d      move right
 
-# fullscreen
-bindsym Mod4+f fullscreen toggle
-
 # split
 bindsym Mod4+g focus parent; layout toggle split; focus child
 
@@ -242,32 +244,39 @@ bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink wid
 bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
 ################################################################################
-#                                MODES                                         #
+#                                  MODES                                       #
 ################################################################################
+
+################################ SUPER-MODE ####################################
 
 mode $sup {
 
 	############## MODES #############
 
-	bindsym XF86PowerOff     mode $pow $no_border $exec $alert $pow
+	bindsym XF86PowerOff     $no_border mode $pow $exec $alert $pow
 
-	bindsym "Alt_L"          mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Delete           mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym BackSpace        mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym space            mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Return           mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindcode 9               $no_border mode $def $exec $alert $alt & $touchpad_off
+	bindsym "Alt_L"          $no_border mode $def $exec $alert $alt & $touchpad_off
+	bindsym space            $no_border mode $def $exec $alert $alt & $touchpad_off
+	bindsym Delete           $no_border mode $def $exec $alert $alt & $touchpad_off
+	bindsym BackSpace        $no_border mode $def $exec $alert $alt & $touchpad_off
+	bindsym Return           $no_border mode $def $exec $alert $alt & $touchpad_off
 
-	bindsym Mod4+space       mode $hov $no_border $exec $enable_hover_mode & $alert $hov & $touchpad_on
-	bindsym --border button2 mode $hov $no_border $exec $enable_hover_mode & $alert $hov
+	bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
 
-	bindsym Mod4+r           mode $red $exec $alert $red
-	bindsym Mod4+z           mode $str $exec $alert $str
-	bindsym Mod4+c           mode $cnf $exec $alert $cnf
+	bindsym r                $no_border mode $red $exec $alert $red
+	bindsym Mod4+r           $no_border mode $red $exec $alert $red
+
+	bindsym z                $no_border mode $str $exec $alert $str
+	bindsym Mod4+z           $no_border mode $str $exec $alert $str
+
+	bindsym c                $no_border mode $cnf $exec $alert $cnf
+	bindsym Mod4+c           $no_border mode $cnf $exec $alert $cnf
 
 	############ COMMANDS ############
 
 	# back to square one
-	bindsym Super_L $border $focus_one
+	bindcode 133 $border $focus_one
 
 	# touchpad toggle
 	bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -306,10 +315,9 @@ mode $sup {
 	bindsym Shift+9 move container to workspace $w9; workspace $w9
 
 	# also Tab
-	bindsym Tab               workspace next; $refresh_status_bar
-	bindsym Shift+Tab         workspace prev; $refresh_status_bar
-	bindsym control+Tab       workspace next; $refresh_status_bar
-	bindsym control+Shift+Tab workspace prev; $refresh_status_bar
+	bindsym Tab         workspace next; $refresh_status_bar
+	bindsym control+Tab workspace next; $refresh_status_bar
+	bindsym Shift+Tab   workspace prev; $refresh_status_bar
 
 	# change focus
 	bindsym o      focus up   ; $refresh_status_bar
@@ -363,39 +371,38 @@ mode $sup {
 	# focus tree
 	bindsym less          focus child
 	bindsym Shift+greater focus parent
-	bindsym control+a     $focus_all
+	bindsym control+a    $focus_all
 
 	# kill
 	bindsym control+w kill; $refresh_status_bar
 
 	# save layout
-	bindsym control+s mode $def $no_border exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"; $exec $alert $hov & $touchpad_off
+	bindsym control+s  exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
 
 	# paste
 	bindsym control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
 	# reload i3
-	bindsym control+r reload; $no_border $exec $alert $hov & $touchpad_off & $alert RELOAD
+	bindsym control+r $no_border reload
 
 	# files
-	bindsym control+f mode $def $no_border $exec nautilus -w & $alert $hov & $touchpad_off
+	bindsym control+f $exec nautilus -w
 
 	# start dmenu (a program launcher)
-	bindsym control+e mode $def $no_border focus parent; $exec dmenu_run; $exec $alert $hov & $touchpad_off & $alert EXEC
+	bindsym control+e $exec dmenu_run
 
 	# start dmenu (a program launcher)
-	bindsym control+t mode $def $no_border focus parent; $exec $dmenu; $exec $alert $hov & $touchpad_off & $alert EXEC
-	bindsym Menu      mode $def $no_border focus parent; $exec $dmenu; $exec $alert $hov & $touchpad_off & $alert EXEC
-	bindsym Mod4+Menu mode $def $no_border focus parent; $exec $dmenu; $exec $alert $hov & $touchpad_off & $alert EXEC
+	bindsym Menu      mode $def $no_border $exec $dmenu; $exec $alert $alt & $touchpad_off $alert EXEC
+	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; $exec $alert $alt & $touchpad_off $alert EXEC
 
 	# fullscreen
-	bindsym f mode $def $no_border fullscreen toggle; $exec $alert $hov & $touchpad_off
+	bindsym f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $enable_hover_mode
 
 	# start a terminal
-	bindsym Mod4+Return mode $def $no_border $exec gnome-terminal & $alert $hov & $touchpad_off
+	bindsym Mod4+Return $exec gnome-terminal
 
 	# open emacs
-	bindsym Mod4+e mode $def $no_border $exec emacs & $alert $hov & $touchpad_off
+	bindsym Mod4+e $exec emacs
 
 	# hard reload
 	bindsym Mod4+control+r $no_border restart
@@ -429,8 +436,9 @@ mode $sup {
 	bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
 
 	# also Tab
-	bindsym Mod4+Tab       workspace next; $refresh_status_bar
-	bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+	bindsym Mod4+Tab         workspace next; $refresh_status_bar
+	bindsym Mod4+control+Tab workspace next; $refresh_status_bar
+	bindsym Mod4+Shift+Tab   workspace prev; $refresh_status_bar
 
 	# change focus
 	bindsym Mod4+o      focus up   ; $refresh_status_bar
@@ -485,86 +493,87 @@ mode $sup {
 	########### CHAIN-LOCKS ##########
 
 	# switch workspace
-	bindsym --release Mod4+1              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+2              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+3              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+4              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+5              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+6              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+7              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+8              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+9              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+0              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+x              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+d              mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+1              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+2              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+3              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+4              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+5              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+6              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+7              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+8              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+9              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+0              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+x              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+d              mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# move focused container to workspace and follow
-	bindsym --release Mod4+Shift+1        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+2        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+3        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+4        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+5        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+6        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+7        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+8        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+9        mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Shift+1        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+2        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+3        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+4        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+5        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+6        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+7        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+8        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+9        mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# cut
-	bindsym --release Mod4+control+x      mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+control+x      mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# also Tab
-	bindsym --release Mod4+Tab            mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+Tab      mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Tab            mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+control+Tab    mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+Tab      mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# change focus
-	bindsym --release Mod4+Up             mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Left           mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Down           mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Right          mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Up             mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Left           mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Down           mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Right          mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# alternatively, you can use the cursor keys:
-	bindsym --release Mod4+Up             mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Left           mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Down           mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Right          mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Up             mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Left           mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Down           mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Right          mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# alternative to the other alternative
-	bindsym --release Mod4+w              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+a              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+s              mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+d              mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+w              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+a              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+s              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+d              mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# move focused window
-	bindsym --release Mod4+Shift+o        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+k        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+l        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+ograve   mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Shift+o        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+k        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+l        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+ograve   mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# alternatively, you can use the cursor keys:
-	bindsym --release Mod4+Shift+Up       mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+Left     mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+Down     mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+Right    mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Shift+Up       mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+Left     mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+Down     mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+Right    mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# alternative to the other alternative
-	bindsym --release Mod4+Shift+w        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+a        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+s        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym --release Mod4+Shift+d        mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+Shift+w        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+a        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+s        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+d        mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# fullscreen
-	bindsym --release Mod4+f              mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+f              mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# split
-	bindsym --release Mod4+g              mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym --release Mod4+g              mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# resize window (you can also use the mouse for that)
-	bindsym Mod4+m                        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym Mod4+p                        mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym Mod4+Shift+m                  mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym Mod4+Shift+p                  mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym Mod4+control+minus            mode $def $no_border $exec $alert $hov & $touchpad_off
-	bindsym Mod4+control+plus             mode $def $no_border $exec $alert $hov & $touchpad_off
+	bindsym Mod4+m                        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym Mod4+p                        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym Mod4+Shift+m                  mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym Mod4+Shift+p                  mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym Mod4+control+minus            mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym Mod4+control+plus             mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	########### UNUSED KEYS ############
 
@@ -764,8 +773,9 @@ mode $pow {
 	bindsym s mode $def $exec systemctl suspend
 	bindsym e           $exec exit
 
-	bindsym "Super_L"             $border mode $sup $exec $alert $sup
+	bindcode 133                  $border mode $sup $exec $alert $sup; fullscreen disable
 
+	bindcode 9                            mode $def $exec $alert $alt
 	bindsym "Alt_L"                       mode $def $exec $alert $alt
 	bindsym Delete                        mode $def $exec $alert $alt
 	bindsym space                         mode $def $exec $alert $alt
@@ -846,13 +856,22 @@ mode $hov {
 
 	bindsym XF86PowerOff                  mode $pow $exec $alert $pow & $disable_hover_mode & $touchpad_off
 
-	bindsym "Super_L"             $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off
+	bindcode 133                  $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off & fullscreen disable
 
+	bindcode 9                            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym "Alt_L"                       mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym Delete                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym space                         mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym Return                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym BackSpace                     mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
+
+	bindsym Mod1+F4 kill; $refresh_status_bar
+
+	bindsym XF86TouchpadToggle $exec $touchpad_toggle
+	bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
+	bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
+
+	bindsym --release Print $exec $stamp
 
 #	bindsym Delete                        nop
 	bindsym backslash                     nop
@@ -920,7 +939,57 @@ mode $hov {
 #	bindsym Left                          nop
 #	bindsym Down                          nop
 #	bindsym Right                         nop
-	}
+
+	# also Shift+ (since Shift is not locked)
+	bindsym Shift+bar                     nop
+	bindsym Shift+exclam                  nop
+	bindsym Shift+quotedbl                nop
+	bindsym Shift+sterling                nop
+	bindsym Shift+dollar                  nop
+	bindsym Shift+percent                 nop
+	bindsym Shift+ampersand               nop
+	bindsym Shift+slash                   nop
+	bindsym Shift+parenleft               nop
+	bindsym Shift+parenright              nop
+	bindsym Shift+equal                   nop
+	bindsym Shift+question                nop
+	bindsym Shift+asciicircum             nop
+	bindsym Shift+q                       nop
+	bindsym Shift+w                       nop
+	bindsym Shift+e                       nop
+	bindsym Shift+r                       nop
+	bindsym Shift+t                       nop
+	bindsym Shift+y                       nop
+	bindsym Shift+u                       nop
+	bindsym Shift+i                       nop
+	bindsym Shift+o                       nop
+	bindsym Shift+p                       nop
+	bindsym Shift+eacute                  nop
+	bindsym Shift+asterisk                nop
+	bindsym Shift+a                       nop
+	bindsym Shift+s                       nop
+	bindsym Shift+d                       nop
+	bindsym Shift+f                       nop
+	bindsym Shift+g                       nop
+	bindsym Shift+h                       nop
+	bindsym Shift+j                       nop
+	bindsym Shift+k                       nop
+	bindsym Shift+l                       nop
+	bindsym Shift+ccedilla                nop
+	bindsym Shift+degree                  nop
+	bindsym Shift+section                 nop
+	bindsym Shift+greater                 nop
+	bindsym Shift+z                       nop
+	bindsym Shift+x                       nop
+	bindsym Shift+c                       nop
+	bindsym Shift+v                       nop
+	bindsym Shift+b                       nop
+	bindsym Shift+n                       nop
+	bindsym Shift+m                       nop
+	bindsym Shift+semicolon               nop
+	bindsym Shift+colon                   nop
+	bindsym Shift+underscore              nop
+}
 
 ############################### SUB-MODES #######################################
 
@@ -940,8 +1009,9 @@ mode $red {
 
 	bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow
 
-	bindsym "Super_L"                     mode $sup $exec $alert $sup
+	bindcode 133                          mode $sup $exec $alert $sup
 
+	bindcode 9                 $no_border mode $def $exec $alert $alt
 	bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
 	bindsym Delete             $no_border mode $def $exec $alert $alt
 	bindsym space              $no_border mode $def $exec $alert $alt
@@ -1019,13 +1089,14 @@ mode $red {
 # start layout
 mode $str {
 
-	bindsym 1 mode $def $no_border $exec $alert $hov & $touchpad_off; $exec "$layout_1; $fill_1"
-	bindsym 2 mode $def $no_border $exec $alert $hov & $touchpad_off; $exec "$layout_2; $fill_2"
+	bindsym 1 mode $def $no_border $exec $alert $alt & $touchpad_off; $exec "$layout_1; $fill_1"
+	bindsym 2 mode $def $no_border $exec $alert $alt & $touchpad_off; $exec "$layout_2; $fill_2"
 
 	bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow
 
-	bindsym "Super_L"                     mode $sup $exec $alert $sup
+	bindcode 133                          mode $sup $exec $alert $sup
 
+	bindcode 9                  $no_border mode $def $exec $alert $alt
 	bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
 	bindsym Delete             $no_border mode $def $exec $alert $alt
 	bindsym space              $no_border mode $def $exec $alert $alt
@@ -1103,23 +1174,24 @@ mode $str {
 # configuration files launcher
 mode $cnf {
 
-	bindsym c mode $def $no_border $exec code-git ~/.i3/config & $alert $hov & $touchpad_off
+	bindsym c mode $def $no_border $exec code-git ~/.i3/config & $alert $alt & $touchpad_off
 	bindsym i mode $def $no_border $exec emacs ~/.gitignore
-	bindsym a mode $def $no_border $exec emacs /sudo::/usr/share/applications/ & $alert $hov & $touchpad_off
-	bindsym e mode $def $no_border $exec emacs ~/.emacs & $alert $hov & $touchpad_off
-	bindsym s mode $def $no_border $exec emacs ~/.config/i3status/config & $alert $hov & $touchpad_off
-	bindsym z mode $def $no_border $exec emacs ~/.zshrc & $alert $hov & $touchpad_off
-	bindsym g mode $def $no_border $exec chromium --new-window i3wm.org/docs/userguide.html & $alert $hov & $touchpad_off
-	bindsym l mode $def $no_border $exec emacs ~/.workspaces/stamp.json & $alert $hov & $touchpad_off
-	bindsym 1 mode $def $no_border $exec emacs ~/.workspaces/$w1.json & $alert $hov & $touchpad_off
-	bindsym 2 mode $def $no_border $exec emacs ~/.workspaces/$w2.json & $alert $hov & $touchpad_off
-	bindsym y mode $def $no_border $exec emacs /sudo::/etc/yaourtrc & $alert $hov & $touchpad_off
+	bindsym a mode $def $no_border $exec emacs /sudo::/usr/share/applications/ & $alert $alt & $touchpad_off
+	bindsym e mode $def $no_border $exec emacs ~/.emacs & $alert $alt & $touchpad_off
+	bindsym s mode $def $no_border $exec emacs ~/.config/i3status/config & $alert $alt & $touchpad_off
+	bindsym z mode $def $no_border $exec emacs ~/.zshrc & $alert $alt & $touchpad_off
+	bindsym g mode $def $no_border $exec chromium --new-window i3wm.org/docs/userguide.html & $alert $alt & $touchpad_off
+	bindsym l mode $def $no_border $exec emacs ~/.workspaces/stamp.json & $alert $alt & $touchpad_off
+	bindsym 1 mode $def $no_border $exec emacs ~/.workspaces/$w1.json & $alert $alt & $touchpad_off
+	bindsym 2 mode $def $no_border $exec emacs ~/.workspaces/$w2.json & $alert $alt & $touchpad_off
+	bindsym y mode $def $no_border $exec emacs /sudo::/etc/yaourtrc & $alert $alt & $touchpad_off
 	bindsym r mode $def $no_border $exec emacs ~/.config/redshift/redshift.conf
 
 	bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow
 
-	bindsym "Super_L"                     mode $sup $exec $alert $sup
+	bindcode 133                          mode $sup $exec $alert $sup
 
+	bindcode 9                 $no_border mode $def $exec $alert $alt
 	bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
 	bindsym Delete             $no_border mode $def $exec $alert $alt
 	bindsym space              $no_border mode $def $exec $alert $alt
@@ -1207,8 +1279,9 @@ mode $cnf {
 #
 #	bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow
 #
-#	bindsym "Super_L"                     mode $sup $exec $alert $sup
+#	bindcode 133                          mode $sup $exec $alert $sup
 #
+#	bindcode 9                 $no_border mode $def $exec $alert $alt
 #	bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
 #	bindsym Delete             $no_border mode $def $exec $alert $alt
 #	bindsym space              $no_border mode $def $exec $alert $alt
@@ -1306,7 +1379,7 @@ bar {
         bindsym button4 nop # scroll wheel up
         bindsym button5 nop # scroll wheel down
 	# mid-mouse click to lock
-	bindsym button2 mode $def $no_border $exec $alert $hov & $touchpad_off_2
+	bindsym button2 mode $def $no_border $exec $alert $alt & $touchpad_off_2
     }
 
 ################################################################################
@@ -1346,7 +1419,7 @@ assign [class="Gimp.*"] $w9
 ################################################################################
 
 # keybinding (order matters)
-$exec $disable_Caps
+$exec $disable_Caps; $disable_Super_L
 
 # bar applications
 $exec nm-applet
@@ -1366,6 +1439,9 @@ $exec redshift -o
 
 # background
 $exec_always nitrogen --restore
+
+# layout
+$exec $layout_2; $fill_2
 
 ################################################################################
 #                                  FIN                                         #
