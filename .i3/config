@@ -107,7 +107,7 @@ set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focu
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
 set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
-set $fill_2 nautilus & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal & pcmanfm -n menu://applications/
+set $fill_2 nautilus & emacs ~/memo & chromium --new-window --profile-directory=Default https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal & pcmanfm -n menu://applications/
 
 ################################ MODES #########################################
 
@@ -137,14 +137,14 @@ set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatus
 
 ############################## ON-NEW-WINDOW ###################################
 
-for_window [title="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $alt & touchpad_off_2
+for_window [title="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & touchpad_off_2
 
 ################################################################################
 #                               COMMANDS                                       #
 ################################################################################
 
 # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
-bindsym XF86PowerOff mode $pow $exec $alert $power
+bindsym XF86PowerOff mode $pow $exec $alert $pow
 
 # touchpad toggle
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -164,7 +164,7 @@ bindsym Mod1+F4 kill; $refresh_status_bar
 
 ################################## SUPER #######################################
 
-bindcode 133 $border mode $sup $exec $alert $sup; fullscreen disable
+bindcode 133 $border mode $sup $exec $enable_autoscroll & $alert $sup; fullscreen disable
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -261,6 +261,7 @@ mode $sup {
 	bindsym Delete           $no_border mode $def $exec $alert $alt & $touchpad_off
 	bindsym BackSpace        $no_border mode $def $exec $alert $alt & $touchpad_off
 	bindsym Return           $no_border mode $def $exec $alert $alt & $touchpad_off
+	bindsym --border button2 $no_border mode $def $exec $alert $alt & $touchpad_off_2
 
 	bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
 
@@ -392,11 +393,11 @@ mode $sup {
 	bindsym control+e $exec dmenu_run
 
 	# start dmenu (a program launcher)
-	bindsym Menu      mode $def $no_border $exec $dmenu; $exec $alert $alt & $touchpad_off $alert EXEC
-	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; $exec $alert $alt & $touchpad_off $alert EXEC
+	bindsym Menu      mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
 	# fullscreen
-	bindsym f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $enable_hover_mode
+	bindsym f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $disable_hover_mode
 
 	# start a terminal
 	bindsym Mod4+Return $exec gnome-terminal
@@ -859,7 +860,6 @@ mode $hov {
 	bindcode 133                  $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off & fullscreen disable
 
 	bindcode 9                            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
-	bindsym "Alt_L"                       mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym Delete                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym space                         mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym Return                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
