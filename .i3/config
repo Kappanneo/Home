@@ -305,19 +305,21 @@ mode $sup {
 	bindsym control+x move container to workspace $wx; $refresh_status_bar
 
 	# move focused container to workspace and follow
-	bindsym Shift+1 move container to workspace $w1; workspace $w1
-	bindsym Shift+2 move container to workspace $w2; workspace $w2
-	bindsym Shift+3 move container to workspace $w3; workspace $w3
-	bindsym Shift+4 move container to workspace $w4; workspace $w4
-	bindsym Shift+5 move container to workspace $w5; workspace $w5
-	bindsym Shift+6 move container to workspace $w6; workspace $w6
-	bindsym Shift+7 move container to workspace $w7; workspace $w7
-	bindsym Shift+8 move container to workspace $w8; workspace $w8
-	bindsym Shift+9 move container to workspace $w9; workspace $w9
+	bindsym control+1 move container to workspace $w1; workspace $w1
+	bindsym control+2 move container to workspace $w2; workspace $w2
+	bindsym control+3 move container to workspace $w3; workspace $w3
+	bindsym control+4 move container to workspace $w4; workspace $w4
+	bindsym control+5 move container to workspace $w5; workspace $w5
+	bindsym control+6 move container to workspace $w6; workspace $w6
+	bindsym control+7 move container to workspace $w7; workspace $w7
+	bindsym control+8 move container to workspace $w8; workspace $w8
+	bindsym control+9 move container to workspace $w9; workspace $w9
+
+	bindsym control+Tab       move container to workspace next; workspace next
+	bindsym control+Shift+Tab move container to workspace prev; workspace prev
 
 	# also Tab
 	bindsym Tab         workspace next; $refresh_status_bar
-	bindsym control+Tab workspace next; $refresh_status_bar
 	bindsym Shift+Tab   workspace prev; $refresh_status_bar
 
 	# change focus
@@ -397,7 +399,8 @@ mode $sup {
 	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
 	# fullscreen
-	bindsym f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $disable_hover_mode
+	bindsym f      fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $disable_hover_mode
+	bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $disable_hover_mode
 
 	# start a terminal
 	bindsym Mod4+Return $exec gnome-terminal
@@ -423,22 +426,24 @@ mode $sup {
 	bindsym Mod4+x workspace $wx; $refresh_status_bar
 
 	# move focused container to workspace and follow
-	bindsym Mod4+Shift+1 move container to workspace $w1; workspace $w1
-	bindsym Mod4+Shift+2 move container to workspace $w2; workspace $w2
-	bindsym Mod4+Shift+3 move container to workspace $w3; workspace $w3
-	bindsym Mod4+Shift+4 move container to workspace $w4; workspace $w4
-	bindsym Mod4+Shift+5 move container to workspace $w5; workspace $w5
-	bindsym Mod4+Shift+6 move container to workspace $w6; workspace $w6
-	bindsym Mod4+Shift+7 move container to workspace $w7; workspace $w7
-	bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
-	bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
+	bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
+	bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
+	bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
+	bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
+	bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
+	bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
+	bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
+	bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
+	bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+
+	bindsym Mod4+control+Tab       move container to workspace next; workspace next
+	bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
 	# cut
 	bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
 
 	# also Tab
 	bindsym Mod4+Tab         workspace next; $refresh_status_bar
-	bindsym Mod4+control+Tab workspace next; $refresh_status_bar
 	bindsym Mod4+Shift+Tab   workspace prev; $refresh_status_bar
 
 	# change focus
@@ -476,9 +481,6 @@ mode $sup {
 	bindsym Mod4+Shift+a      move left
 	bindsym Mod4+Shift+s      move down
 	bindsym Mod4+Shift+d      move right
-
-	# fullscreen
-	bindsym Mod4+f fullscreen toggle
 
 	# split
 	bindsym Mod4+g focus parent; layout toggle split; focus child
@@ -562,9 +564,6 @@ mode $sup {
 	bindsym --release Mod4+Shift+s        mode $def $no_border $exec $alert $alt & $touchpad_off
 	bindsym --release Mod4+Shift+d        mode $def $no_border $exec $alert $alt & $touchpad_off
 
-	# fullscreen
-	bindsym --release Mod4+f              mode $def $no_border $exec $alert $alt & $touchpad_off
-
 	# split
 	bindsym --release Mod4+g              mode $def $no_border $exec $alert $alt & $touchpad_off
 
@@ -646,19 +645,19 @@ mode $sup {
 #	bindsym Right                         nop
 
 	# also Shift+ (since Shift is not locked)
-#	bindsym Shift+bar                     nop
-#	bindsym Shift+exclam                  nop
-#	bindsym Shift+quotedbl                nop
-#	bindsym Shift+sterling                nop
-#	bindsym Shift+dollar                  nop
-#	bindsym Shift+percent                 nop
-#	bindsym Shift+ampersand               nop
-#	bindsym Shift+slash                   nop
-#	bindsym Shift+parenleft               nop
-#	bindsym Shift+parenright              nop
-#	bindsym Shift+equal                   nop
-#	bindsym Shift+question                nop
-#	bindsym Shift+asciicircum             nop
+	bindsym Shift+bar                     nop
+	bindsym Shift+exclam                  nop
+	bindsym Shift+quotedbl                nop
+	bindsym Shift+sterling                nop
+	bindsym Shift+dollar                  nop
+	bindsym Shift+percent                 nop
+	bindsym Shift+ampersand               nop
+	bindsym Shift+slash                   nop
+	bindsym Shift+parenleft               nop
+	bindsym Shift+parenright              nop
+	bindsym Shift+equal                   nop
+	bindsym Shift+question                nop
+	bindsym Shift+asciicircum             nop
 	bindsym Shift+q                       nop
 #	bindsym Shift+w                       nop
 	bindsym Shift+e                       nop
@@ -698,16 +697,16 @@ mode $sup {
 	# also control+ (since control is not locked)
 	bindsym control+Delete                nop
 	bindsym control+backslash             nop
-	bindsym control+1                     nop
-	bindsym control+2                     nop
-	bindsym control+3                     nop
-	bindsym control+4                     nop
-	bindsym control+5                     nop
-	bindsym control+6                     nop
-	bindsym control+7                     nop
-	bindsym control+8                     nop
-	bindsym control+9                     nop
-	bindsym control+0                     nop
+#	bindsym control+1                     nop
+#	bindsym control+2                     nop
+#	bindsym control+3                     nop
+#	bindsym control+4                     nop
+#	bindsym control+5                     nop
+#	bindsym control+6                     nop
+#	bindsym control+7                     nop
+#	bindsym control+8                     nop
+#	bindsym control+9                     nop
+#	bindsym control+0                     nop
 	bindsym control+aphostrophe           nop
 	bindsym control+igrave                nop
 	bindsym control+BackSpace             nop
@@ -767,12 +766,11 @@ mode $sup {
 
 mode $pow {
 
-	bindsym XF86PowerOff $exec $alert $pow
-
-	bindsym q           $exec poweroff
-	bindsym r           $exec reboot
-	bindsym s mode $def $exec systemctl suspend
-	bindsym e           $exec exit
+	bindsym XF86PowerOff $exec poweroff
+	bindsym q            $exec poweroff
+	bindsym r            $exec reboot
+	bindsym s mode $def  $exec systemctl suspend
+	bindsym e            $exec exit
 
 	bindcode 133                  $border mode $sup $exec $alert $sup; fullscreen disable
 
@@ -1392,9 +1390,6 @@ assign [class=".*code.*"] $w3
 # android studio
 assign [class="jetbrains-studio"] $w3
 
-# system monitor
-assign [title="System Monitor"] $w4
-
 # steam
 assign [class="Steam"] $w5
 assign [class="Wine"] $w5
@@ -1421,6 +1416,12 @@ assign [class="Gimp.*"] $w9
 # keybinding (order matters)
 $exec $disable_Caps; $disable_Super_L
 
+# autoscroll (not always permanent, may need reaload)
+$exec_always $enable_autoscroll
+
+# background (not always permanent)
+$exec_always nitrogen --restore
+
 # bar applications
 $exec nm-applet
 $exec pamac-tray
@@ -1431,17 +1432,12 @@ $exec clipit
 $exec xautolock -time 10 -locker dm-tool
 $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-# settings
-$exec_always $enable_autoscroll
-
-# reshift
+# reshift oneshot mode (to set starting temperature according to time)
 $exec redshift -o
-
-# background
-$exec_always nitrogen --restore
 
 # layout
 $exec $layout_2; $fill_2
+$exec code-git
 
 ################################################################################
 #                                  FIN                                         #
