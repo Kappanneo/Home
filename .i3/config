@@ -191,10 +191,12 @@ bindsym Mod4+Shift+7 move container to workspace $w7; workspace $w7
 bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
 
+bindsym Mod4+control+Tab       move container to workspace next; workspace next
+bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
+
 # also Tab
-bindsym Mod4+Tab         workspace next; $refresh_status_bar
-bindsym Mod4+control+Tab workspace next; $refresh_status_bar
-bindsym Mod4+Shift+Tab   workspace prev; $refresh_status_bar
+bindsym Mod4+Tab       workspace next; $refresh_status_bar
+bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
 
 # change focus
 bindsym Mod4+o      focus up   ; $refresh_status_bar
@@ -319,8 +321,8 @@ mode $sup {
 	bindsym control+Shift+Tab move container to workspace prev; workspace prev
 
 	# also Tab
-	bindsym Tab         workspace next; $refresh_status_bar
-	bindsym Shift+Tab   workspace prev; $refresh_status_bar
+	bindsym Tab       workspace next; $refresh_status_bar
+	bindsym Shift+Tab workspace prev; $refresh_status_bar
 
 	# change focus
 	bindsym o      focus up   ; $refresh_status_bar
@@ -443,8 +445,8 @@ mode $sup {
 	bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
 
 	# also Tab
-	bindsym Mod4+Tab         workspace next; $refresh_status_bar
-	bindsym Mod4+Shift+Tab   workspace prev; $refresh_status_bar
+	bindsym Mod4+Tab       workspace next; $refresh_status_bar
+	bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
 
 	# change focus
 	bindsym Mod4+o      focus up   ; $refresh_status_bar
