@@ -162,9 +162,24 @@ bindsym --release Print $exec $stamp
 # a must
 bindsym Mod1+F4 kill; $refresh_status_bar
 
+# fullscreen
+bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
+
+# start a terminal
+bindsym Mod4+Return $exec gnome-terminal
+
+# open emacs
+bindsym Mod4+e $exec emacs
+
+# hard reload
+bindsym Mod4+control+r $no_border restart
+
+# start dmenu for applications
+bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+
 ################################## SUPER #######################################
 
-bindcode 133 $border mode $sup $exec $enable_autoscroll & $alert $sup; fullscreen disable
+bindcode --release 133 $border mode $sup $exec $enable_autoscroll & $alert $sup; fullscreen disable
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -249,6 +264,11 @@ bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  wid
 #                                  MODES                                       #
 ################################################################################
 
+bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
+bindsym Mod4+r           $no_border mode $red $exec $alert $red
+bindsym Mod4+z           $no_border mode $str $exec $alert $str
+bindsym Mod4+c           $no_border mode $cnf $exec $alert $cnf
+
 ################################ SUPER-MODE ####################################
 
 mode $sup {
@@ -265,16 +285,9 @@ mode $sup {
 	bindsym Return           $no_border mode $def $exec $alert $alt & $touchpad_off
 	bindsym --border button2 $no_border mode $def $exec $alert $alt & $touchpad_off_2
 
-	bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
-
 	bindsym r                $no_border mode $red $exec $alert $red
-	bindsym Mod4+r           $no_border mode $red $exec $alert $red
-
 	bindsym z                $no_border mode $str $exec $alert $str
-	bindsym Mod4+z           $no_border mode $str $exec $alert $str
-
 	bindsym c                $no_border mode $cnf $exec $alert $cnf
-	bindsym Mod4+c           $no_border mode $cnf $exec $alert $cnf
 
 	############ COMMANDS ############
 
@@ -393,25 +406,14 @@ mode $sup {
 	# files
 	bindsym control+f $exec nautilus -w
 
-	# start dmenu (a program launcher)
+	# start dmenu for programs
 	bindsym control+e $exec dmenu_run
 
-	# start dmenu (a program launcher)
+	# start dmenu for applications
 	bindsym Menu      mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
-	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
 	# fullscreen
 	bindsym f      fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
-
-	# start a terminal
-	bindsym Mod4+Return $exec gnome-terminal
-
-	# open emacs
-	bindsym Mod4+e $exec emacs
-
-	# hard reload
-	bindsym Mod4+control+r $no_border restart
 
 	########## CHAIN-COMMANDS ########
 
