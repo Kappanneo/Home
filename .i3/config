@@ -401,8 +401,8 @@ mode $sup {
 	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
 	# fullscreen
-	bindsym f      fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $disable_hover_mode
-	bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off & $disable_hover_mode
+	bindsym f      fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# start a terminal
 	bindsym Mod4+Return $exec gnome-terminal
@@ -606,7 +606,7 @@ mode $sup {
 #	bindsym o                             nop
 	bindsym p                             nop
 	bindsym egrave                        nop
-#	bindsym plus                          nop
+	bindsym plus                          nop
 #	bindsym Return                        nop
 	bindsym Caps                          $exec $alert CAPS
 #	bindsym a                             nop
@@ -632,7 +632,7 @@ mode $sup {
 #	bindsym m                             nop
 	bindsym comma                         nop
 	bindsym period                        nop
-#	bindsym minus                         nop
+	bindsym minus                         nop
 #	bindsym "Shift_R"                     nop
 #	bindsym "Control_L"                   nop
 #	bindsym "Super_L"                     nop
@@ -857,7 +857,7 @@ mode $hov {
 
 	bindsym XF86PowerOff                  mode $pow $exec $alert $pow & $disable_hover_mode & $touchpad_off
 
-	bindcode 133                  $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off & fullscreen disable
+	bindcode 133                  $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off; fullscreen disable
 
 	bindcode 9                            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym Delete                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
@@ -933,7 +933,7 @@ mode $hov {
 #	bindsym "Alt_L"                       nop
 #	bindsym space                         nop
 	bindsym "ISO_Level3_Shift"            nop # (alt gr)
-	bindsym Menu                          nop
+#	bindsym Menu                          nop
 #	bindsym "Control_R"                   nop
 #	bindsym Up                            nop
 #	bindsym Left                          nop
@@ -1174,7 +1174,7 @@ mode $str {
 # configuration files launcher
 mode $cnf {
 
-	bindsym c mode $def $no_border $exec code-git ~/.i3/config & $alert $alt & $touchpad_off
+	bindsym c mode $def $no_border $exec emacs ~/.i3/config & $alert $alt & $touchpad_off
 	bindsym i mode $def $no_border $exec emacs ~/.gitignore
 	bindsym a mode $def $no_border $exec emacs /sudo::/usr/share/applications/ & $alert $alt & $touchpad_off
 	bindsym e mode $def $no_border $exec emacs ~/.emacs & $alert $alt & $touchpad_off
@@ -1379,7 +1379,7 @@ bar {
         bindsym button4 nop # scroll wheel up
         bindsym button5 nop # scroll wheel down
 	# mid-mouse click to lock
-	bindsym button2 mode $def $no_border $exec $alert $alt & $touchpad_off_2
+	bindsym button2 mode $def $no_border $exec $alert $alt & $touchpad_off_2 & $disable_hover_mode
     }
 
 ################################################################################
@@ -1439,7 +1439,6 @@ $exec redshift -o
 
 # layout
 $exec $layout_2; $fill_2
-$exec code-git
 
 ################################################################################
 #                                  FIN                                         #
