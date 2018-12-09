@@ -289,6 +289,11 @@ mode $sup {
 	bindsym z                $no_border mode $str $exec $alert $str
 	bindsym c                $no_border mode $cnf $exec $alert $cnf
 
+	bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
+	bindsym Mod4+r           $no_border mode $red $exec $alert $red
+	bindsym Mod4+z           $no_border mode $str $exec $alert $str
+	bindsym Mod4+c           $no_border mode $cnf $exec $alert $cnf
+
 	############ COMMANDS ############
 
 	# back to square one
@@ -303,6 +308,21 @@ mode $sup {
 
 	# screenshot
 	bindsym --release Print $exec $stamp
+
+	# fullscreen
+	bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
+
+	# start a terminal
+	bindsym Mod4+Return $exec gnome-terminal
+
+	# open emacs
+	bindsym Mod4+e $exec emacs
+
+	# hard reload
+	bindsym Mod4+control+r $no_border restart
+
+	# start dmenu for applications
+	bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
 	# switch workspace
 	bindsym 1 workspace $w1; $refresh_status_bar
