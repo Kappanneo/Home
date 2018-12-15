@@ -253,10 +253,10 @@ bindsym Mod4+Shift+d      move right
 bindsym Mod4+g focus parent; layout toggle split; focus child
 
 # resize window (you can also use the mouse for that)
-bindsym Mod4+m             resize shrink width  5 px or 1 ppt
-bindsym Mod4+p             resize  grow  width  5 px or 1 ppt
-bindsym Mod4+Shift+m       resize shrink height 5 px or 1 ppt
-bindsym Mod4+Shift+p       resize  grow  height 5 px or 1 ppt
+bindsym Mod4+m             resize shrink height 5 px or 1 ppt
+bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
+bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
+bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
 bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
@@ -394,10 +394,10 @@ mode $sup {
 	bindsym Shift+d      move right
 
 	# resize window (you can also use the mouse for that)
-	bindsym m             resize shrink width  5 px or 1 ppt
-	bindsym p             resize  grow  width  5 px or 1 ppt
-	bindsym Shift+m       resize shrink height 5 px or 1 ppt
-	bindsym Shift+p       resize  grow  height 5 px or 1 ppt
+	bindsym m             resize shrink height 5 px or 1 ppt
+	bindsym p             resize  grow  height 5 px or 1 ppt
+	bindsym Shift+m       resize shrink width  5 px or 1 ppt
+	bindsym Shift+p       resize  grow  width  5 px or 1 ppt
 	bindsym control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 	bindsym control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
@@ -510,10 +510,10 @@ mode $sup {
 	bindsym Mod4+g focus parent; layout toggle split; focus child
 
 	# resize window (you can also use the mouse for that)
-	bindsym Mod4+m             resize shrink width  5 px or 1 ppt
-	bindsym Mod4+p             resize  grow  width  5 px or 1 ppt
-	bindsym Mod4+Shift+m       resize shrink height 5 px or 1 ppt
-	bindsym Mod4+Shift+p       resize  grow  height 5 px or 1 ppt
+	bindsym Mod4+m             resize shrink height 5 px or 1 ppt
+	bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
+	bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
+	bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
 	bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 	bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
