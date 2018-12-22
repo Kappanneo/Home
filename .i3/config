@@ -56,7 +56,7 @@ set $dmenu i3-dmenu-desktop   # ~/k5-dmenu-desktop
 # for brevity
 set $exec exec --no-startup-id
 set $exec_always exec_always --no-startup-id
-set $alert notify-send --expire-time=4200
+set $alert notify-send --expire-time=1200
 set $refresh_status_bar exec killall -USR1 i3status
 set $focus_all focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
 set $focus_one focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
@@ -157,7 +157,7 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness d
 bindsym --release Print $exec $stamp
 
 # display #TODO
-# binsym XF86Display ...
+bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
 
 # a must
 bindsym Mod1+F4 kill; $refresh_status_bar
@@ -176,6 +176,9 @@ bindsym Mod4+control+r $no_border restart
 
 # start dmenu for applications
 bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+
+# caps
+bindsym Mod4+control+c $exec xdotool key Caps_Lock & $alert CAPS
 
 ################################## SUPER #######################################
 
@@ -293,6 +296,8 @@ mode $sup {
 	bindsym Mod4+r           $no_border mode $red $exec $alert $red
 	bindsym Mod4+z           $no_border mode $str $exec $alert $str
 	bindsym Mod4+c           $no_border mode $cnf $exec $alert $cnf
+
+	bindcode --release 133 $border mode $sup $exec $enable_autoscroll & $alert $sup; fullscreen disable
 
 	############ COMMANDS ############
 
