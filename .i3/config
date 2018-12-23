@@ -597,12 +597,12 @@ mode $sup {
 	bindsym --release Mod4+g              mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	# resize window (you can also use the mouse for that)
-	bindsym Mod4+m                        mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Mod4+p                        mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Mod4+Shift+m                  mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Mod4+Shift+p                  mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Mod4+control+minus            mode $def $no_border $exec $alert $alt & $touchpad_off
-	bindsym Mod4+control+plus             mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+m              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+p              mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+m        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+Shift+p        mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+control+minus  mode $def $no_border $exec $alert $alt & $touchpad_off
+	bindsym --release Mod4+control+plus   mode $def $no_border $exec $alert $alt & $touchpad_off
 
 	########### UNUSED KEYS ############
 

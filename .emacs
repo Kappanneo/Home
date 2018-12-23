@@ -22,6 +22,17 @@
  ;; If there is more than one, they won't work right.
  )
 
+(progn
+  ;; make indentation commands use space only (never tab character)
+  (setq-default indent-tabs-mode nil)
+  ;; emacs 23.1 to 26, default to t
+  ;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab
+  )
+
+;; make tab key do indent first then completion.
+(setq-default tab-always-indent 'complete)
+
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
@@ -56,3 +67,5 @@
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
 
 (prefer-coding-system 'utf-8)
+
+(setq pop-up-frames t)

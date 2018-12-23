@@ -14,6 +14,12 @@ if [[ $TERM = dumb ]]; then
   unset zle_bracketed_paste
 fi
 
+if [[ $INSIDE_EMACS ]]; then
+    export PAGER="/bin/cat"
+else
+    export PAGER="/bin/less"
+fi
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -101,5 +107,6 @@ alias update="yaourt -Syu --aur && pkill pamac-tray"
 alias grappolo="docker restart grappolo || docker run -d --publish 8000:8000 --name grappolo disorganizzazione/grappolo"
 
 export PATH=/home/claudio/bin:$PATH
+export EDITOR=emacs
 
 eval $(thefuck --alias)
