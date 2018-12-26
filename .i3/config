@@ -93,7 +93,7 @@ set $w2 2rectory
 set $w3 3code
 set $w4 4terminl
 set $w5 5team
-set $w6 6kype
+set $w6 6iscord
 set $w7 7atex
 set $w8 8volante
 set $w9 9imp
@@ -107,7 +107,7 @@ set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focu
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
 set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
-set $fill_2 nautilus & emacs ~/memo & chromium --new-window --profile-directory=Default https://discordapp.com/channels/490532172101320724/490532172101320727 & gnome-terminal & pcmanfm -n menu://applications/
+set $fill_2 nautilus & nautilus Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://gitlab.com/kappanneo & gnome-terminal
 
 ################################ MODES #########################################
 
@@ -170,6 +170,9 @@ bindsym Mod4+Return $exec gnome-terminal
 
 # open emacs
 bindsym Mod4+e $exec emacs
+
+# application menu
+bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
 
 # hard reload
 bindsym Mod4+control+r $no_border restart
@@ -891,6 +894,7 @@ mode $hov {
 	bindsym space                         mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym Return                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 	bindsym BackSpace                     mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
+	bindsym control+BackSpace             mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 
 	bindsym Mod1+F4 kill; $refresh_status_bar
 
@@ -1456,6 +1460,9 @@ $exec nm-applet
 $exec pamac-tray
 $exec pa-applet
 $exec clipit
+
+# other application
+$exec discord
 
 # background applications
 $exec xautolock -time 10 -locker dm-tool
