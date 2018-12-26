@@ -14,7 +14,10 @@
  '(initial-frame-alist nil)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
- '(tooltip-mode nil))
+ '(tooltip-mode nil)
+ '(indent-tabs-mode nil)
+ '(tab-always-indent 'complete)
+ '(pop-up-frames t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -22,30 +25,22 @@
  ;; If there is more than one, they won't work right.
  )
 
-(progn
-  ;; make indentation commands use space only (never tab character)
-  (setq-default indent-tabs-mode nil)
-  ;; emacs 23.1 to 26, default to t
-  ;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab
-  )
-
-;; make tab key do indent first then completion.
-(setq-default tab-always-indent 'complete)
-
-
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
+;;(add-to-list 'package-archives
+;;              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;;(require 'package)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;;(require 'xah-fly-keys)
+;;(xah-fly-keys-set-layout "qwerty")
+;;(xah-fly-keys 1)
 
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
-;(require 'xah-fly-keys)
-;(xah-fly-keys-set-layout "qwerty")
-;(xah-fly-keys 1)
+(require 'subset)
+(global-set-key (kbd "C-w") 'xah-close-current-buffer)
+(global-set-key (kbd "C-S-t") 'xah-open-last-closed)
 
 ;; sanity preservers
 (global-set-key (kbd "C-x") 'xah-cut-line-or-region)
@@ -58,14 +53,6 @@
 ;; personal preferences
 (global-set-key (kbd "C-f") 'find-file)
 (global-set-key (kbd "C-d") 'delete-other-windows)
-(global-set-key (kbd "C-w") 'kill-this-buffer)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
-
-(global-set-key [M-Delete] 'delete-backward-char)
-
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
-
-(prefer-coding-system 'utf-8)
-
-(setq pop-up-frames t)

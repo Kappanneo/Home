@@ -107,6 +107,7 @@ alias update="yaourt -Syu --aur && pkill pamac-tray"
 alias grappolo="docker restart grappolo || docker run -d --publish 8000:8000 --name grappolo disorganizzazione/grappolo"
 
 export PATH=/home/claudio/bin:$PATH
+export VISUAL=emacs
 export EDITOR=emacs
 
 eval $(thefuck --alias)
