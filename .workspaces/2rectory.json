@@ -101,7 +101,7 @@
             "name": "Home",
             "percent": 1,
             "swallows": [{
-                "title": "^Home$"
+                "class": "^Nautilus$"
             }],
             "type": "con"
         }]
@@ -124,7 +124,7 @@
             "name": "Files",
             "percent": 1,
             "swallows": [{
-                "title": "^Downloads$"
+                "class": "^Nautilus$"
             }],
             "type": "con"
         }]
