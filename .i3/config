@@ -62,6 +62,7 @@ set $focus_all focus parent; focus parent; focus parent; focus parent; focus par
 set $focus_one focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
 set $no_border [tiling] border none
 set $border [tiling] border pixel 5
+set $alt_gr "ISO_Level3_Shift"
 
 ############################### KEYBINDINGS ####################################
 
@@ -189,6 +190,9 @@ bindcode --release 133 $border mode $sup $exec $enable_autoscroll & $alert $sup;
 
 ############################# CHAIN-COMMANDS ###################################
 
+# fake fullscreen
+bindsym Mod4+$alt_gr $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
+
 # switch workspace
 bindsym Mod4+1 workspace $w1; $refresh_status_bar
 bindsym Mod4+2 workspace $w2; $refresh_status_bar
@@ -287,7 +291,8 @@ mode $sup {
         bindsym BackSpace          $no_border mode $def $exec $alert $alt & $touchpad_off
         bindsym Return             $no_border mode $def $exec $alert $alt & $touchpad_off
         bindsym Tab                $no_border mode $def $exec $alert $alt & $touchpad_off
-        bindsym "ISO_Level3_Shift" $no_border mode $def $exec $alert $alt & $touchpad_off
+        bindsym $alt_gr            $no_border mode $def $exec $alert $alt & $touchpad_off
+        bindsym Mod4+$alt_gr       $no_border mode $def $exec $alert $alt & $touchpad_off
         bindsym --border button2   $no_border mode $def $exec $alert $alt & $touchpad_off_2
 
         bindsym r                  $no_border mode $red $exec $alert $red
@@ -666,7 +671,7 @@ mode $sup {
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
 #       bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#       bindsym $alt_gr                       nop
 #       bindsym Menu                          nop
 #       bindsym "Control_R"                   nop
 #       bindsym Up                            nop
@@ -783,7 +788,7 @@ mode $sup {
 #       bindsym control+"Super_L"             nop
 #       bindsym control+"Alt_L"               nop
 #       bindsym control+space                 nop
-        bindsym control+"ISO_Level3_Shift"    nop # (alt gr)
+        bindsym control+$alt_gr    nop # (alt gr)
 #       bindsym control+Menu                  nop
 #       bindsym control+"Control_R"           nop
 #       bindsym control+Up                    nop
@@ -812,7 +817,7 @@ mode $pow {
         bindsym Return                        mode $def $exec $alert $alt
         bindsym BackSpace                     mode $def $exec $alert $alt
         bindsym Tab                           mode $def $exec $alert $alt
-        bindsym "ISO_Level3_Shift"            mode $def $exec $alert $alt
+        bindsym $alt_gr            mode $def $exec $alert $alt
 
         bindsym Delete                        nop
         bindsym backslash                     nop
@@ -873,7 +878,7 @@ mode $pow {
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
 #       bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#       bindsym $alt_gr                       nop
         bindsym Menu                          nop
         bindsym "Control_R"                   nop
         bindsym Up                            nop
@@ -897,7 +902,7 @@ mode $hov {
         bindsym BackSpace                     mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
         bindsym control+BackSpace             mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
         bindsym Tab                           mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
-        bindsym "ISO_Level3_Shift"            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
+        bindsym $alt_gr            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 
         bindsym Mod1+F4 kill; $refresh_status_bar
         bindsym Mod1+Tab       workspace next; $refresh_status_bar
@@ -968,7 +973,7 @@ mode $hov {
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
 #       bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#       bindsym $alt_gr                       nop
 #       bindsym Menu                          nop
 #       bindsym "Control_R"                   nop
 #       bindsym Up                            nop
@@ -1054,7 +1059,7 @@ mode $red {
         bindsym Return             $no_border mode $def $exec $alert $alt
         bindsym BackSpace          $no_border mode $def $exec $alert $alt
         bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym "ISO_Level3_Shift" $no_border mode $def $exec $alert $alt
+        bindsym $alt_gr $no_border mode $def $exec $alert $alt
 
 #       bindsym Delete                        nop
         bindsym backslash                     nop
@@ -1115,7 +1120,7 @@ mode $red {
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
 #       bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#       bindsym $alt_gr                       nop
         bindsym Menu                          nop
         bindsym "Control_R"                   nop
         bindsym Up                            nop
@@ -1141,7 +1146,7 @@ mode $str {
         bindsym Return             $no_border mode $def $exec $alert $alt
         bindsym BackSpace          $no_border mode $def $exec $alert $alt
         bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym "ISO_Level3_Shift" $no_border mode $def $exec $alert $alt
+        bindsym $alt_gr $no_border mode $def $exec $alert $alt
 
 
 #       bindsym Delete                        nop
@@ -1203,7 +1208,7 @@ mode $str {
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
 #       bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#       bindsym $alt_gr                       nop
         bindsym Menu                          nop
         bindsym "Control_R"                   nop
         bindsym Up                            nop
@@ -1239,7 +1244,7 @@ mode $cnf {
         bindsym Return             $no_border mode $def $exec $alert $alt
         bindsym BackSpace          $no_border mode $def $exec $alert $alt
         bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym "ISO_Level3_Shift" $no_border mode $def $exec $alert $alt
+        bindsym $alt_gr $no_border mode $def $exec $alert $alt
 
 #       bindsym Delete                        nop
         bindsym backslash                     nop
@@ -1300,7 +1305,7 @@ mode $cnf {
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
 #       bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+#       bindsym $alt_gr                       nop
         bindsym Menu                          nop
         bindsym "Control_R"                   nop
         bindsym Up                            nop
@@ -1330,6 +1335,8 @@ mode $cnf {
 #       bindsym space              $no_border mode $def $exec $alert $alt
 #       bindsym Return             $no_border mode $def $exec $alert $alt
 #       bindsym BackSpace          $no_border mode $def $exec $alert $alt
+#       bindsym Tab                $no_border mode $def $exec $alert $alt
+#       bindsym $alt_gr            $no_border mode $def $exec $alert $alt
 #
 # #     bindsym Delete                        nop
 #       bindsym backslash                     nop
@@ -1346,7 +1353,7 @@ mode $cnf {
 #       bindsym aphostrophe                   nop
 #       bindsym igrave                        nop
 # #     bindsym BackSpace                     nop
-#       bindsym Tab                           nop
+# #     bindsym Tab                           nop
 #       bindsym q                             nop
 #       bindsym w                             nop
 #       bindsym e                             nop
@@ -1390,7 +1397,7 @@ mode $cnf {
 # #     bindsym "Super_L"                     nop
 # #     bindsym "Alt_L"                       nop
 # #     bindsym space                         nop
-#       bindsym "ISO_Level3_Shift"            nop # (alt gr)
+# #     bindsym $alt_gr                       nop
 #       bindsym Menu                          nop
 #       bindsym "Control_R"                   nop
 #       bindsym Up                            nop
