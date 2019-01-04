@@ -108,7 +108,7 @@ set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focu
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
 set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 0.5; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
-set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://gitlab.com/kappanneo & gnome-terminal
+set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
 ################################ MODES #########################################
 
@@ -292,7 +292,6 @@ mode $sup {
         bindsym Return             $no_border mode $def $exec $alert $alt & $touchpad_off
         bindsym Tab                $no_border mode $def $exec $alert $alt & $touchpad_off
         bindsym $alt_gr            $no_border mode $def $exec $alert $alt & $touchpad_off
-        bindsym Mod4+$alt_gr       $no_border mode $def $exec $alert $alt & $touchpad_off
         bindsym --border button2   $no_border mode $def $exec $alert $alt & $touchpad_off_2
 
         bindsym r                  $no_border mode $red $exec $alert $red
@@ -310,6 +309,9 @@ mode $sup {
 
         # back to square one
         bindcode 133 $border $focus_one
+
+        # fake fullscreen
+        bindsym Mod4+$alt_gr $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
 
         # touchpad toggle
         bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -529,6 +531,9 @@ mode $sup {
         bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
         ########### CHAIN-LOCKS ##########
+
+        # fake fullscreen
+        bindsym --release Mod4+$alt_gr        mode $def $no_border $exec $alert $alt & $touchpad_off
 
         # switch workspace
         bindsym --release Mod4+1              mode $def $no_border $exec $alert $alt & $touchpad_off
