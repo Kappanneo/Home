@@ -106,7 +106,7 @@ set $wx X
 set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
-set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 1.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 1.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
+set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 0.5; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
 set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://gitlab.com/kappanneo & gnome-terminal
 
 ################################ MODES #########################################
@@ -211,10 +211,6 @@ bindsym Mod4+Shift+6 move container to workspace $w6; workspace $w6
 bindsym Mod4+Shift+7 move container to workspace $w7; workspace $w7
 bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
 bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
-
-# also Alt+Tab
-bindsym Mod1+Tab       workspace next; $refresh_status_bar
-bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
 
 # also Alt+Tab
 bindsym Mod1+Tab       workspace next; $refresh_status_bar
@@ -479,10 +475,6 @@ mode $sup {
 
         # cut
         bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
-
-        # also Tab
-        bindsym Mod4+Tab       workspace next; $refresh_status_bar
-        bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
 
         # change focus
         bindsym Mod4+o      focus up   ; $refresh_status_bar
@@ -1449,6 +1441,9 @@ assign [class="Wine"] $w5
 for_window [title="Steam - News"] kill
 for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
 for_window [title="Steam"] split h
+
+# fullscreen chromium
+for_window [class="^Chromium$"] $exec "xdotool key F11; i3-msg fullscreen disable"
 
 # skype
 assign [class="Skype"] $w6
