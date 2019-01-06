@@ -367,8 +367,8 @@ mode $sup {
         bindsym control+8 move container to workspace $w8; workspace $w8
         bindsym control+9 move container to workspace $w9; workspace $w9
 
-        bindsym control+Tab       move container to workspace next; workspace next
-        bindsym control+Shift+Tab move container to workspace prev; workspace prev
+        bindsym control+Tab       workspace next; $refresh_status_bar
+        bindsym control+Shift+Tab workspace prev; $refresh_status_bar
 
         # also Tab
         bindsym Tab       workspace next; $refresh_status_bar
@@ -466,6 +466,10 @@ mode $sup {
         bindsym Mod4+9 workspace $w9; $refresh_status_bar
         bindsym Mod4+x workspace $wx; $refresh_status_bar
 
+        # also Tab
+        bindsym Mod4+control+Tab       workspace next; $refresh_status_bar
+        bindsym Mod4+control+Shift+Tab workspace prev; $refresh_status_bar
+
         # move focused container to workspace and follow
         bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
         bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
@@ -476,9 +480,6 @@ mode $sup {
         bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
         bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
         bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
-        bindsym Mod4+control+Tab       move container to workspace next; workspace next
-        bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
         # cut
         bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
