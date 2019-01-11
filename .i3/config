@@ -107,7 +107,7 @@ set $wx X
 set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
-set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.5; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 0.5; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
+set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.75; chromium --new-window --profile-directory=Default https://outlook.office.com/ https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://mail.libero.it/ https://calendar.google.com/calendar/ & sleep 0.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
 set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
 ################################ MODES #########################################
@@ -163,9 +163,6 @@ bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
 # a must
 bindsym Mod1+F4 kill; $refresh_status_bar
 
-# fullscreen
-bindsym Mod4+f fullscreen enable; mode $def $no_border $exec $alert $alt & $touchpad_off
-
 # start a terminal
 bindsym Mod4+Return $exec gnome-terminal
 
@@ -175,18 +172,18 @@ bindsym Mod4+e $exec emacs
 # application menu
 bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
 
+# kill
+bindsym Mod4+control+w kill
+
 # hard reload
 bindsym Mod4+control+r $no_border restart
 
 # start dmenu for applications
-bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+bindsym Mod4+control+t mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+bindsym Mod4+Menu      mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
 # caps
-bindsym Mod4+control+c $exec xdotool key Caps_Lock & $alert CAPS
-
-################################## SUPER #######################################
-
-bindcode --release 133 $border mode $sup $exec $enable_autoscroll & $alert $sup; fullscreen disable
+#bindsym Mod4+control+c $exec xdotool key Caps_Lock & $alert CAPS
 
 ############################# CHAIN-COMMANDS ###################################
 
@@ -256,6 +253,9 @@ bindsym Mod4+Shift+a      move left
 bindsym Mod4+Shift+s      move down
 bindsym Mod4+Shift+d      move right
 
+# fullscreen
+bindsym Mod4+f fullscreen toggle
+
 # split
 bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
@@ -271,6 +271,7 @@ bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  wid
 #                                  MODES                                       #
 ################################################################################
 
+bindcode --release 133      $border mode $sup $exec $alert $sup & $enable_autoscroll; fullscreen disable
 bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
 bindsym Mod4+r           $no_border mode $red $exec $alert $red
 bindsym Mod4+z           $no_border mode $str $exec $alert $str
@@ -339,7 +340,8 @@ mode $sup {
         bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
 
         # start dmenu for applications
-        bindsym Mod4+Menu mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+        bindsym Mod4+control+t mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+        bindsym Mod4+Menu      mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
         # switch workspace
         bindsym 1 workspace $w1; $refresh_status_bar
@@ -432,7 +434,7 @@ mode $sup {
         bindsym control+w kill; $refresh_status_bar
 
         # save layout
-        bindsym control+s  exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+        bindsym control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
 
         # paste
         bindsym control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
@@ -447,6 +449,7 @@ mode $sup {
         bindsym control+e $exec dmenu_run
 
         # start dmenu for applications
+        bindsym control+t mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
         bindsym Menu      mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
 
         # fullscreen
@@ -794,7 +797,7 @@ mode $sup {
 #       bindsym control+"Super_L"             nop
 #       bindsym control+"Alt_L"               nop
 #       bindsym control+space                 nop
-        bindsym control+$alt_gr    nop # (alt gr)
+        bindsym control+$alt_gr               nop
 #       bindsym control+Menu                  nop
 #       bindsym control+"Control_R"           nop
 #       bindsym control+Up                    nop
@@ -803,122 +806,153 @@ mode $sup {
 #       bindsym control+Right                 nop
 }
 
-############################# POWEROFF-MODE ####################################
-
-mode $pow {
-
-#       bindsym XF86PowerOff $exec poweroff
-        bindsym XF86PowerOff $exec $alert $pow
-        bindsym q            $exec poweroff
-        bindsym r            $exec reboot
-        bindsym s mode $def  $exec systemctl suspend
-        bindsym e            $exec exit
-
-        bindcode 133                  $border mode $sup $exec $alert $sup; fullscreen disable
-
-        bindcode 9                            mode $def $exec $alert $alt
-        bindsym "Alt_L"                       mode $def $exec $alert $alt
-        bindsym Delete                        mode $def $exec $alert $alt
-        bindsym space                         mode $def $exec $alert $alt
-        bindsym Return                        mode $def $exec $alert $alt
-        bindsym BackSpace                     mode $def $exec $alert $alt
-        bindsym Tab                           mode $def $exec $alert $alt
-        bindsym $alt_gr            mode $def $exec $alert $alt
-
-        bindsym Delete                        nop
-        bindsym backslash                     nop
-        bindsym 1                             nop
-        bindsym 2                             nop
-        bindsym 3                             nop
-        bindsym 4                             nop
-        bindsym 5                             nop
-        bindsym 6                             nop
-        bindsym 7                             nop
-        bindsym 8                             nop
-        bindsym 9                             nop
-        bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
-        bindsym BackSpace                     nop
-#       bindsym Tab                           nop
-#       bindsym q                             nop
-        bindsym w                             nop
-#       bindsym e                             nop
-#       bindsym r                             nop
-        bindsym t                             nop
-        bindsym y                             nop
-        bindsym u                             nop
-        bindsym i                             nop
-        bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
-        bindsym plus                          nop
-        bindsym Return                        nop
-        bindsym Caps                          $exec $alert CAPS
-        bindsym a                             nop
-#       bindsym s                             nop
-        bindsym d                             nop
-        bindsym f                             nop
-        bindsym g                             nop
-        bindsym h                             nop
-        bindsym j                             nop
-        bindsym k                             nop
-        bindsym l                             nop
-        bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
-        bindsym "Shift_L"                     nop
-        bindsym less                          nop
-        bindsym z                             nop
-        bindsym x                             nop
-        bindsym c                             nop
-        bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
-        bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
-        bindsym "Shift_R"                     nop
-        bindsym "Control_L"                   nop
-#       bindsym "Super_L"                     nop
-#       bindsym "Alt_L"                       nop
-#       bindsym space                         nop
-#       bindsym $alt_gr                       nop
-        bindsym Menu                          nop
-        bindsym "Control_R"                   nop
-        bindsym Up                            nop
-        bindsym Left                          nop
-        bindsym Down                          nop
-        bindsym Right                         nop
-}
 
 ############################## HOVER-MODE ######################################
 
 mode $hov {
 
+        ############## MODES #############
+
+        bindsym Mod4+r             $no_border mode $red $exec $alert $red & $disable_hover_mode & $touchpad_off
+        bindsym Mod4+z             $no_border mode $str $exec $alert $str & $disable_hover_mode & $touchpad_off
+        bindsym Mod4+c             $no_border mode $cnf $exec $alert $cnf & $disable_hover_mode & $touchpad_off
+
         bindsym XF86PowerOff                  mode $pow $exec $alert $pow & $disable_hover_mode & $touchpad_off; fullscreen disable
 
-        bindcode 133                  $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off; fullscreen disable
+        bindcode --release 133        $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off; fullscreen disable
 
         bindcode 9                            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
         bindsym Delete                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
         bindsym space                         mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
-        bindsym Return                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
+#       bindsym Return                        mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
         bindsym BackSpace                     mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
         bindsym control+BackSpace             mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
-        bindsym Tab                           mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
-        bindsym $alt_gr            mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
+#       bindsym Tab                           mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
+        bindsym $alt_gr                       mode $def $exec $alert $alt & $disable_hover_mode & $touchpad_off
 
-        bindsym Mod1+F4 kill; $refresh_status_bar
-        bindsym Mod1+Tab       workspace next; $refresh_status_bar
-        bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
+        ############ COMMANDS ############
 
+        # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
+        bindsym XF86PowerOff mode $pow $exec $alert $pow; fullscreen disable
+
+        # touchpad toggle
         bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+        # Screen brightness controls
         bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
         bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
 
+        # screenshot
         bindsym --release Print $exec $stamp
+
+        # display #TODO
+        bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
+
+        # a must
+        bindsym Mod1+F4 kill; $refresh_status_bar
+
+        # start a terminal
+        bindsym Mod4+Return $exec gnome-terminal
+
+        # open emacs
+        bindsym Mod4+e $exec emacs
+
+        # application menu
+        bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
+
+        # kill
+        bindsym Mod4+control+w kill
+
+        # hard reload
+        bindsym Mod4+control+r $no_border restart
+
+        # start dmenu for applications
+        bindsym Mod4+control+t mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+        bindsym Mod4+Menu      mode $def $no_border $exec $dmenu; focus parent; $exec $alert $alt & $touchpad_off $alert EXEC
+
+        ########## CHAIN-COMMANDS ########
+
+        # fake fullscreen
+        bindsym Mod4+$alt_gr $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
+
+        # switch workspace
+        bindsym Mod4+1 workspace $w1; $refresh_status_bar
+        bindsym Mod4+2 workspace $w2; $refresh_status_bar
+        bindsym Mod4+3 workspace $w3; $refresh_status_bar
+        bindsym Mod4+4 workspace $w4; $refresh_status_bar
+        bindsym Mod4+5 workspace $w5; $refresh_status_bar
+        bindsym Mod4+6 workspace $w6; $refresh_status_bar
+        bindsym Mod4+7 workspace $w7; $refresh_status_bar
+        bindsym Mod4+8 workspace $w8; $refresh_status_bar
+        bindsym Mod4+9 workspace $w9; $refresh_status_bar
+        bindsym Mod4+x workspace $wx; $refresh_status_bar
+
+        # move focused container to workspace and follow
+        bindsym Mod4+Shift+1 move container to workspace $w1; workspace $w1
+        bindsym Mod4+Shift+2 move container to workspace $w2; workspace $w2
+        bindsym Mod4+Shift+3 move container to workspace $w3; workspace $w3
+        bindsym Mod4+Shift+4 move container to workspace $w4; workspace $w4
+        bindsym Mod4+Shift+5 move container to workspace $w5; workspace $w5
+        bindsym Mod4+Shift+6 move container to workspace $w6; workspace $w6
+        bindsym Mod4+Shift+7 move container to workspace $w7; workspace $w7
+        bindsym Mod4+Shift+8 move container to workspace $w8; workspace $w8
+        bindsym Mod4+Shift+9 move container to workspace $w9; workspace $w9
+
+        # also Alt+Tab
+        bindsym Mod1+Tab       workspace next; $refresh_status_bar
+        bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
+
+        # change focus
+        bindsym Mod4+o      focus up   ; $refresh_status_bar
+        bindsym Mod4+k      focus left ; $refresh_status_bar
+        bindsym Mod4+l      focus down ; $refresh_status_bar
+        bindsym Mod4+ograve focus right; $refresh_status_bar
+
+        # alternatively, you can use the cursor keys:
+        bindsym Mod4+Up     focus up   ; $refresh_status_bar
+        bindsym Mod4+Left   focus left ; $refresh_status_bar
+        bindsym Mod4+Down   focus down ; $refresh_status_bar
+        bindsym Mod4+Right  focus right; $refresh_status_bar
+
+        # alternative to the other alternative
+        bindsym Mod4+w      focus up   ; $refresh_status_bar
+        bindsym Mod4+a      focus left ; $refresh_status_bar
+        bindsym Mod4+s      focus down ; $refresh_status_bar
+        bindsym Mod4+d      focus right; $refresh_status_bar
+
+        # move focused window
+        bindsym Mod4+Shift+o      move up
+        bindsym Mod4+Shift+k      move left
+        bindsym Mod4+Shift+l      move down
+        bindsym Mod4+Shift+ograve move right
+
+        # alternatively, you can use the cursor keys:
+        bindsym Mod4+Shift+Up     move up
+        bindsym Mod4+Shift+Left   move left
+        bindsym Mod4+Shift+Down   move down
+        bindsym Mod4+Shift+Right  move right
+
+        # alternative to the other alternative
+        bindsym Mod4+Shift+w      move up
+        bindsym Mod4+Shift+a      move left
+        bindsym Mod4+Shift+s      move down
+        bindsym Mod4+Shift+d      move right
+
+        # fullscreen
+        bindsym Mod4+f fullscreen toggle
+
+        # split
+        bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+        # resize window (you can also use the mouse for that)
+        bindsym Mod4+m             resize shrink height 5 px or 1 ppt
+        bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
+        bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
+        bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
+        bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+        bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+
+        ########### UNUSED KEYS ############
 
 #       bindsym Delete                        nop
         bindsym backslash                     nop
@@ -1038,6 +1072,96 @@ mode $hov {
         bindsym Shift+underscore              nop
 }
 
+############################# POWEROFF-MODE ####################################
+
+mode $pow {
+
+#       bindsym XF86PowerOff $exec poweroff
+        bindsym XF86PowerOff $exec $alert $pow
+        bindsym q            $exec poweroff
+        bindsym r            $exec reboot
+        bindsym s mode $def  $exec systemctl suspend
+        bindsym e            $exec exit
+
+        bindcode --release 133        $border mode $sup $exec $alert $sup; fullscreen disable
+
+        bindcode 9                            mode $def $exec $alert $alt
+        bindsym "Alt_L"                       mode $def $exec $alert $alt
+        bindsym Delete                        mode $def $exec $alert $alt
+        bindsym space                         mode $def $exec $alert $alt
+        bindsym Return                        mode $def $exec $alert $alt
+        bindsym BackSpace                     mode $def $exec $alert $alt
+        bindsym Tab                           mode $def $exec $alert $alt
+        bindsym $alt_gr                       mode $def $exec $alert $alt
+
+        bindsym Delete                        nop
+        bindsym backslash                     nop
+        bindsym 1                             nop
+        bindsym 2                             nop
+        bindsym 3                             nop
+        bindsym 4                             nop
+        bindsym 5                             nop
+        bindsym 6                             nop
+        bindsym 7                             nop
+        bindsym 8                             nop
+        bindsym 9                             nop
+        bindsym 0                             nop
+        bindsym aphostrophe                   nop
+        bindsym igrave                        nop
+        bindsym BackSpace                     nop
+#       bindsym Tab                           nop
+#       bindsym q                             nop
+        bindsym w                             nop
+#       bindsym e                             nop
+#       bindsym r                             nop
+        bindsym t                             nop
+        bindsym y                             nop
+        bindsym u                             nop
+        bindsym i                             nop
+        bindsym o                             nop
+        bindsym p                             nop
+        bindsym egrave                        nop
+        bindsym plus                          nop
+        bindsym Return                        nop
+        bindsym Caps                          $exec $alert CAPS
+        bindsym a                             nop
+#       bindsym s                             nop
+        bindsym d                             nop
+        bindsym f                             nop
+        bindsym g                             nop
+        bindsym h                             nop
+        bindsym j                             nop
+        bindsym k                             nop
+        bindsym l                             nop
+        bindsym ograve                        nop
+        bindsym agrave                        nop
+        bindsym ugrave                        nop
+        bindsym "Shift_L"                     nop
+        bindsym less                          nop
+        bindsym z                             nop
+        bindsym x                             nop
+        bindsym c                             nop
+        bindsym v                             nop
+        bindsym b                             nop
+        bindsym n                             nop
+        bindsym m                             nop
+        bindsym comma                         nop
+        bindsym period                        nop
+        bindsym minus                         nop
+        bindsym "Shift_R"                     nop
+        bindsym "Control_L"                   nop
+#       bindsym "Super_L"                     nop
+#       bindsym "Alt_L"                       nop
+#       bindsym space                         nop
+#       bindsym $alt_gr                       nop
+        bindsym Menu                          nop
+        bindsym "Control_R"                   nop
+        bindsym Up                            nop
+        bindsym Left                          nop
+        bindsym Down                          nop
+        bindsym Right                         nop
+}
+
 ############################### SUB-MODES #######################################
 
 mode $red {
@@ -1056,7 +1180,7 @@ mode $red {
 
         bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
 
-        bindcode 133                          mode $sup $exec $alert $sup
+        bindcode --release 133                mode $sup $exec $alert $sup
 
         bindcode 9                 $no_border mode $def $exec $alert $alt
         bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
@@ -1065,7 +1189,7 @@ mode $red {
         bindsym Return             $no_border mode $def $exec $alert $alt
         bindsym BackSpace          $no_border mode $def $exec $alert $alt
         bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym $alt_gr $no_border mode $def $exec $alert $alt
+        bindsym $alt_gr            $no_border mode $def $exec $alert $alt
 
 #       bindsym Delete                        nop
         bindsym backslash                     nop
@@ -1143,7 +1267,7 @@ mode $str {
 
         bindsyl XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
 
-        bindcode 133                          mode $sup $exec $alert $sup
+        bindcode --release 133                mode $sup $exec $alert $sup
 
         bindcode 9                 $no_border mode $def $exec $alert $alt
         bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
@@ -1152,7 +1276,7 @@ mode $str {
         bindsym Return             $no_border mode $def $exec $alert $alt
         bindsym BackSpace          $no_border mode $def $exec $alert $alt
         bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym $alt_gr $no_border mode $def $exec $alert $alt
+        bindsym $alt_gr            $no_border mode $def $exec $alert $alt
 
 
 #       bindsym Delete                        nop
@@ -1241,7 +1365,7 @@ mode $cnf {
 
         bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
 
-        bindcode 133                          mode $sup $exec $alert $sup
+        bindcode --release 133                mode $sup $exec $alert $sup
 
         bindcode 9                 $no_border mode $def $exec $alert $alt
         bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
@@ -1250,7 +1374,7 @@ mode $cnf {
         bindsym Return             $no_border mode $def $exec $alert $alt
         bindsym BackSpace          $no_border mode $def $exec $alert $alt
         bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym $alt_gr $no_border mode $def $exec $alert $alt
+        bindsym $alt_gr            $no_border mode $def $exec $alert $alt
 
 #       bindsym Delete                        nop
         bindsym backslash                     nop
@@ -1333,7 +1457,7 @@ mode $cnf {
 #
 #       bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
 #
-#       bindcode 133                          mode $sup $exec $alert $sup
+#       bindcode --release 133                mode $sup $exec $alert $sup
 #
 #       bindcode 9                 $no_border mode $def $exec $alert $alt
 #       bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
@@ -1456,7 +1580,7 @@ for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
 for_window [title="Steam"] split h
 
 # fullscreen chromium
-for_window [class="^Chromium$"] $exec "xdotool key F11; i3-msg fullscreen disable"
+#for_window [class="^Chromium$"] $exec "xdotool key F11; i3-msg fullscreen disable"
 
 # skype
 assign [class="Skype"] $w6

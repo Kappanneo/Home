@@ -4,6 +4,7 @@
 !.gitconfig
 !.zshrc
 !.emacs
+!memo
 
 !.emacs.d/
 .emacs.d/*
