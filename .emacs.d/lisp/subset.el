@@ -1,3 +1,6 @@
+;; subset of functions from https://github.com/xahlee/xah-fly-keys/blob/master/xah-fly-keys.el
+;; all credits to Xah Lee ( http://xahlee.info/ )
+
 (defvar xah-recently-closed-buffers nil)
 (defvar xah-recently-closed-buffers-max 40)
 
