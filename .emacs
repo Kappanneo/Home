@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+ '(savehist-mode 1)
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
@@ -31,20 +32,26 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;;(require 'xah-fly-keys)
-;;(xah-fly-keys-set-layout "qwerty")
-;;(xah-fly-keys 1)
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+(exec-path-from-shell-copy-env "HISTFILE")
 
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
-(require 'subset)
+(require 'xah-fly-keys)
+(xah-fly-keys-set-layout "qwerty")
+;;(xah-fly-keys-set-layout "qwerty")
+;;(xah-fly-keys 1)
 (global-set-key (kbd "C-w") 'xah-close-current-buffer)
 (global-set-key (kbd "C-S-t") 'xah-open-last-closed)
 
 ;; sanity preservers
 (global-set-key (kbd "C-x") 'xah-cut-line-or-region)
 (global-set-key (kbd "C-c") 'xah-copy-line-or-region)
+
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-y") 'redo)
@@ -52,7 +59,6 @@
 
 ;; personal preferences
 (global-set-key (kbd "C-f") 'find-file)
-(global-set-key (kbd "C-d") 'delete-other-windows)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
