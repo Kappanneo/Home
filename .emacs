@@ -41,10 +41,7 @@
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
-(require 'xah-fly-keys)
-(xah-fly-keys-set-layout "qwerty")
-;;(xah-fly-keys-set-layout "qwerty")
-;;(xah-fly-keys 1)
+(require 'subset)
 (global-set-key (kbd "C-w") 'xah-close-current-buffer)
 (global-set-key (kbd "C-S-t") 'xah-open-last-closed)
 
