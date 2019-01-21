@@ -59,6 +59,7 @@
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
+(global-set-key (kbd "C-j") 'pop-to-mark-command)
 
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
