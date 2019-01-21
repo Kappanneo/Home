@@ -146,7 +146,7 @@ set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatus
 
 ############################## ON-NEW-WINDOW ###################################
 
-for_window [title="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & touchpad_off_2
+for_window [class="."] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $touchpad_on & $alert $hov
 
 ################################################################################
 #                               COMMANDS                                       #
@@ -191,6 +191,9 @@ bindsym Mod4+control+w kill
 
 # reload configuration
 bindsym Mod4+control+r $no_border restart
+
+# start dmenu for commands
+bindsym Mod4+control+e $exec dmenu_run
 
 # start dmenu for applications
 bindsym Mod4+Menu $exec $dmenu
@@ -297,16 +300,16 @@ mode $sup {
 
         bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
 
-        bindsym Escape             $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym Super_L            $no_border mode $def $exec $alert $bas & $touchpad_off; $focus_one
-        bindsym "Alt_L"            $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym space              $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym Delete             $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym BackSpace          $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym Return             $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym Tab                $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym $alt_gr            $no_border mode $def $exec $alert $bas & $touchpad_off
-        bindsym --border button2   $no_border mode $def $exec $alert $bas & $touchpad_off_2
+        bindsym Escape             $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym Super_L            $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym "Alt_L"            $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym space              $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym Delete             $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym BackSpace          $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym Return             $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym Tab                $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym $alt_gr            $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+        bindsym --border button2   $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
 
         bindsym r                  $no_border mode $red $exec $alert $red
         bindsym z                  $no_border mode $str $exec $alert $str
@@ -427,10 +430,10 @@ mode $sup {
         bindsym control+j $exec $fm Downloads
 
         # start dmenu for commands
-        bindsym control+e $exec dmenu_run
+        bindsym control+e $no_border mode $def $exec $alert $bas & $touchpad_off; $exec dmenu_run
 
         # start dmenu for applications
-        bindsym Menu      $exec $dmenu
+        bindsym Menu      $no_border mode $def $exec $alert $bas & $touchpad_off; $exec $dmenu
 
         ########### UNUSED KEYS ############
 
@@ -636,10 +639,10 @@ mode $hov {
 
         bindsym Escape             $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
         bindsym Delete             $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
-        bindsym space              $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
+#       bindsym space              $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
         bindsym BackSpace          $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
         bindsym control+BackSpace  $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
-        bindsym $alt_gr            $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
+#       bindsym $alt_gr            $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
 
         ############ COMMANDS ############
 
@@ -679,8 +682,11 @@ mode $hov {
         # hard reload
         bindsym Mod4+control+r $no_border restart
 
+        # start dmenu for commands
+        bindsym Mod4+control+e $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off; $exec dmenu_run
+
         # start dmenu for applications
-        bindsym Mod4+Menu $exec $dmenu
+        bindsym Mod4+Menu      $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off; $exec $dmenu
 
         # files
         bindsym Mod4+control+f $exec $fm
@@ -826,8 +832,8 @@ mode $hov {
 #       bindsym "Control_L"                   nop
 #       bindsym "Super_L"                     nop
 #       bindsym "Alt_L"                       nop
-#       bindsym space                         nop
-#       bindsym $alt_gr                       nop
+        bindsym space                         nop
+        bindsym $alt_gr                       nop
 #       bindsym Menu                          nop
 #       bindsym "Control_R"                   nop
 #       bindsym Up                            nop
@@ -1315,7 +1321,7 @@ assign [class="Gimp.*"] $w9
 ################################################################################
 
 # keybinding (order matters)
-$exec $disable_Caps #; $disable_Control_R
+$exec $disable_Caps
 
 # autoscroll (not always permanent, may need reaload)
 $exec_always $enable_autoscroll
