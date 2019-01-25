@@ -52,6 +52,7 @@
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-y") 'redo)
+(global-set-key (kbd "C-S-z") 'redo)
 (global-set-key (kbd "C-s") 'save-buffer)
 
 ;; personal preferences
