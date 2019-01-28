@@ -32,6 +32,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
+(require 'cursor-chg)
+(change-cursor-mode 1)
+
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 (when (memq window-system '(mac ns x))
@@ -60,7 +63,7 @@
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
-(global-set-key (kbd "C-j") 'pop-to-mark-command)
+(global-set-key (kbd "C-<prior>") 'pop-to-mark-command)
 
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
@@ -72,3 +75,7 @@
 (global-set-key (kbd "C-7") 'nil)
 (global-set-key (kbd "C-8") 'nil)
 (global-set-key (kbd "C-9") 'nil)
+
+(global-set-key (kbd "C-u") 'insert-char)
+
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)

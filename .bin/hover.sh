@@ -8,8 +8,8 @@ then
 
     xmodmap -e "keycode  33 = p P p P thorn THORN thorn"
     xmodmap -e "keycode  31 = i I i I rightarrow idotless rightarrow"
-
-    xmodmap -e "keycode  19 = 0 equal 0 equal braceright dead_ogonek braceright dead_ogonek 0 equal braceright dead_ogonek"
+    xmodmap -e "keycode  44 = j J j J dead_hook dead_horn dead_hook dead_horn j J dead_hook dead_horn"
+    xmodmap -e "keycode  57 = n N n N ntilde Ntilde ntilde Ntilde n N ntilde Ntilde"
 elif [ $1 -eq "1" ]
 then
     xmodmap -e "keycode  32 = Up Up Up"
@@ -19,6 +19,6 @@ then
 
     xmodmap -e "keycode  33 = End End End"
     xmodmap -e "keycode  31 = Home Home Home"
-
-    xmodmap -e "keycode  19 = Insert NoSymbol Insert NoSymbol Insert"
+    xmodmap -e "keycode  44 = Prior NoSymbol Prior NoSymbol Prior"
+    xmodmap -e "keycode  57 = Next NoSymbol Next NoSymbol Next"
 fi
