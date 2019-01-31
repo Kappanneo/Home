@@ -79,3 +79,5 @@
 (global-set-key (kbd "C-u") 'insert-char)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
