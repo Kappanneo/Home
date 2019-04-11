@@ -30,7 +30,7 @@
     }, {
         "border": "pixel",
         "floating": "auto_off",
-        "layout": "splith",
+        "layout": "splitv",
         "percent": 0.166231555051078,
         "type": "con",
         "nodes": [{
@@ -101,7 +101,7 @@
             "name": "Home",
             "percent": 1,
             "swallows": [{
-                "class": "^Nautilus$"
+                "class": ".*Nautilus$"
             }],
             "type": "con"
         }]
@@ -124,7 +124,7 @@
             "name": "Files",
             "percent": 1,
             "swallows": [{
-                "class": "^Nautilus$"
+                "class": ".*Nautilus$"
             }],
             "type": "con"
         }]

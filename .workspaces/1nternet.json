@@ -1,5 +1,5 @@
 {
-    "layout": "splitv",
+    "layout": "splith",
     "percent": 0.179126574408699,
     "type": "con",
     "nodes": [
@@ -55,7 +55,7 @@
 
 {
     "floating": "auto_off",
-    "layout": "splitv",
+    "layout": "splith",
     "percent": 0.188125531737831,
     "type": "con",
     "nodes": [
