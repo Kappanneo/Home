@@ -6,4 +6,22 @@
     \/_/\/_/\/___/\/_/\/_/\/___/
 
 
-* The journal of open source software (JOSS)
+i3:
+hover mode bug fix
+split-move
+clean code
+sticky modifiers?
+(+ modular modes)
+pym
+caps != ctrl?
+stamp fix
+oklò != wasd?
+back to 2keys-max principle?
+
+Emacs:
+M-x toggle-truncate-lines
+M-x visual-line-mode
+indentation
+ctrl-del until line start
+goto line
+disable messages
