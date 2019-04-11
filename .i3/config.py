@@ -1,3 +1,25 @@
+#begin python
+
+def BINDALL(blocks,modifier="",postfix="",prefix=""):
+    string = ""
+    for name in blocks:
+        string += " # {}\n".format(name)
+        x = blocks[name]
+        if type(x) == tuple:
+            string += BIND(x,modifier,postfix,prefix)
+        elif type(x) == list:
+            for t in blocks[name]:
+                string += BIND(t,modifier,postfix,prefix)
+    return string
+
+def BIND(t,mod,post,pre):
+    x,y = t
+    if pre != "": pre = pre + " "
+    if post != "": post = "; " + post
+    if mod != "":  mod += "+"
+    return "bindsym {} {}\n".format(mod+x,y+post)
+
+#end python
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               SETTINGS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -94,20 +116,38 @@ set $brightness_up exec "xbacklight -inc 5; notify-send 'brightness up'"
 set $brightness_down exec "xbacklight -dec 5; notify-send 'brightness down'"
 
  # # # # # # # # # # # # # # # # WORKSPACES # # # # # # # # # # # # # # # # # # #
+#begin python
 
-set $w1 1nternet
-set $w2 2rectory
-set $w3 3code
-set $w4 4terminl
-set $w5 5team
-set $w6 6iscord
-set $w7 7atex
-set $w8 8volante
-set $w9 9imp
+WORKSPACES = [    
+("1nternet", ("$w1","1")),
+("2rectory", ("$w2","2")),
+("3code",    ("$w3","3")),
+("4terminl", ("$w4","4")),
+("5team",    ("$w5","5")),
+("6iscord",  ("$w6","6")),
+("7atex",    ("$w7","7")),
+("8volante", ("$w8","8")),
+("9imp",     ("$w9","9"))]
+        
+CUT_WORKSPACE = \
+("X",        ("$wx","x")) 
 
+
+def SETALL(l):
+    string=""
+    for x in l:
+        string += SET(x)
+    return string
+
+def SET(x):
+    name,t = x
+    return "set {} {}\n".format(t[0],name)
+
+#end python
+
+<[SETALL(WORKSPACES)]>
  # this one is for cut and paste
-set $wx X
-
+<[SET(CUT_WORKSPACE)]>
  # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # # 
 
 set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
@@ -151,99 +191,154 @@ for_window [class="."] floating disable split toggle; mode $def $no_border; full
  #                               COMMANDS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
- # touchpad toggle
-bindsym XF86TouchpadToggle $touchpad_toggle
- # screen brightness controls
-bindsym XF86MonBrightnessUp $brightness_up
-bindsym XF86MonBrightnessDown $brightness_down
- # display
-bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
- # screenshot
-bindsym --release Shift+Print $exec $stamp
+#begin python
+TOP_COMMANDS={   
 
+"touchpad toggle":
+    ("XF86TouchpadToggle","$touchpad_toggle"),
+
+"screen brightness controls":[
+    ("XF86MonBrightnessUp","$brightness_up"),
+    ("XF86MonBrightnessDown","$brightness_down")
+],
+
+"screenshot":
+    ("--release Shift+Print","$exec $stamp"),
+
+"display": #TODO
+    ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred")
+
+}
+
+#end python
+<[BINDALL(TOP_COMMANDS)]>
  # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
 
- # kill
-bindsym Mod1+F4 kill; $refresh_status_bar
- # browse workspaces
-bindsym Mod1+Tab workspace next; $refresh_status_bar
-bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
+#begin python
+ALT_COMMANDS={
 
+"kill":
+    ("F4","kill"),
+
+"browse workspaces":[
+    ("Tab","workspace next"),
+    ("Shift+Tab","workspace prev")
+]
+    
+}
+
+#end python
+<[BINDALL(ALT_COMMANDS,"Mod1","$refresh_status_bar")]>
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 
- # start dmenu for applications
-bindsym Mod4+Menu $exec $dmenu
-bindsym Mod4+Shift+exclam $exec $dmenu
- # resize window
-bindsym Mod4+m resize shrink height 5 px or 1 ppt
-bindsym Mod4+p resize  grow  height 5 px or 1 ppt
-bindsym Mod4+Shift+m resize shrink width  5 px or 1 ppt
-bindsym Mod4+Shift+p resize  grow  width  5 px or 1 ppt
- # split toggle
-bindsym Mod4+g split v; focus parent; layout toggle split; focus child
- # fullscreen
-bindsym Mod4+f fullscreen toggle
-bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
- # open terminal
-bindsym Mod4+Return $exec gnome-terminal
- # open emacs
-bindsym Mod4+e exec emacs
- # arrows change focus
-bindsym Mod4+Up focus up; $refresh_status_bar
-bindsym Mod4+Left focus left; $refresh_status_bar
-bindsym Mod4+Down focus down; $refresh_status_bar
-bindsym Mod4+Right focus right; $refresh_status_bar
- # switch workspace
-bindsym Mod4+1 workspace $w1; $refresh_status_bar
-bindsym Mod4+2 workspace $w2; $refresh_status_bar
-bindsym Mod4+3 workspace $w3; $refresh_status_bar
-bindsym Mod4+4 workspace $w4; $refresh_status_bar
-bindsym Mod4+5 workspace $w5; $refresh_status_bar
-bindsym Mod4+6 workspace $w6; $refresh_status_bar
-bindsym Mod4+7 workspace $w7; $refresh_status_bar
-bindsym Mod4+8 workspace $w8; $refresh_status_bar
-bindsym Mod4+9 workspace $w9; $refresh_status_bar
-bindsym Mod4+x workspace $wx; $refresh_status_bar
- # oklò change focus
-bindsym Mod4+o focus up; $refresh_status_bar
-bindsym Mod4+k focus left; $refresh_status_bar
-bindsym Mod4+l focus down; $refresh_status_bar
-bindsym Mod4+ograve focus right; $refresh_status_bar
- # wasd change focus
-bindsym Mod4+w focus up; $refresh_status_bar
-bindsym Mod4+a focus left; $refresh_status_bar
-bindsym Mod4+s focus down; $refresh_status_bar
-bindsym Mod4+d focus right; $refresh_status_bar
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
- # resize (scale)
-bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
- # reload configuration
-bindsym Mod4+control+r $no_border restart
- # open application menu
-bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
- # kill
-bindsym Mod4+control+w kill
- # move focused container to workspace and follow
-bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
-bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
-bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
-bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
-bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
-bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
-bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
-bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
-bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+#begin python
+SUPER_COMMANDS = {
+    
+"open terminal":
+    ("Return","$exec gnome-terminal"),
 
+"open emacs":
+    ("e","exec emacs"),
+
+"start dmenu for applications":[
+    ("Menu","$exec $dmenu"),
+    ("Shift+exclam","$exec $dmenu")
+],
+
+"fullscreen":[
+    ("f","fullscreen toggle"),
+    ("Shift+f",'$exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"')
+],
+    
+"split toggle":
+    ("g","split v; focus parent; layout toggle split; focus child"),
+
+"resize window":[
+    ("m",      "resize shrink height 5 px or 1 ppt"),
+    ("p",      "resize  grow  height 5 px or 1 ppt"),
+    ("Shift+m","resize shrink width  5 px or 1 ppt"),
+    ("Shift+p","resize  grow  width  5 px or 1 ppt")
+]
+    
+}
+
+SUPER_CONTROL_COMMANDS = {
+
+"open application menu":
+    ("a","$exec pcmanfm -n menu://applications/"),
+
+"kill":
+    ("w","kill"),
+
+"reload configuration":
+    ("r","$no_border restart"),
+
+"start dmenu for commands":
+    ("e","$exec dmenu_run"),
+
+"files":[
+    ("f","$exec $fm"),
+    ("j","$exec $fm Downloads")
+],
+
+"resize (scale)":[
+    ("minus","resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt"),
+    ("plus", "resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt")
+]
+
+}
+
+SUPER_COMMANDS_RSB = {
+
+"oklò change focus":[
+    ("o",     "focus up"),
+    ("k",     "focus left"),
+    ("l",     "focus down"),
+    ("ograve","focus right")
+],
+    
+"arrows change focus":[
+    ("Up",    "focus up"),
+    ("Left",  "focus left"),
+    ("Down",  "focus down"),
+    ("Right", "focus right")
+],
+    
+"wasd change focus":[
+    ("w",     "focus up"),
+    ("a",     "focus left"),
+    ("s",     "focus down"),
+    ("d",     "focus right")
+]
+
+}
+
+SUPER_COMMANDS_RSB["switch workspace"] = []
+
+for i,t in WORKSPACES+[CUT_WORKSPACE]:
+    x,y = t
+    SUPER_COMMANDS_RSB["switch workspace"].append(
+        (y,"workspace {}".format(x))
+    )
+    
+SUPER_CONTROL_COMMANDS["move focused container to workspace and follow"] = []
+
+for i,t in WORKSPACES:
+    x,y = t
+    SUPER_CONTROL_COMMANDS["move focused container to workspace and follow"].append(
+        (y,"move container to workspace {}; workspace {}".format(x,x))
+    )
+
+#end python
+<[BINDALL(SUPER_COMMANDS,"Mod4")]><[BINDALL(SUPER_COMMANDS_RSB,"Mod4","$refresh_status_bar")]><[BINDALL(SUPER_CONTROL_COMMANDS,"Mod4+control")]>
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
  #                                  MODES                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 
+#begin python
+
+#end python
 
 bindsym XF86PowerOff     $no_border mode $pow $exec $alert $pow; fullscreen disable
 
