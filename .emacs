@@ -18,7 +18,8 @@
  '(tooltip-mode nil)
  '(indent-tabs-mode nil)
  '(tab-always-indent 'complete)
- '(pop-up-frames t))
+ '(pop-up-frames t)
+ '(truncate-lines t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -41,8 +42,9 @@
   (exec-path-from-shell-initialize))
 (exec-path-from-shell-copy-env "HISTFILE")
 
-(require 'undo-tree)
-(global-undo-tree-mode 1)
+(require 'move-text)
+(global-set-key (kbd "M-<up>") 'move-text-up)
+(global-set-key (kbd "M-<down>") 'move-text-down)
 
 (require 'subset)
 (global-set-key (kbd "C-w") 'xah-close-current-buffer)
@@ -54,8 +56,8 @@
 
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-y") 'redo)
-(global-set-key (kbd "C-S-z") 'redo)
+(global-set-key (kbd "C-y") 'nil)
+(global-set-key (kbd "C-S-z") 'nil)
 (global-set-key (kbd "C-s") 'save-buffer)
 
 ;; personal preferences
@@ -63,7 +65,6 @@
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 (global-set-key (kbd "C-r") 'isearch-forward-regexp)
-(global-set-key (kbd "C-<prior>") 'pop-to-mark-command)
 
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
@@ -77,7 +78,22 @@
 (global-set-key (kbd "C-9") 'nil)
 
 (global-set-key (kbd "C-u") 'insert-char)
+(global-set-key (kbd "C-ù") 'pop-to-mark-command)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
+(defun un-indent-by-removing-4-spaces ()
+  "remove 4 (or less) spaces from beginning of of line"
+  (interactive)
+  (save-excursion
+    (save-match-data
+      (beginning-of-line)
+      ;; get rid of tabs at beginning of line
+      (when (looking-at "^\\s-+")
+        (untabify (match-beginning 0) (match-end 0)))
+      (when (looking-at "^ \\{1,4\\}")
+        (replace-match "")))))
+(put 'scroll-left 'disabled nil)
