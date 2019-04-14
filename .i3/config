@@ -31,7 +31,7 @@ popup_during_fullscreen leave_fullscreen
  # smart|urgent|focus|none
 focus_on_window_activation none
 
- # # # # # # # # # # # # # # # # # COLORS  # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # COLORS  # # # # # # # # # # # # # # # # # # #
 
  # class                 border  backgr. text    ind.    child
 client.focused          #4CC97E #4CC97E #ffffff #4CC97E #4CC97E
@@ -42,9 +42,9 @@ client.placeholder      #000000 #222222 #ffffff #000000 #222222
 
 client.background       #222222
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              DEFINITIONS                                    #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # The (new) i3-dmenu-desktop which only displays applications
  # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -67,7 +67,7 @@ set $no_border [tiling] border none
 set $border [tiling] border pixel 5
 set $alt_gr "ISO_Level3_Shift"
 
- # # # # # # # # # # # # # # # # KEYBINDINGS # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # KEYBINDINGS # # # # # # # # # # # # # # # # # #
 
 set $disable_Caps setxkbmap -option ctrl:nocaps
 set  $enable_Caps setxkbmap -option
@@ -108,7 +108,7 @@ set $w9 9imp
  # this one is for cut and paste
 set $wx X
 
- # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # #
 
 set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
 set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
@@ -119,80 +119,100 @@ set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-
 
  # # # # # # # # # # # # # # # # # MODES # # # # # # # # # # # # # # # # # # # # #
 
- # [poweroff] to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
-set $pow "POWER: [q]uit  [r]estart  [s]uspend  [e]xit  [esc]"
-
- # [space] basic mode
-set $bas "BASIC: writing enabled  [super] select container  [super+space] hover mode"
 set $def "default"
-
- # [super+space] hovering mode
 set $hov "HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] exit mode"
-
- # [super] super mode
+set $pow "POWER: [q]uit  [r]estart  [s]uspend  [e]xit  [esc]"
 set $sup "SUPER: [wasd|oklò] select  [shift] move  [123] workspace  [space|esc] exit mode"
+set $wrt "WRITE: writing enabled  [super] select container  [super+space] hover mode"
 
- # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # #
 
- # [super+z] (start) layout
+set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [y]aourt  [r]edshift  [space|esc] exit mode"
+set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
 set $str "START: [1|2] layouts  [space|esc] exit mode"
 
- # [super+r] redshift
-set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
+ # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
- # [super+c] configuration
-set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [y]aourt  [r]edshift  [space|esc] exit mode"
+for_window [class="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $wrt
 
- # # # # # # # # # # # # # # # #ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
-
-for_window [class="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $bas
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # touchpad toggle
-bindsym XF86TouchpadToggle $touchpad_toggle
+bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
  # screen brightness controls
-bindsym XF86MonBrightnessUp $brightness_up
-bindsym XF86MonBrightnessDown $brightness_down
+bindsym XF86MonBrightnessUp $exec $brightness_up
+bindsym XF86MonBrightnessDown $exec $brightness_down
+
  # display
 bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
+
  # screenshot
-bindsym --release Shift+Print $exec $stamp
+bindsym --release Print $exec $stamp
+
 
  # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
 
  # kill
 bindsym Mod1+F4 kill; $refresh_status_bar
+
  # browse workspaces
 bindsym Mod1+Tab workspace next; $refresh_status_bar
 bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
+
 
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 
  # start dmenu for applications
 bindsym Mod4+Menu $exec $dmenu
 bindsym Mod4+Shift+exclam $exec $dmenu
+
+ # fullscreen
+bindsym Mod4+f fullscreen toggle
+bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
+
+ # wasd move
+bindsym Mod4+Shift+w move up
+bindsym Mod4+Shift+a move left
+bindsym Mod4+Shift+s move down
+bindsym Mod4+Shift+d move right
+
+ # oklò move
+bindsym Mod4+Shift+o move up
+bindsym Mod4+Shift+k move left
+bindsym Mod4+Shift+l move down
+bindsym Mod4+Shift+ograve move right
+
+ # open terminal
+bindsym Mod4+Return $exec gnome-terminal
+
+ # focus group
+bindsym Mod4+less focus child
+bindsym Mod4+Shift+greater focus parent
+
+ # open emacs
+bindsym Mod4+e exec emacs
+
+ # split
+bindsym Mod4+v split v
+bindsym Mod4+h split h
+bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # arrows move
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Right move right
+
  # resize window
 bindsym Mod4+m resize shrink height 5 px or 1 ppt
 bindsym Mod4+p resize  grow  height 5 px or 1 ppt
 bindsym Mod4+Shift+m resize shrink width  5 px or 1 ppt
 bindsym Mod4+Shift+p resize  grow  width  5 px or 1 ppt
- # split toggle
-bindsym Mod4+g split v; focus parent; layout toggle split; focus child
- # fullscreen
-bindsym Mod4+f fullscreen toggle
-bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
- # open terminal
-bindsym Mod4+Return $exec gnome-terminal
- # open emacs
-bindsym Mod4+e exec emacs
- # arrows change focus
-bindsym Mod4+Up focus up; $refresh_status_bar
-bindsym Mod4+Left focus left; $refresh_status_bar
-bindsym Mod4+Down focus down; $refresh_status_bar
-bindsym Mod4+Right focus right; $refresh_status_bar
+
+
  # switch workspace
 bindsym Mod4+1 workspace $w1; $refresh_status_bar
 bindsym Mod4+2 workspace $w2; $refresh_status_bar
@@ -204,30 +224,49 @@ bindsym Mod4+7 workspace $w7; $refresh_status_bar
 bindsym Mod4+8 workspace $w8; $refresh_status_bar
 bindsym Mod4+9 workspace $w9; $refresh_status_bar
 bindsym Mod4+x workspace $wx; $refresh_status_bar
- # oklò change focus
+
+ # oklò focus
 bindsym Mod4+o focus up; $refresh_status_bar
 bindsym Mod4+k focus left; $refresh_status_bar
 bindsym Mod4+l focus down; $refresh_status_bar
 bindsym Mod4+ograve focus right; $refresh_status_bar
- # wasd change focus
+
+ # arrows focus
+bindsym Mod4+Up focus up; $refresh_status_bar
+bindsym Mod4+Left focus left; $refresh_status_bar
+bindsym Mod4+Down focus down; $refresh_status_bar
+bindsym Mod4+Right focus right; $refresh_status_bar
+
+ # wasd focus
 bindsym Mod4+w focus up; $refresh_status_bar
 bindsym Mod4+a focus left; $refresh_status_bar
 bindsym Mod4+s focus down; $refresh_status_bar
 bindsym Mod4+d focus right; $refresh_status_bar
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
+
+
+ # focus all
+bindsym Mod4+control+a $focus_all
+
+ # reload configuration
+bindsym Mod4+control+r $no_border restart
+
+ # start dmenu for commands
+bindsym Mod4+control+e $exec dmenu_run
+
+ # kill
+bindsym Mod4+control+w kill
+
  # resize (scale)
 bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
- # reload configuration
-bindsym Mod4+control+r $no_border restart
- # open application menu
-bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
- # kill
-bindsym Mod4+control+w kill
+
+ # save layout
+bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+
+ # files
+bindsym Mod4+control+f $exec $fm
+bindsym Mod4+control+j $exec $fm Downloads
+
  # move focused container to workspace and follow
 bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
 bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
@@ -239,426 +278,410 @@ bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
 bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
 bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  MODES                                      #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable
 
+bindsym --release Super_L $border mode $sup $exec $alert $sup
 
-bindsym XF86PowerOff     $no_border mode $pow $exec $alert $pow; fullscreen disable
+bindsym Mod4+space $border mode $sup $exec $alert $sup
 
-bindsym --release Super_L   $border mode $sup $exec $alert $sup & $enable_autoscroll; fullscreen disable; $focus_one
+bindsym Mod4+r $no_border mode $red exec $alert $red
 
-bindsym Mod4+space       $no_border mode $hov $exec $alert $hov & $enable_hover_mode & $touchpad_on
+bindsym Mod4+z $no_border mode $str exec $alert $str
 
-bindsym Mod4+r           $no_border mode $red $exec $alert $red
-bindsym Mod4+z           $no_border mode $str $exec $alert $str
-bindsym Mod4+c           $no_border mode $cnf $exec $alert $cnf
+bindsym Mod4+c $no_border mode $cnf exec $alert $cnf
 
- # # # # # # # # # # # # # # # # #SUPER-MODE # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # #SUPER-MODE # # # # # # # # # # # # # # # # # #
 
 mode $sup {
 
-        # # # # # # # MODES # # # # # # #
+ # # # # # # # MODES # # # # # # #
 
-        bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable
 
-        bindsym Escape             $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym Super_L            $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym "Alt_L"            $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym space              $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym Delete             $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym BackSpace          $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym Return             $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym Tab                $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym $alt_gr            $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
-        bindsym --border button2   $no_border mode $hov $exec $alert $hov & $touchpad_on & $enable_hover_mode
+ # exit to write mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Super_L $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym 'Alt_L' $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym space $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Return $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Tab $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym $alt_gr $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt & $touchpad_off
+bindsym Menu $no_border mode $def $exec $dmenu; $exec $alert $wrt & $touchpad_off
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off
 
-        bindsym r                  $no_border mode $red $exec $alert $red
-        bindsym z                  $no_border mode $str $exec $alert $str
-        bindsym c                  $no_border mode $cnf $exec $alert $cnf
 
-        # # # # # # COMMANDS # # # # # # 
+bindsym r $no_border mode $red exec $alert $red
 
-        # touchpad toggle
-        bindsym XF86TouchpadToggle $exec $touchpad_toggle
+bindsym z $no_border mode $str exec $alert $str
 
-        # Screen brightness controls
-        bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
-        bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
+bindsym c $no_border mode $cnf exec $alert $cnf
 
-        # screenshot
-        bindsym --release Print $exec $stamp
 
-        # switch workspace
-        bindsym 1 workspace $w1; $refresh_status_bar
-        bindsym 2 workspace $w2; $refresh_status_bar
-        bindsym 3 workspace $w3; $refresh_status_bar
-        bindsym 4 workspace $w4; $refresh_status_bar
-        bindsym 5 workspace $w5; $refresh_status_bar
-        bindsym 6 workspace $w6; $refresh_status_bar
-        bindsym 7 workspace $w7; $refresh_status_bar
-        bindsym 8 workspace $w8; $refresh_status_bar
-        bindsym 9 workspace $w9; $refresh_status_bar
-        bindsym x workspace $wx; $refresh_status_bar
+ # # # # # # COMMANDS # # # # # #
 
-        # move focused container to workspace and follow
-        bindsym control+1 move container to workspace $w1; workspace $w1
-        bindsym control+2 move container to workspace $w2; workspace $w2
-        bindsym control+3 move container to workspace $w3; workspace $w3
-        bindsym control+4 move container to workspace $w4; workspace $w4
-        bindsym control+5 move container to workspace $w5; workspace $w5
-        bindsym control+6 move container to workspace $w6; workspace $w6
-        bindsym control+7 move container to workspace $w7; workspace $w7
-        bindsym control+8 move container to workspace $w8; workspace $w8
-        bindsym control+9 move container to workspace $w9; workspace $w9
+ # touchpad toggle
+bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
-        bindsym control+Tab       workspace next; $refresh_status_bar
-        bindsym control+Shift+Tab workspace prev; $refresh_status_bar
+ # screen brightness controls
+bindsym XF86MonBrightnessUp $exec $brightness_up
+bindsym XF86MonBrightnessDown $exec $brightness_down
 
-        # cut
-        bindsym control+x move container to workspace $wx; $refresh_status_bar
+ # display
+bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
-        # paste
-        bindsym control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ # screenshot
+bindsym --release Print $exec $stamp
 
-        # change focus
-        bindsym o      focus up   ; $refresh_status_bar
-        bindsym k      focus left ; $refresh_status_bar
-        bindsym l      focus down ; $refresh_status_bar
-        bindsym ograve focus right; $refresh_status_bar
 
-        # alternatively, you can use the cursor keys:
-        bindsym Up     focus up   ; $refresh_status_bar
-        bindsym Left   focus left ; $refresh_status_bar
-        bindsym Down   focus down ; $refresh_status_bar
-        bindsym Right  focus right; $refresh_status_bar
+ # kill
+bindsym Mod1+F4 kill
 
-        # alternative to the other alternative
-        bindsym w      focus up   ; $refresh_status_bar
-        bindsym a      focus left ; $refresh_status_bar
-        bindsym s      focus down ; $refresh_status_bar
-        bindsym d      focus right; $refresh_status_bar
+ # browse workspaces
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
 
-        # move focused window
-        bindsym Shift+o      move up
-        bindsym Shift+k      move left
-        bindsym Shift+l      move down
-        bindsym Shift+ograve move right
 
-        # alternatively, you can use the cursor keys:
-        bindsym Shift+Up     move up
-        bindsym Shift+Left   move left
-        bindsym Shift+Down   move down
-        bindsym Shift+Right  move right
+ # start dmenu for applications
+bindsym Menu $exec $dmenu
+bindsym Shift+exclam $exec $dmenu
 
-        # alternative to the other alternative
-        bindsym Shift+w      move up
-        bindsym Shift+a      move left
-        bindsym Shift+s      move down
-        bindsym Shift+d      move right
+ # fullscreen
+bindsym f fullscreen toggle
+bindsym Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
 
-        # fullscreen
-        bindsym f fullscreen enable; mode $def $no_border $exec $alert $bas & $touchpad_off
-        bindsym Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
+ # wasd move
+bindsym Shift+w move up
+bindsym Shift+a move left
+bindsym Shift+s move down
+bindsym Shift+d move right
 
-        # resize window (you can also use the mouse for that)
-        bindsym m             resize shrink height 5 px or 1 ppt
-        bindsym p             resize  grow  height 5 px or 1 ppt
-        bindsym Shift+m       resize shrink width  5 px or 1 ppt
-        bindsym Shift+p       resize  grow  width  5 px or 1 ppt
-        bindsym control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-        bindsym control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ # oklò move
+bindsym Shift+o move up
+bindsym Shift+k move left
+bindsym Shift+l move down
+bindsym Shift+ograve move right
 
-        # split
-        bindsym h split h
-        bindsym v split v
-        bindsym g split v; focus parent; layout toggle split; focus child
+ # open terminal
+bindsym Return $exec gnome-terminal
 
-        # focus tree
-        bindsym less          focus child
-        bindsym Shift+greater focus parent
-        bindsym control+a    $focus_all
+ # focus group
+bindsym less focus child
+bindsym Shift+greater focus parent
 
-        # kill
-        bindsym control+w kill; $refresh_status_bar
+ # open emacs
+bindsym e exec emacs
 
-        # save layout
-        bindsym control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+ # split
+bindsym v split v
+bindsym h split h
+bindsym g split v; focus parent; layout toggle split; focus child
 
-        # reload i3
-        bindsym control+r $no_border reload
+ # arrows move
+bindsym Shift+Up move up
+bindsym Shift+Left move left
+bindsym Shift+Down move down
+bindsym Shift+Right move right
 
-        # files
-        bindsym control+f $exec $fm
-        bindsym control+j $exec $fm Downloads
+ # resize window
+bindsym m resize shrink height 5 px or 1 ppt
+bindsym p resize  grow  height 5 px or 1 ppt
+bindsym Shift+m resize shrink width  5 px or 1 ppt
+bindsym Shift+p resize  grow  width  5 px or 1 ppt
 
-        # start dmenu for commands
-        bindsym control+e    $no_border mode $def $exec $alert $bas & $touchpad_off; $exec dmenu_run
 
-        # start dmenu for applications
-        bindsym Menu         $no_border mode $def $exec $alert $bas & $touchpad_off; $exec $dmenu
-        bindsym Shift+exclam $no_border mode $def $exec $alert $bas & $touchpad_off; $exec $dmenu
+ # switch workspace
+bindsym 1 workspace $w1; $refresh_status_bar
+bindsym 2 workspace $w2; $refresh_status_bar
+bindsym 3 workspace $w3; $refresh_status_bar
+bindsym 4 workspace $w4; $refresh_status_bar
+bindsym 5 workspace $w5; $refresh_status_bar
+bindsym 6 workspace $w6; $refresh_status_bar
+bindsym 7 workspace $w7; $refresh_status_bar
+bindsym 8 workspace $w8; $refresh_status_bar
+bindsym 9 workspace $w9; $refresh_status_bar
+bindsym x workspace $wx; $refresh_status_bar
 
-        # # # # # # UNUSED KEYS # # # # # # 
+ # oklò focus
+bindsym o focus up; $refresh_status_bar
+bindsym k focus left; $refresh_status_bar
+bindsym l focus down; $refresh_status_bar
+bindsym ograve focus right; $refresh_status_bar
 
- #       bindsym Delete                        nop
-        bindsym backslash                     nop
- #       bindsym 1                             nop
- #       bindsym 2                             nop
- #       bindsym 3                             nop
- #       bindsym 4                             nop
- #       bindsym 5                             nop
- #       bindsym 6                             nop
- #       bindsym 7                             nop
- #       bindsym 8                             nop
- #       bindsym 9                             nop
- #       bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
- #       bindsym BackSpace                     nop
- #       bindsym Tab                           nop
-        bindsym q                             nop
- #       bindsym w                             nop
-        bindsym e                             nop
-        bindsym r                             nop
-        bindsym t                             nop
-        bindsym y                             nop
-        bindsym u                             nop
-        bindsym i                             nop
- #       bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
-        bindsym plus                          nop
- #       bindsym Return                        nop
-        bindsym Caps                          nop
- #       bindsym a                             nop
- #       bindsym s                             nop
- #       bindsym d                             nop
-        bindsym f                             nop
- #       bindsym g                             nop
- #       bindsym h                             nop
-        bindsym j                             nop
- #       bindsym k                             nop
- #       bindsym l                             nop
- #       bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
- #       bindsym "Shift_L"                     nop
- #       bindsym less                          nop
-        bindsym z                             nop
- #       bindsym x                             nop
-        bindsym c                             nop
- #       bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
- #       bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
- #       bindsym "Shift_R"                     nop
- #       bindsym "Control_L"                   nop
- #       bindsym "Super_L"                     nop
- #       bindsym "Alt_L"                       nop
- #       bindsym space                         nop
- #       bindsym $alt_gr                       nop
- #       bindsym Menu                          nop
- #       bindsym "Control_R"                   nop
- #       bindsym Up                            nop
- #       bindsym Left                          nop
- #       bindsym Down                          nop
- #       bindsym Right                         nop
+ # arrows focus
+bindsym Up focus up; $refresh_status_bar
+bindsym Left focus left; $refresh_status_bar
+bindsym Down focus down; $refresh_status_bar
+bindsym Right focus right; $refresh_status_bar
 
-        # also Shift+ (since Shift is not locked)
-        bindsym Shift+bar                     nop
- #       bindsym Shift+exclam                  nop
-        bindsym Shift+quotedbl                nop
-        bindsym Shift+sterling                nop
-        bindsym Shift+dollar                  nop
-        bindsym Shift+percent                 nop
-        bindsym Shift+ampersand               nop
-        bindsym Shift+slash                   nop
-        bindsym Shift+parenleft               nop
-        bindsym Shift+parenright              nop
-        bindsym Shift+equal                   nop
-        bindsym Shift+question                nop
-        bindsym Shift+asciicircum             nop
-        bindsym Shift+q                       nop
- #       bindsym Shift+w                       nop
-        bindsym Shift+e                       nop
-        bindsym Shift+r                       nop
-        bindsym Shift+t                       nop
-        bindsym Shift+y                       nop
-        bindsym Shift+u                       nop
-        bindsym Shift+i                       nop
-        bindsym Shift+o                       nop
-        bindsym Shift+p                       nop
-        bindsym Shift+eacute                  nop
-        bindsym Shift+asterisk                nop
- #       bindsym Shift+a                       nop
- #       bindsym Shift+s                       nop
- #       bindsym Shift+d                       nop
- #       bindsym Shift+f                       nop
-        bindsym Shift+g                       nop
-        bindsym Shift+h                       nop
-        bindsym Shift+j                       nop
-        bindsym Shift+k                       nop
-        bindsym Shift+l                       nop
-        bindsym Shift+ccedilla                nop
-        bindsym Shift+degree                  nop
-        bindsym Shift+section                 nop
- #       bindsym Shift+greater                 nop
- #       bindsym Shift+z                       nop
-        bindsym Shift+x                       nop
-        bindsym Shift+c                       nop
-        bindsym Shift+v                       nop
-        bindsym Shift+b                       nop
-        bindsym Shift+n                       nop
-        bindsym Shift+m                       nop
-        bindsym Shift+semicolon               nop
-        bindsym Shift+colon                   nop
-        bindsym Shift+underscore              nop
+ # wasd focus
+bindsym w focus up; $refresh_status_bar
+bindsym a focus left; $refresh_status_bar
+bindsym s focus down; $refresh_status_bar
+bindsym d focus right; $refresh_status_bar
 
-        # also control+ (since control is not locked)
-        bindsym control+Delete                nop
-        bindsym control+backslash             nop
- #       bindsym control+1                     nop
- #       bindsym control+2                     nop
- #       bindsym control+3                     nop
- #       bindsym control+4                     nop
- #       bindsym control+5                     nop
- #       bindsym control+6                     nop
- #       bindsym control+7                     nop
- #       bindsym control+8                     nop
- #       bindsym control+9                     nop
- #       bindsym control+0                     nop
-        bindsym control+aphostrophe           nop
-        bindsym control+igrave                nop
-        bindsym control+BackSpace             nop
- #       bindsym control+Tab                   nop
-        bindsym control+q                     nop
- #       bindsym control+w                     nop
-        bindsym control+e                     nop
- #       bindsym control+r                     nop
- #       bindsym control+t                     nop
-        bindsym control+y                     nop
-        bindsym control+u                     nop
-        bindsym control+i                     nop
-        bindsym control+o                     nop
-        bindsym control+p                     nop
-        bindsym control+egrave                nop
- #       bindsym control+plus                  nop
-        bindsym control+Return                nop
- #       bindsym control+a                     nop
- #       bindsym control+s                     nop
-        bindsym control+d                     nop
- #       bindsym control+f                     nop
-        bindsym control+g                     nop
-        bindsym control+h                     nop
-        bindsym control+j                     nop
- #       bindsym control+k                     nop
- #       bindsym control+l                     nop
- #       bindsym control+ograve                nop
-        bindsym control+agrave                nop
-        bindsym control+ugrave                nop
- #       bindsym control+"Shift_L"             nop
- #       bindsym control+less                  nop
-        bindsym control+z                     nop
- #       bindsym control+x                     nop
-        bindsym control+c                     nop
- #       bindsym control+v                     nop
-        bindsym control+b                     nop
-        bindsym control+n                     nop
- #       bindsym control+m                     nop
-        bindsym control+comma                 nop
-        bindsym control+period                nop
- #       bindsym control+minus                 nop
- #       bindsym control+"Shift_R"             nop
- #       bindsym control+"Control_L"           nop
- #       bindsym control+"Super_L"             nop
- #       bindsym control+"Alt_L"               nop
- #       bindsym control+space                 nop
-        bindsym control+$alt_gr               nop
- #       bindsym control+Menu                  nop
- #       bindsym control+"Control_R"           nop
- #       bindsym control+Up                    nop
- #       bindsym control+Left                  nop
- #       bindsym control+Down                  nop
- #       bindsym control+Right                 nop
+
+ # focus all
+bindsym control+a $focus_all
+
+ # reload configuration
+bindsym control+r $no_border restart
+
+ # start dmenu for commands
+bindsym control+e $exec dmenu_run
+
+ # kill
+bindsym control+w kill
+
+ # resize (scale)
+bindsym control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+bindsym control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+
+ # save layout
+bindsym control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+
+ # files
+bindsym control+f $exec $fm
+bindsym control+j $exec $fm Downloads
+
+ # move focused container to workspace and follow
+bindsym control+1 move container to workspace $w1; workspace $w1
+bindsym control+2 move container to workspace $w2; workspace $w2
+bindsym control+3 move container to workspace $w3; workspace $w3
+bindsym control+4 move container to workspace $w4; workspace $w4
+bindsym control+5 move container to workspace $w5; workspace $w5
+bindsym control+6 move container to workspace $w6; workspace $w6
+bindsym control+7 move container to workspace $w7; workspace $w7
+bindsym control+8 move container to workspace $w8; workspace $w8
+bindsym control+9 move container to workspace $w9; workspace $w9
+
+
+ # paste
+bindsym control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+
+ # cut
+bindsym control+x move container to workspace $wx; $refresh_status_bar
+
+ # kill
+bindsym control+w kill; $refresh_status_bar
+
+
+         
+ # unused keys
+bindsym backslash nop
+bindsym 0 nop
+bindsym aphostrophe nop
+bindsym igrave nop
+bindsym q nop
+bindsym t nop
+bindsym y nop
+bindsym u nop
+bindsym i nop
+bindsym egrave nop
+bindsym plus nop
+bindsym Caps nop
+bindsym j nop
+bindsym agrave nop
+bindsym ugrave nop
+bindsym b nop
+bindsym n nop
+bindsym comma nop
+bindsym period nop
+bindsym minus nop
+bindsym "Super_L" nop
+bindsym "Alt_L" nop
+
+ # also Shift+ (since Shift is not locked)
+bindsym Shift+bar nop
+bindsym Shift+quotedbl nop
+bindsym Shift+sterling nop
+bindsym Shift+dollar nop
+bindsym Shift+percent nop
+bindsym Shift+ampersand nop
+bindsym Shift+slash nop
+bindsym Shift+parenleft nop
+bindsym Shift+parenright nop
+bindsym Shift+equal nop
+bindsym Shift+question nop
+bindsym Shift+asciicircum nop
+bindsym Shift+q nop
+bindsym Shift+e nop
+bindsym Shift+r nop
+bindsym Shift+t nop
+bindsym Shift+y nop
+bindsym Shift+u nop
+bindsym Shift+i nop
+bindsym Shift+eacute nop
+bindsym Shift+asterisk nop
+bindsym Shift+g nop
+bindsym Shift+h nop
+bindsym Shift+j nop
+bindsym Shift+ccedilla nop
+bindsym Shift+degree nop
+bindsym Shift+section nop
+bindsym Shift+z nop
+bindsym Shift+x nop
+bindsym Shift+c nop
+bindsym Shift+v nop
+bindsym Shift+b nop
+bindsym Shift+n nop
+bindsym Shift+semicolon nop
+bindsym Shift+colon nop
+bindsym Shift+underscore nop
+
+ # also control+ (since control is not locked)
+bindsym control+Delete nop
+bindsym control+backslash nop
+bindsym control+0 nop
+bindsym control+aphostrophe nop
+bindsym control+igrave nop
+bindsym control+BackSpace nop
+bindsym control+Tab nop
+bindsym control+q nop
+bindsym control+t nop
+bindsym control+y nop
+bindsym control+u nop
+bindsym control+i nop
+bindsym control+o nop
+bindsym control+p nop
+bindsym control+egrave nop
+bindsym control+Return nop
+bindsym control+Caps nop
+bindsym control+d nop
+bindsym control+g nop
+bindsym control+h nop
+bindsym control+k nop
+bindsym control+l nop
+bindsym control+ograve nop
+bindsym control+agrave nop
+bindsym control+ugrave nop
+bindsym control+"Shift_L" nop
+bindsym control+less nop
+bindsym control+z nop
+bindsym control+c nop
+bindsym control+b nop
+bindsym control+n nop
+bindsym control+m nop
+bindsym control+comma nop
+bindsym control+period nop
+bindsym control+"Shift_R" nop
+bindsym control+"Control_L" nop
+bindsym control+"Super_L" nop
+bindsym control+"Alt_L" nop
+bindsym control+space nop
+bindsym control+$alt_gr nop
+bindsym control+Menu nop
+bindsym control+"Control_R" nop
+bindsym control+Up nop
+bindsym control+Left nop
+bindsym control+Down nop
+bindsym control+Right nop
+
+
 }
 
- # # # # # # # # # # # # # # # # HOVER-MODE # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # HOVER-MODE # # # # # # # # # # # # # # # # # # #
 
 mode $hov {
 
-        # # # # # # # # MODES # # # # # # #
+ # # # # # # # # MODES # # # # # # #
 
-        bindsym Mod4+r             $no_border mode $red $exec $alert $red & $disable_hover_mode & $touchpad_off
-        bindsym Mod4+z             $no_border mode $str $exec $alert $str & $disable_hover_mode & $touchpad_off
-        bindsym Mod4+c             $no_border mode $cnf $exec $alert $cnf & $disable_hover_mode & $touchpad_off
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable; $disable_hover_mode
 
-        bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow & $disable_hover_mode & $touchpad_off; fullscreen disable
+ # exit to write mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
+bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt & $touchpad_off; $disable_hover_mode
+bindsym Mod4+Menu $no_border mode $def $exec $dmenu; $exec $alert $wrt & $touchpad_off; $disable_hover_mode
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
 
-        bindsym --release Super_L     $border mode $sup $exec $alert $sup & $disable_hover_mode & $touchpad_off; fullscreen disable
 
-        bindsym Escape             $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
-        bindsym Delete             $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
- #       bindsym space              $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
-        bindsym BackSpace          $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
-        bindsym control+BackSpace  $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
- #       bindsym $alt_gr            $no_border mode $def $exec $alert $bas & $disable_hover_mode & $touchpad_off
+bindsym Mod4+r $no_border mode $red exec $alert $red; $disable_hover_mode
 
-        # # # # # # # COMMANDS # # # # # # 
+bindsym Mod4+z $no_border mode $str exec $alert $str; $disable_hover_mode
 
-        # touchpad toggle
+bindsym Mod4+c $no_border mode $cnf exec $alert $cnf; $disable_hover_mode
+
+
+ # # # # # # # COMMANDS # # # # # #
+
+ # touchpad toggle
 bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
- # Screen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
+ # screen brightness controls
+bindsym XF86MonBrightnessUp $exec $brightness_up
+bindsym XF86MonBrightnessDown $exec $brightness_down
+
+ # display
+bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screenshot
 bindsym --release Print $exec $stamp
 
- # display #TODO
-bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # a must
-bindsym Mod1+F4 kill; $refresh_status_bar
-
- # also Alt+Tab
-bindsym Mod1+Tab       workspace next; $refresh_status_bar
-bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
-
- # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # start a terminal
-bindsym Mod4+Return $exec gnome-terminal
-
- # open emacs
-bindsym Mod4+e $exec emacs
-
- # application menu
-bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
 
  # kill
-bindsym Mod4+control+w kill
+bindsym Mod1+F4 kill
 
- # reload configuration
-bindsym Mod4+control+r $no_border restart
+ # browse workspaces
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
 
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
 
  # start dmenu for applications
-bindsym Mod4+Menu         $exec $dmenu
+bindsym Mod4+Menu $exec $dmenu
 bindsym Mod4+Shift+exclam $exec $dmenu
 
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
+ # fullscreen
+bindsym Mod4+f fullscreen toggle
+bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
+
+ # wasd move
+bindsym Mod4+Shift+w move up
+bindsym Mod4+Shift+a move left
+bindsym Mod4+Shift+s move down
+bindsym Mod4+Shift+d move right
+
+ # oklò move
+bindsym Mod4+Shift+o move up
+bindsym Mod4+Shift+k move left
+bindsym Mod4+Shift+l move down
+bindsym Mod4+Shift+ograve move right
+
+ # open terminal
+bindsym Mod4+Return $exec gnome-terminal
+
+ # focus group
+bindsym Mod4+less focus child
+bindsym Mod4+Shift+greater focus parent
+
+ # open emacs
+bindsym Mod4+e exec emacs
+
+ # split
+bindsym Mod4+v split v
+bindsym Mod4+h split h
+bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # arrows move
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Right move right
+
+ # resize window
+bindsym Mod4+m resize shrink height 5 px or 1 ppt
+bindsym Mod4+p resize  grow  height 5 px or 1 ppt
+bindsym Mod4+Shift+m resize shrink width  5 px or 1 ppt
+bindsym Mod4+Shift+p resize  grow  width  5 px or 1 ppt
+
 
  # switch workspace
 bindsym Mod4+1 workspace $w1; $refresh_status_bar
@@ -672,6 +695,48 @@ bindsym Mod4+8 workspace $w8; $refresh_status_bar
 bindsym Mod4+9 workspace $w9; $refresh_status_bar
 bindsym Mod4+x workspace $wx; $refresh_status_bar
 
+ # oklò focus
+bindsym Mod4+o focus up; $refresh_status_bar
+bindsym Mod4+k focus left; $refresh_status_bar
+bindsym Mod4+l focus down; $refresh_status_bar
+bindsym Mod4+ograve focus right; $refresh_status_bar
+
+ # arrows focus
+bindsym Mod4+Up focus up; $refresh_status_bar
+bindsym Mod4+Left focus left; $refresh_status_bar
+bindsym Mod4+Down focus down; $refresh_status_bar
+bindsym Mod4+Right focus right; $refresh_status_bar
+
+ # wasd focus
+bindsym Mod4+w focus up; $refresh_status_bar
+bindsym Mod4+a focus left; $refresh_status_bar
+bindsym Mod4+s focus down; $refresh_status_bar
+bindsym Mod4+d focus right; $refresh_status_bar
+
+
+ # focus all
+bindsym Mod4+control+a $focus_all
+
+ # reload configuration
+bindsym Mod4+control+r $no_border restart
+
+ # start dmenu for commands
+bindsym Mod4+control+e $exec dmenu_run
+
+ # kill
+bindsym Mod4+control+w kill
+
+ # resize (scale)
+bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
+bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+
+ # save layout
+bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+
+ # files
+bindsym Mod4+control+f $exec $fm
+bindsym Mod4+control+j $exec $fm Downloads
+
  # move focused container to workspace and follow
 bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
 bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
@@ -683,929 +748,597 @@ bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
 bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
 bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
 
- # change focus
-bindsym Mod4+o      focus up   ; $refresh_status_bar
-bindsym Mod4+k      focus left ; $refresh_status_bar
-bindsym Mod4+l      focus down ; $refresh_status_bar
-bindsym Mod4+ograve focus right; $refresh_status_bar
 
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Up     focus up   ; $refresh_status_bar
-bindsym Mod4+Left   focus left ; $refresh_status_bar
-bindsym Mod4+Down   focus down ; $refresh_status_bar
-bindsym Mod4+Right  focus right; $refresh_status_bar
+ # paste
+bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
 
- # alternative to the other alternative
-bindsym Mod4+w      focus up   ; $refresh_status_bar
-bindsym Mod4+a      focus left ; $refresh_status_bar
-bindsym Mod4+s      focus down ; $refresh_status_bar
-bindsym Mod4+d      focus right; $refresh_status_bar
+ # cut
+bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
 
- # move focused window
-bindsym Mod4+Shift+o      move up
-bindsym Mod4+Shift+k      move left
-bindsym Mod4+Shift+l      move down
-bindsym Mod4+Shift+ograve move right
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Shift+Up     move up
-bindsym Mod4+Shift+Left   move left
-bindsym Mod4+Shift+Down   move down
-bindsym Mod4+Shift+Right  move right
-
- # alternative to the other alternative
-bindsym Mod4+Shift+w      move up
-bindsym Mod4+Shift+a      move left
-bindsym Mod4+Shift+s      move down
-bindsym Mod4+Shift+d      move right
-
- # fullscreen
-bindsym Mod4+f fullscreen toggle
-bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
-
- # split toggle
-bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # resize window (you can also use the mouse for that)
-bindsym Mod4+m             resize shrink height 5 px or 1 ppt
-bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
-bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
-bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
-bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ # kill
+bindsym Mod4+control+w kill; $refresh_status_bar
 
 
+ 
+ # # # # # # UNUSED KEYS # # # # # #
 
-        # # # # # # UNUSED KEYS # # # # # # 
+ # unused keys
+bindsym backslash nop
+bindsym 1 nop
+bindsym 2 nop
+bindsym 3 nop
+bindsym 4 nop
+bindsym 5 nop
+bindsym 6 nop
+bindsym 7 nop
+bindsym 8 nop
+bindsym 9 nop
+bindsym 0 nop
+bindsym aphostrophe nop
+bindsym igrave nop
+bindsym Tab nop
+bindsym q nop
+bindsym w nop
+bindsym e nop
+bindsym r nop
+bindsym t nop
+bindsym y nop
+bindsym u nop
+bindsym i nop
+bindsym o nop
+bindsym p nop
+bindsym egrave nop
+bindsym plus nop
+bindsym Return nop
+bindsym Caps nop
+bindsym a nop
+bindsym s nop
+bindsym d nop
+bindsym f nop
+bindsym g nop
+bindsym h nop
+bindsym j nop
+bindsym k nop
+bindsym l nop
+bindsym ograve nop
+bindsym agrave nop
+bindsym ugrave nop
+bindsym less nop
+bindsym z nop
+bindsym x nop
+bindsym c nop
+bindsym v nop
+bindsym b nop
+bindsym n nop
+bindsym m nop
+bindsym comma nop
+bindsym period nop
+bindsym minus nop
+bindsym "Super_L" nop
+bindsym "Alt_L" nop
+bindsym space nop
+bindsym $alt_gr nop
+bindsym Menu nop
+bindsym Up nop
+bindsym Left nop
+bindsym Down nop
+bindsym Right nop
 
- #       bindsym Delete                        nop
-        bindsym backslash                     nop
-        bindsym 1                             nop
-        bindsym 2                             nop
-        bindsym 3                             nop
-        bindsym 4                             nop
-        bindsym 5                             nop
-        bindsym 6                             nop
-        bindsym 7                             nop
-        bindsym 8                             nop
-        bindsym 9                             nop
-        bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
- #       bindsym BackSpace                     nop
- #       bindsym Tab                           nop
-        bindsym q                             nop
-        bindsym w                             nop
-        bindsym e                             nop
-        bindsym r                             nop
-        bindsym t                             nop
-        bindsym y                             nop
-        bindsym u                             nop
-        bindsym i                             nop
-        bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
-        bindsym plus                          nop
- #       bindsym Return                        nop
-        bindsym Caps                          nop
-        bindsym a                             nop
-        bindsym s                             nop
-        bindsym d                             nop
-        bindsym f                             nop
-        bindsym g                             nop
-        bindsym h                             nop
-        bindsym j                             nop
-        bindsym k                             nop
-        bindsym l                             nop
-        bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
- #       bindsym "Shift_L"                     nop
-        bindsym less                          nop
-        bindsym z                             nop
-        bindsym x                             nop
-        bindsym c                             nop
-        bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
-        bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
- #       bindsym "Shift_R"                     nop
- #       bindsym "Control_L"                   nop
- #       bindsym "Super_L"                     nop
- #       bindsym "Alt_L"                       nop
-        bindsym space                         nop
-        bindsym $alt_gr                       nop
- #       bindsym Menu                          nop
- #       bindsym "Control_R"                   nop
- #       bindsym Up                            nop
- #       bindsym Left                          nop
- #       bindsym Down                          nop
- #       bindsym Right                         nop
+ # also Shift+ (since Shift is not locked)
+bindsym Shift+bar nop
+bindsym Shift+exclam nop
+bindsym Shift+quotedbl nop
+bindsym Shift+sterling nop
+bindsym Shift+dollar nop
+bindsym Shift+percent nop
+bindsym Shift+ampersand nop
+bindsym Shift+slash nop
+bindsym Shift+parenleft nop
+bindsym Shift+parenright nop
+bindsym Shift+equal nop
+bindsym Shift+question nop
+bindsym Shift+asciicircum nop
+bindsym Shift+q nop
+bindsym Shift+w nop
+bindsym Shift+e nop
+bindsym Shift+r nop
+bindsym Shift+t nop
+bindsym Shift+y nop
+bindsym Shift+u nop
+bindsym Shift+i nop
+bindsym Shift+o nop
+bindsym Shift+p nop
+bindsym Shift+eacute nop
+bindsym Shift+asterisk nop
+bindsym Shift+a nop
+bindsym Shift+s nop
+bindsym Shift+d nop
+bindsym Shift+f nop
+bindsym Shift+g nop
+bindsym Shift+h nop
+bindsym Shift+j nop
+bindsym Shift+k nop
+bindsym Shift+l nop
+bindsym Shift+ccedilla nop
+bindsym Shift+degree nop
+bindsym Shift+section nop
+bindsym Shift+greater nop
+bindsym Shift+z nop
+bindsym Shift+x nop
+bindsym Shift+c nop
+bindsym Shift+v nop
+bindsym Shift+b nop
+bindsym Shift+n nop
+bindsym Shift+m nop
+bindsym Shift+semicolon nop
+bindsym Shift+colon nop
+bindsym Shift+underscore nop
 
-        # also Shift+ (since Shift is not locked)
-        bindsym Shift+bar                     nop
-        bindsym Shift+exclam                  nop
-        bindsym Shift+quotedbl                nop
-        bindsym Shift+sterling                nop
-        bindsym Shift+dollar                  nop
-        bindsym Shift+percent                 nop
-        bindsym Shift+ampersand               nop
-        bindsym Shift+slash                   nop
-        bindsym Shift+parenleft               nop
-        bindsym Shift+parenright              nop
-        bindsym Shift+equal                   nop
-        bindsym Shift+question                nop
-        bindsym Shift+asciicircum             nop
-        bindsym Shift+q                       nop
-        bindsym Shift+w                       nop
-        bindsym Shift+e                       nop
-        bindsym Shift+r                       nop
-        bindsym Shift+t                       nop
-        bindsym Shift+y                       nop
-        bindsym Shift+u                       nop
-        bindsym Shift+i                       nop
-        bindsym Shift+o                       nop
-        bindsym Shift+p                       nop
-        bindsym Shift+eacute                  nop
-        bindsym Shift+asterisk                nop
-        bindsym Shift+a                       nop
-        bindsym Shift+s                       nop
-        bindsym Shift+d                       nop
-        bindsym Shift+f                       nop
-        bindsym Shift+g                       nop
-        bindsym Shift+h                       nop
-        bindsym Shift+j                       nop
-        bindsym Shift+k                       nop
-        bindsym Shift+l                       nop
-        bindsym Shift+ccedilla                nop
-        bindsym Shift+degree                  nop
-        bindsym Shift+section                 nop
-        bindsym Shift+greater                 nop
-        bindsym Shift+z                       nop
-        bindsym Shift+x                       nop
-        bindsym Shift+c                       nop
-        bindsym Shift+v                       nop
-        bindsym Shift+b                       nop
-        bindsym Shift+n                       nop
-        bindsym Shift+m                       nop
-        bindsym Shift+semicolon               nop
-        bindsym Shift+colon                   nop
-        bindsym Shift+underscore              nop
+ # also control+ (since control is not locked)
+bindsym control+Delete nop
+bindsym control+backslash nop
+bindsym control+1 nop
+bindsym control+2 nop
+bindsym control+3 nop
+bindsym control+4 nop
+bindsym control+5 nop
+bindsym control+6 nop
+bindsym control+7 nop
+bindsym control+8 nop
+bindsym control+9 nop
+bindsym control+0 nop
+bindsym control+aphostrophe nop
+bindsym control+igrave nop
+bindsym control+BackSpace nop
+bindsym control+Tab nop
+bindsym control+q nop
+bindsym control+w nop
+bindsym control+e nop
+bindsym control+r nop
+bindsym control+t nop
+bindsym control+y nop
+bindsym control+u nop
+bindsym control+i nop
+bindsym control+o nop
+bindsym control+p nop
+bindsym control+egrave nop
+bindsym control+plus nop
+bindsym control+Return nop
+bindsym control+Caps nop
+bindsym control+a nop
+bindsym control+s nop
+bindsym control+d nop
+bindsym control+f nop
+bindsym control+g nop
+bindsym control+h nop
+bindsym control+j nop
+bindsym control+k nop
+bindsym control+l nop
+bindsym control+ograve nop
+bindsym control+agrave nop
+bindsym control+ugrave nop
+bindsym control+"Shift_L" nop
+bindsym control+less nop
+bindsym control+z nop
+bindsym control+x nop
+bindsym control+c nop
+bindsym control+v nop
+bindsym control+b nop
+bindsym control+n nop
+bindsym control+m nop
+bindsym control+comma nop
+bindsym control+period nop
+bindsym control+minus nop
+bindsym control+"Shift_R" nop
+bindsym control+"Control_L" nop
+bindsym control+"Super_L" nop
+bindsym control+"Alt_L" nop
+bindsym control+space nop
+bindsym control+$alt_gr nop
+bindsym control+Menu nop
+bindsym control+"Control_R" nop
+bindsym control+Up nop
+bindsym control+Left nop
+bindsym control+Down nop
+bindsym control+Right nop
+
+
 }
-
- # # # # # # # # # # # # # # # POWEROFF-MODE # # # # # # # # # # # # # # # # # # 
+ 
+ # # # # # # # # # # # # # # # POWEROFF-MODE # # # # # # # # # # # # # # # # # #
 
 mode $pow {
+ # options
+bindsym XF86PowerOff $exec $alert $pow
+bindsym q $exec poweroff
+bindsym r $exec reboot
+bindsym e $exec exit
 
- #       bindsym XF86PowerOff $exec poweroff
-        bindsym XF86PowerOff $exec $alert $pow
-        bindsym q            $exec poweroff
-        bindsym r            $exec reboot
-        bindsym s mode $def  $exec systemctl suspend
-        bindsym e            $exec exit
 
-        bindsym Super_L               $border mode $sup $exec $alert $sup
+bindsym "Super_L" $border mode $sup $exec $alert $sup
 
-        bindsym Escape                        mode $def $exec $alert $alt
-        bindsym "Alt_L"                       mode $def $exec $alert $alt
-        bindsym Delete                        mode $def $exec $alert $alt
-        bindsym space                         mode $def $exec $alert $alt
-        bindsym Return                        mode $def $exec $alert $alt
-        bindsym BackSpace                     mode $def $exec $alert $alt
-        bindsym Tab                           mode $def $exec $alert $alt
-        bindsym $alt_gr                       mode $def $exec $alert $alt
+ # exit to write mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym 'Alt_L' $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym space $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Return $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Tab $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym $alt_gr $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym s $no_border mode $def mode $def $exec systemctl suspend; $exec $alert $wrt & $touchpad_off
 
-        bindsym Delete                        nop
-        bindsym backslash                     nop
-        bindsym 1                             nop
-        bindsym 2                             nop
-        bindsym 3                             nop
-        bindsym 4                             nop
-        bindsym 5                             nop
-        bindsym 6                             nop
-        bindsym 7                             nop
-        bindsym 8                             nop
-        bindsym 9                             nop
-        bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
-        bindsym BackSpace                     nop
- #       bindsym Tab                           nop
- #       bindsym q                             nop
-        bindsym w                             nop
- #       bindsym e                             nop
- #       bindsym r                             nop
-        bindsym t                             nop
-        bindsym y                             nop
-        bindsym u                             nop
-        bindsym i                             nop
-        bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
-        bindsym plus                          nop
-        bindsym Return                        nop
-        bindsym Caps                          nop
-        bindsym a                             nop
- #       bindsym s                             nop
-        bindsym d                             nop
-        bindsym f                             nop
-        bindsym g                             nop
-        bindsym h                             nop
-        bindsym j                             nop
-        bindsym k                             nop
-        bindsym l                             nop
-        bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
-        bindsym "Shift_L"                     nop
-        bindsym less                          nop
-        bindsym z                             nop
-        bindsym x                             nop
-        bindsym c                             nop
-        bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
-        bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
-        bindsym "Shift_R"                     nop
-        bindsym "Control_L"                   nop
- #       bindsym "Super_L"                     nop
- #       bindsym "Alt_L"                       nop
- #       bindsym space                         nop
- #       bindsym $alt_gr                       nop
-        bindsym Menu                          nop
-        bindsym "Control_R"                   nop
-        bindsym Up                            nop
-        bindsym Left                          nop
-        bindsym Down                          nop
-        bindsym Right                         nop
+
+ # unused keys
+bindsym backslash nop
+bindsym 1 nop
+bindsym 2 nop
+bindsym 3 nop
+bindsym 4 nop
+bindsym 5 nop
+bindsym 6 nop
+bindsym 7 nop
+bindsym 8 nop
+bindsym 9 nop
+bindsym 0 nop
+bindsym aphostrophe nop
+bindsym igrave nop
+bindsym w nop
+bindsym t nop
+bindsym y nop
+bindsym u nop
+bindsym i nop
+bindsym o nop
+bindsym p nop
+bindsym egrave nop
+bindsym plus nop
+bindsym Caps nop
+bindsym a nop
+bindsym d nop
+bindsym f nop
+bindsym g nop
+bindsym h nop
+bindsym j nop
+bindsym k nop
+bindsym l nop
+bindsym ograve nop
+bindsym agrave nop
+bindsym ugrave nop
+bindsym "Shift_L" nop
+bindsym less nop
+bindsym z nop
+bindsym x nop
+bindsym c nop
+bindsym v nop
+bindsym b nop
+bindsym n nop
+bindsym m nop
+bindsym comma nop
+bindsym period nop
+bindsym minus nop
+bindsym "Shift_R" nop
+bindsym "Control_L" nop
+bindsym "Alt_L" nop
+bindsym Menu nop
+bindsym "Control_R" nop
+bindsym Up nop
+bindsym Left nop
+bindsym Down nop
+bindsym Right nop
+
+
 }
 
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # # #
+ 
+ # redshift
+mode $red { # options
+bindsym 1 $exec redshift -P -O 2100K
+bindsym 2 $exec redshift -P -O 2300K
+bindsym 3 $exec redshift -P -O 2500K
+bindsym 4 $exec redshift -P -O 2700K
+bindsym 5 $exec redshift -P -O 3000K
+bindsym 6 $exec redshift -P -O 3500K
+bindsym 7 $exec redshift -P -O 4000K
+bindsym 8 $exec redshift -P -O 4500K
+bindsym 9 $exec redshift -P -O 5000K
+bindsym 0 $exec redshift -P -O 6500K
+bindsym plus $exec redshift -O 6400K
 
-mode $red {
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable
+bindsym "Super_L" $border mode $sup $exec $alert $sup
+ # exit to write mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym 'Alt_L' $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym space $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Return $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Tab $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym $alt_gr $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off
 
-        bindsym 1 $exec redshift -P -O 2100K
-        bindsym 2 $exec redshift -P -O 2300K
-        bindsym 3 $exec redshift -P -O 2500K
-        bindsym 4 $exec redshift -P -O 2700K
-        bindsym 5 $exec redshift -P -O 3000K
-        bindsym 6 $exec redshift -P -O 3500K
-        bindsym 7 $exec redshift -P -O 4000K
-        bindsym 8 $exec redshift -P -O 4500K
-        bindsym 9 $exec redshift -P -O 5000K
-        bindsym 0 $exec redshift -P -O 6500K
-        bindsym plus $exec redshift -O 6400K
+ # touchpad toggle
+bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt & $touchpad_off
 
-        bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
+ # screen brightness controls
+bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt & $touchpad_off
+bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt & $touchpad_off
 
-        bindsym --release Super_L                       mode $sup $exec $alert $sup
+ # display
+bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt & $touchpad_off
 
-        # touchpad toggle
-bindsym XF86TouchpadToggle $exec $touchpad_toggle
+ # screenshot
+bindsym --release Print $no_border mode $def $exec $stamp; $exec $alert $wrt & $touchpad_off
 
- # Screen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
-
- # display #TODO
-bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # a must
-bindsym Mod1+F4 kill; $refresh_status_bar
-
- # also Alt+Tab
-bindsym Mod1+Tab       workspace next; $refresh_status_bar
-bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
-
- # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # start a terminal
-bindsym Mod4+Return $exec gnome-terminal
-
- # open emacs
-bindsym Mod4+e $exec emacs
-
- # application menu
-bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
-
- # kill
-bindsym Mod4+control+w kill
-
- # reload configuration
-bindsym Mod4+control+r $no_border restart
-
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run &
-
- # start dmenu for applications
-bindsym Mod4+Menu         $exec $dmenu
-bindsym Mod4+Shift+exclam $exec $dmenu
-
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
-
- # switch workspace
-bindsym Mod4+1 workspace $w1; $refresh_status_bar
-bindsym Mod4+2 workspace $w2; $refresh_status_bar
-bindsym Mod4+3 workspace $w3; $refresh_status_bar
-bindsym Mod4+4 workspace $w4; $refresh_status_bar
-bindsym Mod4+5 workspace $w5; $refresh_status_bar
-bindsym Mod4+6 workspace $w6; $refresh_status_bar
-bindsym Mod4+7 workspace $w7; $refresh_status_bar
-bindsym Mod4+8 workspace $w8; $refresh_status_bar
-bindsym Mod4+9 workspace $w9; $refresh_status_bar
-bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # move focused container to workspace and follow
-bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
-bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
-bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
-bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
-bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
-bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
-bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
-bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
-bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
- # change focus
-bindsym Mod4+o      focus up   ; $refresh_status_bar
-bindsym Mod4+k      focus left ; $refresh_status_bar
-bindsym Mod4+l      focus down ; $refresh_status_bar
-bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Up     focus up   ; $refresh_status_bar
-bindsym Mod4+Left   focus left ; $refresh_status_bar
-bindsym Mod4+Down   focus down ; $refresh_status_bar
-bindsym Mod4+Right  focus right; $refresh_status_bar
-
- # alternative to the other alternative
-bindsym Mod4+w      focus up   ; $refresh_status_bar
-bindsym Mod4+a      focus left ; $refresh_status_bar
-bindsym Mod4+s      focus down ; $refresh_status_bar
-bindsym Mod4+d      focus right; $refresh_status_bar
-
- # move focused window
-bindsym Mod4+Shift+o      move up
-bindsym Mod4+Shift+k      move left
-bindsym Mod4+Shift+l      move down
-bindsym Mod4+Shift+ograve move right
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Shift+Up     move up
-bindsym Mod4+Shift+Left   move left
-bindsym Mod4+Shift+Down   move down
-bindsym Mod4+Shift+Right  move right
-
- # alternative to the other alternative
-bindsym Mod4+Shift+w      move up
-bindsym Mod4+Shift+a      move left
-bindsym Mod4+Shift+s      move down
-bindsym Mod4+Shift+d      move right
-
- # fullscreen
-bindsym Mod4+f fullscreen toggle
-bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
-
- # split toggle
-bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # resize window (you can also use the mouse for that)
-bindsym Mod4+m             resize shrink height 5 px or 1 ppt
-bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
-bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
-bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
-bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ # unused keys
+bindsym backslash nop
+bindsym 1 nop
+bindsym 2 nop
+bindsym 3 nop
+bindsym 4 nop
+bindsym 5 nop
+bindsym 6 nop
+bindsym 7 nop
+bindsym 8 nop
+bindsym 9 nop
+bindsym 0 nop
+bindsym aphostrophe nop
+bindsym igrave nop
+bindsym q nop
+bindsym w nop
+bindsym e nop
+bindsym r nop
+bindsym t nop
+bindsym y nop
+bindsym u nop
+bindsym i nop
+bindsym o nop
+bindsym p nop
+bindsym egrave nop
+bindsym plus nop
+bindsym Caps nop
+bindsym a nop
+bindsym s nop
+bindsym d nop
+bindsym f nop
+bindsym g nop
+bindsym h nop
+bindsym j nop
+bindsym k nop
+bindsym l nop
+bindsym ograve nop
+bindsym agrave nop
+bindsym ugrave nop
+bindsym "Shift_L" nop
+bindsym less nop
+bindsym z nop
+bindsym x nop
+bindsym c nop
+bindsym v nop
+bindsym b nop
+bindsym n nop
+bindsym m nop
+bindsym comma nop
+bindsym period nop
+bindsym minus nop
+bindsym "Shift_R" nop
+bindsym "Control_L" nop
+bindsym "Alt_L" nop
+bindsym Menu nop
+bindsym "Control_R" nop
+bindsym Up nop
+bindsym Left nop
+bindsym Down nop
+bindsym Right nop
 
 
-
-        bindsym Escape             $no_border mode $def $exec $alert $alt
-        bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
-        bindsym Delete             $no_border mode $def $exec $alert $alt
-        bindsym space              $no_border mode $def $exec $alert $alt
-        bindsym Return             $no_border mode $def $exec $alert $alt
-        bindsym BackSpace          $no_border mode $def $exec $alert $alt
-        bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym $alt_gr            $no_border mode $def $exec $alert $alt
-
- #       bindsym Delete                        nop
-        bindsym backslash                     nop
- #       bindsym 1                             nop
- #       bindsym 2                             nop
- #       bindsym 3                             nop
- #       bindsym 4                             nop
- #       bindsym 5                             nop
- #       bindsym 6                             nop
- #       bindsym 7                             nop
- #       bindsym 8                             nop
- #       bindsym 9                             nop
- #       bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
- #       bindsym BackSpace                     nop
- #       bindsym Tab                           nop
-        bindsym q                             nop
-        bindsym w                             nop
-        bindsym e                             nop
-        bindsym r                             nop
-        bindsym t                             nop
-        bindsym y                             nop
-        bindsym u                             nop
-        bindsym i                             nop
-        bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
- #       bindsym plus                          nop
- #       bindsym Return                        nop
-        bindsym Caps                          nop
-        bindsym a                             nop
-        bindsym s                             nop
-        bindsym d                             nop
-        bindsym f                             nop
-        bindsym g                             nop
-        bindsym h                             nop
-        bindsym j                             nop
-        bindsym k                             nop
-        bindsym l                             nop
-        bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
-        bindsym "Shift_L"                     nop
-        bindsym less                          nop
-        bindsym z                             nop
-        bindsym x                             nop
-        bindsym c                             nop
-        bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
-        bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
-        bindsym "Shift_R"                     nop
-        bindsym "Control_L"                   nop
- #       bindsym "Super_L"                     nop
- #       bindsym "Alt_L"                       nop
- #       bindsym space                         nop
- #       bindsym $alt_gr                       nop
-        bindsym Menu                          nop
-        bindsym "Control_R"                   nop
-        bindsym Up                            nop
-        bindsym Left                          nop
-        bindsym Down                          nop
-        bindsym Right                         nop
 }
 
  # start layout
-mode $str {
+mode $str { # options
+bindsym 1 $no_border mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt & $touchpad_off
+bindsym 2 $no_border mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt & $touchpad_off
 
-        bindsym 1 mode $def $no_border $exec $alert $bas & $touchpad_off; $exec "$layout_1; $fill_1"
-        bindsym 2 mode $def $no_border $exec $alert $bas & $touchpad_off; $exec "$layout_2; $fill_2"
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable
+bindsym "Super_L" $border mode $sup $exec $alert $sup
+ # exit to write mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym 'Alt_L' $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym space $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Return $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Tab $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym $alt_gr $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off
 
-        bindsyl XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
+ # touchpad toggle
+bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt & $touchpad_off
 
-        bindsym --release Super_L                       mode $sup $exec $alert $sup
+ # screen brightness controls
+bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt & $touchpad_off
+bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt & $touchpad_off
 
-        # touchpad toggle
-bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # Screen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
+ # display
+bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt & $touchpad_off
 
  # screenshot
-bindsym --release Print $exec $stamp
+bindsym --release Print $no_border mode $def $exec $stamp; $exec $alert $wrt & $touchpad_off
 
- # display #TODO
-bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # a must
-bindsym Mod1+F4 kill; $refresh_status_bar
-
- # also Alt+Tab
-bindsym Mod1+Tab       workspace next; $refresh_status_bar
-bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
-
- # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # start a terminal
-bindsym Mod4+Return $exec gnome-terminal
-
- # open emacs
-bindsym Mod4+e $exec emacs
-
- # application menu
-bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
-
- # kill
-bindsym Mod4+control+w kill
-
- # reload configuration
-bindsym Mod4+control+r $no_border restart
-
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
-
- # start dmenu for applications
-bindsym Mod4+Menu         $exec $dmenu
-bindsym Mod4+Shift+exclam $exec $dmenu
-
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
-
- # switch workspace
-bindsym Mod4+1 workspace $w1; $refresh_status_bar
-bindsym Mod4+2 workspace $w2; $refresh_status_bar
-bindsym Mod4+3 workspace $w3; $refresh_status_bar
-bindsym Mod4+4 workspace $w4; $refresh_status_bar
-bindsym Mod4+5 workspace $w5; $refresh_status_bar
-bindsym Mod4+6 workspace $w6; $refresh_status_bar
-bindsym Mod4+7 workspace $w7; $refresh_status_bar
-bindsym Mod4+8 workspace $w8; $refresh_status_bar
-bindsym Mod4+9 workspace $w9; $refresh_status_bar
-bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # move focused container to workspace and follow
-bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
-bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
-bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
-bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
-bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
-bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
-bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
-bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
-bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
- # change focus
-bindsym Mod4+o      focus up   ; $refresh_status_bar
-bindsym Mod4+k      focus left ; $refresh_status_bar
-bindsym Mod4+l      focus down ; $refresh_status_bar
-bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Up     focus up   ; $refresh_status_bar
-bindsym Mod4+Left   focus left ; $refresh_status_bar
-bindsym Mod4+Down   focus down ; $refresh_status_bar
-bindsym Mod4+Right  focus right; $refresh_status_bar
-
- # alternative to the other alternative
-bindsym Mod4+w      focus up   ; $refresh_status_bar
-bindsym Mod4+a      focus left ; $refresh_status_bar
-bindsym Mod4+s      focus down ; $refresh_status_bar
-bindsym Mod4+d      focus right; $refresh_status_bar
-
- # move focused window
-bindsym Mod4+Shift+o      move up
-bindsym Mod4+Shift+k      move left
-bindsym Mod4+Shift+l      move down
-bindsym Mod4+Shift+ograve move right
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Shift+Up     move up
-bindsym Mod4+Shift+Left   move left
-bindsym Mod4+Shift+Down   move down
-bindsym Mod4+Shift+Right  move right
-
- # alternative to the other alternative
-bindsym Mod4+Shift+w      move up
-bindsym Mod4+Shift+a      move left
-bindsym Mod4+Shift+s      move down
-bindsym Mod4+Shift+d      move right
-
- # fullscreen
-bindsym Mod4+f fullscreen toggle
-bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
-
- # split toggle
-bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # resize window (you can also use the mouse for that)
-bindsym Mod4+m             resize shrink height 5 px or 1 ppt
-bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
-bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
-bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
-bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ # unused keys
+bindsym backslash nop
+bindsym 1 nop
+bindsym 2 nop
+bindsym 3 nop
+bindsym 4 nop
+bindsym 5 nop
+bindsym 6 nop
+bindsym 7 nop
+bindsym 8 nop
+bindsym 9 nop
+bindsym 0 nop
+bindsym aphostrophe nop
+bindsym igrave nop
+bindsym q nop
+bindsym w nop
+bindsym e nop
+bindsym r nop
+bindsym t nop
+bindsym y nop
+bindsym u nop
+bindsym i nop
+bindsym o nop
+bindsym p nop
+bindsym egrave nop
+bindsym plus nop
+bindsym Caps nop
+bindsym a nop
+bindsym s nop
+bindsym d nop
+bindsym f nop
+bindsym g nop
+bindsym h nop
+bindsym j nop
+bindsym k nop
+bindsym l nop
+bindsym ograve nop
+bindsym agrave nop
+bindsym ugrave nop
+bindsym "Shift_L" nop
+bindsym less nop
+bindsym z nop
+bindsym x nop
+bindsym c nop
+bindsym v nop
+bindsym b nop
+bindsym n nop
+bindsym m nop
+bindsym comma nop
+bindsym period nop
+bindsym minus nop
+bindsym "Shift_R" nop
+bindsym "Control_L" nop
+bindsym "Alt_L" nop
+bindsym Menu nop
+bindsym "Control_R" nop
+bindsym Up nop
+bindsym Left nop
+bindsym Down nop
+bindsym Right nop
 
 
-
-        bindsym Escape             $no_border mode $def $exec $alert $alt
-        bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
-        bindsym Delete             $no_border mode $def $exec $alert $alt
-        bindsym space              $no_border mode $def $exec $alert $alt
-        bindsym Return             $no_border mode $def $exec $alert $alt
-        bindsym BackSpace          $no_border mode $def $exec $alert $alt
-        bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym $alt_gr            $no_border mode $def $exec $alert $alt
-
-
- #       bindsym Delete                        nop
-        bindsym backslash                     nop
- #       bindsym 1                             nop
- #       bindsym 2                             nop
-        bindsym 3                             nop
-        bindsym 4                             nop
-        bindsym 5                             nop
-        bindsym 6                             nop
-        bindsym 7                             nop
-        bindsym 8                             nop
-        bindsym 9                             nop
-        bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
- #       bindsym BackSpace                     nop
- #       bindsym Tab                           nop
-        bindsym q                             nop
-        bindsym w                             nop
-        bindsym e                             nop
-        bindsym r                             nop
-        bindsym t                             nop
-        bindsym y                             nop
-        bindsym u                             nop
-        bindsym i                             nop
-        bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
-        bindsym plus                          nop
- #       bindsym Return                        nop
-        bindsym Caps                          nop
-        bindsym a                             nop
-        bindsym s                             nop
-        bindsym d                             nop
-        bindsym f                             nop
-        bindsym g                             nop
-        bindsym h                             nop
-        bindsym j                             nop
-        bindsym k                             nop
-        bindsym l                             nop
-        bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
-        bindsym "Shift_L"                     nop
-        bindsym less                          nop
-        bindsym z                             nop
-        bindsym x                             nop
-        bindsym c                             nop
-        bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
-        bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
-        bindsym "Shift_R"                     nop
-        bindsym "Control_L"                   nop
- #       bindsym "Super_L"                     nop
- #       bindsym "Alt_L"                       nop
- #       bindsym space                         nop
- #       bindsym $alt_gr                       nop
-        bindsym Menu                          nop
-        bindsym "Control_R"                   nop
-        bindsym Up                            nop
-        bindsym Left                          nop
-        bindsym Down                          nop
-        bindsym Right                         nop
 }
 
  # configuration files launcher
-mode $cnf {
+mode $cnf { # options
+bindsym c $no_border mode $def $exec emacs ~/.i3/config.py; $exec $alert $wrt & $touchpad_off
+bindsym i $no_border mode $def $exec emacs ~/.gitignore; $exec $alert $wrt & $touchpad_off
+bindsym a $no_border mode $def $exec emacs /sudo::/usr/share/applications/; $exec $alert $wrt & $touchpad_off
+bindsym e $no_border mode $def $exec emacs ~/.emacs; $exec $alert $wrt & $touchpad_off
+bindsym s $no_border mode $def $exec emacs ~/.config/i3status/config; $exec $alert $wrt & $touchpad_off
+bindsym z $no_border mode $def $exec emacs ~/.zshrc; $exec $alert $wrt & $touchpad_off
+bindsym g $no_border mode $def $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt & $touchpad_off
+bindsym l $no_border mode $def $exec emacs ~/.workspaces/stamp.json; $exec $alert $wrt & $touchpad_off
+bindsym 1 $no_border mode $def $exec emacs ~/.workspaces/$w1.json; $exec $alert $wrt & $touchpad_off
+bindsym 2 $no_border mode $def $exec emacs ~/.workspaces/$w2.json; $exec $alert $wrt & $touchpad_off
+bindsym y $no_border mode $def $exec emacs /sudo::/etc/yaourtrc; $exec $alert $wrt & $touchpad_off
+bindsym r $no_border mode $def $exec emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt & $touchpad_off
 
-        bindsym c mode $def $no_border $exec emacs ~/.i3/config & $alert $bas & $touchpad_off
-        bindsym i mode $def $no_border $exec emacs ~/.gitignore
-        bindsym a mode $def $no_border $exec emacs /sudo::/usr/share/applications/ & $alert $bas & $touchpad_off
-        bindsym e mode $def $no_border $exec emacs ~/.emacs & $alert $bas & $touchpad_off
-        bindsym s mode $def $no_border $exec emacs ~/.config/i3status/config & $alert $bas & $touchpad_off
-        bindsym z mode $def $no_border $exec emacs ~/.zshrc & $alert $bas & $touchpad_off
-        bindsym g mode $def $no_border $exec chromium --new-window i3wm.org/docs/userguide.html & $alert $bas & $touchpad_off
-        bindsym l mode $def $no_border $exec emacs ~/.workspaces/stamp.json & $alert $bas & $touchpad_off
-        bindsym 1 mode $def $no_border $exec emacs ~/.workspaces/$w1.json & $alert $bas & $touchpad_off
-        bindsym 2 mode $def $no_border $exec emacs ~/.workspaces/$w2.json & $alert $bas & $touchpad_off
-        bindsym y mode $def $no_border $exec emacs /sudo::/etc/yaourtrc & $alert $bas & $touchpad_off
-        bindsym r mode $def $no_border $exec emacs ~/.config/redshift/redshift.conf
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable
+bindsym "Super_L" $border mode $sup $exec $alert $sup
+ # exit to write mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym 'Alt_L' $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym space $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Return $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym Tab $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym $alt_gr $no_border mode $def $exec $alert $wrt & $touchpad_off
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off
 
-        bindsym XF86PowerOff       $no_border mode $pow $exec $alert $pow; fullscreen disable
+ # touchpad toggle
+bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt & $touchpad_off
 
-        bindsym --release Super_L                       mode $sup $exec $alert $sup
+ # screen brightness controls
+bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt & $touchpad_off
+bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt & $touchpad_off
 
-        # touchpad toggle
-bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # Screen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 5; notify-send 'brightness up'" 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 5; notify-send 'brightness down'"
+ # display
+bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt & $touchpad_off
 
  # screenshot
-bindsym --release Print $exec $stamp
+bindsym --release Print $no_border mode $def $exec $stamp; $exec $alert $wrt & $touchpad_off
 
- # display #TODO
-bindsym XF86Display xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # a must
-bindsym Mod1+F4 kill; $refresh_status_bar
-
- # also Alt+Tab
-bindsym Mod1+Tab       workspace next; $refresh_status_bar
-bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
-
- # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # start a terminal
-bindsym Mod4+Return $exec gnome-terminal
-
- # open emacs
-bindsym Mod4+e $exec emacs
-
- # application menu
-bindsym Mod4+control+a $exec pcmanfm -n menu://applications/
-
- # kill
-bindsym Mod4+control+w kill
-
- # reload configuration
-bindsym Mod4+control+r $no_border restart
-
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
-
- # start dmenu for applications
-bindsym Mod4+Menu         $exec $dmenu
-bindsym Mod4+Shift+exclam $exec $dmenu
-
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
-
- # switch workspace
-bindsym Mod4+1 workspace $w1; $refresh_status_bar
-bindsym Mod4+2 workspace $w2; $refresh_status_bar
-bindsym Mod4+3 workspace $w3; $refresh_status_bar
-bindsym Mod4+4 workspace $w4; $refresh_status_bar
-bindsym Mod4+5 workspace $w5; $refresh_status_bar
-bindsym Mod4+6 workspace $w6; $refresh_status_bar
-bindsym Mod4+7 workspace $w7; $refresh_status_bar
-bindsym Mod4+8 workspace $w8; $refresh_status_bar
-bindsym Mod4+9 workspace $w9; $refresh_status_bar
-bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # move focused container to workspace and follow
-bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
-bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
-bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
-bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
-bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
-bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
-bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
-bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
-bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
- # change focus
-bindsym Mod4+o      focus up   ; $refresh_status_bar
-bindsym Mod4+k      focus left ; $refresh_status_bar
-bindsym Mod4+l      focus down ; $refresh_status_bar
-bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Up     focus up   ; $refresh_status_bar
-bindsym Mod4+Left   focus left ; $refresh_status_bar
-bindsym Mod4+Down   focus down ; $refresh_status_bar
-bindsym Mod4+Right  focus right; $refresh_status_bar
-
- # alternative to the other alternative
-bindsym Mod4+w      focus up   ; $refresh_status_bar
-bindsym Mod4+a      focus left ; $refresh_status_bar
-bindsym Mod4+s      focus down ; $refresh_status_bar
-bindsym Mod4+d      focus right; $refresh_status_bar
-
- # move focused window
-bindsym Mod4+Shift+o      move up
-bindsym Mod4+Shift+k      move left
-bindsym Mod4+Shift+l      move down
-bindsym Mod4+Shift+ograve move right
-
- # alternatively, you can use the cursor keys:
-bindsym Mod4+Shift+Up     move up
-bindsym Mod4+Shift+Left   move left
-bindsym Mod4+Shift+Down   move down
-bindsym Mod4+Shift+Right  move right
-
- # alternative to the other alternative
-bindsym Mod4+Shift+w      move up
-bindsym Mod4+Shift+a      move left
-bindsym Mod4+Shift+s      move down
-bindsym Mod4+Shift+d      move right
-
- # fullscreen
-bindsym Mod4+f fullscreen toggle
-bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
-
- # split toggle
-bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # resize window (you can also use the mouse for that)
-bindsym Mod4+m             resize shrink height 5 px or 1 ppt
-bindsym Mod4+p             resize  grow  height 5 px or 1 ppt
-bindsym Mod4+Shift+m       resize shrink width  5 px or 1 ppt
-bindsym Mod4+Shift+p       resize  grow  width  5 px or 1 ppt
-bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
-bindsym Mod4+control+plus  resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ # unused keys
+bindsym backslash nop
+bindsym 1 nop
+bindsym 2 nop
+bindsym 3 nop
+bindsym 4 nop
+bindsym 5 nop
+bindsym 6 nop
+bindsym 7 nop
+bindsym 8 nop
+bindsym 9 nop
+bindsym 0 nop
+bindsym aphostrophe nop
+bindsym igrave nop
+bindsym q nop
+bindsym w nop
+bindsym e nop
+bindsym r nop
+bindsym t nop
+bindsym y nop
+bindsym u nop
+bindsym i nop
+bindsym o nop
+bindsym p nop
+bindsym egrave nop
+bindsym plus nop
+bindsym Caps nop
+bindsym a nop
+bindsym s nop
+bindsym d nop
+bindsym f nop
+bindsym g nop
+bindsym h nop
+bindsym j nop
+bindsym k nop
+bindsym l nop
+bindsym ograve nop
+bindsym agrave nop
+bindsym ugrave nop
+bindsym "Shift_L" nop
+bindsym less nop
+bindsym z nop
+bindsym x nop
+bindsym c nop
+bindsym v nop
+bindsym b nop
+bindsym n nop
+bindsym m nop
+bindsym comma nop
+bindsym period nop
+bindsym minus nop
+bindsym "Shift_R" nop
+bindsym "Control_L" nop
+bindsym "Alt_L" nop
+bindsym Menu nop
+bindsym "Control_R" nop
+bindsym Up nop
+bindsym Left nop
+bindsym Down nop
+bindsym Right nop
 
 
-
-        bindsym Escape             $no_border mode $def $exec $alert $alt
-        bindsym "Alt_L"            $no_border mode $def $exec $alert $alt
-        bindsym Delete             $no_border mode $def $exec $alert $alt
-        bindsym space              $no_border mode $def $exec $alert $alt
-        bindsym Return             $no_border mode $def $exec $alert $alt
-        bindsym BackSpace          $no_border mode $def $exec $alert $alt
-        bindsym Tab                $no_border mode $def $exec $alert $alt
-        bindsym $alt_gr            $no_border mode $def $exec $alert $alt
-
- #       bindsym Delete                        nop
-        bindsym backslash                     nop
- #       bindsym 1                             nop
- #       bindsym 2                             nop
-        bindsym 3                             nop
-        bindsym 4                             nop
-        bindsym 5                             nop
-        bindsym 6                             nop
-        bindsym 7                             nop
-        bindsym 8                             nop
-        bindsym 9                             nop
-        bindsym 0                             nop
-        bindsym aphostrophe                   nop
-        bindsym igrave                        nop
- #       bindsym BackSpace                     nop
- #       bindsym Tab                           nop
-        bindsym q                             nop
-        bindsym w                             nop
- #       bindsym e                             nop
-        bindsym r                             nop
-        bindsym t                             nop
- #       bindsym y                             nop
-        bindsym u                             nop
- #       bindsym i                             nop
-        bindsym o                             nop
-        bindsym p                             nop
-        bindsym egrave                        nop
-        bindsym plus                          nop
- #       bindsym Return                        nop
-        bindsym Caps                          nop
- #       bindsym a                             nop
- #       bindsym s                             nop
-        bindsym d                             nop
-        bindsym f                             nop
- #       bindsym g                             nop
-        bindsym h                             nop
-        bindsym j                             nop
-        bindsym k                             nop
- #       bindsym l                             nop
-        bindsym ograve                        nop
-        bindsym agrave                        nop
-        bindsym ugrave                        nop
-        bindsym "Shift_L"                     nop
-        bindsym less                          nop
- #       bindsym z                             nop
-        bindsym x                             nop
- #       bindsym c                             nop
-        bindsym v                             nop
-        bindsym b                             nop
-        bindsym n                             nop
-        bindsym m                             nop
-        bindsym comma                         nop
-        bindsym period                        nop
-        bindsym minus                         nop
-        bindsym "Shift_R"                     nop
-        bindsym "Control_L"                   nop
- #       bindsym "Super_L"                     nop
- #       bindsym "Alt_L"                       nop
- #       bindsym space                         nop
- #       bindsym $alt_gr                       nop
-        bindsym Menu                          nop
-        bindsym "Control_R"                   nop
-        bindsym Up                            nop
-        bindsym Left                          nop
-        bindsym Down                          nop
-        bindsym Right                         nop
 }
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              STATUS-BAR                                     #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
@@ -1626,12 +1359,12 @@ bar {
  #       bindsym button4 nop # scroll wheel up
  #       bindsym button5 nop # scroll wheel down
         # mid-mouse click to lock
- #       bindsym button2 mode $def $no_border $exec $alert $bas & $touchpad_off_2 & $disable_hover_mode
+ #       bindsym button2 mode $def $no_border $exec $alert $wrt & $touchpad_off_2 & $disable_hover_mode
     }
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              APPLICATIONS                                   #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # code
 assign [class=".*code.*"] $w3
@@ -1657,9 +1390,9 @@ assign [title=".*overleaf.*"] $w7
  # gimp
 assign [class="Gimp.*"] $w9
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                STARTUP                                      #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # keybinding (order matters)
 $exec $disable_Caps
@@ -1685,6 +1418,6 @@ $exec redshift -o
  # layout
 $exec $layout_2; $fill_2
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  FIN                                        #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
