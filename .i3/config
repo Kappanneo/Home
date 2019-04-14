@@ -105,8 +105,10 @@ set $w7 7atex
 set $w8 8volante
 set $w9 9imp
 
+
  # this one is for cut and paste
 set $wx X
+
 
  # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # #
 
@@ -125,11 +127,13 @@ set $pow "POWER: [q]uit  [r]estart  [s]uspend  [e]xit  [esc]"
 set $sup "SUPER: [wasd|oklò] select  [shift] move  [123] workspace  [space|esc] exit mode"
 set $wrt "WRITE: writing enabled  [super] select container  [super+space] hover mode"
 
+
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # #
 
 set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [y]aourt  [r]edshift  [space|esc] exit mode"
 set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
 set $str "START: [1|2] layouts  [space|esc] exit mode"
+
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
@@ -153,6 +157,7 @@ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 bindsym --release Print $exec $stamp
 
 
+
  # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
 
  # kill
@@ -161,6 +166,7 @@ bindsym Mod1+F4 kill; $refresh_status_bar
  # browse workspaces
 bindsym Mod1+Tab workspace next; $refresh_status_bar
 bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
+
 
 
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
@@ -247,25 +253,22 @@ bindsym Mod4+d focus right; $refresh_status_bar
  # focus all
 bindsym Mod4+control+a $focus_all
 
- # reload configuration
-bindsym Mod4+control+r $no_border restart
+ # files
+bindsym Mod4+control+f $exec $fm
+bindsym Mod4+control+j $exec $fm Downloads
 
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
-
- # kill
-bindsym Mod4+control+w kill
+ # save layout
+bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
 
  # resize (scale)
 bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
- # save layout
-bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+ # reload configuration
+bindsym Mod4+control+r $no_border restart
 
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
+ # start dmenu for commands
+bindsym Mod4+control+e $exec dmenu_run
 
  # move focused container to workspace and follow
 bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -279,6 +282,17 @@ bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
 bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
 
 
+ # paste
+bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+
+ # cut
+bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # kill
+bindsym Mod4+control+w kill; $refresh_status_bar
+
+
+
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  MODES                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -287,13 +301,14 @@ bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable
 
 bindsym --release Super_L $border mode $sup $exec $alert $sup
 
-bindsym Mod4+space $border mode $sup $exec $alert $sup
+bindsym Mod4+space $no_border mode $hov $exec $alert $how & $touchpad_on & $enable_hover_mode
 
-bindsym Mod4+r $no_border mode $red exec $alert $red
+bindsym Mod4+r $no_border mode $red $exec $alert $red
 
-bindsym Mod4+z $no_border mode $str exec $alert $str
+bindsym Mod4+z $no_border mode $str $exec $alert $str
 
-bindsym Mod4+c $no_border mode $cnf exec $alert $cnf
+bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
+
 
  # # # # # # # # # # # # # # # # #SUPER-MODE # # # # # # # # # # # # # # # # # #
 
@@ -318,11 +333,11 @@ bindsym Menu $no_border mode $def $exec $dmenu; $exec $alert $wrt & $touchpad_of
 bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off
 
 
-bindsym r $no_border mode $red exec $alert $red
+bindsym r $no_border mode $red $exec $alert $red
 
-bindsym z $no_border mode $str exec $alert $str
+bindsym z $no_border mode $str $exec $alert $str
 
-bindsym c $no_border mode $cnf exec $alert $cnf
+bindsym c $no_border mode $cnf $exec $alert $cnf
 
 
  # # # # # # COMMANDS # # # # # #
@@ -342,11 +357,11 @@ bindsym --release Print $exec $stamp
 
 
  # kill
-bindsym Mod1+F4 kill
+bindsym Mod1+F4 kill; $refresh_status_bar
 
  # browse workspaces
-bindsym Mod1+Tab workspace next
-bindsym Mod1+Shift+Tab workspace prev
+bindsym Mod1+Tab workspace next; $refresh_status_bar
+bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
 
 
  # start dmenu for applications
@@ -431,25 +446,22 @@ bindsym d focus right; $refresh_status_bar
  # focus all
 bindsym control+a $focus_all
 
- # reload configuration
-bindsym control+r $no_border restart
+ # files
+bindsym control+f $exec $fm
+bindsym control+j $exec $fm Downloads
 
- # start dmenu for commands
-bindsym control+e $exec dmenu_run
-
- # kill
-bindsym control+w kill
+ # save layout
+bindsym control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
 
  # resize (scale)
 bindsym control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 bindsym control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
- # save layout
-bindsym control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+ # reload configuration
+bindsym control+r $no_border restart
 
- # files
-bindsym control+f $exec $fm
-bindsym control+j $exec $fm Downloads
+ # start dmenu for commands
+bindsym control+e $exec dmenu_run
 
  # move focused container to workspace and follow
 bindsym control+1 move container to workspace $w1; workspace $w1
@@ -486,7 +498,7 @@ bindsym u nop
 bindsym i nop
 bindsym egrave nop
 bindsym plus nop
-bindsym Caps nop
+bindsym "Caps" nop
 bindsym j nop
 bindsym agrave nop
 bindsym ugrave nop
@@ -553,7 +565,7 @@ bindsym control+o nop
 bindsym control+p nop
 bindsym control+egrave nop
 bindsym control+Return nop
-bindsym control+Caps nop
+bindsym control+"Caps" nop
 bindsym control+d nop
 bindsym control+g nop
 bindsym control+h nop
@@ -593,22 +605,22 @@ mode $hov {
 
  # # # # # # # # MODES # # # # # # #
 
-bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable; $disable_hover_mode
+bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow; fullscreen disable; $exec $disable_hover_mode
 
  # exit to write mode
-bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
-bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
-bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
-bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt & $touchpad_off; $disable_hover_mode
-bindsym Mod4+Menu $no_border mode $def $exec $dmenu; $exec $alert $wrt & $touchpad_off; $disable_hover_mode
-bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off; $disable_hover_mode
+bindsym Escape $no_border mode $def $exec $alert $wrt & $touchpad_off; $exec $disable_hover_mode
+bindsym Delete $no_border mode $def $exec $alert $wrt & $touchpad_off; $exec $disable_hover_mode
+bindsym BackSpace $no_border mode $def $exec $alert $wrt & $touchpad_off; $exec $disable_hover_mode
+bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt & $touchpad_off; $exec $disable_hover_mode
+bindsym Mod4+Menu $no_border mode $def $exec $dmenu; $exec $alert $wrt & $touchpad_off; $exec $disable_hover_mode
+bindsym --border button2 $no_border mode $def $exec $alert $wrt & $touchpad_off; $exec $disable_hover_mode
 
 
-bindsym Mod4+r $no_border mode $red exec $alert $red; $disable_hover_mode
+bindsym Mod4+r $no_border mode $red $exec $alert $red; $exec $disable_hover_mode
 
-bindsym Mod4+z $no_border mode $str exec $alert $str; $disable_hover_mode
+bindsym Mod4+z $no_border mode $str $exec $alert $str; $exec $disable_hover_mode
 
-bindsym Mod4+c $no_border mode $cnf exec $alert $cnf; $disable_hover_mode
+bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf; $exec $disable_hover_mode
 
 
  # # # # # # # COMMANDS # # # # # #
@@ -628,11 +640,11 @@ bindsym --release Print $exec $stamp
 
 
  # kill
-bindsym Mod1+F4 kill
+bindsym Mod1+F4 kill; $refresh_status_bar
 
  # browse workspaces
-bindsym Mod1+Tab workspace next
-bindsym Mod1+Shift+Tab workspace prev
+bindsym Mod1+Tab workspace next; $refresh_status_bar
+bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
 
 
  # start dmenu for applications
@@ -717,25 +729,22 @@ bindsym Mod4+d focus right; $refresh_status_bar
  # focus all
 bindsym Mod4+control+a $focus_all
 
- # reload configuration
-bindsym Mod4+control+r $no_border restart
+ # files
+bindsym Mod4+control+f $exec $fm
+bindsym Mod4+control+j $exec $fm Downloads
 
- # start dmenu for commands
-bindsym Mod4+control+e $exec dmenu_run
-
- # kill
-bindsym Mod4+control+w kill
+ # save layout
+bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
 
  # resize (scale)
 bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
 bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
 
- # save layout
-bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
+ # reload configuration
+bindsym Mod4+control+r $no_border restart
 
- # files
-bindsym Mod4+control+f $exec $fm
-bindsym Mod4+control+j $exec $fm Downloads
+ # start dmenu for commands
+bindsym Mod4+control+e $exec dmenu_run
 
  # move focused container to workspace and follow
 bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -790,7 +799,7 @@ bindsym p nop
 bindsym egrave nop
 bindsym plus nop
 bindsym Return nop
-bindsym Caps nop
+bindsym "Caps" nop
 bindsym a nop
 bindsym s nop
 bindsym d nop
@@ -904,7 +913,7 @@ bindsym control+p nop
 bindsym control+egrave nop
 bindsym control+plus nop
 bindsym control+Return nop
-bindsym control+Caps nop
+bindsym control+"Caps" nop
 bindsym control+a nop
 bindsym control+s nop
 bindsym control+d nop
@@ -993,7 +1002,7 @@ bindsym o nop
 bindsym p nop
 bindsym egrave nop
 bindsym plus nop
-bindsym Caps nop
+bindsym "Caps" nop
 bindsym a nop
 bindsym d nop
 bindsym f nop
@@ -1027,11 +1036,129 @@ bindsym Left nop
 bindsym Down nop
 bindsym Right nop
 
+ # also Shift+ (since Shift is not locked)
+bindsym Shift+bar nop
+bindsym Shift+exclam nop
+bindsym Shift+quotedbl nop
+bindsym Shift+sterling nop
+bindsym Shift+dollar nop
+bindsym Shift+percent nop
+bindsym Shift+ampersand nop
+bindsym Shift+slash nop
+bindsym Shift+parenleft nop
+bindsym Shift+parenright nop
+bindsym Shift+equal nop
+bindsym Shift+question nop
+bindsym Shift+asciicircum nop
+bindsym Shift+q nop
+bindsym Shift+w nop
+bindsym Shift+e nop
+bindsym Shift+r nop
+bindsym Shift+t nop
+bindsym Shift+y nop
+bindsym Shift+u nop
+bindsym Shift+i nop
+bindsym Shift+o nop
+bindsym Shift+p nop
+bindsym Shift+eacute nop
+bindsym Shift+asterisk nop
+bindsym Shift+a nop
+bindsym Shift+s nop
+bindsym Shift+d nop
+bindsym Shift+f nop
+bindsym Shift+g nop
+bindsym Shift+h nop
+bindsym Shift+j nop
+bindsym Shift+k nop
+bindsym Shift+l nop
+bindsym Shift+ccedilla nop
+bindsym Shift+degree nop
+bindsym Shift+section nop
+bindsym Shift+greater nop
+bindsym Shift+z nop
+bindsym Shift+x nop
+bindsym Shift+c nop
+bindsym Shift+v nop
+bindsym Shift+b nop
+bindsym Shift+n nop
+bindsym Shift+m nop
+bindsym Shift+semicolon nop
+bindsym Shift+colon nop
+bindsym Shift+underscore nop
+
+ # also control+ (since control is not locked)
+bindsym control+Delete nop
+bindsym control+backslash nop
+bindsym control+1 nop
+bindsym control+2 nop
+bindsym control+3 nop
+bindsym control+4 nop
+bindsym control+5 nop
+bindsym control+6 nop
+bindsym control+7 nop
+bindsym control+8 nop
+bindsym control+9 nop
+bindsym control+0 nop
+bindsym control+aphostrophe nop
+bindsym control+igrave nop
+bindsym control+BackSpace nop
+bindsym control+Tab nop
+bindsym control+q nop
+bindsym control+w nop
+bindsym control+e nop
+bindsym control+r nop
+bindsym control+t nop
+bindsym control+y nop
+bindsym control+u nop
+bindsym control+i nop
+bindsym control+o nop
+bindsym control+p nop
+bindsym control+egrave nop
+bindsym control+plus nop
+bindsym control+Return nop
+bindsym control+"Caps" nop
+bindsym control+a nop
+bindsym control+s nop
+bindsym control+d nop
+bindsym control+f nop
+bindsym control+g nop
+bindsym control+h nop
+bindsym control+j nop
+bindsym control+k nop
+bindsym control+l nop
+bindsym control+ograve nop
+bindsym control+agrave nop
+bindsym control+ugrave nop
+bindsym control+"Shift_L" nop
+bindsym control+less nop
+bindsym control+z nop
+bindsym control+x nop
+bindsym control+c nop
+bindsym control+v nop
+bindsym control+b nop
+bindsym control+n nop
+bindsym control+m nop
+bindsym control+comma nop
+bindsym control+period nop
+bindsym control+minus nop
+bindsym control+"Shift_R" nop
+bindsym control+"Control_L" nop
+bindsym control+"Super_L" nop
+bindsym control+"Alt_L" nop
+bindsym control+space nop
+bindsym control+$alt_gr nop
+bindsym control+Menu nop
+bindsym control+"Control_R" nop
+bindsym control+Up nop
+bindsym control+Left nop
+bindsym control+Down nop
+bindsym control+Right nop
+
 
 }
 
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # # #
- 
+
  # redshift
 mode $red { # options
 bindsym 1 $exec redshift -P -O 2100K
@@ -1074,16 +1201,6 @@ bindsym --release Print $no_border mode $def $exec $stamp; $exec $alert $wrt & $
 
  # unused keys
 bindsym backslash nop
-bindsym 1 nop
-bindsym 2 nop
-bindsym 3 nop
-bindsym 4 nop
-bindsym 5 nop
-bindsym 6 nop
-bindsym 7 nop
-bindsym 8 nop
-bindsym 9 nop
-bindsym 0 nop
 bindsym aphostrophe nop
 bindsym igrave nop
 bindsym q nop
@@ -1097,8 +1214,7 @@ bindsym i nop
 bindsym o nop
 bindsym p nop
 bindsym egrave nop
-bindsym plus nop
-bindsym Caps nop
+bindsym "Caps" nop
 bindsym a nop
 bindsym s nop
 bindsym d nop
@@ -1132,6 +1248,124 @@ bindsym Up nop
 bindsym Left nop
 bindsym Down nop
 bindsym Right nop
+
+ # also Shift+ (since Shift is not locked)
+bindsym Shift+bar nop
+bindsym Shift+exclam nop
+bindsym Shift+quotedbl nop
+bindsym Shift+sterling nop
+bindsym Shift+dollar nop
+bindsym Shift+percent nop
+bindsym Shift+ampersand nop
+bindsym Shift+slash nop
+bindsym Shift+parenleft nop
+bindsym Shift+parenright nop
+bindsym Shift+equal nop
+bindsym Shift+question nop
+bindsym Shift+asciicircum nop
+bindsym Shift+q nop
+bindsym Shift+w nop
+bindsym Shift+e nop
+bindsym Shift+r nop
+bindsym Shift+t nop
+bindsym Shift+y nop
+bindsym Shift+u nop
+bindsym Shift+i nop
+bindsym Shift+o nop
+bindsym Shift+p nop
+bindsym Shift+eacute nop
+bindsym Shift+asterisk nop
+bindsym Shift+a nop
+bindsym Shift+s nop
+bindsym Shift+d nop
+bindsym Shift+f nop
+bindsym Shift+g nop
+bindsym Shift+h nop
+bindsym Shift+j nop
+bindsym Shift+k nop
+bindsym Shift+l nop
+bindsym Shift+ccedilla nop
+bindsym Shift+degree nop
+bindsym Shift+section nop
+bindsym Shift+greater nop
+bindsym Shift+z nop
+bindsym Shift+x nop
+bindsym Shift+c nop
+bindsym Shift+v nop
+bindsym Shift+b nop
+bindsym Shift+n nop
+bindsym Shift+m nop
+bindsym Shift+semicolon nop
+bindsym Shift+colon nop
+bindsym Shift+underscore nop
+
+ # also control+ (since control is not locked)
+bindsym control+Delete nop
+bindsym control+backslash nop
+bindsym control+1 nop
+bindsym control+2 nop
+bindsym control+3 nop
+bindsym control+4 nop
+bindsym control+5 nop
+bindsym control+6 nop
+bindsym control+7 nop
+bindsym control+8 nop
+bindsym control+9 nop
+bindsym control+0 nop
+bindsym control+aphostrophe nop
+bindsym control+igrave nop
+bindsym control+BackSpace nop
+bindsym control+Tab nop
+bindsym control+q nop
+bindsym control+w nop
+bindsym control+e nop
+bindsym control+r nop
+bindsym control+t nop
+bindsym control+y nop
+bindsym control+u nop
+bindsym control+i nop
+bindsym control+o nop
+bindsym control+p nop
+bindsym control+egrave nop
+bindsym control+plus nop
+bindsym control+Return nop
+bindsym control+"Caps" nop
+bindsym control+a nop
+bindsym control+s nop
+bindsym control+d nop
+bindsym control+f nop
+bindsym control+g nop
+bindsym control+h nop
+bindsym control+j nop
+bindsym control+k nop
+bindsym control+l nop
+bindsym control+ograve nop
+bindsym control+agrave nop
+bindsym control+ugrave nop
+bindsym control+"Shift_L" nop
+bindsym control+less nop
+bindsym control+z nop
+bindsym control+x nop
+bindsym control+c nop
+bindsym control+v nop
+bindsym control+b nop
+bindsym control+n nop
+bindsym control+m nop
+bindsym control+comma nop
+bindsym control+period nop
+bindsym control+minus nop
+bindsym control+"Shift_R" nop
+bindsym control+"Control_L" nop
+bindsym control+"Super_L" nop
+bindsym control+"Alt_L" nop
+bindsym control+space nop
+bindsym control+$alt_gr nop
+bindsym control+Menu nop
+bindsym control+"Control_R" nop
+bindsym control+Up nop
+bindsym control+Left nop
+bindsym control+Down nop
+bindsym control+Right nop
 
 
 }
@@ -1168,9 +1402,8 @@ bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x
 bindsym --release Print $no_border mode $def $exec $stamp; $exec $alert $wrt & $touchpad_off
 
  # unused keys
+bindsym Delete nop
 bindsym backslash nop
-bindsym 1 nop
-bindsym 2 nop
 bindsym 3 nop
 bindsym 4 nop
 bindsym 5 nop
@@ -1181,6 +1414,8 @@ bindsym 9 nop
 bindsym 0 nop
 bindsym aphostrophe nop
 bindsym igrave nop
+bindsym BackSpace nop
+bindsym Tab nop
 bindsym q nop
 bindsym w nop
 bindsym e nop
@@ -1193,7 +1428,8 @@ bindsym o nop
 bindsym p nop
 bindsym egrave nop
 bindsym plus nop
-bindsym Caps nop
+bindsym Return nop
+bindsym "Caps" nop
 bindsym a nop
 bindsym s nop
 bindsym d nop
@@ -1221,12 +1457,132 @@ bindsym minus nop
 bindsym "Shift_R" nop
 bindsym "Control_L" nop
 bindsym "Alt_L" nop
+bindsym space nop
+bindsym $alt_gr nop
 bindsym Menu nop
 bindsym "Control_R" nop
 bindsym Up nop
 bindsym Left nop
 bindsym Down nop
 bindsym Right nop
+
+ # also Shift+ (since Shift is not locked)
+bindsym Shift+bar nop
+bindsym Shift+exclam nop
+bindsym Shift+quotedbl nop
+bindsym Shift+sterling nop
+bindsym Shift+dollar nop
+bindsym Shift+percent nop
+bindsym Shift+ampersand nop
+bindsym Shift+slash nop
+bindsym Shift+parenleft nop
+bindsym Shift+parenright nop
+bindsym Shift+equal nop
+bindsym Shift+question nop
+bindsym Shift+asciicircum nop
+bindsym Shift+q nop
+bindsym Shift+w nop
+bindsym Shift+e nop
+bindsym Shift+r nop
+bindsym Shift+t nop
+bindsym Shift+y nop
+bindsym Shift+u nop
+bindsym Shift+i nop
+bindsym Shift+o nop
+bindsym Shift+p nop
+bindsym Shift+eacute nop
+bindsym Shift+asterisk nop
+bindsym Shift+a nop
+bindsym Shift+s nop
+bindsym Shift+d nop
+bindsym Shift+f nop
+bindsym Shift+g nop
+bindsym Shift+h nop
+bindsym Shift+j nop
+bindsym Shift+k nop
+bindsym Shift+l nop
+bindsym Shift+ccedilla nop
+bindsym Shift+degree nop
+bindsym Shift+section nop
+bindsym Shift+greater nop
+bindsym Shift+z nop
+bindsym Shift+x nop
+bindsym Shift+c nop
+bindsym Shift+v nop
+bindsym Shift+b nop
+bindsym Shift+n nop
+bindsym Shift+m nop
+bindsym Shift+semicolon nop
+bindsym Shift+colon nop
+bindsym Shift+underscore nop
+
+ # also control+ (since control is not locked)
+bindsym control+Delete nop
+bindsym control+backslash nop
+bindsym control+1 nop
+bindsym control+2 nop
+bindsym control+3 nop
+bindsym control+4 nop
+bindsym control+5 nop
+bindsym control+6 nop
+bindsym control+7 nop
+bindsym control+8 nop
+bindsym control+9 nop
+bindsym control+0 nop
+bindsym control+aphostrophe nop
+bindsym control+igrave nop
+bindsym control+BackSpace nop
+bindsym control+Tab nop
+bindsym control+q nop
+bindsym control+w nop
+bindsym control+e nop
+bindsym control+r nop
+bindsym control+t nop
+bindsym control+y nop
+bindsym control+u nop
+bindsym control+i nop
+bindsym control+o nop
+bindsym control+p nop
+bindsym control+egrave nop
+bindsym control+plus nop
+bindsym control+Return nop
+bindsym control+"Caps" nop
+bindsym control+a nop
+bindsym control+s nop
+bindsym control+d nop
+bindsym control+f nop
+bindsym control+g nop
+bindsym control+h nop
+bindsym control+j nop
+bindsym control+k nop
+bindsym control+l nop
+bindsym control+ograve nop
+bindsym control+agrave nop
+bindsym control+ugrave nop
+bindsym control+"Shift_L" nop
+bindsym control+less nop
+bindsym control+z nop
+bindsym control+x nop
+bindsym control+c nop
+bindsym control+v nop
+bindsym control+b nop
+bindsym control+n nop
+bindsym control+m nop
+bindsym control+comma nop
+bindsym control+period nop
+bindsym control+minus nop
+bindsym control+"Shift_R" nop
+bindsym control+"Control_L" nop
+bindsym control+"Super_L" nop
+bindsym control+"Alt_L" nop
+bindsym control+space nop
+bindsym control+$alt_gr nop
+bindsym control+Menu nop
+bindsym control+"Control_R" nop
+bindsym control+Up nop
+bindsym control+Left nop
+bindsym control+Down nop
+bindsym control+Right nop
 
 
 }
@@ -1273,9 +1629,8 @@ bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x
 bindsym --release Print $no_border mode $def $exec $stamp; $exec $alert $wrt & $touchpad_off
 
  # unused keys
+bindsym Delete nop
 bindsym backslash nop
-bindsym 1 nop
-bindsym 2 nop
 bindsym 3 nop
 bindsym 4 nop
 bindsym 5 nop
@@ -1286,36 +1641,29 @@ bindsym 9 nop
 bindsym 0 nop
 bindsym aphostrophe nop
 bindsym igrave nop
+bindsym BackSpace nop
+bindsym Tab nop
 bindsym q nop
 bindsym w nop
-bindsym e nop
-bindsym r nop
 bindsym t nop
-bindsym y nop
 bindsym u nop
-bindsym i nop
 bindsym o nop
 bindsym p nop
 bindsym egrave nop
 bindsym plus nop
-bindsym Caps nop
-bindsym a nop
-bindsym s nop
+bindsym Return nop
+bindsym "Caps" nop
 bindsym d nop
 bindsym f nop
-bindsym g nop
 bindsym h nop
 bindsym j nop
 bindsym k nop
-bindsym l nop
 bindsym ograve nop
 bindsym agrave nop
 bindsym ugrave nop
 bindsym "Shift_L" nop
 bindsym less nop
-bindsym z nop
 bindsym x nop
-bindsym c nop
 bindsym v nop
 bindsym b nop
 bindsym n nop
@@ -1326,12 +1674,132 @@ bindsym minus nop
 bindsym "Shift_R" nop
 bindsym "Control_L" nop
 bindsym "Alt_L" nop
+bindsym space nop
+bindsym $alt_gr nop
 bindsym Menu nop
 bindsym "Control_R" nop
 bindsym Up nop
 bindsym Left nop
 bindsym Down nop
 bindsym Right nop
+
+ # also Shift+ (since Shift is not locked)
+bindsym Shift+bar nop
+bindsym Shift+exclam nop
+bindsym Shift+quotedbl nop
+bindsym Shift+sterling nop
+bindsym Shift+dollar nop
+bindsym Shift+percent nop
+bindsym Shift+ampersand nop
+bindsym Shift+slash nop
+bindsym Shift+parenleft nop
+bindsym Shift+parenright nop
+bindsym Shift+equal nop
+bindsym Shift+question nop
+bindsym Shift+asciicircum nop
+bindsym Shift+q nop
+bindsym Shift+w nop
+bindsym Shift+e nop
+bindsym Shift+r nop
+bindsym Shift+t nop
+bindsym Shift+y nop
+bindsym Shift+u nop
+bindsym Shift+i nop
+bindsym Shift+o nop
+bindsym Shift+p nop
+bindsym Shift+eacute nop
+bindsym Shift+asterisk nop
+bindsym Shift+a nop
+bindsym Shift+s nop
+bindsym Shift+d nop
+bindsym Shift+f nop
+bindsym Shift+g nop
+bindsym Shift+h nop
+bindsym Shift+j nop
+bindsym Shift+k nop
+bindsym Shift+l nop
+bindsym Shift+ccedilla nop
+bindsym Shift+degree nop
+bindsym Shift+section nop
+bindsym Shift+greater nop
+bindsym Shift+z nop
+bindsym Shift+x nop
+bindsym Shift+c nop
+bindsym Shift+v nop
+bindsym Shift+b nop
+bindsym Shift+n nop
+bindsym Shift+m nop
+bindsym Shift+semicolon nop
+bindsym Shift+colon nop
+bindsym Shift+underscore nop
+
+ # also control+ (since control is not locked)
+bindsym control+Delete nop
+bindsym control+backslash nop
+bindsym control+1 nop
+bindsym control+2 nop
+bindsym control+3 nop
+bindsym control+4 nop
+bindsym control+5 nop
+bindsym control+6 nop
+bindsym control+7 nop
+bindsym control+8 nop
+bindsym control+9 nop
+bindsym control+0 nop
+bindsym control+aphostrophe nop
+bindsym control+igrave nop
+bindsym control+BackSpace nop
+bindsym control+Tab nop
+bindsym control+q nop
+bindsym control+w nop
+bindsym control+e nop
+bindsym control+r nop
+bindsym control+t nop
+bindsym control+y nop
+bindsym control+u nop
+bindsym control+i nop
+bindsym control+o nop
+bindsym control+p nop
+bindsym control+egrave nop
+bindsym control+plus nop
+bindsym control+Return nop
+bindsym control+"Caps" nop
+bindsym control+a nop
+bindsym control+s nop
+bindsym control+d nop
+bindsym control+f nop
+bindsym control+g nop
+bindsym control+h nop
+bindsym control+j nop
+bindsym control+k nop
+bindsym control+l nop
+bindsym control+ograve nop
+bindsym control+agrave nop
+bindsym control+ugrave nop
+bindsym control+"Shift_L" nop
+bindsym control+less nop
+bindsym control+z nop
+bindsym control+x nop
+bindsym control+c nop
+bindsym control+v nop
+bindsym control+b nop
+bindsym control+n nop
+bindsym control+m nop
+bindsym control+comma nop
+bindsym control+period nop
+bindsym control+minus nop
+bindsym control+"Shift_R" nop
+bindsym control+"Control_L" nop
+bindsym control+"Super_L" nop
+bindsym control+"Alt_L" nop
+bindsym control+space nop
+bindsym control+$alt_gr nop
+bindsym control+Menu nop
+bindsym control+"Control_R" nop
+bindsym control+Up nop
+bindsym control+Left nop
+bindsym control+Down nop
+bindsym control+Right nop
 
 
 }
@@ -1381,7 +1849,7 @@ for_window [title="Steam"] split h
 
  # discord and skype
 assign [class="discord"] $w6
-assign [title=".*skype.*"] $w6
+assign [title="Skype"] $w6
 
  # texmaker
 assign [title="Texmaker"] $w7

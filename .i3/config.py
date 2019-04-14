@@ -14,42 +14,38 @@ def SET(d):
         string += "set {} {}\n".format(x,t[0])
     return string
 
-def BINDALL(blocks,modifier,postfix,prefix,mode_tag):
+def BIND((x,y),current_mode,after_mode=None,modifier="",prefix="",postfix=""):
+    if postfix != "" and y != "": y += "; " + postfix
+    if postfix != "" and y == "": y += postfix
+    if prefix != "" and y != "": y = prefix + " " + y
+    if prefix != "" and y == "": y = prefix
+    if modifier != "": x = modifier + "+" + x
+    if current_mode in USED_KEYS:
+        if "Shift" in x: USED_KEYS[current_mode].extend(['"Shift_L"','"Shift_R"'])
+        if "control" in x : USED_KEYS[current_mode].extend(['"Control_L"','"Control_R"'])
+        USED_KEYS[current_mode].append(x)
+    if after_mode:
+        n, p, q, exit = ALLMODES[current_mode]
+        name, pre, post, e = ALLMODES[after_mode]
+        if exit != "": post += "; " + exit
+        if post != "" and y != "": y += "; " + post
+        if post != "" and y == "": y += post
+        if pre != "" and y != "": y = pre + " " + y
+        if pre != "" and y == "": y = pre
+    return "bindsym {} {}\n".format(x,y)
+
+def BINDBLOCKS(blocks,current_mode,after_mode=None,modifier="",prefix="",postfix=""):
     string = ""
     for name in blocks:
         string += " # {}\n".format(name)
         x = blocks[name]
         if type(x) == tuple:
-            string += BIND(x,modifier,postfix,prefix,mode_tag)
+            string += BIND(x,current_mode,after_mode,modifier,prefix,postfix)
         elif type(x) == list:
             for t in x:
-                string += BIND(t,modifier,postfix,prefix,mode_tag)
+                string += BIND(t,current_mode,after_mode,modifier,prefix,postfix)
         string += "\n"
     return string
-
-def BIND(t,mod,post,pre,mode_tag):
-    x,y = t
-    if post != "" and y != "": y += "; " + post
-    if post != "" and y == "": y += post
-    if pre != "": y = pre + " " + y
-    if mod != "": x = mod + "+" + x
-    if mode_tag in USED_KEYS:
-        if "Shift" in x: USED_KEYS[mode_tag].extend(['"Shift_L"','"Shift_R"'])
-        if "control" in x : USED_KEYS[mode_tag].extend(['"Control_L"','"Control_R"'])
-        USED_KEYS[mode_tag].append(x)
-    return "bindsym {} {}\n".format(x,y)
-
-def BINDALL_TO_MODE(blocks,mode_prev,mode_next):
-    n, p, q, exit = ALLMODES[mode_prev]
-    name, pre, post, e = ALLMODES[mode_next]
-    if exit != "": post += "; " + exit
-    return BINDALL(blocks,"",post,pre,mode_prev)
-
-def BIND_TO_MODE(t,mode_prev,mode_next):
-    n, p, q, exit = ALLMODES[mode_prev]
-    name, pre, post, e = ALLMODES[mode_next]
-    if exit != "": post += "; " + exit
-    return BIND(t,"",post,pre,mode_prev)
 
 def BEGIN_MODE(mode_tag):
     USED_KEYS[mode_tag] = []
@@ -60,14 +56,35 @@ def END_MODE(mode_tag):
     string = "";
     U = [(x,"nop") for x in KEYS if x not in USED]
     if len(U) :
-        string += BINDALL({"unused keys":U},"","","","")
+        string += BINDBLOCKS({"unused keys":U},mode_tag)
     if any([x for x in ['"Shift_L"','"Shift_R"'] if x in USED]):
         U = [(x,"nop") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in USED]
-        string += BINDALL({"also Shift+ (since Shift is not locked)":U},"","","","")
+        string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U},mode_tag)
     if any([x for x in ['"Control_L"','"Control_R"'] if x in USED]):
         U = [(x,"nop") for x in ['control+'+y for y in KEYS] if x not in USED]
-        string += BINDALL({"also control+ (since control is not locked)":U},"","","","")
+        string += BINDBLOCKS({"also control+ (since control is not locked)":U},mode_tag)
     return string + "\n}"
+
+def MAKE_SUBMODE(options,mode_tag,after_mode=None):
+    string = ""
+    string += BEGIN_MODE(mode_tag)
+    string += BINDBLOCKS({"options":options},mode_tag,after_mode)
+    string += BIND(("XF86PowerOff",""),mode_tag,"$pow")
+    string += BIND(('"Super_L"',""),mode_tag,"$sup")
+    string += BINDBLOCKS({"exit to write mode":[
+        ("Escape",""),
+        ("'Alt_L'",""),
+        ("space",""),
+        ("Delete",""),
+        ("BackSpace",""),
+        ("Return",""),
+        ("Tab",""),
+        ("$alt_gr",""),
+        ("--border button2","")
+    ]},"$red","$wrt")
+    string += BINDBLOCKS(TOP_COMMANDS,mode_tag,"$wrt")
+    string += END_MODE(mode_tag)
+    return string
 
 USED_KEYS ={}
 
@@ -101,7 +118,7 @@ KEYS = [
 'egrave',
 'plus',
 'Return',
-'Caps',
+'"Caps"',
 'a',
 's',
 'd',
@@ -190,8 +207,6 @@ SHIFT_KEYS = [
 'colon',
 'underscore'
 ]
-
-UNUSED_KEYS = []
 
 #end python
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -312,8 +327,10 @@ ALLWORKSPACES = merge(WORKSPACES,CUT_WORKSPACE)
 #end python
 
 <[SET(WORKSPACES)]>
+
  # this one is for cut and paste
 <[SET(CUT_WORKSPACE)]>
+
  # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # #
 
 set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
@@ -327,21 +344,25 @@ set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-
 #begin python
 
 MODES = {
+
 "$pow": # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
     ('"POWER: [q]uit  [r]estart  [s]uspend  [e]xit  [esc]"',
      "$no_border mode $pow",
      "$exec $alert $pow; fullscreen disable",
      ""),
+
 "$wrt":
     ('"WRITE: writing enabled  [super] select container  [super+space] hover mode"',
      "$no_border mode $def",
      "$exec $alert $wrt & $touchpad_off",
      ""),
+
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] exit mode"',
      "$no_border mode $hov",
      "$exec $alert $how & $touchpad_on & $enable_hover_mode",
-     "$disable_hover_mode"),
+     "$exec $disable_hover_mode"),
+
 "$sup":
     ('"SUPER: [wasd|oklò] select  [shift] move  [123] workspace  [space|esc] exit mode"',
      "$border mode $sup",
@@ -350,34 +371,37 @@ MODES = {
 }
 
 SUBMODES = {
+
 "$str":
     ('"START: [1|2] layouts  [space|esc] exit mode"',
      "$no_border mode $str",
-     "exec $alert $str",
+     "$exec $alert $str",
      ""),
+
 "$red":
     ('"REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"',
      "$no_border mode $red",
-     "exec $alert $red",
+     "$exec $alert $red",
      ""),
+
 "$cnf":
     ('"CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [y]aourt  [r]edshift  [space|esc] exit mode"',
      "$no_border mode $cnf",
-     "exec $alert $cnf",
+     "$exec $alert $cnf",
      "")
 }
 
 CURRENT_MODE = "$wrt"
-
 ALLMODES = merge(MODES,SUBMODES)
-
 #end python
 
 set $def "default"
 <[SET(MODES)]>
+
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # #
 
 <[SET(SUBMODES)]>
+
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
 for_window [class="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $wrt
@@ -385,8 +409,8 @@ for_window [class="."] floating disable split toggle; mode $def $no_border; full
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 #begin python
+
 TOP_COMMANDS={
 
 "touchpad toggle":
@@ -404,13 +428,14 @@ TOP_COMMANDS={
     ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred")
 
 }
-
 #end python
-<[BINDALL(TOP_COMMANDS,"","","","$wrt")]>
- # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
 
+<[BINDBLOCKS(TOP_COMMANDS,"$wrt")]>
+
+ # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
 #begin python
-ALT_COMMANDS={
+
+ALT_COMMANDS_RSB={
 
 "kill":
     ("F4","kill"),
@@ -421,11 +446,11 @@ ALT_COMMANDS={
 ]
 
 }
-
 #end python
-<[BINDALL(ALT_COMMANDS,"Mod1","$refresh_status_bar","","$wrt")]>
- # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 
+<[BINDBLOCKS(ALT_COMMANDS_RSB,"$wrt",modifier="Mod1",postfix="$refresh_status_bar")]>
+
+ # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 #begin python
 
 SUPER_COMMANDS = {
@@ -462,17 +487,12 @@ SUPER_COMMANDS = {
     ("p","resize  grow  height 5 px or 1 ppt"),
     ("Shift+m","resize shrink width  5 px or 1 ppt"),
     ("Shift+p","resize  grow  width  5 px or 1 ppt")
-]
-
-}
+]}
 
 SUPER_CONTROL_COMMANDS = {
 
 "focus all":
     ("a","$focus_all"),
-
-"kill":
-    ("w","kill"),
 
 "reload configuration":
     ("r","$no_border restart"),
@@ -496,9 +516,21 @@ SUPER_CONTROL_COMMANDS = {
 "files":[
     ("f","$exec $fm"),
     ("j","$exec $fm Downloads")
-]
-    
-}
+]}
+
+SUPER_COMMANDS_RSB = {}
+
+SUPER_CONTROL_COMMANDS_RSB = {
+
+"kill":
+    ("w","kill"),
+
+"cut":
+    ("x","move container to workspace $wx"),
+
+"paste":
+    ("v","$exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'")
+}    
 
 ARROWS = {
 "arrows":["Up","Left","Down","Right"],
@@ -507,8 +539,6 @@ ARROWS = {
 }
 
 DIRECTIONS = ["up","left","down","right"]
-
-SUPER_COMMANDS_RSB = {}
 
 K = ARROWS.keys()
 K.sort()
@@ -539,42 +569,32 @@ for i in K:
     SUPER_CONTROL_COMMANDS["move focused container to workspace and follow"].append(
         (y,"move container to workspace {}; workspace {}".format(i,i))
     )
-
-SUPER_CONTROL_COMMANDS_RSB = {
-
-"kill":
-    ("w","kill"),
-
-"cut":
-    ("x","move container to workspace $wx"),
-
-"paste":
-    ("v","$exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'")
-
-}    
-
 #end python
-<[BINDALL(SUPER_COMMANDS,"Mod4","","","$wrt")]>
-<[BINDALL(SUPER_COMMANDS_RSB,"Mod4","$refresh_status_bar","","$wrt")]>
-<[BINDALL(SUPER_CONTROL_COMMANDS,"Mod4+control","","","$wrt")]>
+
+<[BINDBLOCKS(SUPER_COMMANDS,"$wrt",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$wrt",modifier="Mod4",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$wrt",modifier="Mod4+control")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$wrt",modifier="Mod4+control",postfix="$refresh_status_bar")]>
+
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  MODES                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-<[BIND_TO_MODE(("XF86PowerOff",""),"$wrt","$pow")]>
-<[BIND_TO_MODE(("--release Super_L",""),"$wrt","$sup")]>
-<[BIND_TO_MODE(("Mod4+space",""),"$wrt","$sup")]>
-<[BIND_TO_MODE(("Mod4+r",""),"$wrt","$red")]>
-<[BIND_TO_MODE(("Mod4+z",""),"$wrt","$str")]>
-<[BIND_TO_MODE(("Mod4+c",""),"$wrt","$cnf")]>
+<[BIND(("XF86PowerOff",      ""),"$wrt","$pow")]>
+<[BIND(("--release Super_L", ""),"$wrt","$sup")]>
+<[BIND(("Mod4+space",        ""),"$wrt","$hov")]>
+<[BIND(("Mod4+r",            ""),"$wrt","$red")]>
+<[BIND(("Mod4+z",            ""),"$wrt","$str")]>
+<[BIND(("Mod4+c",            ""),"$wrt","$cnf")]>
+
  # # # # # # # # # # # # # # # # #SUPER-MODE # # # # # # # # # # # # # # # # # #
 
 <[BEGIN_MODE("$sup")]>
 
  # # # # # # # MODES # # # # # # #
 
-<[BIND_TO_MODE(("XF86PowerOff",""),"$sup","$pow")]>
-<[BINDALL_TO_MODE({"exit to write mode":[
+<[BIND(("XF86PowerOff",""),"$sup","$pow")]>
+<[BINDBLOCKS({"exit to write mode":[
     ("Escape",""),
     ("Super_L",""),
     ("'Alt_L'",""),
@@ -588,18 +608,18 @@ SUPER_CONTROL_COMMANDS_RSB = {
     ("Menu","$exec $dmenu"),
     ("--border button2","")
 ]},"$sup","$wrt")]>
-<[BIND_TO_MODE(("r",""),"$sup","$red")]>
-<[BIND_TO_MODE(("z",""),"$sup","$str")]>
-<[BIND_TO_MODE(("c",""),"$sup","$cnf")]>
+<[BIND(("r",""),"$sup","$red")]>
+<[BIND(("z",""),"$sup","$str")]>
+<[BIND(("c",""),"$sup","$cnf")]>
 
  # # # # # # COMMANDS # # # # # #
 
-<[BINDALL(TOP_COMMANDS,"","","","$sup")]>
-<[BINDALL(ALT_COMMANDS,"Mod1","","","$sup")]>
-<[BINDALL(SUPER_COMMANDS,"","","","$sup")]>
-<[BINDALL(SUPER_COMMANDS_RSB,"","$refresh_status_bar","","$sup")]>
-<[BINDALL(SUPER_CONTROL_COMMANDS,"control","","","$sup")]>
-<[BINDALL(SUPER_CONTROL_COMMANDS_RSB,"control","$refresh_status_bar","","$sup")]>
+<[BINDBLOCKS(TOP_COMMANDS,"$sup")]>
+<[BINDBLOCKS(ALT_COMMANDS_RSB,"$sup",modifier="Mod1",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$sup")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")]>
          
 <[END_MODE("$sup")]>
 
@@ -609,8 +629,8 @@ SUPER_CONTROL_COMMANDS_RSB = {
 
  # # # # # # # # MODES # # # # # # #
 
-<[BIND_TO_MODE(("XF86PowerOff",""),"$hov","$pow")]>
-<[BINDALL_TO_MODE({"exit to write mode":[
+<[BIND(("XF86PowerOff",""),"$hov","$pow")]>
+<[BINDBLOCKS({"exit to write mode":[
     ("Escape",""),
     ("Delete",""),
     ("BackSpace",""),
@@ -618,18 +638,18 @@ SUPER_CONTROL_COMMANDS_RSB = {
     ("Mod4+Menu","$exec $dmenu"),
     ("--border button2","")
 ]},"$hov","$wrt")]>
-<[BIND_TO_MODE(("Mod4+r",""),"$hov","$red")]>
-<[BIND_TO_MODE(("Mod4+z",""),"$hov","$str")]>
-<[BIND_TO_MODE(("Mod4+c",""),"$hov","$cnf")]>
+<[BIND(("Mod4+r",""),"$hov","$red")]>
+<[BIND(("Mod4+z",""),"$hov","$str")]>
+<[BIND(("Mod4+c",""),"$hov","$cnf")]>
 
  # # # # # # # COMMANDS # # # # # #
 
-<[BINDALL(TOP_COMMANDS,"","","","$hov")]>
-<[BINDALL(ALT_COMMANDS,"Mod1","","","$hov")]>
-<[BINDALL(SUPER_COMMANDS,"Mod4","","","$hov")]>
-<[BINDALL(SUPER_COMMANDS_RSB,"Mod4","$refresh_status_bar","","$hov")]>
-<[BINDALL(SUPER_CONTROL_COMMANDS,"Mod4+control","","","$hov")]>
-<[BINDALL(SUPER_CONTROL_COMMANDS_RSB,"Mod4+control","$refresh_status_bar","","$hov")]>
+<[BINDBLOCKS(TOP_COMMANDS,"$hov")]>
+<[BINDBLOCKS(ALT_COMMANDS_RSB,"$hov",modifier="Mod1",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$hov",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$hov",modifier="Mod4",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$hov",modifier="Mod4+control")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$hov",modifier="Mod4+control",postfix="$refresh_status_bar")]>
  
  # # # # # # UNUSED KEYS # # # # # #
 
@@ -638,14 +658,14 @@ SUPER_CONTROL_COMMANDS_RSB = {
  # # # # # # # # # # # # # # # POWEROFF-MODE # # # # # # # # # # # # # # # # # #
 
 <[BEGIN_MODE("$pow")]>
-<[BINDALL({"options":[
+<[BINDBLOCKS({"options":[
     ("XF86PowerOff","$exec $alert $pow"),
     ("q","$exec poweroff"),
     ("r","$exec reboot"),
     ("e","$exec exit")
-]},"","","","$pow")]>
-<[BIND_TO_MODE(('"Super_L"',""),"$pow","$sup")]>
-<[BINDALL_TO_MODE({"exit to write mode":[
+]},"$pow")]>
+<[BIND(('"Super_L"',""),"$pow","$sup")]>
+<[BINDBLOCKS({"exit to write mode":[
     ("Escape",""),
     ("'Alt_L'",""),
     ("space",""),
@@ -660,33 +680,9 @@ SUPER_CONTROL_COMMANDS_RSB = {
 <[END_MODE("$pow")]>
 
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # # #
-#begin python
 
-def MAKE_SUBMODE(mode_tag,OPTIONS):
-    string = ""
-    string += BEGIN_MODE(mode_tag)
-    string += OPTIONS
-    string += BIND_TO_MODE(("XF86PowerOff",""),"$red","$pow")
-    string += BIND_TO_MODE(('"Super_L"',""),"$red","$sup")
-    string += BINDALL_TO_MODE({"exit to write mode":[
-        ("Escape",""),
-        ("'Alt_L'",""),
-        ("space",""),
-        ("Delete",""),
-        ("BackSpace",""),
-        ("Return",""),
-        ("Tab",""),
-        ("$alt_gr",""),
-        ("--border button2","")
-    ]},"$red","$wrt")
-    string += BINDALL_TO_MODE(TOP_COMMANDS,"$red","$wrt")
-    string += END_MODE("$red")
-    return string
-
-#end python
- 
  # redshift
-<[MAKE_SUBMODE("$red",BINDALL({"options":[    
+<[MAKE_SUBMODE([    
     ("1","$exec redshift -P -O 2100K"),
     ("2","$exec redshift -P -O 2300K"),
     ("3","$exec redshift -P -O 2500K"),
@@ -698,16 +694,16 @@ def MAKE_SUBMODE(mode_tag,OPTIONS):
     ("9","$exec redshift -P -O 5000K"),
     ("0","$exec redshift -P -O 6500K"),
     ("plus","$exec redshift -O 6400K")
-]},"","","","$red"))]>
+],"$red")]>
 
  # start layout
-<[MAKE_SUBMODE("$str",BINDALL_TO_MODE({"options":[    
+<[MAKE_SUBMODE([    
     ("1",'$exec "$layout_1; $fill_1"'),
     ("2",'$exec "$layout_2; $fill_2"'),
-]},"$str","$wrt"))]>
+],"$str","$wrt")]>
 
  # configuration files launcher
-<[MAKE_SUBMODE("$cnf",BINDALL_TO_MODE({"options":[    
+<[MAKE_SUBMODE([    
     ("c","$exec emacs ~/.i3/config.py"),                                  
     ("i","$exec emacs ~/.gitignore"),
     ("a","$exec emacs /sudo::/usr/share/applications/"),
@@ -720,7 +716,7 @@ def MAKE_SUBMODE(mode_tag,OPTIONS):
     ("2","$exec emacs ~/.workspaces/$w2.json"),
     ("y","$exec emacs /sudo::/etc/yaourtrc"),
     ("r","$exec emacs ~/.config/redshift/redshift.conf")
-]},"$cnf","$wrt"))]>
+],"$cnf","$wrt")]>
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              STATUS-BAR                                     #
@@ -767,7 +763,7 @@ for_window [title="Steam"] split h
 
  # discord and skype
 assign [class="discord"] $w6
-assign [title=".*skype.*"] $w6
+assign [title="Skype"] $w6
 
  # texmaker
 assign [title="Texmaker"] $w7
