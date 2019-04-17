@@ -17,6 +17,7 @@ caps != ctrl?
 stamp fix
 oklò != wasd?
 back to 2keys-max principle?
+page up-down resize
 
 Emacs:
 M-x toggle-truncate-lines
@@ -25,3 +26,6 @@ indentation
 ctrl-del until line start
 goto line
 disable messages
+
+DAIS:
+17-21 Giugno

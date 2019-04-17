@@ -11,30 +11,33 @@ def SET(d):
     k.sort()
     for x in k:
         t = d[x]
-        string += "set {} {}\n".format(x,t[0])
+        string += " set {} {}\n".format(x,t[0])
     return string
 
-def BIND((x,y),current_mode,after_mode=None,modifier="",prefix="",postfix=""):
+def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix=""):
     if postfix != "" and y != "": y += "; " + postfix
     if postfix != "" and y == "": y += postfix
     if prefix != "" and y != "": y = prefix + " " + y
     if prefix != "" and y == "": y = prefix
     if modifier != "": x = modifier + "+" + x
-    if current_mode in USED_KEYS:
-        if "Shift" in x: USED_KEYS[current_mode].extend(['"Shift_L"','"Shift_R"'])
-        if "control" in x : USED_KEYS[current_mode].extend(['"Control_L"','"Control_R"'])
+    if current_mode:
         USED_KEYS[current_mode].append(x)
+        #if "Shift" in x and not any([x for x in ['"Shift_L"','"Shift_R"'] if x in USED]):
+        #    USED_KEYS[current_mode].extend(['"Shift_L"','"Shift_R"'])
+        #if "control" in x and not any([x for x in ['"Control_L"','"Control_R"'] if x in USED]):
+        #    USED_KEYS[current_mode].extend(['"Control_L"','"Control_R"'])
     if after_mode:
-        n, p, q, exit = ALLMODES[current_mode]
-        name, pre, post, e = ALLMODES[after_mode]
-        if exit != "": post += "; " + exit
+        name, pre, post, _ = ALLMODES[after_mode]
         if post != "" and y != "": y += "; " + post
         if post != "" and y == "": y += post
         if pre != "" and y != "": y = pre + " " + y
         if pre != "" and y == "": y = pre
-    return "bindsym {} {}\n".format(x,y)
+        if current_mode:
+            _, _, _, exit = ALLMODES[current_mode]
+            if exit != "": y += "; " + exit
+    return " bindsym {} {}\n".format(x,y)
 
-def BINDBLOCKS(blocks,current_mode,after_mode=None,modifier="",prefix="",postfix=""):
+def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",postfix=""):
     string = ""
     for name in blocks:
         string += " # {}\n".format(name)
@@ -47,33 +50,35 @@ def BINDBLOCKS(blocks,current_mode,after_mode=None,modifier="",prefix="",postfix
         string += "\n"
     return string
 
-def BEGIN_MODE(mode_tag):
-    USED_KEYS[mode_tag] = []
-    return "mode "+mode_tag+" {"
-
-def END_MODE(mode_tag):
-    USED = USED_KEYS[mode_tag]
+def LOCK(mode,free_keys=[]):
+    F = USED_KEYS[mode] + free_keys 
     string = "";
-    U = [(x,"nop") for x in KEYS if x not in USED]
-    if len(U) :
-        string += BINDBLOCKS({"unused keys":U},mode_tag)
-    if any([x for x in ['"Shift_L"','"Shift_R"'] if x in USED]):
-        U = [(x,"nop") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in USED]
-        string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U},mode_tag)
-    if any([x for x in ['"Control_L"','"Control_R"'] if x in USED]):
-        U = [(x,"nop") for x in ['control+'+y for y in KEYS] if x not in USED]
-        string += BINDBLOCKS({"also control+ (since control is not locked)":U},mode_tag)
-    return string + "\n}"
+    U = [(x,"nop") for x in KEYS if x not in F]
+    string += BINDBLOCKS({"unused keys":U})
+    return string
 
-def MAKE_SUBMODE(options,mode_tag,after_mode=None):
-    string = ""
-    string += BEGIN_MODE(mode_tag)
+def LOCK_SHIFT(mode,free_keys=[]):
+    F = USED_KEYS[mode] + ['Shift'+y for y in free_keys] 
+    string = "";
+    U = [(x,"nop") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in F]
+    string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U})
+    return string
+
+def LOCK_CONTROL(mode,free_keys=[]):
+    F = USED_KEYS[mode] + ['control'+y for y in free_keys] 
+    string = "";
+    U = [(x,"nop") for x in ['control+'+y for y in KEYS] if x not in F]
+    string += BINDBLOCKS({"also control+ (since control is not locked)":U})
+    return string    
+        
+def MAKE_SUBMODE(options,mode_tag,after_mode=None,free_keys=[]):
+    string = " mode "+mode_tag+" {\n"
     string += BINDBLOCKS({"options":options},mode_tag,after_mode)
     string += BIND(("XF86PowerOff",""),mode_tag,"$pow")
     string += BIND(('"Super_L"',""),mode_tag,"$sup")
     string += BINDBLOCKS({"exit to write mode":[
         ("Escape",""),
-        ("'Alt_L'",""),
+        ('"Alt_L"',""),
         ("space",""),
         ("Delete",""),
         ("BackSpace",""),
@@ -83,7 +88,8 @@ def MAKE_SUBMODE(options,mode_tag,after_mode=None):
         ("--border button2","")
     ]},"$red","$wrt")
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag,"$wrt")
-    string += END_MODE(mode_tag)
+    string += LOCK(mode_tag,free_keys=[])
+    string += " }"
     return string
 
 USED_KEYS ={}
@@ -101,7 +107,7 @@ KEYS = [
 '8',
 '9',
 '0',
-'aphostrophe',
+'"aphostrophe"',
 'igrave',
 'BackSpace',
 'Tab',
@@ -213,45 +219,52 @@ SHIFT_KEYS = [
  #                               SETTINGS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
- # This font is widely installed, provides lots of unicode glyphs, right-to-left
- # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
-
- # Use Mouse+Mod1 to drag floating windows to their wanted position
-floating_modifier Mod1
-
- # no title-bars nor border
-new_window pixel 0
-
- # no floating border
-new_float pixel 0
+ # i3 config file (v4)
+ # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+ 
+ # Set mod key (Mod1=<Alt>, Mod4=<Super>)
+ set $mod Mod4
+ 
+ # set default desktop layout (default is tiling)
+ # workspace_layout tabbed <stacking|tabbed>
+ 
+ # Configure border style <normal|1pixel|pixel xx|none|pixel>
+ new_window pixel 0
+ new_float normal
+ 
+ # Hide borders
+ hide_edge_borders none
+ 
+ # Font for window titles. Will also be used by the bar unless a different font
+ # is used in the bar {} block below.
+ font pango:DejaVu Sans Mono 8
 
  # go back to previous workspace if you try to go to the current one
  # (allow for fast window movement to a workspace and back)
-workspace_auto_back_and_forth yes
+ workspace_auto_back_and_forth yes
 
- # focus on mouse (is a pain if you happen to have a mouse)
-focus_follows_mouse no
+ # focus on mouseover (is a pain if you happen to have a mouse)
+ focus_follows_mouse no
 
  # I like the original snake better
-focus_wrapping no
+ focus_wrapping no
 
  # smart|ignore|leave_fullscreen
-popup_during_fullscreen leave_fullscreen
+ popup_during_fullscreen leave_fullscreen
 
  # smart|urgent|focus|none
-focus_on_window_activation none
+ focus_on_window_activation none
 
  # # # # # # # # # # # # # # # # # COLORS  # # # # # # # # # # # # # # # # # # #
 
  # class                 border  backgr. text    ind.    child
-client.focused          #4CC97E #4CC97E #ffffff #4CC97E #4CC97E
-client.focused_inactive #222222 #222222 #ffffff #222222 #222222
-client.unfocused        #222222 #222222 #888888 #222222 #222222
-client.urgent           #222222 #900000 #ffffff #900000 #900000
-client.placeholder      #000000 #222222 #ffffff #000000 #222222
+ client.focused          #4CC97E #4CC97E #ffffff #4CC97E #4CC97E
+ client.focused_inactive #222222 #222222 #ffffff #222222 #222222
+ client.unfocused        #222222 #222222 #888888 #222222 #222222
+ client.urgent           #222222 #900000 #ffffff #900000 #900000
+ client.placeholder      #000000 #222222 #ffffff #000000 #222222
 
-client.background       #222222
+ client.background       #222222
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              DEFINITIONS                                    #
@@ -262,47 +275,47 @@ client.background       #222222
  # installed.
  # Since it's slow as **** someone made a fast one:
  # https://github.com/matteoalessiocarrara/k5-dmenu-desktop
-set $dmenu i3-dmenu-desktop   # ~/k5-dmenu-desktop
+ set $dmenu i3-dmenu-desktop   # ~/k5-dmenu-desktop
 
  # file manager
-set $fm nautilus -w
+ set $fm nautilus -w
 
  # for brevity
-set $exec exec --no-startup-id
-set $exec_always exec_always --no-startup-id
-set $alert notify-send --expire-time=1200
-set $refresh_status_bar exec killall -USR1 i3status
-set $focus_all focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
-set $focus_one focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
-set $no_border [tiling] border none
-set $border [tiling] border pixel 5
-set $alt_gr "ISO_Level3_Shift"
+ set $exec exec --no-startup-id
+ set $exec_always exec_always --no-startup-id
+ set $alert notify-send --expire-time=1200
+ set $refresh_status_bar exec killall -USR1 i3status
+ set $focus_all focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
+ set $focus_one focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
+ set $no_border [tiling] border none
+ set $border [tiling] border pixel 5
+ set $alt_gr "ISO_Level3_Shift"
 
  # # # # # # # # # # # # # # # # KEYBINDINGS # # # # # # # # # # # # # # # # # #
 
-set $disable_Caps setxkbmap -option ctrl:nocaps
-set  $enable_Caps setxkbmap -option
-set $disable_hover_mode ~/.bin/hover.sh 0
-set  $enable_hover_mode ~/.bin/hover.sh 1
+ set $disable_Caps setxkbmap -option ctrl:nocaps
+ set $enable_Caps setxkbmap -option
+ set $disable_hover_mode ~/.bin/hover.sh 0
+ set $enable_hover_mode ~/.bin/hover.sh 1
 
  # # # # # # # # # # # # # # # FUNCTIONALITIES # # # # # # # # # # # # # # # # #
 
  # touchpad toggle
-set $touchpad_on ~/.bin/touchpad_toggle.sh 1 & xdotool mousemove  750  350
-set $touchpad_off ~/.bin/touchpad_toggle.sh 0 & xdotool mousemove 2500 1200
-set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
-set $touchpad_toggle ~/.bin/touchpad_toggle.sh
+ set $touchpad_on ~/.bin/touchpad_toggle.sh 1 & xdotool mousemove  750  350
+ set $touchpad_off ~/.bin/touchpad_toggle.sh 0 & xdotool mousemove 2500 1200
+ set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
+ set $touchpad_toggle ~/.bin/touchpad_toggle.sh
 
  # autoscroll
-set $disable_autoscroll ~/.bin/autoscroll.sh 0
-set  $enable_autoscroll ~/.bin/autoscroll.sh 1
+ set $disable_autoscroll ~/.bin/autoscroll.sh 0
+ set $enable_autoscroll ~/.bin/autoscroll.sh 1
 
- # screenshot
-set $stamp "import ~/Pictures/latest-screenshot.png; xdg-open ~/Pictures/latest-screenshot.png"
-
+ # screenshot (-w -> window, -s -> mouse selection)
+ set $stamp exec --no-startup-id i3-scrot
+ 
  # brightness
-set $brightness_up exec "xbacklight -inc 5; notify-send 'brightness up'"
-set $brightness_down exec "xbacklight -dec 5; notify-send 'brightness down'"
+ set $brightness_up exec "xbacklight -inc 5; notify-send 'brightness up'"
+ set $brightness_down exec "xbacklight -dec 5; notify-send 'brightness down'"
 
  # # # # # # # # # # # # # # # # WORKSPACES # # # # # # # # # # # # # # # # # # #
 #begin python
@@ -333,12 +346,12 @@ ALLWORKSPACES = merge(WORKSPACES,CUT_WORKSPACE)
 
  # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # #
 
-set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
-set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
+ set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
+ set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
-set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.75; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
+ set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.75; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
  # set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
-set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://observablehq.com/@kappanneo & gnome-terminal
+ set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-window --profile-directory=Default https://observablehq.com/@kappanneo & gnome-terminal
 
  # # # # # # # # # # # # # # # # # MODES # # # # # # # # # # # # # # # # # # # # #
 #begin python
@@ -346,9 +359,9 @@ set $fill_2 nautilus -w & nautilus -w Downloads & emacs ~/memo & chromium --new-
 MODES = {
 
 "$pow": # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
-    ('"POWER: [q]uit  [r]estart  [s]uspend  [e]xit  [esc]"',
+    ('"POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"',
      "$no_border mode $pow",
-     "$exec $alert $pow; fullscreen disable",
+     "$exec $alert $pow, fullscreen disable",
      ""),
 
 "$wrt":
@@ -358,13 +371,13 @@ MODES = {
      ""),
 
 "$hov":
-    ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] exit mode"',
+    ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [backspace|esc] exit mode"',
      "$no_border mode $hov",
      "$exec $alert $how & $touchpad_on & $enable_hover_mode",
      "$exec $disable_hover_mode"),
 
 "$sup":
-    ('"SUPER: [wasd|oklò] select  [shift] move  [123] workspace  [space|esc] exit mode"',
+    ('"SUPER: [oklò] select [+shift] move  [123] workspace [+control] move  [space] hover mode  [backspace] write mode"',
      "$border mode $sup",
      "$exec $alert $sup",
      "")
@@ -391,11 +404,13 @@ SUBMODES = {
      "")
 }
 
-CURRENT_MODE = "$wrt"
 ALLMODES = merge(MODES,SUBMODES)
+for x in ALLMODES.keys():
+    USED_KEYS[x] = []
+
 #end python
 
-set $def "default"
+ set $def "default"
 <[SET(MODES)]>
 
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # #
@@ -404,7 +419,7 @@ set $def "default"
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
-for_window [class="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $wrt
+ for_window [class="."] floating disable split toggle; mode $def $no_border; fullscreen disable; $exec $disable_hover_mode & $alert $wrt
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
@@ -423,7 +438,7 @@ TOP_COMMANDS={
 
 "screenshot":
     ("--release Print","$exec $stamp"),
-
+    
 "display": #TODO
     ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred")
 
@@ -452,11 +467,10 @@ ALT_COMMANDS_RSB={
 
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 #begin python
-
 SUPER_COMMANDS = {
 
 "open terminal":
-    ("Return","$exec gnome-terminal"),
+    ("Return","exec gnome-terminal"),
 
 "open emacs":
     ("e","exec emacs"),
@@ -471,9 +485,9 @@ SUPER_COMMANDS = {
     ("Shift+f",'$exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"')
 ],
 
-"split":[
-    ("v","split v"),
-    ("h","split h"),
+"split orientation":[
+    ("v","split v; exec notify-send 'vertical'"),
+    ("h","split h; exec notify-send 'horizontal'"),
     ("g","split v; focus parent; layout toggle split; focus child"),
 ],
     
@@ -501,8 +515,8 @@ SUPER_CONTROL_COMMANDS = {
     ("e","$exec dmenu_run"),
 
 "files":[
-    ("f","$exec $fm"),
-    ("j","$exec $fm Downloads")
+    ("f","exec $fm"),
+    ("j","exec $fm Downloads")
 ],
 
 "resize (scale)":[
@@ -530,12 +544,12 @@ SUPER_CONTROL_COMMANDS_RSB = {
 
 "paste":
     ("v","$exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'")
-}    
+}
 
 ARROWS = {
-"arrows":["Up","Left","Down","Right"],
+"default":["Up","Left","Down","Right"],
 "oklò":["o","k","l","ograve"],
-"wasd":["w","a","s","d"]
+#"wasd":["w","a","s","d"]
 }
 
 DIRECTIONS = ["up","left","down","right"]
@@ -587,18 +601,42 @@ for i in K:
 <[BIND(("Mod4+z",            ""),"$wrt","$str")]>
 <[BIND(("Mod4+c",            ""),"$wrt","$cnf")]>
 
+ # # # # # # # # # # # # # # # POWEROFF-MODE # # # # # # # # # # # # # # # # # #
+
+ mode $pow {
+<[BINDBLOCKS({"options":[
+    ("XF86PowerOff","$exec $alert $pow"),
+    ("q","$exec poweroff"),
+    ("r","$exec systemctl reboot"),
+    ("s","$exec systemctl suspend"),
+    ("h","$exec systemctl hibernate")
+]},"$pow","$wrt")]>
+<[BINDBLOCKS({"exit to write mode":[
+    ("Escape",""),
+    ('"Alt_L"',""),
+    ("space",""),
+    ("Delete",""),
+    ("BackSpace",""),
+    ("Return",""),
+    ("Tab",""),
+    ("$alt_gr",""),
+    ("--border button2",""),
+]},"$pow","$wrt")]>
+<[BIND(('"Super_L"',""),"$pow","$sup")]>
+<[LOCK("$pow")]>
+ }
+
  # # # # # # # # # # # # # # # # #SUPER-MODE # # # # # # # # # # # # # # # # # #
 
-<[BEGIN_MODE("$sup")]>
-
+ mode $sup {
+ 
  # # # # # # # MODES # # # # # # #
 
 <[BIND(("XF86PowerOff",""),"$sup","$pow")]>
 <[BINDBLOCKS({"exit to write mode":[
     ("Escape",""),
-    ("Super_L",""),
-    ("'Alt_L'",""),
-    ("space",""),
+    #("Super_L",""),
+    ('"Alt_L"',""),
     ("Delete",""),
     ("BackSpace",""),
     ("Return",""),
@@ -608,10 +646,11 @@ for i in K:
     ("Menu","$exec $dmenu"),
     ("--border button2","")
 ]},"$sup","$wrt")]>
+<[BIND(("space",""),"$sup","$hov")]>
 <[BIND(("r",""),"$sup","$red")]>
 <[BIND(("z",""),"$sup","$str")]>
 <[BIND(("c",""),"$sup","$cnf")]>
-
+     
  # # # # # # COMMANDS # # # # # #
 
 <[BINDBLOCKS(TOP_COMMANDS,"$sup")]>
@@ -620,12 +659,19 @@ for i in K:
 <[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")]>
-         
-<[END_MODE("$sup")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$sup",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",modifier="Mod4",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control+Mod4")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control+Mod4",postfix="$refresh_status_bar")]>
+           
+<[LOCK("$sup")]>
+<[LOCK_SHIFT("$sup")]>
+<[LOCK_CONTROL("$sup")]>
+ }
 
  # # # # # # # # # # # # # # # # HOVER-MODE # # # # # # # # # # # # # # # # # # #
 
-<[BEGIN_MODE("$hov")]>
+ mode $hov {
 
  # # # # # # # # MODES # # # # # # #
 
@@ -638,6 +684,7 @@ for i in K:
     ("Mod4+Menu","$exec $dmenu"),
     ("--border button2","")
 ]},"$hov","$wrt")]>
+<[BIND(('--release "Super_L"',""),"$hov","$sup")]>
 <[BIND(("Mod4+r",""),"$hov","$red")]>
 <[BIND(("Mod4+z",""),"$hov","$str")]>
 <[BIND(("Mod4+c",""),"$hov","$cnf")]>
@@ -653,32 +700,10 @@ for i in K:
  
  # # # # # # UNUSED KEYS # # # # # #
 
-<[END_MODE("$hov")]>
- 
- # # # # # # # # # # # # # # # POWEROFF-MODE # # # # # # # # # # # # # # # # # #
-
-<[BEGIN_MODE("$pow")]>
-<[BINDBLOCKS({"options":[
-    ("XF86PowerOff","$exec $alert $pow"),
-    ("q","$exec poweroff"),
-    ("r","$exec reboot"),
-    ("e","$exec exit")
-]},"$pow")]>
-<[BIND(('"Super_L"',""),"$pow","$sup")]>
-<[BINDBLOCKS({"exit to write mode":[
-    ("Escape",""),
-    ("'Alt_L'",""),
-    ("space",""),
-    ("Delete",""),
-    ("BackSpace",""),
-    ("Return",""),
-    ("Tab",""),
-    ("$alt_gr",""),
-    ("--border button2",""),
-    ("s","mode $def $exec systemctl suspend")
-]},"$pow","$wrt")]>
-<[END_MODE("$pow")]>
-
+<[LOCK("$hov",ARROWS["default"]+['"Alt_L"','"Control_L"','"Shift_L"'])]>
+<[LOCK_SHIFT("$hov",ARROWS["default"])]>
+ }
+     
  # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # # #
 
  # redshift
@@ -723,7 +748,7 @@ for i in K:
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
-bar {
+ bar {
         status_command    ./.bin/my_status.sh
         position          bottom
         mode              dock
@@ -737,68 +762,71 @@ bar {
                    urgent_workspace   #ffffff #000000
                }
 
-        # disable scrolling on status bar
- #       bindsym button4 nop # scroll wheel up
- #       bindsym button5 nop # scroll wheel down
-        # mid-mouse click to lock
- #       bindsym button2 mode $def $no_border $exec $alert $wrt & $touchpad_off_2 & $disable_hover_mode
-    }
+     # disable scrolling on status bar
+        bindsym button4 nop # scroll wheel up
+        bindsym button5 nop # scroll wheel down
+ }
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              APPLICATIONS                                   #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # code
-assign [class=".*code.*"] $w3
+ assign [class=".*code.*"] $w3
 
  # android studio
-assign [class="jetbrains-studio"] $w3
+ assign [class="jetbrains-studio"] $w3
 
  # steam
-assign [class="Steam"] $w5
-assign [class="Wine"] $w5
-for_window [title="Steam - News"] kill
-for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
-for_window [title="Steam"] split h
+ assign [class="Steam"] $w5
+ assign [class="Wine"] $w5
+ for_window [title="Steam - News"] kill
+ for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
+ for_window [title="Steam"] split h
 
  # discord and skype
-assign [class="discord"] $w6
-assign [title="Skype"] $w6
+ assign [class="discord"] $w6
+ assign [title="Skype"] $w6
 
  # texmaker
-assign [title="Texmaker"] $w7
-assign [title=".*overleaf.*"] $w7
+ assign [title="Texmaker"] $w7
+ assign [title=".*overleaf.*"] $w7
 
  # gimp
-assign [class="Gimp.*"] $w9
+ assign [class="Gimp.*"] $w9
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                STARTUP                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # keybinding (order matters)
-$exec $disable_Caps
+ $exec $disable_Caps
 
  # autoscroll (not always permanent, may need reaload)
-$exec_always $enable_autoscroll
+ $exec_always $enable_autoscroll
 
  # background (not always permanent)
-$exec_always nitrogen --restore
-
- # bar applications
-$exec nm-applet
-$exec pamac-tray
-$exec pa-applet
-$exec clipit
+ $exec_always nitrogen --restore
+ $exec_always ff-theme-util
+ $exec_always fix_xcursor
 
  # background applications
-$exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+ $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+ $exec nitrogen --restore; sleep 1; compton -b
+ $exec xfce4-power-manager
+ $exec start_conky_maja
+
+ # bar applications
+ $exec nm-applet
+ $exec pamac-tray
+ $exec pa-applet
+ $exec clipit
 
  # reshift oneshot mode (to set starting temperature according to time)
-$exec redshift -o
+ $exec redshift -o
 
  # layout
-$exec $layout_2; $fill_2
+ $exec $layout_2; $fill_2
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  FIN                                        #
