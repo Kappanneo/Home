@@ -145,7 +145,7 @@
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
- for_window [class="."] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $alert $hov
+ for_window [class=".?" title=".?"] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $alert $hov
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
@@ -179,6 +179,13 @@
 
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $exec $dmenu
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $exec dmenu_run
+
+
  # default move
  bindsym Mod4+Shift+Up move up
  bindsym Mod4+Shift+Left move left
@@ -206,18 +213,19 @@
  bindsym Mod4+Return exec gnome-terminal
 
  # resize window
- bindsym Mod4+m resize shrink height 5 px or 1 ppt
- bindsym Mod4+p resize  grow  height 5 px or 1 ppt
- bindsym Mod4+Shift+m resize shrink width  5 px or 1 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 1 ppt
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+j resize shrink width  5 px or 5 ppt
+ bindsym Mod4+agrave resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+Shift+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+Shift+j resize shrink width  1 px or 1 ppt
+ bindsym Mod4+Shift+agrave resize  grow  width  1 px or 1 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $dmenu
 
  # wasd move
  bindsym Mod4+Shift+w move up
@@ -279,14 +287,13 @@
  bindsym Mod4+control+r $no_border restart
 
  # resize (scale)
- bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
- bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
-
- # start dmenu for commands
- bindsym Mod4+control+e $exec dmenu_run
 
 
  # cut
@@ -339,6 +346,7 @@
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt
  bindsym "Alt_L" $no_border mode $def $exec $alert $wrt
  bindsym --border button2 $no_border mode $def $exec $alert $wrt
+ bindsym control+z $no_border mode $def $exec $alert $wrt
 
 
  bindsym "Super_L" $border mode $sup $exec $alert $sup, $focus_one fullscreen disable
@@ -419,6 +427,7 @@
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt; $exec $touchpad_off
  bindsym "Alt_L" $no_border mode $def $exec $alert $wrt; $exec $touchpad_off
  bindsym --border button2 $no_border mode $def $exec $alert $wrt; $exec $touchpad_off
+ bindsym control+z $no_border mode $def $exec $alert $wrt; $exec $touchpad_off
 
 
  bindsym "Super_L" $border mode $sup $exec $alert $sup, $focus_one fullscreen disable; $exec $touchpad_off
@@ -505,7 +514,9 @@
  bindsym Return $no_border mode $def $exec $alert $wrt
  bindsym Tab $no_border mode $def $exec $alert $wrt
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt
+ bindsym "Alt_L" $no_border mode $def $exec $alert $wrt
  bindsym --border button2 $no_border mode $def $exec $alert $wrt
+ bindsym control+z $no_border mode $def $exec $alert $wrt
 
 
  bindsym Menu $no_border mode $hov $exec $alert $how & $enable_hover_mode
@@ -528,10 +539,6 @@
     
  # # # # # # COMMANDS # # # # # #
 
- bindsym control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
-
- bindsym Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
-
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
@@ -544,14 +551,6 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
-
- # browse workspaces
- bindsym Mod1+Tab workspace next; $refresh_status_bar
- bindsym Mod1+Shift+Tab workspace prev; $refresh_status_bar
-
- # kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
 
  # default move
@@ -581,24 +580,87 @@
  bindsym Return exec gnome-terminal
 
  # resize window
- bindsym m resize shrink height 5 px or 1 ppt
- bindsym p resize  grow  height 5 px or 1 ppt
- bindsym Shift+m resize shrink width  5 px or 1 ppt
- bindsym Shift+p resize  grow  width  5 px or 1 ppt
+ bindsym i resize shrink height 5 px or 5 ppt
+ bindsym p resize  grow  height 5 px or 5 ppt
+ bindsym j resize shrink width  5 px or 5 ppt
+ bindsym agrave resize  grow  width  5 px or 5 ppt
+ bindsym Shift+i resize shrink height 1 px or 1 ppt
+ bindsym Shift+p resize  grow  height 1 px or 1 ppt
+ bindsym Shift+j resize shrink width  1 px or 1 ppt
+ bindsym Shift+agrave resize  grow  width  1 px or 1 ppt
 
  # split orientation
  bindsym v split v; exec notify-send 'vertical'
  bindsym h split h; exec notify-send 'horizontal'
  bindsym g split v; focus parent; layout toggle split; focus child
 
- # start dmenu for applications
- bindsym Shift+exclam $exec $dmenu
-
  # wasd move
  bindsym Shift+w move up
  bindsym Shift+a move left
  bindsym Shift+s move down
  bindsym Shift+d move right
+
+
+ # default move
+ bindsym Mod4+Shift+Up move up
+ bindsym Mod4+Shift+Left move left
+ bindsym Mod4+Shift+Down move down
+ bindsym Mod4+Shift+Right move right
+
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
+
+ # open emacs
+ bindsym Mod4+e exec emacs
+
+ # open terminal
+ bindsym Mod4+Return exec gnome-terminal
+
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+j resize shrink width  5 px or 5 ppt
+ bindsym Mod4+agrave resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+Shift+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+Shift+j resize shrink width  1 px or 1 ppt
+ bindsym Mod4+Shift+agrave resize  grow  width  1 px or 1 ppt
+
+ # split orientation
+ bindsym Mod4+v split v; exec notify-send 'vertical'
+ bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
+
+ # start dmenu for applications
+ bindsym Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+
+
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
 
 
  # default focus
@@ -654,14 +716,13 @@
  bindsym control+r $no_border restart
 
  # resize (scale)
- bindsym control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
- bindsym control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ bindsym control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
  bindsym control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
-
- # start dmenu for commands
- bindsym control+e $exec dmenu_run
 
 
  # cut
@@ -701,18 +762,19 @@
  bindsym Mod4+Return exec gnome-terminal
 
  # resize window
- bindsym Mod4+m resize shrink height 5 px or 1 ppt
- bindsym Mod4+p resize  grow  height 5 px or 1 ppt
- bindsym Mod4+Shift+m resize shrink width  5 px or 1 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 1 ppt
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+j resize shrink width  5 px or 5 ppt
+ bindsym Mod4+agrave resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+Shift+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+Shift+j resize shrink width  1 px or 1 ppt
+ bindsym Mod4+Shift+agrave resize  grow  width  1 px or 1 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $dmenu
 
  # wasd move
  bindsym Mod4+Shift+w move up
@@ -774,14 +836,13 @@
  bindsym control+Mod4+r $no_border restart
 
  # resize (scale)
- bindsym control+Mod4+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
- bindsym control+Mod4+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ bindsym control+Mod4+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym control+Mod4+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym control+Mod4+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym control+Mod4+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
  bindsym control+Mod4+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
-
- # start dmenu for commands
- bindsym control+Mod4+e $exec dmenu_run
 
 
  # cut
@@ -804,23 +865,20 @@
  bindsym t nop
  bindsym y nop
  bindsym u nop
- bindsym i nop
  bindsym egrave nop
  bindsym plus nop
  bindsym "Caps_Lock" nop
- bindsym j nop
- bindsym agrave nop
  bindsym ugrave nop
  bindsym "Shift_L" nop
  bindsym b nop
  bindsym n nop
+ bindsym m nop
  bindsym comma nop
  bindsym period nop
  bindsym minus nop
  bindsym "Shift_R" nop
  bindsym "Control_L" nop
  bindsym "Super_L" nop
- bindsym "Alt_L" nop
  bindsym "Control_R" nop
 
 
@@ -843,12 +901,10 @@
  bindsym Shift+t nop
  bindsym Shift+y nop
  bindsym Shift+u nop
- bindsym Shift+i nop
  bindsym Shift+eacute nop
  bindsym Shift+asterisk nop
  bindsym Shift+g nop
  bindsym Shift+h nop
- bindsym Shift+j nop
  bindsym Shift+ccedilla nop
  bindsym Shift+degree nop
  bindsym Shift+section nop
@@ -858,6 +914,7 @@
  bindsym Shift+v nop
  bindsym Shift+b nop
  bindsym Shift+n nop
+ bindsym Shift+m nop
  bindsym Shift+semicolon nop
  bindsym Shift+colon nop
  bindsym Shift+underscore nop
@@ -891,7 +948,6 @@
  bindsym control+ugrave nop
  bindsym control+"Shift_L" nop
  bindsym control+less nop
- bindsym control+z nop
  bindsym control+c nop
  bindsym control+b nop
  bindsym control+n nop
@@ -930,6 +986,7 @@
  bindsym Tab $no_border mode $def $exec $alert $wrt; $exec $disable_hover_mode
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt; $exec $disable_hover_mode
  bindsym --border button2 $no_border mode $def $exec $alert $wrt; $exec $disable_hover_mode
+ bindsym control+z $no_border mode $def $exec $alert $wrt; $exec $disable_hover_mode
 
 
  bindsym --release "Super_L" $border mode $sup $exec $alert $sup, $focus_one fullscreen disable; $exec $disable_hover_mode
@@ -946,10 +1003,6 @@
  # # # # # # # COMMANDS # # # # # #
 
 
- bindsym control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt; $exec $disable_hover_mode
-
- bindsym Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt; $exec $disable_hover_mode
- 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
@@ -970,6 +1023,13 @@
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
+
+
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt; $exec $disable_hover_mode
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt; $exec $disable_hover_mode
 
 
  # default move
@@ -999,18 +1059,19 @@
  bindsym Mod4+Return exec gnome-terminal
 
  # resize window
- bindsym Mod4+m resize shrink height 5 px or 1 ppt
- bindsym Mod4+p resize  grow  height 5 px or 1 ppt
- bindsym Mod4+Shift+m resize shrink width  5 px or 1 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 1 ppt
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+j resize shrink width  5 px or 5 ppt
+ bindsym Mod4+agrave resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+Shift+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+Shift+j resize shrink width  1 px or 1 ppt
+ bindsym Mod4+Shift+agrave resize  grow  width  1 px or 1 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $dmenu
 
  # wasd move
  bindsym Mod4+Shift+w move up
@@ -1072,14 +1133,13 @@
  bindsym Mod4+control+r $no_border restart
 
  # resize (scale)
- bindsym Mod4+control+minus resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt
- bindsym Mod4+control+plus resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt
+ bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacs ~/.workspaces/stamp.json"
-
- # start dmenu for commands
- bindsym Mod4+control+e $exec dmenu_run
 
 
  # cut
@@ -1152,6 +1212,7 @@
 
  # also Shift+ (since Shift is not locked)
  bindsym Shift+bar nop
+ bindsym Shift+exclam nop
  bindsym Shift+quotedbl nop
  bindsym Shift+sterling nop
  bindsym Shift+dollar nop
@@ -1230,6 +1291,7 @@
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt
  bindsym "Alt_L" $no_border mode $def $exec $alert $wrt
  bindsym --border button2 $no_border mode $def $exec $alert $wrt
+ bindsym control+z $no_border mode $def $exec $alert $wrt
 
  # display
  bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
@@ -1312,6 +1374,7 @@
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt
  bindsym "Alt_L" $no_border mode $def $exec $alert $wrt
  bindsym --border button2 $no_border mode $def $exec $alert $wrt
+ bindsym control+z $no_border mode $def $exec $alert $wrt
 
  # display
  bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
@@ -1412,6 +1475,7 @@
  bindsym $alt_gr $no_border mode $def $exec $alert $wrt
  bindsym "Alt_L" $no_border mode $def $exec $alert $wrt
  bindsym --border button2 $no_border mode $def $exec $alert $wrt
+ bindsym control+z $no_border mode $def $exec $alert $wrt
 
  # display
  bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
@@ -1565,3 +1629,4 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  FIN                                        #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ 

@@ -94,7 +94,8 @@ DEFAULT_EXIT_KEYS = [
 "Tab",             
 "$alt_gr",
 '"Alt_L"',
-"--border button2"
+"--border button2",
+"control+z",
 ]
 
 KEYS = [
@@ -428,7 +429,7 @@ for x in ALLMODES.keys():
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
- for_window [class="."] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $alert $hov
+ for_window [class=".?" title=".?"] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $alert $hov
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
@@ -484,9 +485,6 @@ SUPER_COMMANDS = {
 "open emacs":
     ("e","exec emacs"),
 
-"start dmenu for applications":
-    ("Shift+exclam","$exec $dmenu"),
-
 "fullscreen":[
     ("f","fullscreen toggle"),
     ("Shift+f",'$exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"')
@@ -504,10 +502,14 @@ SUPER_COMMANDS = {
 ],
 
 "resize window":[
-    ("m","resize shrink height 5 px or 1 ppt"),
-    ("p","resize  grow  height 5 px or 1 ppt"),
-    ("Shift+m","resize shrink width  5 px or 1 ppt"),
-    ("Shift+p","resize  grow  width  5 px or 1 ppt")
+    ("i","resize shrink height 5 px or 5 ppt"),
+    ("p","resize  grow  height 5 px or 5 ppt"),
+    ("j","resize shrink width  5 px or 5 ppt"),
+    ("agrave","resize  grow  width  5 px or 5 ppt"),
+    ("Shift+i","resize shrink height 1 px or 1 ppt"),
+    ("Shift+p","resize  grow  height 1 px or 1 ppt"),
+    ("Shift+j","resize shrink width  1 px or 1 ppt"),
+    ("Shift+agrave","resize  grow  width  1 px or 1 ppt"),
 ]}
 
 SUPER_CONTROL_COMMANDS = {
@@ -518,17 +520,9 @@ SUPER_CONTROL_COMMANDS = {
 "reload configuration":
     ("r","$no_border restart"),
 
-"start dmenu for commands":
-    ("e","$exec dmenu_run"),
-
 "files":[
     ("f","exec $fm"),
     ("j","exec $fm Downloads")
-],
-
-"resize (scale)":[
-    ("minus","resize shrink height 5 px or 1 ppt; resize shrink width  5 px or 1 ppt"),
-    ("plus","resize  grow  height 5 px or 1 ppt; resize  grow  width  5 px or 1 ppt")
 ],
 
 "save layout":
@@ -537,6 +531,13 @@ SUPER_CONTROL_COMMANDS = {
 "files":[
     ("f","$exec $fm"),
     ("j","$exec $fm Downloads")
+],
+
+    "resize (scale)":[
+    ("minus","resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt"),
+    ("plus","resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt"),
+    ("Shift+minus","resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt"),
+    ("Shift+plus","resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt"),
 ]}
 
 SUPER_COMMANDS_RSB = {}
@@ -591,8 +592,18 @@ for i in K:
         (y,"workspace {}".format(i))
     )
 
+DMENU_COMMANDS = {
+
+"start dmenu for applications":
+    ("Shift+exclam","$exec $dmenu"),
+
+"start dmenu for commands":
+    ("control+e","$exec dmenu_run"),
+
+}
 #end python
 
+<[BINDBLOCKS(DMENU_COMMANDS,"$wrt",modifier="Mod4")]>
 <[BINDBLOCKS(SUPER_COMMANDS,"$wrt",modifier="Mod4")]>
 <[BINDBLOCKS(SUPER_COMMANDS_RSB,"$wrt",modifier="Mod4",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$wrt",modifier="Mod4+control")]>
@@ -647,7 +658,7 @@ for i in K:
  # # # # # # # MODES # # # # # # #
 
 <[BIND(("XF86PowerOff",""),"$sup","$pow")]>
-<[BINDBLOCKS({"exit to write mode":[(x,"") for x in DEFAULT_EXIT_KEYS if x not in ['"Alt_L"']]},"$sup","$wrt")]>
+<[BINDBLOCKS({"exit to write mode":[(x,"") for x in DEFAULT_EXIT_KEYS]},"$sup","$wrt")]>
 <[BIND(("Menu",""),"$sup","$hov")]>
 <[BIND(("r",""),"$sup","$red")]>
 <[BIND(("z",""),"$sup","$str")]>
@@ -660,11 +671,11 @@ for i in K:
     
  # # # # # # COMMANDS # # # # # #
 
-<[BIND(("control+e","$exec dmenu_run"),"$sup","$wrt")]>
-<[BIND(("Shift+exclam","$exec $dmenu"),"$sup","$wrt")]>
 <[BINDBLOCKS(TOP_COMMANDS,"$sup")]>
-<[BINDBLOCKS(ALT_COMMANDS_RSB,"$sup",modifier="Mod1",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_COMMANDS,"$sup")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$sup",modifier="Mod4")]>
+<[BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt")]>
+<[BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt",modifier="Mod4")]>
 <[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")]>
@@ -695,10 +706,9 @@ for i in K:
  # # # # # # # COMMANDS # # # # # #
 
 
-<[BIND(("control+e","$exec dmenu_run"),"$hov","$wrt")]>
-<[BIND(("Shift+exclam","$exec $dmenu"),"$hov","$wrt")]> 
 <[BINDBLOCKS(TOP_COMMANDS,"$hov")]>
 <[BINDBLOCKS(ALT_COMMANDS_RSB,"$hov",modifier="Mod1",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(DMENU_COMMANDS,"$hov","$wrt",modifier="Mod4")]>
 <[BINDBLOCKS(SUPER_COMMANDS,"$hov",modifier="Mod4")]>
 <[BINDBLOCKS(SUPER_COMMANDS_RSB,"$hov",modifier="Mod4",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$hov",modifier="Mod4+control")]>
