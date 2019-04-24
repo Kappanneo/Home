@@ -18,6 +18,7 @@ stamp fix
 oklò != wasd?
 back to 2keys-max principle?
 page up-down resize
+alt -> hover
 
 Emacs:
 M-x toggle-truncate-lines

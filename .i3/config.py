@@ -69,7 +69,7 @@ def LOCK_SHIFT(mode,free_keys=[]):
 def LOCK_CONTROL(mode,free_keys=[]):
     F = USED_KEYS[mode] + ['control'+y for y in free_keys] 
     string = "";
-    U = [(x,"nop") for x in ['control+'+y for y in KEYS] if x not in F]
+    U = [(x,"nop") for x in ['control+'+y for y in KEYS if y not in ['"Control_L"','"Control_R"']] if x not in F]
     string += BINDBLOCKS({"also control+ (since control is not locked)":U})
     return string    
 
@@ -389,7 +389,7 @@ MODES = {
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
      "$no_border mode $hov",
-     "$exec $alert $how & $enable_hover_mode",
+     "$exec $alert $hov & $enable_hover_mode",
      "$exec $disable_hover_mode"),
 } 
 
@@ -429,7 +429,7 @@ for x in ALLMODES.keys():
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
- for_window [class=".?" title=".?"] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $alert $hov
+ for_window [class=".?" title=".?"] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $enable_hover_mode & $touchpad_disable $alert $hov
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
@@ -445,6 +445,9 @@ TOP_COMMANDS={
     ("XF86MonBrightnessUp","$exec $brightness_up"),
     ("XF86MonBrightnessDown","$exec $brightness_down")
 ],
+
+"screen poweroff":
+    ("XF86ScreenSaver","$exec xset dpms force off"),
 
 "screenshot":
     ("--release Print","$exec $stamp"),
@@ -473,7 +476,7 @@ ALT_COMMANDS_RSB={
 }
 #end python
 
-<[BINDBLOCKS(ALT_COMMANDS_RSB,"$wrt",modifier="Mod1",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(ALT_COMMANDS_RSB,"$wrt","$hov",modifier="Mod1",postfix="$refresh_status_bar")]>
 
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 #begin python
@@ -504,12 +507,14 @@ SUPER_COMMANDS = {
 "resize window":[
     ("i","resize shrink height 5 px or 5 ppt"),
     ("p","resize  grow  height 5 px or 5 ppt"),
-    ("j","resize shrink width  5 px or 5 ppt"),
-    ("agrave","resize  grow  width  5 px or 5 ppt"),
-    ("Shift+i","resize shrink height 1 px or 1 ppt"),
-    ("Shift+p","resize  grow  height 1 px or 1 ppt"),
-    ("Shift+j","resize shrink width  1 px or 1 ppt"),
-    ("Shift+agrave","resize  grow  width  1 px or 1 ppt"),
+    ("Shift+i","resize shrink width  5 px or 5 ppt"),
+    ("Shift+p","resize  grow  width  5 px or 5 ppt"),
+],
+
+"browse workspaces":[
+    ("j","workspace prev"),
+    ("agrave","workspace next"),
+    ("ugrave","workspace back_and_forth")
 ]}
 
 SUPER_CONTROL_COMMANDS = {
@@ -532,8 +537,15 @@ SUPER_CONTROL_COMMANDS = {
     ("f","$exec $fm"),
     ("j","$exec $fm Downloads")
 ],
-
-    "resize (scale)":[
+  
+"resize (precise)":[
+    ("i","resize shrink height 1 px or 1 ppt"),
+    ("p","resize  grow  height 1 px or 1 ppt"),
+    ("Shift+i","resize shrink width  1 px or 1 ppt"),
+    ("Shift+p","resize  grow  width  1 px or 1 ppt"),
+],
+    
+"resize (scale)":[
     ("minus","resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt"),
     ("plus","resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt"),
     ("Shift+minus","resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt"),
@@ -605,17 +617,18 @@ DMENU_COMMANDS = {
 
 <[BINDBLOCKS(DMENU_COMMANDS,"$wrt",modifier="Mod4")]>
 <[BINDBLOCKS(SUPER_COMMANDS,"$wrt",modifier="Mod4")]>
-<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$wrt",modifier="Mod4",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$wrt","$hov",modifier="Mod4",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$wrt",modifier="Mod4+control")]>
-<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$wrt",modifier="Mod4+control",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$wrt","$hov",modifier="Mod4+control",postfix="$refresh_status_bar")]>
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  MODES                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 <[BIND(("XF86PowerOff",""),"$wrt","$pow")]>
-<[BIND(("--release Super_L",""),"$wrt","$sup")]>
+<[BIND(('--release "Super_L"',""),"$wrt","$sup")]>
 <[BIND(("Menu",""),"$wrt","$hov")]>
+<[BIND(("Mod4+Menu",""),"$wrt","$hov")]>
 <[BIND(("Mod4+space",""),"$wrt","$tch")]>
 <[BIND(("Mod4+r",""),"$wrt","$red")]>
 <[BIND(("Mod4+z",""),"$wrt","$str")]>
@@ -644,10 +657,15 @@ DMENU_COMMANDS = {
 
 <[BIND(("XF86PowerOff",""),"$tch","$pow")]>
 <[BINDBLOCKS({"exit to write mode":[(x,"") for x in DEFAULT_EXIT_KEYS]},"$tch","$wrt")]>
-<[BIND(('"Super_L"',""),"$tch","$sup")]>
+<[BIND(('--release "Super_L"',""),"$tch","$sup")]>
 <[BIND(("Menu",""),"$tch","$hov")]>
-<[BIND(("Mod4+Menu",""),"$tch","$hov")]>
 <[LOCK("$tch")]>     
+
+<[BINDBLOCKS(DMENU_COMMANDS,"$tch","$wrt",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$tch",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$tch","$hov",modifier="Mod4",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$tch",modifier="Mod4+control")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$tch","$hov",modifier="Mod4+control",postfix="$refresh_status_bar")]>
 
  }
  
@@ -666,27 +684,34 @@ DMENU_COMMANDS = {
 <[BIND(("Mod4+r",""),"$sup","$red")]>
 <[BIND(("Mod4+z",""),"$sup","$str")]>
 <[BIND(("Mod4+c",""),"$sup","$cnf")]>
-<[BIND(("Mod4+space",""),"$sup","$tch")]>
-     
-    
+<[BIND(("Mod4+space",""),"$sup","$tch")]>     
+<[BIND(("Mod4+Menu",""),"$sup","$hov")]>
+
  # # # # # # COMMANDS # # # # # #
 
-<[BINDBLOCKS(TOP_COMMANDS,"$sup")]>
-<[BINDBLOCKS(SUPER_COMMANDS,"$sup")]>
-<[BINDBLOCKS(SUPER_COMMANDS,"$sup",modifier="Mod4")]>
+<[BIND(('"Super_L"',"fullscreen disable $exec $focus_one"),"$sup")]>
+
+<[BINDBLOCKS(TOP_COMMANDS,"$sup","$hov")]>
+
 <[BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt")]>
-<[BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$sup")]>
 <[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")]>
 <[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")]>
-<[BINDBLOCKS(SUPER_COMMANDS,"$sup",modifier="Mod4")]>
-<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",modifier="Mod4",postfix="$refresh_status_bar")]>
-<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control+Mod4")]>
-<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control+Mod4",postfix="$refresh_status_bar")]>
-           
-<[LOCK("$sup")]>
+
+ # # # # # MOD4-COMMANDS # # # # #
+
+<[BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS,"$sup","$hov",modifier="Mod4")]>
+<[BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup","$hov",modifier="Mod4",postfix="$refresh_status_bar")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup","$hov",modifier="control+Mod4")]>
+<[BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup","$hov",modifier="control+Mod4",postfix="$refresh_status_bar")]>
+
+ # # # # # # # LOCKS # # # # # # #
+     
+<[LOCK("$sup",ARROWS["default"])]>
 <[LOCK_SHIFT("$sup")]>
-<[LOCK_CONTROL("$sup")]>
+<[LOCK_CONTROL("$sup",["Tab"])]>
  }
 
  # # # # # # # # # # # # # # # # HOVER-MODE # # # # # # # # # # # # # # # # # # #
@@ -696,7 +721,7 @@ DMENU_COMMANDS = {
  # # # # # # # # MODES # # # # # # #
 
 <[BIND(("XF86PowerOff",""),"$hov","$pow")]>
-<[BINDBLOCKS({"exit to write mode":[(x,"") for x in DEFAULT_EXIT_KEYS if x not in ['"Alt_L"']]},"$hov","$wrt")]>
+<[BINDBLOCKS({"exit to write mode":[(x,"") for x in DEFAULT_EXIT_KEYS if x not in ['"Alt_L"',"Return","Tab"]]},"$hov","$wrt")]>
 <[BIND(('--release "Super_L"',""),"$hov","$sup")]>
 <[BIND(("Mod4+r",""),"$hov","$red")]>
 <[BIND(("Mod4+z",""),"$hov","$str")]>
@@ -716,7 +741,7 @@ DMENU_COMMANDS = {
  
  # # # # # # UNUSED KEYS # # # # # #
 
-<[LOCK("$hov",ARROWS["default"]+['"Alt_L"','"Control_L"','"Shift_L"',"space","Return","Tab","Menu"])]>
+<[LOCK("$hov",ARROWS["default"]+['"Alt_L"','"Control_L"','"Shift_L"',"space","Return","Tab"])]>
 <[LOCK_SHIFT("$hov",ARROWS["default"])]>
  }
      
@@ -822,7 +847,6 @@ DMENU_COMMANDS = {
 
  # background (not always permanent)
  $exec_always nitrogen --restore
- $exec_always ff-theme-util
  $exec_always fix_xcursor
 
  # background applications
