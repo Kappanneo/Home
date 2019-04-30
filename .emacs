@@ -27,10 +27,6 @@
  ;; If there is more than one, they won't work right.
  )
 
-;;(add-to-list 'package-archives
-;;              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-;;(require 'package)
-
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 (require 'cursor-chg)
@@ -49,6 +45,9 @@
 (require 'subset)
 (global-set-key (kbd "C-w") 'xah-close-current-buffer)
 (global-set-key (kbd "C-S-t") 'xah-open-last-closed)
+
+(require 'bash-completion)
+(bash-completion-setup)
 
 ;; sanity preservers
 (global-set-key (kbd "C-x") 'xah-cut-line-or-region)
@@ -77,12 +76,18 @@
 (global-set-key (kbd "C-8") 'nil)
 (global-set-key (kbd "C-9") 'nil)
 
+(global-set-key (kbd "C-o") 'nil)
+(global-set-key (kbd "C-k") 'nil)
+(global-set-key (kbd "C-l") 'nil)
+(global-set-key (kbd "C-ò") 'nil)
+
 (global-set-key (kbd "C-u") 'insert-char)
 (global-set-key (kbd "C-ù") 'pop-to-mark-command)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "<menu>") 'x-menu-bar-open)
 
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
 (defun un-indent-by-removing-4-spaces ()
@@ -97,3 +102,5 @@
       (when (looking-at "^ \\{1,4\\}")
         (replace-match "")))))
 (put 'scroll-left 'disabled nil)
+
+(server-start)

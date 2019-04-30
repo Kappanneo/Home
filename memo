@@ -7,26 +7,17 @@
 
 
 i3:
-hover mode bug fix
 split-move
-clean code
-sticky modifiers?
-(+ modular modes)
-pym
-caps != ctrl?
-stamp fix
-oklò != wasd?
-back to 2keys-max principle?
-page up-down resize
-alt -> hover
+stamp fix for windows
+focus all on workspace swithc
+bindmodes
 
 Emacs:
-M-x toggle-truncate-lines
-M-x visual-line-mode
-indentation
 ctrl-del until line start
 goto line
 disable messages
-
-DAIS:
-17-21 Giugno
+synchronize history
+fix i-search direction
+multiterm?
+query replace?
+emacsclient delete frame when done

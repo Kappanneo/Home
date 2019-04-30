@@ -15,7 +15,7 @@
 !.i3/
 .i3/*
 !.i3/config
-!.i3/config.py
+!.i3/index.conf
 !.i3/makefile
 !.i3/pym.py
 

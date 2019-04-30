@@ -10,6 +10,8 @@ then
     xmodmap -e "keycode  31 = i I i I rightarrow idotless rightarrow"
     xmodmap -e "keycode  44 = j J j J dead_hook dead_horn dead_hook dead_horn"
     xmodmap -e "keycode  48 = agrave degree agrave degree numbersign dead_abovering numbersign dead_abovering agrave degree numbersign dead_abovering"
+
+    xmodmap -e "keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift"
 elif [ $1 -eq "1" ]
 then
     xmodmap -e "keycode  32 = Up Up Up"
@@ -21,4 +23,6 @@ then
     xmodmap -e "keycode  44 = Home Home Home"
     xmodmap -e "keycode  31 = Prior NoSymbol Prior NoSymbol Prior"
     xmodmap -e "keycode  33 = Next NoSymbol Next NoSymbol Next"
+
+    xmodmap -e "keycode 108 = Escape NoSymbol Escape NoSymbol Escape"
 fi
