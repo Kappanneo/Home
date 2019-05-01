@@ -370,6 +370,7 @@
  bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
 
  # reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
  bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
 
  # resize (precise)
@@ -643,6 +644,7 @@
  bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
 
  # reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
  bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
 
  # resize (precise)
@@ -910,6 +912,7 @@
  bindsym control+9 move container to workspace $w9; workspace $w9
 
  # reload configuration
+ bindsym control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
  bindsym control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
 
  # resize (precise)
@@ -1051,6 +1054,7 @@
  bindsym control+Mod4+9 $no_border mode $hov move container to workspace $w9; workspace $w9; $exec $alert $hov
 
  # reload configuration
+ bindsym control+Mod4+r $no_border mode $hov $exec "make -C ~/.i3 && i3-msg $no_border restart"; $exec $alert $hov
  bindsym control+Mod4+Shift+r $no_border mode $hov $exec "make -C ~/.i3 stable && i3-msg $no_border restart"; $exec $alert $hov
 
  # resize (precise)
@@ -1309,6 +1313,7 @@
  bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
 
  # reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
  bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
 
  # resize (precise)
