@@ -101,7 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias update="yay -Syu --aur && pkill pamac-tray"
+alias update="yay -Syu && pkill pamac-tray"
 alias grappolo="docker restart grappolo || docker run -d --publish 8000:8000 --name grappolo disorganizzazione/grappolo"
 alias open_default="xdg-open"
 
