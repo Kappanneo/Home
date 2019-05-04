@@ -21,7 +21,7 @@ MODES = {
 
 "$wrt":
     ('"WRITE: writing enabled"',
-     ['BackSpace','space'],
+     ['BackSpace','space','Delete'],
      "$no_border mode $def",
      "$exec $alert $wrt & $oklò_disable",
      "$exec $oklò_enable",
@@ -105,7 +105,8 @@ SUBMODES = {
      "",
      [    
          ("c","$exec $emacs ~/.i3/index.conf"),                                  
-         ("Shift+c","$exec $emacs ~/.i3/modes.py"),
+         ("m","$exec $emacs ~/.i3/modes.py"),
+         ("b","$exec $emacs ~/.i3/bindings.py"),
          ("i","$exec $emacs ~/.gitignore"),
          ("a","$exec $emacs /sudo::/usr/share/applications/"),
          ("e","$exec $emacs ~/.emacs"),

@@ -228,7 +228,7 @@
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
- for_window [class=".?" title=".?"] floating disable split toggle; mode $hov $no_border; fullscreen disable; $exec $oklò_enable & $touchpad_disable $alert $hov
+ for_window [class=".?" title=".?"] floating disable split toggle; fullscreen disable
  
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               COMMANDS                                      #
@@ -425,6 +425,7 @@
  bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
  bindsym Mod4+r $no_border mode $red $exec $alert $red
  bindsym Mod4+z $no_border mode $str $exec $alert $str
@@ -579,7 +580,6 @@
  bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -649,6 +649,7 @@
  bindsym --release "Super_L" $exec $touchpad_off; $border mode $sup $exec $alert $sup, $focus_one fullscreen disable
  bindsym BackSpace $exec $touchpad_off; $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $exec $touchpad_off; $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $exec $touchpad_off; $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+c $exec $touchpad_off; $no_border mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $touchpad_off; $no_border mode $red $exec $alert $red
  bindsym Mod4+z $exec $touchpad_off; $no_border mode $str $exec $alert $str
@@ -803,7 +804,6 @@
  bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -879,6 +879,7 @@
  bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
  bindsym Mod4+r $no_border mode $red $exec $alert $red
  bindsym Mod4+z $no_border mode $str $exec $alert $str
@@ -1180,7 +1181,6 @@
  # # # # # # # LOCKS # # # # # # #
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 0 nop
  bindsym apostrophe nop
@@ -1258,6 +1258,7 @@
  bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
  bindsym Mod4+r $no_border mode $red $exec $alert $red
  bindsym Mod4+z $no_border mode $str $exec $alert $str
@@ -1421,7 +1422,6 @@
  # # # # # # # LOCKS # # # # # # #
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -1551,6 +1551,7 @@
  bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
  bindsym Mod4+z $no_border mode $str $exec $alert $str
  # display
@@ -1704,7 +1705,6 @@
  bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym apostrophe nop
  bindsym igrave nop
@@ -1771,6 +1771,7 @@
  bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
  bindsym Mod4+r $no_border mode $red $exec $alert $red
  # display
@@ -1924,7 +1925,6 @@
  bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 3 nop
  bindsym 4 nop
@@ -1992,7 +1992,8 @@
  mode $cnf {
  # options
  bindsym c $no_border mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt & $oklò_disable
- bindsym Shift+c $no_border mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt & $oklò_disable
+ bindsym m $no_border mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt & $oklò_disable
+ bindsym b $no_border mode $def $exec $emacs ~/.i3/bindings.py; $exec $alert $wrt & $oklò_disable
  bindsym i $no_border mode $def $exec $emacs ~/.gitignore; $exec $alert $wrt & $oklò_disable
  bindsym a $no_border mode $def $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt & $oklò_disable
  bindsym e $no_border mode $def $exec $emacs ~/.emacs; $exec $alert $wrt & $oklò_disable
@@ -2010,6 +2011,7 @@
  bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym space $no_border mode $def $exec $alert $wrt & $oklò_disable
+ bindsym Delete $no_border mode $def $exec $alert $wrt & $oklò_disable
  bindsym Mod4+r $no_border mode $red $exec $alert $red
  bindsym Mod4+z $no_border mode $str $exec $alert $str
  # display
@@ -2163,7 +2165,6 @@
  bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 3 nop
  bindsym 4 nop
@@ -2199,9 +2200,7 @@
  bindsym less nop
  bindsym x nop
  bindsym v nop
- bindsym b nop
  bindsym n nop
- bindsym m nop
  bindsym comma nop
  bindsym period nop
  bindsym minus nop
