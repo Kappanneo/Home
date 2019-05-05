@@ -21,13 +21,13 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
     if current_mode:
         USED_KEYS[current_mode].append(x)
     if after_mode:
-        _, _, pre, post, _, _, _, _ = ALLMODES[after_mode]
+        _, _, pre, post, _, _, _, _, _ = ALLMODES[after_mode]
         if post != "" and y != "": y += "; " + post
         if post != "" and y == "": y += post
         if pre != "" and y != "": y = pre + " " + y
         if pre != "" and y == "": y = pre
         if current_mode:
-            _, _, _, _, exit, _, _, _ = ALLMODES[current_mode]
+            _, _, _, _, exit, _, _, _, _ = ALLMODES[current_mode]
             if exit != "": y = exit + "; " + y
     return " bindsym {} {}\n".format(x,y)
 
@@ -60,20 +60,20 @@ def BIND_MOD4_COMMANDS(mode_tag,modifier="Mod4"):
     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,mode_tag,modifier=modifier+"+control",postfix="$refresh_status_bar")
     return string
 
-def BIND_MODES(mode_tag):
+def BIND_MODES(mode_tag,free_keys=[]):
     string = ""
-    K = [x for x in MODES if x != mode_tag]
-    K.sort()
-    for x in K:
-        _, keys, _, _, _, _, _, _ = MODES[x]
-        for k in keys:
-            string += BIND((k,""),mode_tag,x)
-    K = [x for x in SUBMODES if x != mode_tag]
-    K.sort()
-    for x in K:
-        _, keys, _, _, _, _, _, _ = SUBMODES[x]
-        for k in keys:
-            string += BIND(("Mod4+"+k,""),mode_tag,x)
+    M = [x for x in MODES if x != mode_tag]
+    M.sort()
+    for after_mode in M:
+        _, keys, _, _, _, _, _, _, _ = MODES[after_mode]
+        for key in [x for x in keys if x not in free_keys]:
+            string += BIND((key,""),mode_tag,after_mode)
+    S = [x for x in SUBMODES if x != mode_tag]
+    S.sort()
+    for after_mode in S:
+        _, keys, _, _, _, _, _, _, _ = SUBMODES[after_mode]
+        for key in [x for x in keys if x not in free_keys]:
+            string += BIND(("Mod4+"+key,""),mode_tag,after_mode)
     return string
 
 USED_KEYS = {}
@@ -96,50 +96,38 @@ def LOCK_SHIFT(mode,free_keys=[]):
     return string
 
 def MAKE_MODE(mode_tag):
-    _, _, _, _, _, options, after_mode, free_keys = ALLMODES[mode_tag]
+    _, _, _, _, _, options, after_mode, free_keys, free_shift_keys = ALLMODES[mode_tag]
     string = " mode "+mode_tag+" {\n"
     if len(options):
         string += BINDBLOCKS({"options":options},mode_tag,after_mode)
-    string += BIND_MODES(mode_tag)
+    string += BIND_MODES(mode_tag,free_keys)
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag,"$wrt")
     string += BIND_MOD4_COMMANDS(mode_tag)
     string += LOCK(mode_tag,free_keys)
+    if len([x for x in ['"Shift_L"','"Shift_R"'] if x in free_keys]):
+        string += LOCK_SHIFT(mode_tag,free_shift_keys)
     string += " }"
     return string
 
-def MAKE_SUPER_MODE():
-    string = " mode $sup {\n"
-    string += "\n # # # # # # # MODES # # # # # # #\n\n"
-    string += BIND_MODES("$sup")
-    string += "\n # # # # # # COMMANDS# # # # # # #\n\n"
-    string += BIND(('"Super_L"',"fullscreen disable $exec $focus_one"),"$sup")
-    string += BINDBLOCKS(TOP_COMMANDS,"$sup","$hov")
-    string += BINDBLOCKS(ALT_COMMANDS_RSB,"$sup",modifier="Mod1",postfix="$refresh_status_bar")
-    string += BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt")
-    string += BINDBLOCKS(SUPER_COMMANDS,"$sup")
-    string += BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")
-    string += BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")
-    string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")
-    string += "\n # # # # # MOD4-COMMANDS # # # # #\n\n"
-    string += BIND_MOD4_COMMANDS("$sup")
-    string += "\n # # # # # # # LOCKS # # # # # # #\n\n"
-    string += LOCK("$sup",ARROWS["default"]+['"Alt_L"'])
-    string += LOCK_SHIFT("$sup")
-    string += " }"
-    return string
-
-def MAKE_HOVER_MODE():
-    string = " mode $hov {\n"
-    string += "\n # # # # # # # MODES # # # # # # #\n\n"
-    string += BIND_MODES("$hov")
-    string += "\n # # # # # # COMMANDS# # # # # # #\n\n"
-    string += BINDBLOCKS(TOP_COMMANDS,"$hov")
-    string += BINDBLOCKS(ALT_COMMANDS_RSB,"$hov",modifier="Mod1",postfix="$refresh_status_bar")
-    string += BIND_MOD4_COMMANDS("$hov")
-    string += "\n # # # # # # # LOCKS # # # # # # #\n\n"
-    string += LOCK("$hov",ARROWS["default"]+['"Alt_L"',"BackSpace",'"Control_L"','"Shift_L"',"space","Return","Tab","Menu"])
-    string += LOCK_SHIFT("$hov",ARROWS["default"])
-    string += " }"
-    return string
+# def MAKE_SUPER_MODE():
+#     string = " mode $sup {\n"
+#     string += "\n # # # # # # # MODES # # # # # # #\n\n"
+#     string += BIND_MODES("$sup")
+#     string += "\n # # # # # # COMMANDS# # # # # # #\n\n"
+#     string += BIND(('"Super_L"',"fullscreen disable $exec $focus_one"),"$sup")
+#     string += BINDBLOCKS(TOP_COMMANDS,"$sup","$hov")
+#     string += BINDBLOCKS(ALT_COMMANDS_RSB,"$sup",modifier="Mod1",postfix="$refresh_status_bar")
+#     string += BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt")
+#     string += BINDBLOCKS(SUPER_COMMANDS,"$sup")
+#     string += BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")
+#     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")
+#     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")
+#     string += "\n # # # # # MOD4-COMMANDS # # # # #\n\n"
+#     string += BIND_MOD4_COMMANDS("$sup")
+#     string += "\n # # # # # # # LOCKS # # # # # # #\n\n"
+#     string += LOCK("$sup",ARROWS["default"]+['"Alt_L"'])
+#     string += LOCK_SHIFT("$sup")
+#     string += " }"
+#     return string
 
 #end python

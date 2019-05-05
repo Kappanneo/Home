@@ -1,4 +1,5 @@
 #include "merge.py"
+#include "arrows.py"
 #begin python
 
 MODES = {
@@ -17,16 +18,18 @@ MODES = {
          ("h","$exec systemctl hibernate")
      ],
      "$wrt",
+     [],
      []),
 
 "$wrt":
     ('"WRITE: writing enabled"',
-     ['BackSpace','space','Delete'],
+     ['Return','BackSpace','space','Delete'],
      "$no_border mode $def",
-     "$exec $alert $wrt & $oklò_disable",
-     "$exec $oklò_enable",
+     "$exec $alert $wrt",
+     "",
      [],
      "",
+     [],
      []),
 
 "$tch":
@@ -37,28 +40,30 @@ MODES = {
      "$exec $touchpad_off",
      [],
      "",
-     ['"Control_L"']),
-
-"$sup":
-    ('"SUPER: [oklò] select  [shift+] move  [123] workspace  [Menu] hover mode  [super+space] touch mode  [space|esc] write mode"',
-     ['--release "Super_L"'],
-     "$border mode $sup",
-     "$exec $alert $sup, $focus_one fullscreen disable",
-     "",
-     [],
-     "",
+     ['"Control_L"','"Alt_L"'],
      []),
+
+# "$sup":
+#     ('"SUPER: [oklò] select  [shift+] move  [123] workspace  [Menu] hover mode  [super+space] touch mode  [space|esc] write mode"',
+#      ['--release "Super_L"'],
+#      "$border mode $sup",
+#      "$exec $alert $sup, $focus_one fullscreen disable",
+#      "",
+#      [],
+#      "",
+#      []),
 
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
      ['Menu'],
      "$no_border mode $hov",
-     "$exec $alert $hov",
-     "",
+     "$exec $alert $hov & $oklò_enable",
+     "$exec $oklò_disable",
      [],
      "",
-     [])
-} 
+     ARROWS["default"]+['"Alt_L"','"Control_L"','"Shift_L"',"Return","Tab","Menu"],
+     ARROWS["default"])
+}
 
 SUBMODES = {
 
@@ -73,6 +78,7 @@ SUBMODES = {
          ("2",'$exec "$layout_2; $fill_2"'),
      ],
      "$wrt",
+     [],
      []),
 
 "$red":
@@ -95,6 +101,7 @@ SUBMODES = {
          ("plus","$exec redshift -O 6400K")
      ],
      "",
+     [],
      []),
 
 "$cnf":
@@ -119,6 +126,7 @@ SUBMODES = {
          ("r","$exec $emacs ~/.config/redshift/redshift.conf")
      ],
      "$wrt",
+     [],
      [])
 
 }
