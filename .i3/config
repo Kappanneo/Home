@@ -435,6 +435,7 @@
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
+ bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
  bindsym Mod4+z mode $str $exec $alert $str
@@ -649,7 +650,6 @@
  bindsym "Shift_R" nop
  bindsym "Control_L" nop
  bindsym "Super_L" nop
- bindsym "Alt_L" nop
  bindsym $alt_gr nop
  bindsym "Control_R" nop
  bindsym Up nop
@@ -1198,6 +1198,7 @@
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
+ bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+z mode $str $exec $alert $str
  # borders
@@ -1404,7 +1405,6 @@
  bindsym "Shift_R" nop
  bindsym "Control_L" nop
  bindsym "Super_L" nop
- bindsym "Alt_L" nop
  bindsym $alt_gr nop
  bindsym "Control_R" nop
  bindsym Up nop
@@ -1428,6 +1428,7 @@
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
+ bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
  # borders
@@ -1643,7 +1644,6 @@
  bindsym "Shift_R" nop
  bindsym "Control_L" nop
  bindsym "Super_L" nop
- bindsym "Alt_L" nop
  bindsym $alt_gr nop
  bindsym "Control_R" nop
  bindsym Up nop
@@ -1678,6 +1678,7 @@
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
+ bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+r mode $red $exec $alert $red
  bindsym Mod4+z mode $str $exec $alert $str
  # borders
@@ -1882,7 +1883,6 @@
  bindsym "Shift_R" nop
  bindsym "Control_L" nop
  bindsym "Super_L" nop
- bindsym "Alt_L" nop
  bindsym $alt_gr nop
  bindsym "Control_R" nop
  bindsym Up nop

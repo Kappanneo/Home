@@ -9,7 +9,7 @@
 i3:
 split-move
 stamp fix for windows
-focus all on workspace swithc
+focus all on workspace switch
 bindmodes
 also _R
 fix resize
