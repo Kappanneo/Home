@@ -235,6 +235,9 @@
  #                               COMMANDS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+ # borders
+ bindsym --border button2 $no_border
+
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
@@ -407,6 +410,7 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Mod4+c mode $cnf $exec $alert $cnf
@@ -425,6 +429,7 @@
  bindsym h mode $def $exec systemctl hibernate; $exec $alert $wrt
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
@@ -433,21 +438,24 @@
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
  bindsym Mod4+z mode $str $exec $alert $str
+ # borders
+ bindsym --border button2 $no_border
+
  # display
- bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $brightness_up
+ bindsym XF86MonBrightnessDown $exec $brightness_down
 
  # screen poweroff
- bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec xset dpms force off
 
  # screenshot
- bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec i3-scrot
 
  # touchpad toggle
- bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -655,6 +663,7 @@
 
  mode $tch {
  bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
  bindsym Return $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym BackSpace $exec $touchpad_off; mode $def $exec $alert $wrt
@@ -663,21 +672,24 @@
  bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $touchpad_off; mode $red $exec $alert $red
  bindsym Mod4+z $exec $touchpad_off; mode $str $exec $alert $str
+ # borders
+ bindsym --border button2 $no_border
+
  # display
- bindsym XF86Display $exec $touchpad_off; mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $touchpad_off; mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $exec $touchpad_off; mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $brightness_up
+ bindsym XF86MonBrightnessDown $exec $brightness_down
 
  # screen poweroff
- bindsym XF86ScreenSaver $exec $touchpad_off; mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec xset dpms force off
 
  # screenshot
- bindsym --release Print $exec $touchpad_off; mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec i3-scrot
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $exec $touchpad_off; mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -894,21 +906,24 @@
  bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
  bindsym Mod4+z $exec $oklò_disable; mode $str $exec $alert $str
+ # borders
+ bindsym --border button2 $no_border
+
  # display
- bindsym XF86Display $exec $oklò_disable; mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $oklò_disable; mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $exec $oklò_disable; mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $brightness_up
+ bindsym XF86MonBrightnessDown $exec $brightness_down
 
  # screen poweroff
- bindsym XF86ScreenSaver $exec $oklò_disable; mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec xset dpms force off
 
  # screenshot
- bindsym --release Print $exec $oklò_disable; mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec i3-scrot
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $exec $oklò_disable; mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1176,6 +1191,7 @@
  bindsym plus $exec redshift -O 6400K
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1184,21 +1200,24 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+z mode $str $exec $alert $str
+ # borders
+ bindsym --border button2 $no_border
+
  # display
- bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $brightness_up
+ bindsym XF86MonBrightnessDown $exec $brightness_down
 
  # screen poweroff
- bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec xset dpms force off
 
  # screenshot
- bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec i3-scrot
 
  # touchpad toggle
- bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1402,6 +1421,7 @@
  bindsym 2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1410,21 +1430,24 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
+ # borders
+ bindsym --border button2 $no_border
+
  # display
- bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $brightness_up
+ bindsym XF86MonBrightnessDown $exec $brightness_down
 
  # screen poweroff
- bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec xset dpms force off
 
  # screenshot
- bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec i3-scrot
 
  # touchpad toggle
- bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1648,6 +1671,7 @@
  bindsym r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1656,21 +1680,24 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym Mod4+r mode $red $exec $alert $red
  bindsym Mod4+z mode $str $exec $alert $str
+ # borders
+ bindsym --border button2 $no_border
+
  # display
- bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $brightness_up
+ bindsym XF86MonBrightnessDown $exec $brightness_down
 
  # screen poweroff
- bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec xset dpms force off
 
  # screenshot
- bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec i3-scrot
 
  # touchpad toggle
- bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar

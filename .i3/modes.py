@@ -55,7 +55,7 @@ MODES = {
 
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
-     ['Menu'],
+     ['Menu','Mod4+Menu'],
      "mode $hov",
      "$exec $alert $hov & $oklò_enable",
      "$exec $oklò_disable",
