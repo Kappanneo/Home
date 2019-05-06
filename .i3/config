@@ -268,6 +268,10 @@
  # start dmenu for commands
  bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
 
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
+
  # browse workspaces
  bindsym Mod4+j workspace prev
  bindsym Mod4+agrave workspace next
@@ -450,6 +454,10 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
 
  # browse workspaces
  bindsym Mod4+j workspace prev
@@ -674,6 +682,10 @@
  # start dmenu for commands
  bindsym Mod4+control+e $exec $touchpad_off; $no_border mode $def $exec dmenu_run; $exec $alert $wrt
 
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
+
  # browse workspaces
  bindsym Mod4+j workspace prev
  bindsym Mod4+agrave workspace next
@@ -897,6 +909,10 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e $exec $oklò_disable; $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
 
  # browse workspaces
  bindsym Mod4+j workspace prev
@@ -1181,6 +1197,10 @@
  # start dmenu for commands
  bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
 
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
+
  # browse workspaces
  bindsym Mod4+j workspace prev
  bindsym Mod4+agrave workspace next
@@ -1399,6 +1419,10 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
 
  # browse workspaces
  bindsym Mod4+j workspace prev
@@ -1638,6 +1662,10 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # borders
+ bindsym Mod4+b $border
+ bindsym Mod4+Shift+b $no_border
 
  # browse workspaces
  bindsym Mod4+j workspace prev
