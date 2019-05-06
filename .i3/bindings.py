@@ -20,7 +20,7 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
     if modifier != "": x = modifier + "+" + x
     if current_mode:
         USED_KEYS[current_mode].append(x)
-    if after_mode:
+    if after_mode and current_mode != after_mode:
         _, _, pre, post, _, _, _, _, _ = ALLMODES[after_mode]
         if post != "" and y != "": y += "; " + post
         if post != "" and y == "": y += post
@@ -46,18 +46,19 @@ def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",po
         string += "\n"
     return string
 
-def BIND_MOD1_COMMANDS(mode_tag):
+def BIND_ALT_COMMANDS(mode_tag,modifier="Mod1"):
     string = ""
-    string += BINDBLOCKS(ALT_COMMANDS_RSB,mode_tag,modifier="Mod1",postfix="$refresh_status_bar")
+    string += BINDBLOCKS(ALT_COMMANDS_RSB,mode_tag,modifier=modifier,postfix="$refresh_status_bar")
     return string
     
-def BIND_MOD4_COMMANDS(mode_tag,modifier="Mod4"):
+def BIND_SUPER_COMMANDS(mode_tag,modifier="Mod4"):
     string = ""
-    string += BINDBLOCKS(DMENU_COMMANDS,mode_tag,"$wrt",modifier=modifier)
     string += BINDBLOCKS(SUPER_COMMANDS,mode_tag,modifier=modifier)
-    string += BINDBLOCKS(SUPER_COMMANDS_RSB,mode_tag,modifier=modifier,postfix="$refresh_status_bar")
     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS,mode_tag,modifier=modifier+"+control")
-    string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,mode_tag,modifier=modifier+"+control",postfix="$refresh_status_bar")
+    string += BINDBLOCKS(SUPER_COMMANDS_TO_WRITE,mode_tag,"$wrt",modifier=modifier)
+    string += BINDBLOCKS(SUPER_COMMANDS_TO_HOVER,mode_tag,"$hov",modifier=modifier)
+    string += BINDBLOCKS(SUPER_COMMANDS_TO_HOVER_RSB,mode_tag,"$hov",modifier=modifier,postfix="$refresh_status_bar")
+    string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_TO_HOVER_RSB,mode_tag,"$hov",modifier=modifier+"+control",postfix="$refresh_status_bar")
     return string
 
 def BIND_MODES(mode_tag,free_keys=[]):
@@ -102,8 +103,8 @@ def MAKE_MODE(mode_tag):
         string += BINDBLOCKS({"options":options},mode_tag,after_mode)
     string += BIND_MODES(mode_tag,free_keys)
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
-    string += BIND_MOD1_COMMANDS(mode_tag)
-    string += BIND_MOD4_COMMANDS(mode_tag)
+    string += BIND_ALT_COMMANDS(mode_tag)
+    string += BIND_SUPER_COMMANDS(mode_tag)
     string += LOCK(mode_tag,free_keys)
     if len([x for x in ['"Shift_L"','"Shift_R"'] if x in free_keys]):
         string += LOCK_SHIFT(mode_tag,free_shift_keys)

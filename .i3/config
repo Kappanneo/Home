@@ -38,7 +38,7 @@
  # smart|urgent|focus|none
  focus_on_window_activation none
 
- # # # # # # # # # # # # # # # # # COLORS# # # # # # # # # # # # # # # # # # # # 
+ #                                 COLORS                                      #
 
  # class                 border  backgr. text    ind.    child
  client.focused          #4CC97E #4CC97E #ffffff #4CC97E #4CC97E
@@ -73,14 +73,14 @@
  set $alt_gr "ISO_Level3_Shift"
  set $emacs emacsclient -create-frame --alternate-editor=""
 
- # # # # # # # # # # # # # # # # KEYBINDINGS # # # # # # # # # # # # # # # # # #
+ #                               KEYBINDINGS                                   #
 
  set $disable_Caps setxkbmap -option ctrl:nocaps
  set $enable_Caps setxkbmap -option
  set $oklò_disable ~/.bin/oklò.sh 0
  set $oklò_enable ~/.bin/oklò.sh 1
 
- # # # # # # # # # # # # # # # FUNCTIONALITIES # # # # # # # # # # # # # # # # #
+ #                             FUNCTIONALITIES                                 #
 
  # touchpad toggle
  set $touchpad_on ~/.bin/touchpad_toggle.sh 1 & xdotool mousemove 800 450
@@ -96,7 +96,7 @@
  set $brightness_up exec "xbacklight -inc 5; notify-send 'brightness up'"
  set $brightness_down exec "xbacklight -dec 5; notify-send 'brightness down'"
 
- # # # # # # # # # # # # # # # # LAYOUTS # # # # # # # # # # # # # # # # # # # #
+ #                                LAYOUTS                                      #
 
  set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
  set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
@@ -105,7 +105,7 @@
  set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                              STATUS-BAR                                     #
+ #                               STATUS-BAR                                    #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
@@ -189,7 +189,7 @@
  $exec $layout_2; $fill_2
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                              WORKSPACES                                     #
+ #                               WORKSPACES                                    #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  set $w1 1nternet
@@ -208,7 +208,7 @@
 
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                                   MODES                                     #
+ #                                 MODES                                       #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  set $def "default"
@@ -218,14 +218,14 @@
  set $wrt "WRITE: writing enabled"
 
 
- # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # #
+ #                               SUB-MODES                                     #
 
  set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"
  set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
  set $str "START: [1|2] layouts  [space|esc] exit mode"
 
 
- # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
+ #                             ON-NEW-WINDOW                                   #
 
  for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border mode $hov $exec $oklò_enable & $alert $hov
 
@@ -256,20 +256,7 @@
 
 
 
- # # # # # # # # # # # # # # # MOD1-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # kill
- bindsym Mod1+F4 kill; $refresh_status_bar
-
-
-
- # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
+ #                            SUPER-COMMANDS                                   #
 
  # borders
  bindsym Mod4+b $border
@@ -317,46 +304,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -394,14 +341,58 @@
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $exec $dmenu
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $exec dmenu_run
+
+ # application menu
+ bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # browse workspaces
+ bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # default focus
+ bindsym Mod4+Up mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Left mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Down mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Right mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # oklò focus
+ bindsym Mod4+o mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+k mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+l mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+ograve mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # switch workspace
+ bindsym Mod4+1 mode $hov workspace $w1; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+2 mode $hov workspace $w2; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+3 mode $hov workspace $w3; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+4 mode $hov workspace $w4; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+5 mode $hov workspace $w5; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+6 mode $hov workspace $w6; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+ bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # kill
- bindsym Mod4+control+w kill; $refresh_status_bar
+ bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+
+
+ #                             ALT-COMMANDS                                    #
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
 
 
@@ -410,15 +401,16 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+z mode $str $exec $alert $str
+ bindsym Mod4+s mode $str $exec $alert $str
 
 
- # # # # # # # # # # # # # # # #POWEROFF-MODE  # # # # # # # # # # # # # # # # # 
+ #                             POWEROFF-MODE                                   #
 
  mode $pow {
  # options
@@ -429,6 +421,7 @@
  bindsym h mode $def $exec systemctl hibernate; $exec $alert $wrt
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -438,7 +431,7 @@
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+z mode $str $exec $alert $str
+ bindsym Mod4+s mode $str $exec $alert $str
  # borders
  bindsym --border button2 $no_border
 
@@ -461,12 +454,6 @@
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
-
  # borders
  bindsym Mod4+b $border
  bindsym Mod4+Shift+b $no_border
@@ -513,46 +500,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -590,14 +537,51 @@
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # application menu
+ bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # browse workspaces
+ bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # default focus
+ bindsym Mod4+Up mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Left mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Down mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Right mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # oklò focus
+ bindsym Mod4+o mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+k mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+l mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+ograve mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # switch workspace
+ bindsym Mod4+1 mode $hov workspace $w1; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+2 mode $hov workspace $w2; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+3 mode $hov workspace $w3; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+4 mode $hov workspace $w4; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+5 mode $hov workspace $w5; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+6 mode $hov workspace $w6; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+ bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # kill
- bindsym Mod4+control+w kill; $refresh_status_bar
+ bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -659,10 +643,11 @@
 
  }
 
- # # # # # # # # # # # # # # # # TOUCH-MODE# # # # # # # # # # # # # # # # # # #
+ #                              TOUCH-MODE                                     #
 
  mode $tch {
  bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Shift+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
  bindsym Return $exec $touchpad_off; mode $def $exec $alert $wrt
@@ -671,7 +656,7 @@
  bindsym Delete $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $touchpad_off; mode $red $exec $alert $red
- bindsym Mod4+z $exec $touchpad_off; mode $str $exec $alert $str
+ bindsym Mod4+s $exec $touchpad_off; mode $str $exec $alert $str
  # borders
  bindsym --border button2 $no_border
 
@@ -693,12 +678,6 @@
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $touchpad_off; mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e $exec $touchpad_off; mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -746,46 +725,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -823,14 +762,51 @@
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $exec $touchpad_off; mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $exec $touchpad_off; mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # application menu
+ bindsym Mod4+z $exec $touchpad_off; mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # browse workspaces
+ bindsym Mod4+Tab $exec $touchpad_off; mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Shift+Tab $exec $touchpad_off; mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # default focus
+ bindsym Mod4+Up $exec $touchpad_off; mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Left $exec $touchpad_off; mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Down $exec $touchpad_off; mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Right $exec $touchpad_off; mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # oklò focus
+ bindsym Mod4+o $exec $touchpad_off; mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+k $exec $touchpad_off; mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+l $exec $touchpad_off; mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+ograve $exec $touchpad_off; mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # switch workspace
+ bindsym Mod4+1 $exec $touchpad_off; mode $hov workspace $w1; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+2 $exec $touchpad_off; mode $hov workspace $w2; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+3 $exec $touchpad_off; mode $hov workspace $w3; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+4 $exec $touchpad_off; mode $hov workspace $w4; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+5 $exec $touchpad_off; mode $hov workspace $w5; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+6 $exec $touchpad_off; mode $hov workspace $w6; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+7 $exec $touchpad_off; mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+8 $exec $touchpad_off; mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+9 $exec $touchpad_off; mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+x $exec $touchpad_off; mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+ bindsym Mod4+control+x $exec $touchpad_off; mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # kill
- bindsym Mod4+control+w kill; $refresh_status_bar
+ bindsym Mod4+control+w $exec $touchpad_off; mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v $exec $touchpad_off; mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -895,7 +871,7 @@
 
  }
 
- # # # # # # # # # # # # # # # # HOVER-MODE# # # # # # # # # # # # # # # # # # # 
+ #                              HOVER-MODE                                     #
 
  mode $hov {
  bindsym XF86PowerOff $exec $oklò_disable; mode $pow $exec $alert $pow, fullscreen disable
@@ -905,7 +881,7 @@
  bindsym Delete $exec $oklò_disable; mode $def $exec $alert $wrt
  bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
- bindsym Mod4+z $exec $oklò_disable; mode $str $exec $alert $str
+ bindsym Mod4+s $exec $oklò_disable; mode $str $exec $alert $str
  # borders
  bindsym --border button2 $no_border
 
@@ -927,12 +903,6 @@
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $oklò_disable; mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e $exec $oklò_disable; mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -980,46 +950,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1056,6 +986,43 @@
 
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
+
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $exec $oklò_disable; mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $exec $oklò_disable; mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # application menu
+ bindsym Mod4+z exec morc_menu
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+ bindsym Mod4+x workspace $wx; $refresh_status_bar
 
  # cut
  bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
@@ -1173,7 +1140,7 @@
 
  }
      
- # # # # # # # # # # # # # # # # SUB-MODES # # # # # # # # # # # # # # # # # # # 
+ #                              SUB-MODES                                      #
 
  # redshift
  mode $red {
@@ -1191,6 +1158,7 @@
  bindsym plus $exec redshift -O 6400K
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
@@ -1200,7 +1168,7 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
- bindsym Mod4+z mode $str $exec $alert $str
+ bindsym Mod4+s mode $str $exec $alert $str
  # borders
  bindsym --border button2 $no_border
 
@@ -1222,12 +1190,6 @@
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -1275,46 +1237,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1352,14 +1274,51 @@
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # application menu
+ bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # browse workspaces
+ bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # default focus
+ bindsym Mod4+Up mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Left mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Down mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Right mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # oklò focus
+ bindsym Mod4+o mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+k mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+l mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+ograve mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # switch workspace
+ bindsym Mod4+1 mode $hov workspace $w1; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+2 mode $hov workspace $w2; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+3 mode $hov workspace $w3; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+4 mode $hov workspace $w4; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+5 mode $hov workspace $w5; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+6 mode $hov workspace $w6; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+ bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # kill
- bindsym Mod4+control+w kill; $refresh_status_bar
+ bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -1421,6 +1380,7 @@
  bindsym 2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
@@ -1452,12 +1412,6 @@
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -1505,46 +1459,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1582,14 +1496,51 @@
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # application menu
+ bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # browse workspaces
+ bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # default focus
+ bindsym Mod4+Up mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Left mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Down mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Right mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # oklò focus
+ bindsym Mod4+o mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+k mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+l mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+ograve mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # switch workspace
+ bindsym Mod4+1 mode $hov workspace $w1; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+2 mode $hov workspace $w2; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+3 mode $hov workspace $w3; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+4 mode $hov workspace $w4; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+5 mode $hov workspace $w5; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+6 mode $hov workspace $w6; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+ bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # kill
- bindsym Mod4+control+w kill; $refresh_status_bar
+ bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -1671,6 +1622,7 @@
  bindsym r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
@@ -1680,7 +1632,7 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+z mode $str $exec $alert $str
+ bindsym Mod4+s mode $str $exec $alert $str
  # borders
  bindsym --border button2 $no_border
 
@@ -1702,12 +1654,6 @@
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -1755,46 +1701,6 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
-
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1832,14 +1738,51 @@
  # save layout
  bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
+
+ # application menu
+ bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # browse workspaces
+ bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # default focus
+ bindsym Mod4+Up mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Left mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Down mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Right mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # oklò focus
+ bindsym Mod4+o mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+k mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+l mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+ograve mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # switch workspace
+ bindsym Mod4+1 mode $hov workspace $w1; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+2 mode $hov workspace $w2; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+3 mode $hov workspace $w3; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+4 mode $hov workspace $w4; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+5 mode $hov workspace $w5; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+6 mode $hov workspace $w6; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+ bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # kill
- bindsym Mod4+control+w kill; $refresh_status_bar
+ bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
