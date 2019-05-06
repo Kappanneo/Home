@@ -227,7 +227,7 @@
 
  # # # # # # # # # # # # # # # ON-NEW-WINDOW # # # # # # # # # # # # # # # # # #
 
- for_window [class=".?" title=".?"] split toggle, fullscreen disable, $no_border mode $hov $exec $oklò_enable & $alert $hov
+ for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border mode $hov $exec $oklò_enable & $alert $hov
 
  for_window [floating] floating disable
 
@@ -263,10 +263,10 @@
  # # # # # # # # # # # # # # # MOD4-COMMANDS # # # # # # # # # # # # # # # # # #
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -406,54 +406,57 @@
  #                                  MODES                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
- bindsym Menu $no_border mode $hov $exec $alert $hov & $oklò_enable
- bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow, fullscreen disable
- bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
- bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
- bindsym Mod4+r $no_border mode $red $exec $alert $red
- bindsym Mod4+z $no_border mode $str $exec $alert $str
+ bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+ bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+ bindsym Mod4+r mode $red $exec $alert $red
+ bindsym Mod4+z mode $str $exec $alert $str
 
 
  # # # # # # # # # # # # # # # #POWEROFF-MODE  # # # # # # # # # # # # # # # # # 
 
  mode $pow {
  # options
- bindsym XF86PowerOff $no_border mode $def $exec $alert $pow; $exec $alert $wrt
- bindsym q $no_border mode $def $exec systemctl poweroff; $exec $alert $wrt
- bindsym r $no_border mode $def $exec systemctl reboot; $exec $alert $wrt
- bindsym s $no_border mode $def $exec systemctl suspend; $exec $alert $wrt
- bindsym h $no_border mode $def $exec systemctl hibernate; $exec $alert $wrt
+ bindsym XF86PowerOff mode $def $exec $alert $pow; $exec $alert $wrt
+ bindsym q mode $def $exec systemctl poweroff; $exec $alert $wrt
+ bindsym r mode $def $exec systemctl reboot; $exec $alert $wrt
+ bindsym s mode $def $exec systemctl suspend; $exec $alert $wrt
+ bindsym h mode $def $exec systemctl hibernate; $exec $alert $wrt
 
- bindsym Menu $no_border mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
- bindsym Return $no_border mode $def $exec $alert $wrt
- bindsym BackSpace $no_border mode $def $exec $alert $wrt
- bindsym space $no_border mode $def $exec $alert $wrt
- bindsym Delete $no_border mode $def $exec $alert $wrt
- bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
- bindsym Mod4+r $no_border mode $red $exec $alert $red
- bindsym Mod4+z $no_border mode $str $exec $alert $str
+ bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+ bindsym Return mode $def $exec $alert $wrt
+ bindsym BackSpace mode $def $exec $alert $wrt
+ bindsym space mode $def $exec $alert $wrt
+ bindsym Delete mode $def $exec $alert $wrt
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+ bindsym Mod4+r mode $red $exec $alert $red
+ bindsym Mod4+z mode $str $exec $alert $str
  # display
- bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
+ bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
 
  # screen poweroff
- bindsym XF86ScreenSaver $no_border mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
 
  # screenshot
- bindsym --release Print $no_border mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -651,36 +654,39 @@
  # # # # # # # # # # # # # # # # TOUCH-MODE# # # # # # # # # # # # # # # # # # #
 
  mode $tch {
- bindsym Menu $exec $touchpad_off; $no_border mode $hov $exec $alert $hov & $oklò_enable
- bindsym XF86PowerOff $exec $touchpad_off; $no_border mode $pow $exec $alert $pow, fullscreen disable
- bindsym Return $exec $touchpad_off; $no_border mode $def $exec $alert $wrt
- bindsym BackSpace $exec $touchpad_off; $no_border mode $def $exec $alert $wrt
- bindsym space $exec $touchpad_off; $no_border mode $def $exec $alert $wrt
- bindsym Delete $exec $touchpad_off; $no_border mode $def $exec $alert $wrt
- bindsym Mod4+c $exec $touchpad_off; $no_border mode $cnf $exec $alert $cnf
- bindsym Mod4+r $exec $touchpad_off; $no_border mode $red $exec $alert $red
- bindsym Mod4+z $exec $touchpad_off; $no_border mode $str $exec $alert $str
+ bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
+ bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
+ bindsym Return $exec $touchpad_off; mode $def $exec $alert $wrt
+ bindsym BackSpace $exec $touchpad_off; mode $def $exec $alert $wrt
+ bindsym space $exec $touchpad_off; mode $def $exec $alert $wrt
+ bindsym Delete $exec $touchpad_off; mode $def $exec $alert $wrt
+ bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
+ bindsym Mod4+r $exec $touchpad_off; mode $red $exec $alert $red
+ bindsym Mod4+z $exec $touchpad_off; mode $str $exec $alert $str
  # display
- bindsym XF86Display $exec $touchpad_off; $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec $touchpad_off; mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $touchpad_off; $no_border mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $exec $touchpad_off; $no_border mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $touchpad_off; mode $def $exec $brightness_up; $exec $alert $wrt
+ bindsym XF86MonBrightnessDown $exec $touchpad_off; mode $def $exec $brightness_down; $exec $alert $wrt
 
  # screen poweroff
- bindsym XF86ScreenSaver $exec $touchpad_off; $no_border mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec $touchpad_off; mode $def $exec xset dpms force off; $exec $alert $wrt
 
  # screenshot
- bindsym --release Print $exec $touchpad_off; $no_border mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec $touchpad_off; mode $def $exec i3-scrot; $exec $alert $wrt
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $exec $touchpad_off; $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $touchpad_off; mode $def $exec $touchpad_toggle; $exec $alert $wrt
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $touchpad_off; $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam $exec $touchpad_off; mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $exec $touchpad_off; $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e $exec $touchpad_off; mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -880,35 +886,38 @@
  # # # # # # # # # # # # # # # # HOVER-MODE# # # # # # # # # # # # # # # # # # # 
 
  mode $hov {
- bindsym XF86PowerOff $exec $oklò_disable; $no_border mode $pow $exec $alert $pow, fullscreen disable
- bindsym Mod4+space $exec $oklò_disable; $no_border mode $tch $exec $alert $tch & $touchpad_on
- bindsym BackSpace $exec $oklò_disable; $no_border mode $def $exec $alert $wrt
- bindsym space $exec $oklò_disable; $no_border mode $def $exec $alert $wrt
- bindsym Delete $exec $oklò_disable; $no_border mode $def $exec $alert $wrt
- bindsym Mod4+c $exec $oklò_disable; $no_border mode $cnf $exec $alert $cnf
- bindsym Mod4+r $exec $oklò_disable; $no_border mode $red $exec $alert $red
- bindsym Mod4+z $exec $oklò_disable; $no_border mode $str $exec $alert $str
+ bindsym XF86PowerOff $exec $oklò_disable; mode $pow $exec $alert $pow, fullscreen disable
+ bindsym Mod4+space $exec $oklò_disable; mode $tch $exec $alert $tch & $touchpad_on
+ bindsym BackSpace $exec $oklò_disable; mode $def $exec $alert $wrt
+ bindsym space $exec $oklò_disable; mode $def $exec $alert $wrt
+ bindsym Delete $exec $oklò_disable; mode $def $exec $alert $wrt
+ bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
+ bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
+ bindsym Mod4+z $exec $oklò_disable; mode $str $exec $alert $str
  # display
- bindsym XF86Display $exec $oklò_disable; $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display $exec $oklò_disable; mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $oklò_disable; $no_border mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $exec $oklò_disable; $no_border mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp $exec $oklò_disable; mode $def $exec $brightness_up; $exec $alert $wrt
+ bindsym XF86MonBrightnessDown $exec $oklò_disable; mode $def $exec $brightness_down; $exec $alert $wrt
 
  # screen poweroff
- bindsym XF86ScreenSaver $exec $oklò_disable; $no_border mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver $exec $oklò_disable; mode $def $exec xset dpms force off; $exec $alert $wrt
 
  # screenshot
- bindsym --release Print $exec $oklò_disable; $no_border mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print $exec $oklò_disable; mode $def $exec i3-scrot; $exec $alert $wrt
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $exec $oklò_disable; $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle $exec $oklò_disable; mode $def $exec $touchpad_toggle; $exec $alert $wrt
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $oklò_disable; $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam $exec $oklò_disable; mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $exec $oklò_disable; $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e $exec $oklò_disable; mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -1166,36 +1175,39 @@
  bindsym 0 $exec redshift -P -O 6500K
  bindsym plus $exec redshift -O 6400K
 
- bindsym Menu $no_border mode $hov $exec $alert $hov & $oklò_enable
- bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow, fullscreen disable
- bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
- bindsym Return $no_border mode $def $exec $alert $wrt
- bindsym BackSpace $no_border mode $def $exec $alert $wrt
- bindsym space $no_border mode $def $exec $alert $wrt
- bindsym Delete $no_border mode $def $exec $alert $wrt
- bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
- bindsym Mod4+z $no_border mode $str $exec $alert $str
+ bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+ bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+ bindsym Return mode $def $exec $alert $wrt
+ bindsym BackSpace mode $def $exec $alert $wrt
+ bindsym space mode $def $exec $alert $wrt
+ bindsym Delete mode $def $exec $alert $wrt
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+ bindsym Mod4+z mode $str $exec $alert $str
  # display
- bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
+ bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
 
  # screen poweroff
- bindsym XF86ScreenSaver $no_border mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
 
  # screenshot
- bindsym --release Print $no_border mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -1386,39 +1398,42 @@
  # start layout
  mode $str {
  # options
- bindsym 1 $no_border mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt
- bindsym 2 $no_border mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
+ bindsym 1 mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt
+ bindsym 2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
 
- bindsym Menu $no_border mode $hov $exec $alert $hov & $oklò_enable
- bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow, fullscreen disable
- bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
- bindsym Return $no_border mode $def $exec $alert $wrt
- bindsym BackSpace $no_border mode $def $exec $alert $wrt
- bindsym space $no_border mode $def $exec $alert $wrt
- bindsym Delete $no_border mode $def $exec $alert $wrt
- bindsym Mod4+c $no_border mode $cnf $exec $alert $cnf
- bindsym Mod4+r $no_border mode $red $exec $alert $red
+ bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+ bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+ bindsym Return mode $def $exec $alert $wrt
+ bindsym BackSpace mode $def $exec $alert $wrt
+ bindsym space mode $def $exec $alert $wrt
+ bindsym Delete mode $def $exec $alert $wrt
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+ bindsym Mod4+r mode $red $exec $alert $red
  # display
- bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
+ bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
 
  # screen poweroff
- bindsym XF86ScreenSaver $no_border mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
 
  # screenshot
- bindsym --release Print $no_border mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border
@@ -1618,50 +1633,53 @@
  # configuration files launcher
  mode $cnf {
  # options
- bindsym c $no_border mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt
- bindsym m $no_border mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt
- bindsym b $no_border mode $def $exec $emacs ~/.i3/bindings.py; $exec $alert $wrt
- bindsym i $no_border mode $def $exec $emacs ~/.gitignore; $exec $alert $wrt
- bindsym a $no_border mode $def $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt
- bindsym e $no_border mode $def $exec $emacs ~/.emacs; $exec $alert $wrt
- bindsym s $no_border mode $def $exec $emacs ~/.config/i3status/config; $exec $alert $wrt
- bindsym z $no_border mode $def $exec $emacs ~/.zshrc; $exec $alert $wrt
- bindsym g $no_border mode $def $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt
- bindsym l $no_border mode $def $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt
- bindsym 1 $no_border mode $def $exec $emacs ~/.workspaces/$w1.json; $exec $alert $wrt
- bindsym 2 $no_border mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
- bindsym r $no_border mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
+ bindsym c mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt
+ bindsym m mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt
+ bindsym b mode $def $exec $emacs ~/.i3/bindings.py; $exec $alert $wrt
+ bindsym i mode $def $exec $emacs ~/.gitignore; $exec $alert $wrt
+ bindsym a mode $def $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt
+ bindsym e mode $def $exec $emacs ~/.emacs; $exec $alert $wrt
+ bindsym s mode $def $exec $emacs ~/.config/i3status/config; $exec $alert $wrt
+ bindsym z mode $def $exec $emacs ~/.zshrc; $exec $alert $wrt
+ bindsym g mode $def $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt
+ bindsym l mode $def $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt
+ bindsym 1 mode $def $exec $emacs ~/.workspaces/$w1.json; $exec $alert $wrt
+ bindsym 2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
+ bindsym r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
- bindsym Menu $no_border mode $hov $exec $alert $hov & $oklò_enable
- bindsym XF86PowerOff $no_border mode $pow $exec $alert $pow, fullscreen disable
- bindsym Mod4+space $no_border mode $tch $exec $alert $tch & $touchpad_on
- bindsym Return $no_border mode $def $exec $alert $wrt
- bindsym BackSpace $no_border mode $def $exec $alert $wrt
- bindsym space $no_border mode $def $exec $alert $wrt
- bindsym Delete $no_border mode $def $exec $alert $wrt
- bindsym Mod4+r $no_border mode $red $exec $alert $red
- bindsym Mod4+z $no_border mode $str $exec $alert $str
+ bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+ bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+ bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+ bindsym Return mode $def $exec $alert $wrt
+ bindsym BackSpace mode $def $exec $alert $wrt
+ bindsym space mode $def $exec $alert $wrt
+ bindsym Delete mode $def $exec $alert $wrt
+ bindsym Mod4+r mode $red $exec $alert $red
+ bindsym Mod4+z mode $str $exec $alert $str
  # display
- bindsym XF86Display $no_border mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
+ bindsym XF86Display mode $def $exec xrandr --output eDP1 --mode 1920x1080 --preferred; $exec $alert $wrt
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $no_border mode $def $exec $brightness_up; $exec $alert $wrt
- bindsym XF86MonBrightnessDown $no_border mode $def $exec $brightness_down; $exec $alert $wrt
+ bindsym XF86MonBrightnessUp mode $def $exec $brightness_up; $exec $alert $wrt
+ bindsym XF86MonBrightnessDown mode $def $exec $brightness_down; $exec $alert $wrt
 
  # screen poweroff
- bindsym XF86ScreenSaver $no_border mode $def $exec xset dpms force off; $exec $alert $wrt
+ bindsym XF86ScreenSaver mode $def $exec xset dpms force off; $exec $alert $wrt
 
  # screenshot
- bindsym --release Print $no_border mode $def $exec i3-scrot; $exec $alert $wrt
+ bindsym --release Print mode $def $exec i3-scrot; $exec $alert $wrt
 
  # touchpad toggle
- bindsym XF86TouchpadToggle $no_border mode $def $exec $touchpad_toggle; $exec $alert $wrt
+ bindsym XF86TouchpadToggle mode $def $exec $touchpad_toggle; $exec $alert $wrt
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
 
  # start dmenu for applications
- bindsym Mod4+Shift+exclam $no_border mode $def $exec $dmenu; $exec $alert $wrt
+ bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
 
  # start dmenu for commands
- bindsym Mod4+control+e $no_border mode $def $exec dmenu_run; $exec $alert $wrt
+ bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # borders
  bindsym Mod4+b $border

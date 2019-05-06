@@ -13,6 +13,7 @@ focus all on workspace swithc
 bindmodes
 also _R
 fix resize
+reshape modes struct
 
 Emacs:
 ctrl-del until line start

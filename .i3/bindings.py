@@ -102,6 +102,7 @@ def MAKE_MODE(mode_tag):
         string += BINDBLOCKS({"options":options},mode_tag,after_mode)
     string += BIND_MODES(mode_tag,free_keys)
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag,"$wrt")
+    string += BIND_MOD1_COMMANDS(mode_tag)
     string += BIND_MOD4_COMMANDS(mode_tag)
     string += LOCK(mode_tag,free_keys)
     if len([x for x in ['"Shift_L"','"Shift_R"'] if x in free_keys]):

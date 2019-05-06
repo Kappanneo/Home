@@ -7,7 +7,7 @@ MODES = {
 "$pow":
     ('"POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"',
      ['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
-     "$no_border mode $pow",
+     "mode $pow",
      "$exec $alert $pow, fullscreen disable",
      "",
      [
@@ -24,7 +24,7 @@ MODES = {
 "$wrt":
     ('"WRITE: writing enabled"',
      ['Return','BackSpace','space','Delete'],
-     "$no_border mode $def",
+     "mode $def",
      "$exec $alert $wrt",
      "",
      [],
@@ -35,7 +35,7 @@ MODES = {
 "$tch":
     ('"TOUCH: touchpad enabled  [space|esc] write mode"',
      ['Mod4+space'],
-     "$no_border mode $tch",
+     "mode $tch",
      "$exec $alert $tch & $touchpad_on",
      "$exec $touchpad_off",
      [],
@@ -56,7 +56,7 @@ MODES = {
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
      ['Menu'],
-     "$no_border mode $hov",
+     "mode $hov",
      "$exec $alert $hov & $oklò_enable",
      "$exec $oklò_disable",
      [],
@@ -70,7 +70,7 @@ SUBMODES = {
 "$str":
     ('"START: [1|2] layouts  [space|esc] exit mode"',
      'z',
-     "$no_border mode $str",
+     "mode $str",
      "$exec $alert $str",
      "",
     [    
@@ -84,7 +84,7 @@ SUBMODES = {
 "$red":
     ('"REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"',
      'r',
-     "$no_border mode $red",
+     "mode $red",
      "$exec $alert $red",
      "",
      [    
@@ -107,7 +107,7 @@ SUBMODES = {
 "$cnf":
     ('"CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"',
      'c',
-     "$no_border mode $cnf",
+     "mode $cnf",
      "$exec $alert $cnf",
      "",
      [    
