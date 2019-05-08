@@ -254,6 +254,16 @@
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+ # where am i?
+ bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
+
+
+
+ #                             ALT-COMMANDS                                    #
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
+
 
 
  #                            SUPER-COMMANDS                                   #
@@ -304,6 +314,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -348,7 +364,7 @@
  bindsym Mod4+control+e $exec dmenu_run
 
  # application menu
- bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -378,6 +394,12 @@
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
+ # wasd focus
+ bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
@@ -389,30 +411,25 @@
 
 
 
- #                             ALT-COMMANDS                                    #
-
- # kill
- bindsym Mod1+F4 kill; $refresh_status_bar
-
-
-
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                  MODES                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+ # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+s mode $str $exec $alert $str
+ bindsym Mod4+z mode $str $exec $alert $str
+
 
 
  #                             POWEROFF-MODE                                   #
 
  mode $pow {
+
  # options
  bindsym XF86PowerOff mode $def $exec $alert $pow; $exec $alert $wrt
  bindsym q mode $def $exec systemctl poweroff; $exec $alert $wrt
@@ -420,9 +437,9 @@
  bindsym s mode $def $exec systemctl suspend; $exec $alert $wrt
  bindsym h mode $def $exec systemctl hibernate; $exec $alert $wrt
 
+ # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
@@ -431,7 +448,8 @@
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+s mode $str $exec $alert $str
+ bindsym Mod4+z mode $str $exec $alert $str
+
  # borders
  bindsym --border button2 $no_border
 
@@ -450,6 +468,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # where am i?
+ bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -500,6 +521,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -544,7 +571,7 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # application menu
- bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -573,6 +600,12 @@
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # wasd focus
+ bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -646,9 +679,10 @@
  #                              TOUCH-MODE                                     #
 
  mode $tch {
+
+ # modes
  bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym Shift+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
  bindsym Return $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym BackSpace $exec $touchpad_off; mode $def $exec $alert $wrt
@@ -656,7 +690,8 @@
  bindsym Delete $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $touchpad_off; mode $red $exec $alert $red
- bindsym Mod4+s $exec $touchpad_off; mode $str $exec $alert $str
+ bindsym Mod4+z $exec $touchpad_off; mode $str $exec $alert $str
+
  # borders
  bindsym --border button2 $no_border
 
@@ -675,6 +710,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # where am i?
+ bindsym --release "Super_L" $exec $touchpad_off; mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -725,6 +763,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -769,7 +813,7 @@
  bindsym Mod4+control+e $exec $touchpad_off; mode $def $exec dmenu_run; $exec $alert $wrt
 
  # application menu
- bindsym Mod4+z $exec $touchpad_off; mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu $exec $touchpad_off; mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
  # browse workspaces
  bindsym Mod4+Tab $exec $touchpad_off; mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -798,6 +842,12 @@
  bindsym Mod4+8 $exec $touchpad_off; mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 $exec $touchpad_off; mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+x $exec $touchpad_off; mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # wasd focus
+ bindsym Mod4+w $exec $touchpad_off; mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+a $exec $touchpad_off; mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+s $exec $touchpad_off; mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+d $exec $touchpad_off; mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # cut
  bindsym Mod4+control+x $exec $touchpad_off; mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -874,6 +924,8 @@
  #                              HOVER-MODE                                     #
 
  mode $hov {
+
+ # modes
  bindsym XF86PowerOff $exec $oklò_disable; mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space $exec $oklò_disable; mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $exec $oklò_disable; mode $def $exec $alert $wrt
@@ -881,7 +933,8 @@
  bindsym Delete $exec $oklò_disable; mode $def $exec $alert $wrt
  bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
- bindsym Mod4+s $exec $oklò_disable; mode $str $exec $alert $str
+ bindsym Mod4+z $exec $oklò_disable; mode $str $exec $alert $str
+
  # borders
  bindsym --border button2 $no_border
 
@@ -900,6 +953,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # where am i?
+ bindsym --release "Super_L" $border, $focus_one, fullscreen disable; $exec $touchpad_off
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -950,6 +1006,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -994,7 +1056,7 @@
  bindsym Mod4+control+e $exec $oklò_disable; mode $def $exec dmenu_run; $exec $alert $wrt
 
  # application menu
- bindsym Mod4+z exec morc_menu
+ bindsym Mod4+Menu exec morc_menu
 
  # browse workspaces
  bindsym Mod4+Tab workspace next; $refresh_status_bar
@@ -1023,6 +1085,12 @@
  bindsym Mod4+8 workspace $w8; $refresh_status_bar
  bindsym Mod4+9 workspace $w9; $refresh_status_bar
  bindsym Mod4+x workspace $wx; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
 
  # cut
  bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
@@ -1144,6 +1212,7 @@
 
  # redshift
  mode $red {
+
  # options
  bindsym 1 $exec redshift -P -O 2100K
  bindsym 2 $exec redshift -P -O 2300K
@@ -1157,9 +1226,9 @@
  bindsym 0 $exec redshift -P -O 6500K
  bindsym plus $exec redshift -O 6400K
 
+ # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1168,7 +1237,8 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
- bindsym Mod4+s mode $str $exec $alert $str
+ bindsym Mod4+z mode $str $exec $alert $str
+
  # borders
  bindsym --border button2 $no_border
 
@@ -1187,6 +1257,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # where am i?
+ bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1237,6 +1310,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1281,7 +1360,7 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # application menu
- bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1310,6 +1389,12 @@
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # wasd focus
+ bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1375,13 +1460,14 @@
 
  # start layout
  mode $str {
+
  # options
  bindsym 1 mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt
  bindsym 2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
 
+ # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1391,6 +1477,7 @@
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+c mode $cnf $exec $alert $cnf
  bindsym Mod4+r mode $red $exec $alert $red
+
  # borders
  bindsym --border button2 $no_border
 
@@ -1409,6 +1496,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # where am i?
+ bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1459,6 +1549,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1503,7 +1599,7 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # application menu
- bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1532,6 +1628,12 @@
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # wasd focus
+ bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1606,6 +1708,7 @@
 
  # configuration files launcher
  mode $cnf {
+
  # options
  bindsym c mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt
  bindsym m mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt
@@ -1621,9 +1724,9 @@
  bindsym 2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
  bindsym r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
+ # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Mod4+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1632,7 +1735,8 @@
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
  bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+s mode $str $exec $alert $str
+ bindsym Mod4+z mode $str $exec $alert $str
+
  # borders
  bindsym --border button2 $no_border
 
@@ -1651,6 +1755,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # where am i?
+ bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1701,6 +1808,12 @@
  bindsym Mod4+h split h; exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
  # files
  bindsym Mod4+control+f $exec $fm
  bindsym Mod4+control+j $exec $fm Downloads
@@ -1745,7 +1858,7 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt
 
  # application menu
- bindsym Mod4+z mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1774,6 +1887,12 @@
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+
+ # wasd focus
+ bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable

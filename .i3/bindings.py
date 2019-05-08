@@ -46,6 +46,12 @@ def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",po
         string += "\n"
     return string
 
+def BIND_TOP_COMMANDS(mode_tag):
+    string = ""
+    string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
+    string += BINDBLOCKS(TOP_COMMANDS_TO_HOVER,mode_tag,"$hov")
+    return string
+
 def BIND_ALT_COMMANDS(mode_tag,modifier="Mod1"):
     string = ""
     string += BINDBLOCKS(ALT_COMMANDS_RSB,mode_tag,modifier=modifier,postfix="$refresh_status_bar")
@@ -62,7 +68,7 @@ def BIND_SUPER_COMMANDS(mode_tag,modifier="Mod4"):
     return string
 
 def BIND_MODES(mode_tag,free_keys=[]):
-    string = ""
+    string = " # modes\n"
     M = [x for x in MODES if x != mode_tag]
     M.sort()
     for after_mode in M:
@@ -75,7 +81,7 @@ def BIND_MODES(mode_tag,free_keys=[]):
         _, keys, _, _, _, _, _, _, _ = SUBMODES[after_mode]
         for key in [x for x in keys if x not in free_keys]:
             string += BIND(("Mod4+"+key,""),mode_tag,after_mode)
-    return string
+    return string + "\n"
 
 USED_KEYS = {}
 
@@ -98,11 +104,11 @@ def LOCK_SHIFT(mode,free_keys=[]):
 
 def MAKE_MODE(mode_tag):
     _, _, _, _, _, options, after_mode, free_keys, free_shift_keys = ALLMODES[mode_tag]
-    string = " mode "+mode_tag+" {\n"
+    string = " mode "+mode_tag+" {\n\n"
     if len(options):
         string += BINDBLOCKS({"options":options},mode_tag,after_mode)
     string += BIND_MODES(mode_tag,free_keys)
-    string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
+    string += BIND_TOP_COMMANDS(mode_tag)
     string += BIND_ALT_COMMANDS(mode_tag)
     string += BIND_SUPER_COMMANDS(mode_tag)
     string += LOCK(mode_tag,free_keys)

@@ -55,7 +55,7 @@ MODES = {
 
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
-     ['Menu','Shift+Menu','Mod4+Menu'],
+     ['Menu','Shift+Menu'],
      "mode $hov",
      "$exec $alert $hov & $oklò_enable",
      "$exec $oklò_disable",
@@ -69,7 +69,7 @@ SUBMODES = {
 
 "$str":
     ('"START: [1|2] layouts  [space|esc] exit mode"',
-     's',
+     'z',
      "mode $str",
      "$exec $alert $str",
      "",
