@@ -164,6 +164,9 @@
  # keybinding
  $exec $disable_Caps
 
+ # start with touchpad disabled
+ $exec $touchpad_off
+ 
  # background (not always permanent, may need reaload)
  $exec_always $enable_autoscroll
  $exec_always nitrogen --restore
