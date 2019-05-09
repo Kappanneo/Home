@@ -166,7 +166,7 @@
 
  # start with touchpad disabled
  $exec $touchpad_off
- 
+
  # background (not always permanent, may need reaload)
  $exec_always $enable_autoscroll
  $exec_always nitrogen --restore
@@ -177,7 +177,7 @@
  $exec nitrogen --restore; sleep 1; compton -b
  $exec xfce4-power-manager
  # $exec start_conky_maja
- $exec alttab
+ $exec alttab -s 1 -d 1
  
  # bar applications
  $exec nm-applet
