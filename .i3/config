@@ -230,7 +230,7 @@
 
  #                             ON-NEW-WINDOW                                   #
 
- for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border mode $hov $exec $oklò_enable & $alert $hov
+ for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border
 
  for_window [floating] floating disable
 
@@ -256,6 +256,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # no border write
+ bindsym Shift+"Super_L" $no_border
 
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -309,8 +312,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -348,8 +355,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
@@ -472,6 +483,9 @@
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+ # no border write
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
@@ -516,8 +530,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -555,8 +573,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
@@ -714,6 +736,9 @@
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+ # no border write
+ bindsym Shift+"Super_L" $exec $touchpad_off; mode $def $no_border; $exec $alert $wrt
+
  # where am i?
  bindsym --release "Super_L" $exec $touchpad_off; mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
@@ -758,8 +783,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -797,8 +826,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
@@ -901,7 +934,6 @@
  bindsym ograve nop
  bindsym agrave nop
  bindsym ugrave nop
- bindsym "Shift_L" nop
  bindsym less nop
  bindsym z nop
  bindsym x nop
@@ -917,10 +949,56 @@
  bindsym "Super_L" nop
  bindsym $alt_gr nop
  bindsym "Control_R" nop
- bindsym Up nop
- bindsym Left nop
- bindsym Down nop
- bindsym Right nop
+
+ # also Shift+ (since Shift is not locked)
+ bindsym Shift+bar nop
+ bindsym Shift+exclam nop
+ bindsym Shift+quotedbl nop
+ bindsym Shift+sterling nop
+ bindsym Shift+dollar nop
+ bindsym Shift+percent nop
+ bindsym Shift+ampersand nop
+ bindsym Shift+slash nop
+ bindsym Shift+parenleft nop
+ bindsym Shift+parenright nop
+ bindsym Shift+equal nop
+ bindsym Shift+question nop
+ bindsym Shift+asciicircum nop
+ bindsym Shift+q nop
+ bindsym Shift+w nop
+ bindsym Shift+e nop
+ bindsym Shift+r nop
+ bindsym Shift+t nop
+ bindsym Shift+y nop
+ bindsym Shift+u nop
+ bindsym Shift+i nop
+ bindsym Shift+o nop
+ bindsym Shift+p nop
+ bindsym Shift+eacute nop
+ bindsym Shift+asterisk nop
+ bindsym Shift+a nop
+ bindsym Shift+s nop
+ bindsym Shift+d nop
+ bindsym Shift+f nop
+ bindsym Shift+g nop
+ bindsym Shift+h nop
+ bindsym Shift+j nop
+ bindsym Shift+k nop
+ bindsym Shift+l nop
+ bindsym Shift+ccedilla nop
+ bindsym Shift+degree nop
+ bindsym Shift+section nop
+ bindsym Shift+greater nop
+ bindsym Shift+z nop
+ bindsym Shift+x nop
+ bindsym Shift+c nop
+ bindsym Shift+v nop
+ bindsym Shift+b nop
+ bindsym Shift+n nop
+ bindsym Shift+m nop
+ bindsym Shift+semicolon nop
+ bindsym Shift+colon nop
+ bindsym Shift+underscore nop
 
  }
 
@@ -932,7 +1010,6 @@
  bindsym XF86PowerOff $exec $oklò_disable; mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space $exec $oklò_disable; mode $tch $exec $alert $tch & $touchpad_on
  bindsym BackSpace $exec $oklò_disable; mode $def $exec $alert $wrt
- bindsym space $exec $oklò_disable; mode $def $exec $alert $wrt
  bindsym Delete $exec $oklò_disable; mode $def $exec $alert $wrt
  bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
  bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
@@ -956,6 +1033,9 @@
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # no border write
+ bindsym Shift+"Super_L" $exec $oklò_disable; mode $def $no_border; $exec $alert $wrt
 
  # where am i?
  bindsym --release "Super_L" $border, $focus_one, fullscreen disable; $exec $touchpad_off
@@ -1001,8 +1081,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -1040,8 +1124,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
@@ -1261,6 +1349,9 @@
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+ # no border write
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
@@ -1305,8 +1396,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -1344,8 +1439,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
@@ -1500,6 +1599,9 @@
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+ # no border write
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
@@ -1544,8 +1646,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -1583,8 +1689,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
@@ -1759,6 +1869,9 @@
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+ # no border write
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
 
@@ -1803,8 +1916,12 @@
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
  bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
  bindsym Mod4+v split v; exec notify-send 'vertical'
@@ -1842,8 +1959,12 @@
  # resize (precise)
  bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
  bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
  bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
 
  # resize (scale)
  bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt

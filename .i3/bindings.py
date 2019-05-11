@@ -49,6 +49,7 @@ def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",po
 def BIND_TOP_COMMANDS(mode_tag):
     string = ""
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
+    string += BINDBLOCKS(TOP_COMMANDS_TO_WRITE,mode_tag,"$wrt")
     string += BINDBLOCKS(TOP_COMMANDS_TO_HOVER,mode_tag,"$hov")
     return string
 

@@ -40,8 +40,8 @@ MODES = {
      "$exec $touchpad_off",
      [],
      "",
-     ['"Control_L"','"Alt_L"'],
-     []),
+     ARROWS["default"]+['"Control_L"','"Alt_L"','"Shift_L"'],
+     ARROWS["default"]),
 
 # "$sup":
 #     ('"SUPER: [oklò] select  [shift+] move  [123] workspace  [Menu] hover mode  [super+space] touch mode  [space|esc] write mode"',
@@ -61,7 +61,7 @@ MODES = {
      "$exec $oklò_disable",
      [],
      "",
-     ARROWS["default"]+['"Alt_L"','"Control_L"','"Shift_L"',"Return","Tab","Menu"],
+     ARROWS["default"]+['"Alt_L"','"Control_L"','space','"Shift_L"',"Return","Tab","Menu"],
      ARROWS["default"])
 }
 
