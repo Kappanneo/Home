@@ -40,7 +40,7 @@ MODES = {
      "$exec $touchpad_off",
      [],
      "",
-     ARROWS["default"]+['"Control_L"','"Alt_L"','"Shift_L"'],
+     ARROWS["default"]+['"Control_L"','"Alt_L"','"Shift_L"',"Tab"],
      ARROWS["default"]),
 
 # "$sup":
@@ -55,7 +55,7 @@ MODES = {
 
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
-     ['Menu','Shift+Menu'],
+     ['Menu'],
      "mode $hov",
      "$exec $alert $hov & $oklò_enable",
      "$exec $oklò_disable",
