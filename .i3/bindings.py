@@ -31,20 +31,25 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
             if exit != "": y = exit + "; " + y
     return " bindsym {} {}\n".format(x,y)
 
-def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",postfix=""):
+def BINDBLOCK(d,name,current_mode=None,after_mode=None,modifier="",prefix="",postfix=""):
+    string = " # {}\n".format(name)
+    if type(d) == tuple:
+        string += BIND(d,current_mode,after_mode,modifier,prefix,postfix)
+    elif type(d) == list:
+        for t in d:
+            string += BIND(t,current_mode,after_mode,modifier,prefix,postfix)
+    return string + "\n"
+
+def BINDALL(obj,fun,**kwargs):
     string = ""
-    K = blocks.keys()
-    K.sort()
-    for name in K:
-        string += " # {}\n".format(name)
-        x = blocks[name]
-        if type(x) == tuple:
-            string += BIND(x,current_mode,after_mode,modifier,prefix,postfix)
-        elif type(x) == list:
-            for t in x:
-                string += BIND(t,current_mode,after_mode,modifier,prefix,postfix)
-        string += "\n"
+    keys = obj.keys()
+    keys.sort()
+    for i in keys:
+        string += fun(obj[i],i,**kwargs)
     return string
+
+def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",postfix=""):
+    return BINDALL(blocks,BINDBLOCK,current_mode=current_mode,after_mode=after_mode,modifier=modifier,prefix=prefix,postfix=postfix)
 
 def BIND_TOP_COMMANDS(mode_tag):
     string = ""
@@ -68,20 +73,22 @@ def BIND_SUPER_COMMANDS(mode_tag,modifier="Mod4"):
     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_TO_HOVER_RSB,mode_tag,"$hov",modifier=modifier+"+control",postfix="$refresh_status_bar")
     return string
 
+def BIND_TO_MODE(d,after_mode,current_mode="",modifier="",free_keys=[]):
+    string = ""
+    if current_mode == "" or current_mode == after_mode:
+        return string
+    else:
+        _, keys, _, _, _, _, _, _, _ = d
+        for key in [x for x in keys if x not in free_keys]:
+            if modifier != "":
+                key = modifier + "+" + key
+            string += BIND((key,""),current_mode,after_mode)
+        return string
+
 def BIND_MODES(mode_tag,free_keys=[]):
     string = " # modes\n"
-    M = [x for x in MODES if x != mode_tag]
-    M.sort()
-    for after_mode in M:
-        _, keys, _, _, _, _, _, _, _ = MODES[after_mode]
-        for key in [x for x in keys if x not in free_keys]:
-            string += BIND((key,""),mode_tag,after_mode)
-    S = [x for x in SUBMODES if x != mode_tag]
-    S.sort()
-    for after_mode in S:
-        _, keys, _, _, _, _, _, _, _ = SUBMODES[after_mode]
-        for key in [x for x in keys if x not in free_keys]:
-            string += BIND(("Mod4+"+key,""),mode_tag,after_mode)
+    string += BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag,free_keys=free_keys)
+    string += BINDALL(SUBMODES,BIND_TO_MODE,current_mode=mode_tag,modifier="Mod4",free_keys=free_keys)
     return string + "\n"
 
 USED_KEYS = {}
@@ -117,26 +124,5 @@ def MAKE_MODE(mode_tag):
         string += LOCK_SHIFT(mode_tag,free_shift_keys)
     string += " }"
     return string
-
-# def MAKE_SUPER_MODE():
-#     string = " mode $sup {\n"
-#     string += "\n # # # # # # # MODES # # # # # # #\n\n"
-#     string += BIND_MODES("$sup")
-#     string += "\n # # # # # # COMMANDS# # # # # # #\n\n"
-#     string += BIND(('"Super_L"',"fullscreen disable $exec $focus_one"),"$sup")
-#     string += BINDBLOCKS(TOP_COMMANDS,"$sup","$hov")
-#     string += BINDBLOCKS(ALT_COMMANDS_RSB,"$sup",modifier="Mod1",postfix="$refresh_status_bar")
-#     string += BINDBLOCKS(DMENU_COMMANDS,"$sup","$wrt")
-#     string += BINDBLOCKS(SUPER_COMMANDS,"$sup")
-#     string += BINDBLOCKS(SUPER_COMMANDS_RSB,"$sup",postfix="$refresh_status_bar")
-#     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS,"$sup",modifier="control")
-#     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_RSB,"$sup",modifier="control",postfix="$refresh_status_bar")
-#     string += "\n # # # # # MOD4-COMMANDS # # # # #\n\n"
-#     string += BIND_MOD4_COMMANDS("$sup")
-#     string += "\n # # # # # # # LOCKS # # # # # # #\n\n"
-#     string += LOCK("$sup",ARROWS["default"]+['"Alt_L"'])
-#     string += LOCK_SHIFT("$sup")
-#     string += " }"
-#     return string
 
 #end python

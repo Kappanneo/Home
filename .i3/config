@@ -50,6 +50,30 @@
  client.background       #222222
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                               STATUS-BAR                                    #
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
+ bar {
+        status_command    ./.bin/my_status.sh
+        position          bottom
+        mode              dock
+        workspace_buttons yes
+        colors {
+                   background #000000
+                   statusline #999999
+                   focused_workspace  #ffffff #000000
+                   active_workspace   #ffffff #000000
+                   inactive_workspace #888888 #000000
+                   urgent_workspace   #ffffff #000000
+               }
+
+     # disable scrolling on status bar
+        bindsym button4 nop # scroll wheel up
+        bindsym button5 nop # scroll wheel down
+ }
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                              DEFINITIONS                                    #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -105,59 +129,6 @@
  set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                               STATUS-BAR                                    #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
- bar {
-        status_command    ./.bin/my_status.sh
-        position          bottom
-        mode              dock
-        workspace_buttons yes
-        colors {
-                   background #000000
-                   statusline #999999
-                   focused_workspace  #ffffff #000000
-                   active_workspace   #ffffff #000000
-                   inactive_workspace #888888 #000000
-                   urgent_workspace   #ffffff #000000
-               }
-
-     # disable scrolling on status bar
-        bindsym button4 nop # scroll wheel up
-        bindsym button5 nop # scroll wheel down
- }
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                              APPLICATIONS                                   #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- # code
- assign [class=".*code.*"] $w3
-
- # android studio
- assign [class="jetbrains-studio"] $w3
-
- # steam
- assign [class="Steam"] $w5
- assign [class="Wine"] $w5
- for_window [title="Steam - News"] kill
- for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
- for_window [title="Steam"] split h
-
- # discord and skype
- assign [class="discord"] $w6
- assign [title="Telegram"] $w6
- assign [title="Skype"] $w6
-
- # texmaker
- assign [title="Texmaker"] $w7
- assign [title=".*overleaf.*"] $w7
-
- # gimp
- assign [class="Gimp.*"] $w9
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                STARTUP                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -211,6 +182,35 @@
 
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                              APPLICATIONS                                   #
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ # code
+ assign [class=".*code.*"] $w3
+
+ # android studio
+ assign [class="jetbrains-studio"] $w3
+
+ # steam
+ assign [class="Steam"] $w5
+ assign [class="Wine"] $w5
+ for_window [title="Steam - News"] kill
+ for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
+ for_window [title="Steam"] split h
+
+ # discord and skype
+ assign [class="discord"] $w6
+ assign [title="Telegram"] $w6
+ assign [title="Skype"] $w6
+
+ # texmaker
+ assign [title="Texmaker"] $w7
+ assign [title=".*overleaf.*"] $w7
+
+ # gimp
+ assign [class="Gimp.*"] $w9
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                 MODES                                       #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -259,6 +259,9 @@
 
  # no border write
  bindsym Shift+"Super_L" $no_border
+
+ # no border hover
+ bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable
 
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -406,7 +409,6 @@
  bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
- bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # wasd focus
  bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -421,7 +423,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
 
 
@@ -431,7 +433,6 @@
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Mod4+c mode $cnf $exec $alert $cnf
@@ -453,7 +454,6 @@
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
@@ -485,6 +485,9 @@
 
  # no border write
  bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
+ # no border hover
+ bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable
 
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -624,7 +627,6 @@
  bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
- bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # wasd focus
  bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -639,7 +641,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -707,7 +709,6 @@
 
  # modes
  bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
- bindsym Shift+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
  bindsym Return $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym BackSpace $exec $touchpad_off; mode $def $exec $alert $wrt
@@ -738,6 +739,9 @@
 
  # no border write
  bindsym Shift+"Super_L" $exec $touchpad_off; mode $def $no_border; $exec $alert $wrt
+
+ # no border hover
+ bindsym Shift+Menu $exec $touchpad_off; mode $hov $no_border; $exec $alert $hov & $oklò_enable
 
  # where am i?
  bindsym --release "Super_L" $exec $touchpad_off; mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -877,7 +881,6 @@
  bindsym Mod4+7 $exec $touchpad_off; mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+8 $exec $touchpad_off; mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 $exec $touchpad_off; mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
- bindsym Mod4+x $exec $touchpad_off; mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # wasd focus
  bindsym Mod4+w $exec $touchpad_off; mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -892,7 +895,7 @@
  bindsym Mod4+control+w $exec $touchpad_off; mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec $touchpad_off; mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v $exec $touchpad_off; mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -908,7 +911,6 @@
  bindsym 0 nop
  bindsym apostrophe nop
  bindsym igrave nop
- bindsym Tab nop
  bindsym q nop
  bindsym w nop
  bindsym e nop
@@ -1036,6 +1038,9 @@
 
  # no border write
  bindsym Shift+"Super_L" $exec $oklò_disable; mode $def $no_border; $exec $alert $wrt
+
+ # no border hover
+ bindsym Shift+Menu $no_border
 
  # where am i?
  bindsym --release "Super_L" $border, $focus_one, fullscreen disable; $exec $touchpad_off
@@ -1175,7 +1180,6 @@
  bindsym Mod4+7 workspace $w7; $refresh_status_bar
  bindsym Mod4+8 workspace $w8; $refresh_status_bar
  bindsym Mod4+9 workspace $w9; $refresh_status_bar
- bindsym Mod4+x workspace $wx; $refresh_status_bar
 
  # wasd focus
  bindsym Mod4+w focus up; $refresh_status_bar
@@ -1190,7 +1194,7 @@
  bindsym Mod4+control+w kill; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar
+ bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar
 
  # unused keys
  bindsym backslash nop
@@ -1319,7 +1323,6 @@
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1351,6 +1354,9 @@
 
  # no border write
  bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
+ # no border hover
+ bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable
 
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -1490,7 +1496,6 @@
  bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
- bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # wasd focus
  bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1505,7 +1510,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -1569,7 +1574,6 @@
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1601,6 +1605,9 @@
 
  # no border write
  bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
+ # no border hover
+ bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable
 
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -1740,7 +1747,6 @@
  bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
- bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # wasd focus
  bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1755,7 +1761,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -1839,7 +1845,6 @@
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym Shift+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Return mode $def $exec $alert $wrt
@@ -1871,6 +1876,9 @@
 
  # no border write
  bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt
+
+ # no border hover
+ bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable
 
  # where am i?
  bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable
@@ -2010,7 +2018,6 @@
  bindsym Mod4+7 mode $hov workspace $w7; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+8 mode $hov workspace $w8; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+9 mode $hov workspace $w9; $refresh_status_bar; $exec $alert $hov & $oklò_enable
- bindsym Mod4+x mode $hov workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # wasd focus
  bindsym Mod4+w mode $hov focus up; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -2025,7 +2032,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop

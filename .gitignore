@@ -19,11 +19,13 @@
 !.i3/makefile
 !.i3/pym.py
 !.i3/bindings.py
+!.i3/commands.py
 !.i3/modes.py
 !.i3/workspaces.py
 !.i3/arrows.py
 !.i3/keys.py
 !.i3/merge.py
+!.i3/forall.py
 
 !.config/
 .config/*
