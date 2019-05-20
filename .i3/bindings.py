@@ -21,13 +21,13 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
     if current_mode:
         USED_KEYS[current_mode].append(x)
     if after_mode and current_mode != after_mode:
-        _, _, pre, post, _, _, _, _, _, _ = ALLMODES[after_mode]
+        _, _, pre, post, _, _, _, _, _, _ = MODES[after_mode]
         if post != "" and y != "": y += "; " + post
         if post != "" and y == "": y += post
         if pre != "" and y != "": y = pre + " " + y
         if pre != "" and y == "": y = pre
         if current_mode:
-            _, _, _, _, exit, _, _, _, _, _ = ALLMODES[current_mode]
+            _, _, _, _, exit, _, _, _, _, _ = MODES[current_mode]
             if exit != "": y = exit + "; " + y
     return " bindsym {} {}\n".format(x,y)
 
@@ -83,17 +83,14 @@ def BIND_TO_MODE(d,after_mode,current_mode="",modifier="",free_keys=[]):
             if modifier != "":
                 key = modifier + "+" + key
             string += BIND((key,""),current_mode,after_mode)
-        return string
+        return string + "\n"
 
 def BIND_MODES(mode_tag,free_keys=[]):
-    string = " # modes\n"
-    string += BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag,free_keys=free_keys)
-    string += BINDALL(SUBMODES,BIND_TO_MODE,current_mode=mode_tag,modifier="Mod4",free_keys=free_keys)
-    return string + "\n"
+    return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag,free_keys=free_keys)
 
 USED_KEYS = {}
 
-for x in ALLMODES.keys():
+for x in MODES.keys():
     USED_KEYS[x] = []
 
 def LOCK(mode,free_keys=[]):
@@ -111,7 +108,7 @@ def LOCK_SHIFT(mode,free_keys=[]):
     return string
 
 def MAKE_MODE(mode_tag):
-    _, _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys = ALLMODES[mode_tag]
+    _, _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys = MODES[mode_tag]
     string = " mode "+mode_tag+" {\n\n"
     if len(options):
         string += BINDBLOCKS({"options":options},mode_tag,after_mode,modifier=modifier)

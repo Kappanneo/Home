@@ -1,4 +1,3 @@
-#include "merge.py"
 #include "arrows.py"
 #begin python
 
@@ -56,14 +55,11 @@ MODES = {
      "",
      "",
      ARROWS["default"]+['"Alt_L"','"Control_L"','space','"Shift_L"',"Return","Tab","Menu"],
-     ARROWS["default"])
-}
-
-SUBMODES = {
+     ARROWS["default"]),
 
 "$str":
     ('"START: [1|2] layouts  [spaec|esc] exit mode"',
-     'z',
+     ['Mod4+z'],
      "mode $str",
      "$exec $alert $str",
      "",
@@ -78,7 +74,7 @@ SUBMODES = {
 
 "$red":
     ('"REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"',
-     'r',
+     ['Mod4+r'],
      "mode $red",
      "$exec $alert $red",
      "",
@@ -102,7 +98,7 @@ SUBMODES = {
 
 "$cnf":
     ('"CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"',
-     'c',
+     ['Mod4+c'],
      "mode $cnf",
      "$exec $alert $cnf",
      "",
@@ -127,7 +123,5 @@ SUBMODES = {
      [])
 
 }
-
-ALLMODES = merge(MODES,SUBMODES)
 
 #end python

@@ -1,9 +1,6 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               SETTINGS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- # i3 config file (v4)
- # Please see http://i3wm.org/docs/userguide.html for a complete reference!
  
  # Set mod key (Mod1=<Alt>, Mod4=<Super>)
  set $mod Mod4
@@ -53,7 +50,6 @@
  #                               STATUS-BAR                                    #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
- # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
  bar {
         status_command    ./.bin/my_status.sh
         position          bottom
@@ -74,7 +70,7 @@
  }
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                              DEFINITIONS                                    #
+ #                               DEFINITIONS                                   #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # The (new) i3-dmenu-desktop which only displays applications
@@ -90,21 +86,21 @@
  set $exec_always exec_always --no-startup-id
  set $alert notify-send --expire-time=1200
  set $refresh_status_bar exec killall -USR1 i3status
- set $focus_all focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent; focus parent
- set $focus_one focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child ; focus child
+ set $focus_all focus parent; focus parent; focus parent; focus parent
+ set $focus_one focus child ; focus child ; focus child ; focus child
  set $no_border [tiling] border none
  set $border [tiling] border pixel 5
  set $alt_gr "ISO_Level3_Shift"
  set $emacs emacsclient -create-frame --alternate-editor=""
 
- #                               KEYBINDINGS                                   #
+ #                                KEYBINDINGS                                  #
 
  set $disable_Caps setxkbmap -option ctrl:nocaps
  set $enable_Caps setxkbmap -option
  set $oklò_disable ~/.bin/oklò.sh 0
  set $oklò_enable ~/.bin/oklò.sh 1
 
- #                             FUNCTIONALITIES                                 #
+ #                              FUNCTIONALITIES                                #
 
  # touchpad toggle
  set $touchpad_on ~/.bin/touchpad_toggle.sh 1 & xdotool mousemove 800 450
@@ -120,7 +116,24 @@
  set $brightness_up exec "xbacklight -inc 5; notify-send 'brightness up'"
  set $brightness_down exec "xbacklight -dec 5; notify-send 'brightness down'"
 
- #                                LAYOUTS                                      #
+ #                                 WORKSPACES                                  #
+
+ set $w1 1nternet
+ set $w2 2rectory
+ set $w3 3code
+ set $w4 4terminl
+ set $w5 5team
+ set $w6 6iscord
+ set $w7 7atex
+ set $w8 8volante
+ set $w9 9imp
+
+
+ # this one is for cut and paste
+ set $wx X
+
+
+ #                                  LAYOUTS                                    #
 
  set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
  set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
@@ -128,8 +141,57 @@
  set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.75; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
  set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
+ #                                    MODES                                    #
+
+ set $def "default"
+ set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"
+ set $hov "HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"
+ set $pow "POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"
+ set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
+ set $str "START: [1|2] layouts  [spaec|esc] exit mode"
+ set $tch "TOUCH: touchpad enabled  [space|esc] write mode"
+ set $wrt "WRITE: writing enabled"
+
+
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                                STARTUP                                      #
+ #                                APPLICATIONS                                 #
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ # code
+ assign [class=".*code.*"] $w3
+
+ # android studio
+ assign [class="jetbrains-studio"] $w3
+
+ # steam
+ assign [class="Steam"] $w5
+ assign [class="Wine"] $w5
+ for_window [title="Steam - News"] kill
+ for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
+ for_window [title="Steam"] split h
+
+ # discord and skype
+ assign [class="discord"] $w6
+ assign [title="Telegram"] $w6
+ assign [title="Skype"] $w6
+
+ # texmaker
+ assign [title="Texmaker"] $w7
+ assign [title=".*overleaf.*"] $w7
+
+ # gimp
+ assign [class="Gimp.*"] $w9
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                                ON-NEW-WINDOW                                #
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border
+
+ for_window [floating] floating disable
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                                  STARTUP                                    #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # keybinding
@@ -163,79 +225,7 @@
  $exec $layout_2; $fill_2
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                               WORKSPACES                                    #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- set $w1 1nternet
- set $w2 2rectory
- set $w3 3code
- set $w4 4terminl
- set $w5 5team
- set $w6 6iscord
- set $w7 7atex
- set $w8 8volante
- set $w9 9imp
-
-
- # this one is for cut and paste
- set $wx X
-
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                              APPLICATIONS                                   #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- # code
- assign [class=".*code.*"] $w3
-
- # android studio
- assign [class="jetbrains-studio"] $w3
-
- # steam
- assign [class="Steam"] $w5
- assign [class="Wine"] $w5
- for_window [title="Steam - News"] kill
- for_window [title="Friends"] resize shrink width 22 px or 22 ppt; split h
- for_window [title="Steam"] split h
-
- # discord and skype
- assign [class="discord"] $w6
- assign [title="Telegram"] $w6
- assign [title="Skype"] $w6
-
- # texmaker
- assign [title="Texmaker"] $w7
- assign [title=".*overleaf.*"] $w7
-
- # gimp
- assign [class="Gimp.*"] $w9
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                                 MODES                                       #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- set $def "default"
- set $hov "HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"
- set $pow "POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"
- set $tch "TOUCH: touchpad enabled  [space|esc] write mode"
- set $wrt "WRITE: writing enabled"
-
-
- #                               SUB-MODES                                     #
-
- set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"
- set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
- set $str "START: [1|2] layouts  [spaec|esc] exit mode"
-
-
- #                             ON-NEW-WINDOW                                   #
-
- for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border
-
- for_window [floating] floating disable
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                               COMMANDS                                      #
+ #                                  COMMANDS                                   #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # borders
@@ -268,14 +258,14 @@
 
 
 
- #                             ALT-COMMANDS                                    #
+ #                                ALT-COMMANDS                                 #
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
 
 
- #                            SUPER-COMMANDS                                   #
+ #                               SUPER-COMMANDS                                #
 
  # borders
  bindsym Mod4+b $border
@@ -427,21 +417,27 @@
 
 
 
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                                  MODES                                      #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                                   MODES                                     #
 
- # modes
- bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
- bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
- bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
  bindsym Mod4+c mode $cnf $exec $alert $cnf
+
+ bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+
+ bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+
  bindsym Mod4+r mode $red $exec $alert $red
+
  bindsym Mod4+z mode $str $exec $alert $str
 
+ bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
 
 
- #                             POWEROFF-MODE                                   #
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                                   MODES                                     #
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ #                               POWEROFF-MODE                                 #
 
  mode $pow {
 
@@ -452,17 +448,21 @@
  bindsym s mode $def $exec systemctl suspend; $exec $alert $wrt
  bindsym h mode $def $exec systemctl hibernate; $exec $alert $wrt
 
- # modes
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+
+ bindsym Mod4+r mode $red $exec $alert $red
+
+ bindsym Mod4+z mode $str $exec $alert $str
+
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
- bindsym Mod4+c mode $cnf $exec $alert $cnf
- bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+z mode $str $exec $alert $str
 
  # borders
  bindsym --border button2 $no_border
@@ -703,20 +703,24 @@
 
  }
 
- #                              TOUCH-MODE                                     #
+ #                                TOUCH-MODE                                   #
 
  mode $tch {
 
- # modes
+ bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
+
  bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
+
  bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
+
+ bindsym Mod4+r $exec $touchpad_off; mode $red $exec $alert $red
+
+ bindsym Mod4+z $exec $touchpad_off; mode $str $exec $alert $str
+
  bindsym Return $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym BackSpace $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym space $exec $touchpad_off; mode $def $exec $alert $wrt
  bindsym Delete $exec $touchpad_off; mode $def $exec $alert $wrt
- bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
- bindsym Mod4+r $exec $touchpad_off; mode $red $exec $alert $red
- bindsym Mod4+z $exec $touchpad_off; mode $str $exec $alert $str
 
  # borders
  bindsym --border button2 $no_border
@@ -1004,18 +1008,22 @@
 
  }
 
- #                              HOVER-MODE                                     #
+ #                                HOVER-MODE                                   #
 
  mode $hov {
 
- # modes
+ bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
+
  bindsym XF86PowerOff $exec $oklò_disable; mode $pow $exec $alert $pow, fullscreen disable
+
+ bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
+
+ bindsym Mod4+z $exec $oklò_disable; mode $str $exec $alert $str
+
  bindsym Mod4+space $exec $oklò_disable; mode $tch $exec $alert $tch & $touchpad_on
+
  bindsym BackSpace $exec $oklò_disable; mode $def $exec $alert $wrt
  bindsym Delete $exec $oklò_disable; mode $def $exec $alert $wrt
- bindsym Mod4+c $exec $oklò_disable; mode $cnf $exec $alert $cnf
- bindsym Mod4+r $exec $oklò_disable; mode $red $exec $alert $red
- bindsym Mod4+z $exec $oklò_disable; mode $str $exec $alert $str
 
  # borders
  bindsym --border button2 $no_border
@@ -1303,9 +1311,8 @@
 
  }
      
- #                              SUB-MODES                                      #
+ #                                 REDSHIFT                                    #
 
- # redshift
  mode $red {
 
  # options
@@ -1321,17 +1328,21 @@
  bindsym Mod4+0 $exec redshift -P -O 6500K
  bindsym Mod4+plus $exec redshift -O 6400K
 
- # modes
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+
+ bindsym Mod4+z mode $str $exec $alert $str
+
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
- bindsym Mod4+c mode $cnf $exec $alert $cnf
- bindsym Mod4+z mode $str $exec $alert $str
 
  # borders
  bindsym --border button2 $no_border
@@ -1576,24 +1587,29 @@
 
  }
 
- # start layout
+ #                               START-LAYOUT                                  #
+
  mode $str {
 
  # options
  bindsym Mod4+1 mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt
  bindsym Mod4+2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
 
- # modes
+ bindsym Mod4+c mode $cnf $exec $alert $cnf
+
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+
+ bindsym Mod4+r mode $red $exec $alert $red
+
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
- bindsym Mod4+c mode $cnf $exec $alert $cnf
- bindsym Mod4+r mode $red $exec $alert $red
 
  # borders
  bindsym --border button2 $no_border
@@ -1838,7 +1854,8 @@
 
  }
 
- # configuration files launcher
+ #                              CONFIGURATIONS                                 #
+
  mode $cnf {
 
  # options
@@ -1856,17 +1873,21 @@
  bindsym Mod4+2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
  bindsym Mod4+r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
- # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
+
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
+
+ bindsym Mod4+r mode $red $exec $alert $red
+
+ bindsym Mod4+z mode $str $exec $alert $str
+
  bindsym Mod4+space mode $tch $exec $alert $tch & $touchpad_on
+
  bindsym Return mode $def $exec $alert $wrt
  bindsym BackSpace mode $def $exec $alert $wrt
  bindsym space mode $def $exec $alert $wrt
  bindsym Delete mode $def $exec $alert $wrt
  bindsym "Alt_L" mode $def $exec $alert $wrt
- bindsym Mod4+r mode $red $exec $alert $red
- bindsym Mod4+z mode $str $exec $alert $str
 
  # borders
  bindsym --border button2 $no_border
