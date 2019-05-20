@@ -21,13 +21,13 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
     if current_mode:
         USED_KEYS[current_mode].append(x)
     if after_mode and current_mode != after_mode:
-        _, _, pre, post, _, _, _, _, _ = ALLMODES[after_mode]
+        _, _, pre, post, _, _, _, _, _, _ = ALLMODES[after_mode]
         if post != "" and y != "": y += "; " + post
         if post != "" and y == "": y += post
         if pre != "" and y != "": y = pre + " " + y
         if pre != "" and y == "": y = pre
         if current_mode:
-            _, _, _, _, exit, _, _, _, _ = ALLMODES[current_mode]
+            _, _, _, _, exit, _, _, _, _, _ = ALLMODES[current_mode]
             if exit != "": y = exit + "; " + y
     return " bindsym {} {}\n".format(x,y)
 
@@ -78,7 +78,7 @@ def BIND_TO_MODE(d,after_mode,current_mode="",modifier="",free_keys=[]):
     if current_mode == "" or current_mode == after_mode:
         return string
     else:
-        _, keys, _, _, _, _, _, _, _ = d
+        _, keys, _, _, _, _, _, _, _, _ = d
         for key in [x for x in keys if x not in free_keys]:
             if modifier != "":
                 key = modifier + "+" + key
@@ -111,10 +111,10 @@ def LOCK_SHIFT(mode,free_keys=[]):
     return string
 
 def MAKE_MODE(mode_tag):
-    _, _, _, _, _, options, after_mode, free_keys, free_shift_keys = ALLMODES[mode_tag]
+    _, _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys = ALLMODES[mode_tag]
     string = " mode "+mode_tag+" {\n\n"
     if len(options):
-        string += BINDBLOCKS({"options":options},mode_tag,after_mode)
+        string += BINDBLOCKS({"options":options},mode_tag,after_mode,modifier=modifier)
     string += BIND_MODES(mode_tag,free_keys)
     string += BIND_TOP_COMMANDS(mode_tag)
     string += BIND_ALT_COMMANDS(mode_tag)

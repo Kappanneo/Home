@@ -18,6 +18,7 @@ MODES = {
          ("h","$exec systemctl hibernate")
      ],
      "$wrt",
+     "",
      [],
      []),
 
@@ -28,6 +29,7 @@ MODES = {
      "$exec $alert $wrt",
      "",
      [],
+     "",
      "",
      [],
      []),
@@ -40,18 +42,9 @@ MODES = {
      "$exec $touchpad_off",
      [],
      "",
+     "",
      ARROWS["default"]+['"Control_L"','"Alt_L"','"Shift_L"',"Tab"],
      ARROWS["default"]),
-
-# "$sup":
-#     ('"SUPER: [oklò] select  [shift+] move  [123] workspace  [Menu] hover mode  [super+space] touch mode  [space|esc] write mode"',
-#      ['--release "Super_L"'],
-#      "$border mode $sup",
-#      "$exec $alert $sup, $focus_one fullscreen disable",
-#      "",
-#      [],
-#      "",
-#      []),
 
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
@@ -60,6 +53,7 @@ MODES = {
      "$exec $alert $hov & $oklò_enable",
      "$exec $oklò_disable",
      [],
+     "",
      "",
      ARROWS["default"]+['"Alt_L"','"Control_L"','space','"Shift_L"',"Return","Tab","Menu"],
      ARROWS["default"])
@@ -78,6 +72,7 @@ SUBMODES = {
          ("2",'$exec "$layout_2; $fill_2"'),
      ],
      "$wrt",
+     "Mod4",
      [],
      []),
 
@@ -101,6 +96,7 @@ SUBMODES = {
          ("plus","$exec redshift -O 6400K")
      ],
      "",
+     "Mod4",
      [],
      []),
 
@@ -126,6 +122,7 @@ SUBMODES = {
          ("r","$exec $emacs ~/.config/redshift/redshift.conf")
      ],
      "$wrt",
+     "Mod4",
      [],
      [])
 

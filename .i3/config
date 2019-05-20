@@ -1309,17 +1309,17 @@
  mode $red {
 
  # options
- bindsym 1 $exec redshift -P -O 2100K
- bindsym 2 $exec redshift -P -O 2300K
- bindsym 3 $exec redshift -P -O 2500K
- bindsym 4 $exec redshift -P -O 2700K
- bindsym 5 $exec redshift -P -O 3000K
- bindsym 6 $exec redshift -P -O 3500K
- bindsym 7 $exec redshift -P -O 4000K
- bindsym 8 $exec redshift -P -O 4500K
- bindsym 9 $exec redshift -P -O 5000K
- bindsym 0 $exec redshift -P -O 6500K
- bindsym plus $exec redshift -O 6400K
+ bindsym Mod4+1 $exec redshift -P -O 2100K
+ bindsym Mod4+2 $exec redshift -P -O 2300K
+ bindsym Mod4+3 $exec redshift -P -O 2500K
+ bindsym Mod4+4 $exec redshift -P -O 2700K
+ bindsym Mod4+5 $exec redshift -P -O 3000K
+ bindsym Mod4+6 $exec redshift -P -O 3500K
+ bindsym Mod4+7 $exec redshift -P -O 4000K
+ bindsym Mod4+8 $exec redshift -P -O 4500K
+ bindsym Mod4+9 $exec redshift -P -O 5000K
+ bindsym Mod4+0 $exec redshift -P -O 6500K
+ bindsym Mod4+plus $exec redshift -O 6400K
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
@@ -1514,6 +1514,16 @@
 
  # unused keys
  bindsym backslash nop
+ bindsym 1 nop
+ bindsym 2 nop
+ bindsym 3 nop
+ bindsym 4 nop
+ bindsym 5 nop
+ bindsym 6 nop
+ bindsym 7 nop
+ bindsym 8 nop
+ bindsym 9 nop
+ bindsym 0 nop
  bindsym apostrophe nop
  bindsym igrave nop
  bindsym Tab nop
@@ -1528,6 +1538,7 @@
  bindsym o nop
  bindsym p nop
  bindsym egrave nop
+ bindsym plus nop
  bindsym "Caps_Lock" nop
  bindsym a nop
  bindsym s nop
@@ -1569,8 +1580,8 @@
  mode $str {
 
  # options
- bindsym 1 mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt
- bindsym 2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
+ bindsym Mod4+1 mode $def $exec "$layout_1; $fill_1"; $exec $alert $wrt
+ bindsym Mod4+2 mode $def $exec "$layout_2; $fill_2"; $exec $alert $wrt
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
@@ -1765,6 +1776,8 @@
 
  # unused keys
  bindsym backslash nop
+ bindsym 1 nop
+ bindsym 2 nop
  bindsym 3 nop
  bindsym 4 nop
  bindsym 5 nop
@@ -1829,19 +1842,19 @@
  mode $cnf {
 
  # options
- bindsym c mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt
- bindsym m mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt
- bindsym b mode $def $exec $emacs ~/.i3/bindings.py; $exec $alert $wrt
- bindsym i mode $def $exec $emacs ~/.gitignore; $exec $alert $wrt
- bindsym a mode $def $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt
- bindsym e mode $def $exec $emacs ~/.emacs; $exec $alert $wrt
- bindsym s mode $def $exec $emacs ~/.config/i3status/config; $exec $alert $wrt
- bindsym z mode $def $exec $emacs ~/.zshrc; $exec $alert $wrt
- bindsym g mode $def $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt
- bindsym l mode $def $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt
- bindsym 1 mode $def $exec $emacs ~/.workspaces/$w1.json; $exec $alert $wrt
- bindsym 2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
- bindsym r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
+ bindsym Mod4+c mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt
+ bindsym Mod4+m mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt
+ bindsym Mod4+b mode $def $exec $emacs ~/.i3/bindings.py; $exec $alert $wrt
+ bindsym Mod4+i mode $def $exec $emacs ~/.gitignore; $exec $alert $wrt
+ bindsym Mod4+a mode $def $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt
+ bindsym Mod4+e mode $def $exec $emacs ~/.emacs; $exec $alert $wrt
+ bindsym Mod4+s mode $def $exec $emacs ~/.config/i3status/config; $exec $alert $wrt
+ bindsym Mod4+z mode $def $exec $emacs ~/.zshrc; $exec $alert $wrt
+ bindsym Mod4+g mode $def $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt
+ bindsym Mod4+l mode $def $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt
+ bindsym Mod4+1 mode $def $exec $emacs ~/.workspaces/$w1.json; $exec $alert $wrt
+ bindsym Mod4+2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
+ bindsym Mod4+r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
  # modes
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
@@ -2036,6 +2049,8 @@
 
  # unused keys
  bindsym backslash nop
+ bindsym 1 nop
+ bindsym 2 nop
  bindsym 3 nop
  bindsym 4 nop
  bindsym 5 nop
@@ -2049,27 +2064,38 @@
  bindsym Tab nop
  bindsym q nop
  bindsym w nop
+ bindsym e nop
+ bindsym r nop
  bindsym t nop
  bindsym y nop
  bindsym u nop
+ bindsym i nop
  bindsym o nop
  bindsym p nop
  bindsym egrave nop
  bindsym plus nop
  bindsym "Caps_Lock" nop
+ bindsym a nop
+ bindsym s nop
  bindsym d nop
  bindsym f nop
+ bindsym g nop
  bindsym h nop
  bindsym j nop
  bindsym k nop
+ bindsym l nop
  bindsym ograve nop
  bindsym agrave nop
  bindsym ugrave nop
  bindsym "Shift_L" nop
  bindsym less nop
+ bindsym z nop
  bindsym x nop
+ bindsym c nop
  bindsym v nop
+ bindsym b nop
  bindsym n nop
+ bindsym m nop
  bindsym comma nop
  bindsym period nop
  bindsym minus nop
