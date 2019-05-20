@@ -423,7 +423,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
 
 
@@ -641,7 +641,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -895,7 +895,7 @@
  bindsym Mod4+control+w $exec $touchpad_off; mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v $exec $touchpad_off; mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v $exec $touchpad_off; mode $hov $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -1194,7 +1194,7 @@
  bindsym Mod4+control+w kill; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar
+ bindsym Mod4+control+v $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar
 
  # unused keys
  bindsym backslash nop
@@ -1510,7 +1510,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -1761,7 +1761,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop
@@ -2032,7 +2032,7 @@
  bindsym Mod4+control+w mode $hov kill; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # paste
- bindsym Mod4+control+v mode $hov $exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'; $refresh_status_bar; $exec $alert $hov & $oklò_enable
+ bindsym Mod4+control+v mode $hov $exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable
 
  # unused keys
  bindsym backslash nop

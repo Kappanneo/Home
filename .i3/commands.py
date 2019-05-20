@@ -165,7 +165,7 @@ SUPER_CONTROL_COMMANDS_TO_HOVER_RSB = {
     ("x","move container to workspace $wx"),
 
 "paste":
-    ("v","$exec i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx;'")
+    ("v","$exec i3-msg workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx")
 }
 
 DIRECTIONS = ["up","left","down","right"]
