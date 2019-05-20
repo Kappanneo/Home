@@ -68,7 +68,7 @@ MODES = {
 SUBMODES = {
 
 "$str":
-    ('"START: [1|2] layouts  [space|esc] exit mode"',
+    ('"START: [1|2] layouts  [spaec|esc] exit mode"',
      'z',
      "mode $str",
      "$exec $alert $str",
