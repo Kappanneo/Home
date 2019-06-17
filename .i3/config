@@ -138,7 +138,7 @@
  set $layout_1 i3-msg 'workspace --no-auto-back-and-forth 1nternet; split h; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/1nternet.json'
  set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
 
- set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.75; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.75; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
+ set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.25; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.5; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/
  set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal
 
  #                                    MODES                                    #
@@ -235,8 +235,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off
@@ -421,6 +421,7 @@
 
  bindsym Mod4+c mode $cnf $exec $alert $cnf
 
+ bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
 
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
@@ -450,6 +451,7 @@
 
  bindsym Mod4+c mode $cnf $exec $alert $cnf
 
+ bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
 
  bindsym Mod4+r mode $red $exec $alert $red
@@ -471,8 +473,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off
@@ -709,6 +711,7 @@
 
  bindsym Mod4+c $exec $touchpad_off; mode $cnf $exec $alert $cnf
 
+ bindsym Mod1+Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu $exec $touchpad_off; mode $hov $exec $alert $hov & $oklò_enable
 
  bindsym XF86PowerOff $exec $touchpad_off; mode $pow $exec $alert $pow, fullscreen disable
@@ -729,8 +732,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off
@@ -1032,8 +1035,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off
@@ -1330,6 +1333,7 @@
 
  bindsym Mod4+c mode $cnf $exec $alert $cnf
 
+ bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
 
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
@@ -1351,8 +1355,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off
@@ -1597,6 +1601,7 @@
 
  bindsym Mod4+c mode $cnf $exec $alert $cnf
 
+ bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
 
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
@@ -1618,8 +1623,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off
@@ -1873,6 +1878,7 @@
  bindsym Mod4+2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
  bindsym Mod4+r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
 
+ bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
 
  bindsym XF86PowerOff mode $pow $exec $alert $pow, fullscreen disable
@@ -1896,8 +1902,8 @@
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
  # screen brightness controls
- bindsym XF86MonBrightnessUp $exec $brightness_up
- bindsym XF86MonBrightnessDown $exec $brightness_down
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
 
  # screen poweroff
  bindsym XF86ScreenSaver $exec xset dpms force off

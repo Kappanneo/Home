@@ -9,8 +9,8 @@ TOP_COMMANDS={
     ("XF86TouchpadToggle","$exec $touchpad_toggle"),
 
 "screen brightness controls":[
-    ("XF86MonBrightnessUp","$exec $brightness_up"),
-    ("XF86MonBrightnessDown","$exec $brightness_down")
+    ("XF86MonBrightnessUp","$brightness_up"),
+    ("XF86MonBrightnessDown","$brightness_down")
 ],
 
 "screen poweroff":
