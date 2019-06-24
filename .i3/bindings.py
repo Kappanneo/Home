@@ -69,6 +69,7 @@ def BIND_SUPER_COMMANDS(mode_tag,modifier="Mod4"):
     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS,mode_tag,modifier=modifier+"+control")
     string += BINDBLOCKS(SUPER_COMMANDS_TO_WRITE,mode_tag,"$wrt",modifier=modifier)
     string += BINDBLOCKS(SUPER_COMMANDS_TO_HOVER,mode_tag,"$hov",modifier=modifier)
+    string += BINDBLOCKS(SUPER_COMMANDS_TO_TOUCH,mode_tag,"$tch",modifier=modifier)
     string += BINDBLOCKS(SUPER_COMMANDS_TO_HOVER_RSB,mode_tag,"$hov",modifier=modifier,postfix="$refresh_status_bar")
     string += BINDBLOCKS(SUPER_CONTROL_COMMANDS_TO_HOVER_RSB,mode_tag,"$hov",modifier=modifier+"+control",postfix="$refresh_status_bar")
     return string

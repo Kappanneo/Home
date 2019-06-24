@@ -145,7 +145,13 @@ SUPER_COMMANDS_TO_HOVER_RSB = {
 ]
 
 }
-    
+SUPER_COMMANDS_TO_TOUCH = {
+
+"no border touch":
+    ('Shift+space',"$no_border"),
+
+}
+
 SUPER_CONTROL_COMMANDS["move focused container to workspace and follow"] = []
 
 def move_to_workspace(d,i):

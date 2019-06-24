@@ -373,6 +373,9 @@
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
+ # no border touch
+ bindsym Mod4+Shift+space mode $tch $no_border; $exec $alert $tch & $touchpad_on
+
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -602,6 +605,9 @@
 
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # no border touch
+ bindsym Mod4+Shift+space mode $tch $no_border; $exec $alert $tch & $touchpad_on
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -861,6 +867,9 @@
 
  # application menu
  bindsym Mod4+Menu $exec $touchpad_off; mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # no border touch
+ bindsym Mod4+Shift+space $no_border
 
  # browse workspaces
  bindsym Mod4+Tab $exec $touchpad_off; mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1164,6 +1173,9 @@
 
  # application menu
  bindsym Mod4+Menu exec morc_menu
+
+ # no border touch
+ bindsym Mod4+Shift+space $exec $oklò_disable; mode $tch $no_border; $exec $alert $tch & $touchpad_on
 
  # browse workspaces
  bindsym Mod4+Tab workspace next; $refresh_status_bar
@@ -1485,6 +1497,9 @@
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
 
+ # no border touch
+ bindsym Mod4+Shift+space mode $tch $no_border; $exec $alert $tch & $touchpad_on
+
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
  bindsym Mod4+Shift+Tab mode $hov workspace prev; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -1752,6 +1767,9 @@
 
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # no border touch
+ bindsym Mod4+Shift+space mode $tch $no_border; $exec $alert $tch & $touchpad_on
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
@@ -2031,6 +2049,9 @@
 
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable
+
+ # no border touch
+ bindsym Mod4+Shift+space mode $tch $no_border; $exec $alert $tch & $touchpad_on
 
  # browse workspaces
  bindsym Mod4+Tab mode $hov workspace next; $refresh_status_bar; $exec $alert $hov & $oklò_enable
