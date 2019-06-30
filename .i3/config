@@ -67,6 +67,9 @@
      # disable scrolling on status bar
         bindsym button4 nop # scroll wheel up
         bindsym button5 nop # scroll wheel down
+
+     # no border on middle mouse
+        bindsym button2 $no_border
  }
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
