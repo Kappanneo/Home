@@ -60,7 +60,7 @@ SUPER_COMMANDS = {
 
 "fullscreen":[
     ("f","fullscreen toggle"),
-    ("Shift+f",'$exec "sleep 0.5; xdotool key F11; i3-msg fullscreen disable"')
+    ("Shift+f",'$exec "sleep 0.5; xdotool key F11; sleep 0.5; i3-msg fullscreen disable"')
 ],
 
 "split orientation":[
