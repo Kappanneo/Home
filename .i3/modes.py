@@ -66,6 +66,7 @@ MODES = {
     [    
          ("1",'$exec "$layout_1; $fill_1"'),
          ("2",'$exec "$layout_2; $fill_2"'),
+         ("3",'$exec "$layout_3; $fill_3"'),
      ],
      "$wrt",
      "Mod4",

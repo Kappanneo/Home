@@ -112,7 +112,7 @@ SUPER_CONTROL_COMMANDS = {
 ],
 
 "save layout":
-    ("s",'exec "i3-save-tree > ~/.workspaces/stamp.json; $emacs ~/.workspaces/stamp.json"'),
+    ("s",'exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor=\'\' ~/.workspaces/stamp.json"'),
 
 "files":[
     ("f","$exec $fm"),
