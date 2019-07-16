@@ -142,9 +142,9 @@
  set $layout_2 i3-msg 'workspace --no-auto-back-and-forth 2rectory; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill; append_layout ~/.workspaces/2rectory.json'
  set $layout_3 i3-msg 'workspace --no-auto-back-and-forth 3code; split h; focus parent; focus parent; focus parent; focus parent; focus parent; kill'
 
- set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.25; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.5; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/ & sleep 1.5; i3-msg [class='.?'] border none
- set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & chromium --new-window --profile-directory=Default https://github.com/Kappanneo https://gitlab.com/kappanneo & gnome-terminal & sleep 1; i3-msg [class='.?'] border none
- set $fill_3 code-oss & sleep 1; i3-msg [class='.?'] border none
+ set $fill_1 chromium --new-window --profile-directory=Default https://web.telegram.org/ https://web.whatsapp.com/ & sleep 0.25; chromium --new-window --profile-directory=Default https://mail.google.com/mail/u/0/ https://mail.google.com/mail/u/1/ https://calendar.google.com/calendar/ & sleep 0.5; chromium --new-window --profile-directory=Default https://keep.google.com/u/0/ https://getpocket.com/a/queue/list/ & sleep 2; i3-msg [class='.?'] border none
+ set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & sleep 0.5; chromium --new-window --profile-directory=Default https://github.com/kappanneo https://gitlab.com/kappanneo & gnome-terminal & sleep 2; i3-msg [class='.?'] border none
+ set $fill_3 code-oss & sleep 2; i3-msg [class='.?'] border none
  #                                    MODES                                    #
 
  set $def "default"
@@ -203,6 +203,7 @@
 
  # start with touchpad disabled
  $exec $touchpad_off
+ $exec $enable_autoscroll
 
  # background (not always permanent, may need reaload)
  $exec_always $enable_autoscroll
@@ -333,6 +334,10 @@
 
  # focus all
  bindsym Mod4+control+a $focus_all
+
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -566,6 +571,10 @@
 
  # focus all
  bindsym Mod4+control+a $focus_all
+
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -828,6 +837,10 @@
 
  # focus all
  bindsym Mod4+control+a $focus_all
+
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -1134,6 +1147,10 @@
 
  # focus all
  bindsym Mod4+control+a $focus_all
+
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -1458,6 +1475,10 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
+
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
  bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
@@ -1729,6 +1750,10 @@
 
  # focus all
  bindsym Mod4+control+a $focus_all
+
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
@@ -2011,6 +2036,10 @@
 
  # focus all
  bindsym Mod4+control+a $focus_all
+
+ # move browsing workspaces
+ bindsym Mod4+control+Tab move container to workspace next; workspace next
+ bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
  # move focused container to workspace and follow
  bindsym Mod4+control+1 move container to workspace $w1; workspace $w1

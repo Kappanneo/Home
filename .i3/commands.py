@@ -135,6 +135,11 @@ SUPER_CONTROL_COMMANDS = {
     ("plus","resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt"),
     ("Shift+minus","resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt"),
     ("Shift+plus","resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt"),
+],
+
+"move browsing workspaces":[
+    ("Tab","move container to workspace next; workspace next"),
+    ("Shift+Tab","move container to workspace prev; workspace prev"),
 ]}
 
 SUPER_COMMANDS_TO_HOVER_RSB = {
