@@ -248,6 +248,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -514,6 +516,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -801,6 +805,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -1130,6 +1136,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -1476,6 +1484,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -1773,6 +1783,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
@@ -2080,6 +2092,8 @@
 
  # screenshot
  bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+Shift+Print $exec i3-scrot -s
 
  # touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle

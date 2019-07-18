@@ -16,9 +16,12 @@ TOP_COMMANDS={
 "screen poweroff":
     ("XF86ScreenSaver","$exec xset dpms force off"),
 
-"screenshot":
+"screenshot":[
     ("--release Print","$exec i3-scrot"),
-    
+    ("--release Mod4+Print","$exec i3-scrot -w"),
+    ("--release Mod4+Shift+Print","$exec i3-scrot -s"), # not working
+],
+
 "display": #TODO
     ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred"),
 
