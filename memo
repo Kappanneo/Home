@@ -7,12 +7,10 @@
 
 
 i3:
-split-move
 stamp fix for windows
 audio mode like redshift
 oklò bindings via pym
 fix killall on start mode
-previus next workspace hover fix
 fix fullscrenn disable on new window
 fix autoscroll
 

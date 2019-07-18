@@ -90,11 +90,7 @@ SUPER_COMMANDS = {
     ("Shift+Next", "resize  grow  width  5 px or 5 ppt"),
 ],
 
-"browse workspaces":[
-    ("j","workspace prev"),
-    ("agrave","workspace next"),
-    ("ugrave","workspace back_and_forth")
-]}
+}
 
 SUPER_CONTROL_COMMANDS = {
 
@@ -140,16 +136,29 @@ SUPER_CONTROL_COMMANDS = {
 "move container while browsing workspaces":[
     ("Tab","move container to workspace next; workspace next"),
     ("Shift+Tab","move container to workspace prev; workspace prev"),
-]}
+    # ("j","move container to workspace prev; workspace prev"),
+    # ("agrave","move container to workspace next; workspace next"),
+    ("Home","move container to workspace prev; workspace prev"),
+    ("End","move container to workspace next; workspace next"),
+    ("ugrave","move container to workspace back_and_forth; workspace back_and_forth"),
+],
+
+}
 
 SUPER_COMMANDS_TO_HOVER_RSB = {
 
 "browse workspaces":[
     ("Tab","workspace next"),
-    ("Shift+Tab","workspace prev")
-]
+    ("Shift+Tab","workspace prev"),
+    ("j","workspace prev"),
+    ("agrave","workspace next"),
+    ("Home","workspace prev"),
+    ("End","workspace next"),
+    ("ugrave","workspace back_and_forth"),
+],
 
 }
+
 SUPER_COMMANDS_TO_TOUCH = {
 
 "no border touch":
@@ -189,6 +198,13 @@ def move_and_focus(d,i):
         SUPER_COMMANDS_TO_HOVER_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
 
 forall(ARROWS,move_and_focus)
+
+def split_move(d,i):
+    SUPER_CONTROL_COMMANDS[i+" split and move"] = []
+    for j in range(len(d)):
+        SUPER_CONTROL_COMMANDS[i+" split and move"].append(("Shift+"+d[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
+
+forall(ARROWS,split_move)
 
 SUPER_COMMANDS_TO_HOVER_RSB["switch workspace"] = []
 
