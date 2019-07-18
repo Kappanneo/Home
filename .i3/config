@@ -335,7 +335,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
@@ -572,7 +572,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
@@ -838,7 +838,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
@@ -980,10 +980,8 @@
  bindsym comma nop
  bindsym period nop
  bindsym minus nop
- bindsym "Shift_R" nop
  bindsym "Super_L" nop
  bindsym $alt_gr nop
- bindsym "Control_R" nop
 
  # also Shift+ (since Shift is not locked)
  bindsym Shift+bar nop
@@ -1148,7 +1146,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
@@ -1290,10 +1288,8 @@
  bindsym comma nop
  bindsym period nop
  bindsym minus nop
- bindsym "Shift_R" nop
  bindsym "Super_L" nop
  bindsym $alt_gr nop
- bindsym "Control_R" nop
 
  # also Shift+ (since Shift is not locked)
  bindsym Shift+bar nop
@@ -1475,7 +1471,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
@@ -1751,7 +1747,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 
@@ -2037,7 +2033,7 @@
  # focus all
  bindsym Mod4+control+a $focus_all
 
- # move browsing workspaces
+ # move container while browsing workspaces
  bindsym Mod4+control+Tab move container to workspace next; workspace next
  bindsym Mod4+control+Shift+Tab move container to workspace prev; workspace prev
 

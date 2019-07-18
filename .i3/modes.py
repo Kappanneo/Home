@@ -42,7 +42,7 @@ MODES = {
      [],
      "",
      "",
-     ARROWS["default"]+['"Control_L"','"Alt_L"','"Shift_L"',"Tab"],
+     ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','"Shift_L"','"Shift_R"',"Tab"],
      ARROWS["default"]),
 
 "$hov":
@@ -54,7 +54,7 @@ MODES = {
      [],
      "",
      "",
-     ARROWS["default"]+['"Alt_L"','"Control_L"','space','"Shift_L"',"Return","Tab","Menu"],
+     ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','space','"Shift_L"','"Shift_R"',"Return","Tab","Menu"],
      ARROWS["default"]),
 
 "$str":

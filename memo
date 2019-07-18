@@ -9,17 +9,14 @@
 i3:
 split-move
 stamp fix for windows
-also _R
 audio mode like redshift
 oklò bindings via pym
 fix killall on start mode
 previus next workspace hover fix
-two keys principle?
 fix fullscrenn disable on new window
 fix autoscroll
 
 Emacs:
-mouse pointer color
 ctrl-del until line start
 goto line
 disable messages

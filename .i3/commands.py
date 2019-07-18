@@ -137,7 +137,7 @@ SUPER_CONTROL_COMMANDS = {
     ("Shift+plus","resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt"),
 ],
 
-"move browsing workspaces":[
+"move container while browsing workspaces":[
     ("Tab","move container to workspace next; workspace next"),
     ("Shift+Tab","move container to workspace prev; workspace prev"),
 ]}
