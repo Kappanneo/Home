@@ -8,11 +8,11 @@
 
 i3:
 fix stamp selection
-audio mode like redshift
 oklò bindings via pym
 fix killall on start mode
 fix fullscrenn disable on new window
 fix autoscroll
+fix fn+F8
 
 Emacs:
 ctrl-del until line start
