@@ -5,7 +5,7 @@ MODES = {
 
 "$pow":
     ('"POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"',
-     ['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
+     ['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf (M-c M-q) set HandlePowerKey=ignore
      "mode $pow",
      "$exec $alert $pow, fullscreen disable",
      "",
@@ -116,7 +116,9 @@ MODES = {
          ("l","$exec $emacs ~/.workspaces/stamp.json"),
          ("1","$exec $emacs ~/.workspaces/$w1.json"),
          ("2","$exec $emacs ~/.workspaces/$w2.json"),
-         ("r","$exec $emacs ~/.config/redshift/redshift.conf")
+         ("r","$exec $emacs ~/.config/redshift/redshift.conf"),
+         ("p","$exec $emacs /sudo::/etc/pamac.conf"),
+         ("q","$exec $emacs /sudo::/etc/systemd/logind.conf"),
      ],
      "$wrt",
      "Mod4",

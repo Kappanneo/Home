@@ -174,7 +174,6 @@
 
  # discord and skype
  assign [class="discord"] $w6
- assign [title="Telegram"] $w6
  assign [title="Skype"] $w6
 
  # texmaker
@@ -2075,6 +2074,8 @@
  bindsym Mod4+1 mode $def $exec $emacs ~/.workspaces/$w1.json; $exec $alert $wrt; $exec echo Mod4+1 >> .i3/log
  bindsym Mod4+2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt; $exec echo Mod4+2 >> .i3/log
  bindsym Mod4+r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt; $exec echo Mod4+r >> .i3/log
+ bindsym Mod4+p mode $def $exec $emacs /sudo::/etc/pamac.conf; $exec $alert $wrt; $exec echo Mod4+p >> .i3/log
+ bindsym Mod4+q mode $def $exec $emacs /sudo::/etc/systemd/logind.conf; $exec $alert $wrt; $exec echo Mod4+q >> .i3/log
 
  bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable; $exec echo Mod1+Menu >> .i3/log
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable; $exec echo Menu >> .i3/log
