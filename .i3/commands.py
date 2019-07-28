@@ -39,9 +39,6 @@ TOP_COMMANDS_TO_WRITE = {
 
 TOP_COMMANDS_TO_HOVER = {
 
-"where am i?":
-    ('--release "Super_L"',"$border, $focus_one, fullscreen disable; $exec $touchpad_off"),
-
 "no border hover":
     ('Shift+Menu',"$no_border"),
 }
@@ -149,6 +146,9 @@ SUPER_CONTROL_COMMANDS = {
 }
 
 SUPER_COMMANDS_TO_HOVER_RSB = {
+
+"where am i?":
+    ('x',"$border, $focus_one, fullscreen disable; $exec $touchpad_off"),
 
 "browse workspaces":[
     ("Tab","workspace next"),

@@ -257,9 +257,6 @@
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
 
- # where am i?
- bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable; $exec echo --release "Super_L" >> .i3/log
-
 
 
  #                                ALT-COMMANDS                                 #
@@ -441,6 +438,9 @@
  bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+d >> .i3/log
 
+ # where am i?
+ bindsym Mod4+x mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+x >> .i3/log
+
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+control+x >> .i3/log
 
@@ -527,9 +527,6 @@
 
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
-
- # where am i?
- bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable; $exec echo --release "Super_L" >> .i3/log
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar; $exec echo Mod1+F4 >> .i3/log
@@ -704,6 +701,9 @@
  bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+d >> .i3/log
 
+ # where am i?
+ bindsym Mod4+x mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+x >> .i3/log
+
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+control+x >> .i3/log
 
@@ -819,9 +819,6 @@
 
  # no border hover
  bindsym Shift+Menu $exec $touchpad_off; mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
-
- # where am i?
- bindsym --release "Super_L" $exec $touchpad_off; mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable; $exec echo --release "Super_L" >> .i3/log
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar; $exec echo Mod1+F4 >> .i3/log
@@ -996,6 +993,9 @@
  bindsym Mod4+s $exec $touchpad_off; mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d $exec $touchpad_off; mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+d >> .i3/log
 
+ # where am i?
+ bindsym Mod4+x $exec $touchpad_off; mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+x >> .i3/log
+
  # cut
  bindsym Mod4+control+x $exec $touchpad_off; mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+control+x >> .i3/log
 
@@ -1153,9 +1153,6 @@
 
  # no border hover
  bindsym Shift+Menu $no_border; $exec echo Shift+Menu >> .i3/log
-
- # where am i?
- bindsym --release "Super_L" $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec echo --release "Super_L" >> .i3/log
 
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar; $exec echo Mod1+F4 >> .i3/log
@@ -1329,6 +1326,9 @@
  bindsym Mod4+a focus left; $refresh_status_bar; $exec echo Mod4+a >> .i3/log
  bindsym Mod4+s focus down; $refresh_status_bar; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d focus right; $refresh_status_bar; $exec echo Mod4+d >> .i3/log
+
+ # where am i?
+ bindsym Mod4+x $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec echo Mod4+x >> .i3/log
 
  # cut
  bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar; $exec echo Mod4+control+x >> .i3/log
@@ -1505,9 +1505,6 @@
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
 
- # where am i?
- bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable; $exec echo --release "Super_L" >> .i3/log
-
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar; $exec echo Mod1+F4 >> .i3/log
 
@@ -1680,6 +1677,9 @@
  bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+a >> .i3/log
  bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+d >> .i3/log
+
+ # where am i?
+ bindsym Mod4+x mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+x >> .i3/log
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+control+x >> .i3/log
@@ -1807,9 +1807,6 @@
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
 
- # where am i?
- bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable; $exec echo --release "Super_L" >> .i3/log
-
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar; $exec echo Mod1+F4 >> .i3/log
 
@@ -1982,6 +1979,9 @@
  bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+a >> .i3/log
  bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+d >> .i3/log
+
+ # where am i?
+ bindsym Mod4+x mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+x >> .i3/log
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+control+x >> .i3/log
@@ -2121,9 +2121,6 @@
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
 
- # where am i?
- bindsym --release "Super_L" mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $exec $alert $hov & $oklò_enable; $exec echo --release "Super_L" >> .i3/log
-
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar; $exec echo Mod1+F4 >> .i3/log
 
@@ -2296,6 +2293,9 @@
  bindsym Mod4+a mode $hov focus left; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+a >> .i3/log
  bindsym Mod4+s mode $hov focus down; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+s >> .i3/log
  bindsym Mod4+d mode $hov focus right; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+d >> .i3/log
+
+ # where am i?
+ bindsym Mod4+x mode $hov $border, $focus_one, fullscreen disable; $exec $touchpad_off; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+x >> .i3/log
 
  # cut
  bindsym Mod4+control+x mode $hov move container to workspace $wx; $refresh_status_bar; $exec $alert $hov & $oklò_enable; $exec echo Mod4+control+x >> .i3/log
