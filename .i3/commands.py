@@ -33,7 +33,7 @@ TOP_COMMANDS={
 TOP_COMMANDS_TO_WRITE = {
 
 "no border write":
-    ('Shift+"Super_L"',"$no_border"),
+    ('Shift+"Super_L"',"$no_border; $exec $touchpad_off"),
 
 }
 

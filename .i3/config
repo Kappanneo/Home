@@ -252,7 +252,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" $no_border; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" $no_border; $exec $touchpad_off; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
@@ -523,7 +523,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $touchpad_off; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
@@ -815,7 +815,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" $exec $touchpad_off; mode $def $no_border; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" $exec $touchpad_off; mode $def $no_border; $exec $touchpad_off; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu $exec $touchpad_off; mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
@@ -1149,7 +1149,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" $exec $oklò_disable; mode $def $no_border; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" $exec $oklò_disable; mode $def $no_border; $exec $touchpad_off; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu $no_border; $exec echo Shift+Menu >> .i3/log
@@ -1500,7 +1500,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $touchpad_off; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
@@ -1802,7 +1802,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $touchpad_off; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
@@ -2116,7 +2116,7 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle; $exec echo XF86TouchpadToggle >> .i3/log
 
  # no border write
- bindsym Shift+"Super_L" mode $def $no_border; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
+ bindsym Shift+"Super_L" mode $def $no_border; $exec $touchpad_off; $exec $alert $wrt; $exec echo Shift+"Super_L" >> .i3/log
 
  # no border hover
  bindsym Shift+Menu mode $hov $no_border; $exec $alert $hov & $oklò_enable; $exec echo Shift+Menu >> .i3/log
