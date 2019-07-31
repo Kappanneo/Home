@@ -32,15 +32,11 @@ TOP_COMMANDS={
 
 TOP_COMMANDS_TO_WRITE = {
 
-"no border write":
+"no border write":[
     ('Shift+"Super_L"',"$no_border; $exec $touchpad_off"),
-
-}
-
-TOP_COMMANDS_TO_HOVER = {
-
-"no border hover":
     ('Shift+Menu',"$no_border"),
+],
+
 }
 
 ALT_COMMANDS_RSB={
