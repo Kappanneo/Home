@@ -226,6 +226,8 @@ SUPER_COMMANDS_TO_WRITE = {
 "f-fake fullscren":
     ("control+Shift+f",'$exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"'),
 
+"write and touch":
+    ("Shift+x","$exec $touchpad_on"),
 }
 
 SUPER_COMMANDS_TO_HOVER = {

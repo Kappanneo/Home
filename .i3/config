@@ -108,7 +108,6 @@
  # touchpad toggle
  set $touchpad_on ~/.bin/touchpad_toggle.sh 1 & xdotool mousemove 800 450
  set $touchpad_off ~/.bin/touchpad_toggle.sh 0 & xdotool mousemove 2500 1200
- set $touchpad_off_2 ~/.bin/touchpad_toggle.sh 0
  set $touchpad_toggle ~/.bin/touchpad_toggle.sh
 
  # autoscroll
@@ -392,6 +391,9 @@
  # start dmenu for commands
  bindsym Mod4+control+e $exec dmenu_run; $exec echo Mod4+control+e >> .i3/log
 
+ # write and touch
+ bindsym Mod4+Shift+x $exec $touchpad_on; $exec echo Mod4+Shift+x >> .i3/log
+
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable; $exec echo Mod4+Menu >> .i3/log
 
@@ -652,6 +654,9 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt; $exec echo Mod4+control+e >> .i3/log
+
+ # write and touch
+ bindsym Mod4+Shift+x mode $def $exec $touchpad_on; $exec $alert $wrt; $exec echo Mod4+Shift+x >> .i3/log
 
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable; $exec echo Mod4+Menu >> .i3/log
@@ -942,6 +947,9 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e $exec $touchpad_off; mode $def $exec dmenu_run; $exec $alert $wrt; $exec echo Mod4+control+e >> .i3/log
+
+ # write and touch
+ bindsym Mod4+Shift+x $exec $touchpad_off; mode $def $exec $touchpad_on; $exec $alert $wrt; $exec echo Mod4+Shift+x >> .i3/log
 
  # application menu
  bindsym Mod4+Menu $exec $touchpad_off; mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable; $exec echo Mod4+Menu >> .i3/log
@@ -1274,6 +1282,9 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e $exec $oklò_disable; mode $def $exec dmenu_run; $exec $alert $wrt; $exec echo Mod4+control+e >> .i3/log
+
+ # write and touch
+ bindsym Mod4+Shift+x $exec $oklò_disable; mode $def $exec $touchpad_on; $exec $alert $wrt; $exec echo Mod4+Shift+x >> .i3/log
 
  # application menu
  bindsym Mod4+Menu exec morc_menu; $exec echo Mod4+Menu >> .i3/log
@@ -1624,6 +1635,9 @@
  # start dmenu for commands
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt; $exec echo Mod4+control+e >> .i3/log
 
+ # write and touch
+ bindsym Mod4+Shift+x mode $def $exec $touchpad_on; $exec $alert $wrt; $exec echo Mod4+Shift+x >> .i3/log
+
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable; $exec echo Mod4+Menu >> .i3/log
 
@@ -1923,6 +1937,9 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt; $exec echo Mod4+control+e >> .i3/log
+
+ # write and touch
+ bindsym Mod4+Shift+x mode $def $exec $touchpad_on; $exec $alert $wrt; $exec echo Mod4+Shift+x >> .i3/log
 
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable; $exec echo Mod4+Menu >> .i3/log
@@ -2235,6 +2252,9 @@
 
  # start dmenu for commands
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $wrt; $exec echo Mod4+control+e >> .i3/log
+
+ # write and touch
+ bindsym Mod4+Shift+x mode $def $exec $touchpad_on; $exec $alert $wrt; $exec echo Mod4+Shift+x >> .i3/log
 
  # application menu
  bindsym Mod4+Menu mode $hov exec morc_menu; $exec $alert $hov & $oklò_enable; $exec echo Mod4+Menu >> .i3/log
