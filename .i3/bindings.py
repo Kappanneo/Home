@@ -29,7 +29,7 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
         if current_mode:
             _, _, _, _, exit, _, _, _, _, _ = MODES[current_mode]
             if exit != "": y = exit + "; " + y
-    return " bindsym {} {}; $exec echo {} >> .i3/log\n".format(x,y,x)
+    return " bindsym {} {}\n".format(x,y,x)
 
 def BINDBLOCK(d,name,current_mode=None,after_mode=None,modifier="",prefix="",postfix=""):
     string = " # {}\n".format(name)
