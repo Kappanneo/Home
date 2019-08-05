@@ -147,7 +147,7 @@
  #                                    MODES                                    #
 
  set $def "default"
- set $cnf "CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"
+ set $cnf "CONFG: [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [space|esc] exit mode"
  set $hov "HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"
  set $pow "POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"
  set $red "REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"
@@ -281,7 +281,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -381,9 +380,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $dmenu
@@ -545,7 +541,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -645,9 +640,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
@@ -838,7 +830,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -938,9 +929,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f $exec $touchpad_off; mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $touchpad_off; mode $def $exec $dmenu; $exec $alert $wrt
@@ -1173,7 +1161,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -1273,9 +1260,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f $exec $oklò_disable; mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $oklò_disable; mode $def $exec $dmenu; $exec $alert $wrt
@@ -1525,7 +1509,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -1625,9 +1608,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
@@ -1828,7 +1808,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -1928,9 +1907,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
@@ -2066,21 +2042,18 @@
  mode $cnf {
 
  # options
- bindsym Mod4+c mode $def $exec $emacs ~/.i3/index.conf; $exec $alert $wrt
- bindsym Mod4+m mode $def $exec $emacs ~/.i3/modes.py; $exec $alert $wrt
- bindsym Mod4+b mode $def $exec $emacs ~/.i3/bindings.py; $exec $alert $wrt
- bindsym Mod4+i mode $def $exec $emacs ~/.gitignore; $exec $alert $wrt
  bindsym Mod4+a mode $def $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt
+ bindsym Mod4+b mode $def $exec $emacs ~/.config/i3status/config; $exec $alert $wrt
+ bindsym Mod4+c mode $def $exec $emacs ~/.i3/; $exec $alert $wrt
  bindsym Mod4+e mode $def $exec $emacs ~/.emacs; $exec $alert $wrt
- bindsym Mod4+s mode $def $exec $emacs ~/.config/i3status/config; $exec $alert $wrt
- bindsym Mod4+z mode $def $exec $emacs ~/.zshrc; $exec $alert $wrt
  bindsym Mod4+g mode $def $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt
  bindsym Mod4+l mode $def $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt
+ bindsym Mod4+p mode $def $exec $emacs /sudo::/etc/pamac.conf; $exec $alert $wrt
+ bindsym Mod4+r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
+ bindsym Mod4+s mode $def $exec $emacs /sudo::/etc/systemd/; $exec $alert $wrt
+ bindsym Mod4+z mode $def $exec $emacs ~/.zshrc; $exec $alert $wrt
  bindsym Mod4+1 mode $def $exec $emacs ~/.workspaces/$w1.json; $exec $alert $wrt
  bindsym Mod4+2 mode $def $exec $emacs ~/.workspaces/$w2.json; $exec $alert $wrt
- bindsym Mod4+r mode $def $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt
- bindsym Mod4+p mode $def $exec $emacs /sudo::/etc/pamac.conf; $exec $alert $wrt
- bindsym Mod4+q mode $def $exec $emacs /sudo::/etc/systemd/logind.conf; $exec $alert $wrt
 
  bindsym Mod1+Menu mode $hov $exec $alert $hov & $oklò_enable
  bindsym Menu mode $hov $exec $alert $hov & $oklò_enable
@@ -2143,7 +2116,6 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -2243,9 +2215,6 @@
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
