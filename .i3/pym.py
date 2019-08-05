@@ -74,17 +74,7 @@ def pym_expand_expressions(text, env, loc, out):
                         pym_die("illegal prefix '%s'" % exp[:len_pr], loc)
                 else:
                     value = eval(exp, env, env)
-            except PymException: raise
-            except NameError: raise         # doesn't have lineno
-            except KeyError: raise          # ditto
-            except ImportError: raise       # ..
-            except AttributeError: raise    # ditto
-            except TypeError: raise         # ditto
-            except Exception, error:
-                error.filename = loc[0]
-                error.lineno = error.lineno + loc[1] + \
-                               len(string.split(text[0:start],'\n'))
-                raise
+            except Exception, error: raise
 
             pym_expand_expressions(str(value), env, loc, out)
 
