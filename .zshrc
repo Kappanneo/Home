@@ -103,10 +103,9 @@ source $ZSH/oh-my-zsh.sh
 
 alias update="pamac checkupdates --aur --quiet | grep . && yay ; pkill pamac-tray"
 alias open_default="xdg-open"
-alias emacs="emacsclient -create-frame --alternate-editor=''"
 
 export PATH=/home/claudio/bin:$PATH
-export VISUAL=emacs
-export EDITOR=emacs
+export VISUAL="emacsclient -create-frame --alternate-editor=''"
+export EDITOR="emacsclient -create-frame --alternate-editor=''"
 
 eval $(thefuck --alias)
