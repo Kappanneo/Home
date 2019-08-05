@@ -82,8 +82,6 @@ def pym_expand_expressions(text, env, loc, out):
             except TypeError: raise         # ditto
             except Exception, error:
                 error.filename = loc[0]
-                error.lineno = error.lineno + loc[1] + \
-                               len(string.split(text[0:start],'\n'))
                 raise
 
             pym_expand_expressions(str(value), env, loc, out)
