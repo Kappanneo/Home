@@ -281,7 +281,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -383,7 +383,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+control+Shift+f $exec "sleep 0.5; xdotool key f"
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $dmenu
@@ -545,7 +545,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -647,7 +647,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
+ bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
@@ -838,7 +838,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -940,7 +940,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f $exec $touchpad_off; mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
+ bindsym Mod4+control+Shift+f $exec $touchpad_off; mode $def $exec "sleep 0.5; xdotool key f"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $touchpad_off; mode $def $exec $dmenu; $exec $alert $wrt
@@ -1110,6 +1110,56 @@
  bindsym Shift+colon nop
  bindsym Shift+underscore nop
 
+ # also control+Shift+ (since Shift and Control are not locked)
+ bindsym control+Shift+bar nop
+ bindsym control+Shift+exclam nop
+ bindsym control+Shift+quotedbl nop
+ bindsym control+Shift+sterling nop
+ bindsym control+Shift+dollar nop
+ bindsym control+Shift+percent nop
+ bindsym control+Shift+ampersand nop
+ bindsym control+Shift+slash nop
+ bindsym control+Shift+parenleft nop
+ bindsym control+Shift+parenright nop
+ bindsym control+Shift+equal nop
+ bindsym control+Shift+question nop
+ bindsym control+Shift+asciicircum nop
+ bindsym control+Shift+q nop
+ bindsym control+Shift+w nop
+ bindsym control+Shift+e nop
+ bindsym control+Shift+r nop
+ bindsym control+Shift+t nop
+ bindsym control+Shift+y nop
+ bindsym control+Shift+u nop
+ bindsym control+Shift+i nop
+ bindsym control+Shift+o nop
+ bindsym control+Shift+p nop
+ bindsym control+Shift+eacute nop
+ bindsym control+Shift+asterisk nop
+ bindsym control+Shift+a nop
+ bindsym control+Shift+s nop
+ bindsym control+Shift+d nop
+ bindsym control+Shift+f nop
+ bindsym control+Shift+g nop
+ bindsym control+Shift+h nop
+ bindsym control+Shift+j nop
+ bindsym control+Shift+k nop
+ bindsym control+Shift+l nop
+ bindsym control+Shift+ccedilla nop
+ bindsym control+Shift+degree nop
+ bindsym control+Shift+section nop
+ bindsym control+Shift+greater nop
+ bindsym control+Shift+z nop
+ bindsym control+Shift+x nop
+ bindsym control+Shift+c nop
+ bindsym control+Shift+v nop
+ bindsym control+Shift+b nop
+ bindsym control+Shift+n nop
+ bindsym control+Shift+m nop
+ bindsym control+Shift+semicolon nop
+ bindsym control+Shift+colon nop
+ bindsym control+Shift+underscore nop
+
  }
 
  #                                HOVER-MODE                                   #
@@ -1173,7 +1223,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -1275,7 +1325,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f $exec $oklò_disable; mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
+ bindsym Mod4+control+Shift+f $exec $oklò_disable; mode $def $exec "sleep 0.5; xdotool key f"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $oklò_disable; mode $def $exec $dmenu; $exec $alert $wrt
@@ -1445,6 +1495,56 @@
  bindsym Shift+colon nop
  bindsym Shift+underscore nop
 
+ # also control+Shift+ (since Shift and Control are not locked)
+ bindsym control+Shift+bar nop
+ bindsym control+Shift+exclam nop
+ bindsym control+Shift+quotedbl nop
+ bindsym control+Shift+sterling nop
+ bindsym control+Shift+dollar nop
+ bindsym control+Shift+percent nop
+ bindsym control+Shift+ampersand nop
+ bindsym control+Shift+slash nop
+ bindsym control+Shift+parenleft nop
+ bindsym control+Shift+parenright nop
+ bindsym control+Shift+equal nop
+ bindsym control+Shift+question nop
+ bindsym control+Shift+asciicircum nop
+ bindsym control+Shift+q nop
+ bindsym control+Shift+w nop
+ bindsym control+Shift+e nop
+ bindsym control+Shift+r nop
+ bindsym control+Shift+t nop
+ bindsym control+Shift+y nop
+ bindsym control+Shift+u nop
+ bindsym control+Shift+i nop
+ bindsym control+Shift+o nop
+ bindsym control+Shift+p nop
+ bindsym control+Shift+eacute nop
+ bindsym control+Shift+asterisk nop
+ bindsym control+Shift+a nop
+ bindsym control+Shift+s nop
+ bindsym control+Shift+d nop
+ bindsym control+Shift+f nop
+ bindsym control+Shift+g nop
+ bindsym control+Shift+h nop
+ bindsym control+Shift+j nop
+ bindsym control+Shift+k nop
+ bindsym control+Shift+l nop
+ bindsym control+Shift+ccedilla nop
+ bindsym control+Shift+degree nop
+ bindsym control+Shift+section nop
+ bindsym control+Shift+greater nop
+ bindsym control+Shift+z nop
+ bindsym control+Shift+x nop
+ bindsym control+Shift+c nop
+ bindsym control+Shift+v nop
+ bindsym control+Shift+b nop
+ bindsym control+Shift+n nop
+ bindsym control+Shift+m nop
+ bindsym control+Shift+semicolon nop
+ bindsym control+Shift+colon nop
+ bindsym control+Shift+underscore nop
+
  }
      
  #                                 REDSHIFT                                    #
@@ -1525,7 +1625,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -1627,7 +1727,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
+ bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
@@ -1828,7 +1928,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -1930,7 +2030,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
+ bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt
@@ -2143,7 +2243,7 @@
 
  # fullscreen
  bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"
+ bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
 
  # oklò move
  bindsym Mod4+Shift+o move up
@@ -2245,7 +2345,7 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # f-fake fullscren
- bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"; $exec $alert $wrt
+ bindsym Mod4+control+Shift+f mode $def $exec "sleep 0.5; xdotool key f"; $exec $alert $wrt
 
  # start dmenu for applications
  bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $wrt

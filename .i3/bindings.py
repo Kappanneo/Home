@@ -21,13 +21,13 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
     if current_mode:
         USED_KEYS[current_mode].append(x)
     if after_mode and current_mode != after_mode:
-        _, _, pre, post, _, _, _, _, _, _ = MODES[after_mode]
+        _, _, pre, post, _, _, _, _, _, _, _ = MODES[after_mode]
         if post != "" and y != "": y += "; " + post
         if post != "" and y == "": y += post
         if pre != "" and y != "": y = pre + " " + y
         if pre != "" and y == "": y = pre
         if current_mode:
-            _, _, _, _, exit, _, _, _, _, _ = MODES[current_mode]
+            _, _, _, _, exit, _, _, _, _, _, _ = MODES[current_mode]
             if exit != "": y = exit + "; " + y
     return " bindsym {} {}\n".format(x,y,x)
 
@@ -78,7 +78,7 @@ def BIND_TO_MODE(d,after_mode,current_mode="",modifier="",free_keys=[]):
     if current_mode == "" or current_mode == after_mode:
         return string
     else:
-        _, keys, _, _, _, _, _, _, _, _ = d
+        _, keys, _, _, _, _, _, _, _, _, _ = d
         for key in [x for x in keys if x not in free_keys]:
             if modifier != "":
                 key = modifier + "+" + key
@@ -107,8 +107,15 @@ def LOCK_SHIFT(mode,free_keys=[]):
     string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U})
     return string
 
+def LOCK_CONTROL_SHIFT(mode,free_keys=[]):
+    F = USED_KEYS[mode] + ['Shift'+y for y in free_keys] 
+    string = "";
+    U = [(x,"nop") for x in ['control+Shift+'+y for y in SHIFT_KEYS] if x not in F]
+    string += BINDBLOCKS({"also control+Shift+ (since Shift and Control are not locked)":U})
+    return string
+
 def MAKE_MODE(mode_tag):
-    _, _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys = MODES[mode_tag]
+    _, _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys, free_control_shift_keys = MODES[mode_tag]
     string = " mode "+mode_tag+" {\n\n"
     if len(options):
         string += BINDBLOCKS({"options":options},mode_tag,after_mode,modifier=modifier)
@@ -119,6 +126,8 @@ def MAKE_MODE(mode_tag):
     string += LOCK(mode_tag,free_keys)
     if len([x for x in ['"Shift_L"','"Shift_R"'] if x in free_keys]):
         string += LOCK_SHIFT(mode_tag,free_shift_keys)
+        if len([x for x in ['"Control_L"','"Control_R"'] if x in free_keys]):
+            string += LOCK_CONTROL_SHIFT(mode_tag,free_control_shift_keys)
     string += " }"
     return string
 

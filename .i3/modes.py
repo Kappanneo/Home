@@ -19,7 +19,9 @@ MODES = {
      "$wrt",
      "",
      [],
-     []),
+     [],
+     [],
+    ),
 
 "$wrt":
     ('"WRITE: writing enabled"',
@@ -31,7 +33,9 @@ MODES = {
      "",
      "",
      [],
-     []),
+     [],
+     [],
+    ),
 
 "$tch":
     ('"TOUCH: touchpad enabled  [space|esc] write mode"',
@@ -43,7 +47,9 @@ MODES = {
      "",
      "",
      ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','"Shift_L"','"Shift_R"',"Tab"],
-     ARROWS["default"]),
+     ARROWS["default"],
+     [],
+    ),
 
 "$hov":
     ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
@@ -55,7 +61,9 @@ MODES = {
      "",
      "",
      ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','space','"Shift_L"','"Shift_R"',"Return","Tab","Menu"],
-     ARROWS["default"]),
+     ARROWS["default"],
+     [],
+    ),
 
 "$str":
     ('"START: [1|2] layouts  [spaec|esc] exit mode"',
@@ -71,7 +79,9 @@ MODES = {
      "$wrt",
      "Mod4",
      [],
-     []),
+     [],
+     [],
+     ),
 
 "$red":
     ('"REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"',
@@ -95,7 +105,9 @@ MODES = {
      "",
      "Mod4",
      [],
-     []),
+     [],
+     [],
+    ),
 
 "$cnf":
     ('"CONFG: [c]onfigure i3  .git[i]gnore  [a]pplications  [e]macs  [s]tatusbar  [z]sh  [g]uide  [1|2|l]ayouts  [r]edshift  [space|esc] exit mode"',
@@ -123,7 +135,9 @@ MODES = {
      "$wrt",
      "Mod4",
      [],
-     [])
+     [],
+     [],
+    ),
 
 }
 
