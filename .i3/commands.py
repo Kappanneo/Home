@@ -56,7 +56,7 @@ SUPER_COMMANDS = {
 
 "fullscreen":[
     ("f","fullscreen toggle"),
-    ("Shift+f",'$exec "sleep 0.5; xdotool key F11"'),
+    ("Shift+f",'$exec "sleep 0.5; xdotool key F11; sleep 0.25; i3-msg fullscreen disable"'),
 ],
 
 "split orientation":[
@@ -224,7 +224,7 @@ SUPER_COMMANDS_TO_WRITE = {
     ("control+e","$exec dmenu_run"),
 
 "f-fake fullscren":
-    ("control+Shift+f",'$exec "sleep 0.5; xdotool key f"'),
+    ("control+Shift+f",'$exec "sleep 0.5; xdotool key f; sleep 0.25; i3-msg fullscreen disable"'),
 
 "write and touch":
     ("Shift+x","$exec $touchpad_on"),

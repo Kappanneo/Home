@@ -13,9 +13,6 @@ fix killall on start mode
 fix fullscrenn disable on new window
 fix autoscroll
 fix fn+F8
-fullscreen mode?
-control+shift lock
-single config shortcut to i3 folder
 
 Emacs:
 ctrl-del until line start
