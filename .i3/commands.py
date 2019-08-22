@@ -30,23 +30,14 @@ TOP_COMMANDS={
 
 }
 
-TOP_COMMANDS_TO_WRITE = {
-
-"no border write":[
-    ('Shift+"Super_L"',"$no_border; $exec $touchpad_off"),
-    ('Shift+Menu',"$no_border"),
-],
-
-}
-
-ALT_COMMANDS_RSB={
+MOD1_COMMANDS_RSB={
 
 "kill":
     ("F4","kill"),
 
 }
 
-SUPER_COMMANDS = {
+MOD4_COMMANDS = {
 
 "open terminal":
     ("Return","exec gnome-terminal"),
@@ -86,7 +77,7 @@ SUPER_COMMANDS = {
 
 }
 
-SUPER_CONTROL_COMMANDS = {
+MOD4_CONTROL_COMMANDS = {
 
 "focus all":
     ("a","$focus_all"),
@@ -104,11 +95,6 @@ SUPER_CONTROL_COMMANDS = {
 "save layout":
     ("s",'exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor=\'\' ~/.workspaces/stamp.json"'),
 
-"files":[
-    ("f","$exec $fm"),
-    ("j","$exec $fm Downloads")
-],
-  
 "resize (precise)":[
     ("i","resize shrink height 1 px or 1 ppt"),
     ("p","resize  grow  height 1 px or 1 ppt"),
@@ -139,10 +125,7 @@ SUPER_CONTROL_COMMANDS = {
 
 }
 
-SUPER_COMMANDS_TO_HOVER_RSB = {
-
-"where am i?":
-    ('x',"$border, $focus_one, fullscreen disable; $exec $touchpad_off"),
+MOD4_COMMANDS_TO_SUPER_RSB = {
 
 "browse workspaces":[
     ("Tab","workspace next"),
@@ -156,24 +139,17 @@ SUPER_COMMANDS_TO_HOVER_RSB = {
 
 }
 
-SUPER_COMMANDS_TO_TOUCH = {
-
-"no border touch":
-    ('Shift+space',"$no_border"),
-
-}
-
-SUPER_CONTROL_COMMANDS["move focused container to workspace and follow"] = []
+MOD4_CONTROL_COMMANDS["move focused container to workspace and follow"] = []
 
 def move_to_workspace(d,i):
     _, key = d
-    SUPER_CONTROL_COMMANDS["move focused container to workspace and follow"].append(
+    MOD4_CONTROL_COMMANDS["move focused container to workspace and follow"].append(
         (key,"move container to workspace {}; workspace {}".format(i,i))
     )
 
 forall(WORKSPACES, move_to_workspace)
 
-SUPER_CONTROL_COMMANDS_TO_HOVER_RSB = {
+MOD4_CONTROL_COMMANDS_TO_SUPER_RSB = {
 
 "kill":
     ("w","kill"),
@@ -188,47 +164,55 @@ SUPER_CONTROL_COMMANDS_TO_HOVER_RSB = {
 DIRECTIONS = ["up","left","down","right"]
 
 def move_and_focus(d,i):
-    SUPER_COMMANDS[i+" move"] = []
-    SUPER_COMMANDS_TO_HOVER_RSB[i+" focus"] = []
+    MOD4_COMMANDS[i+" move"] = []
+    MOD4_COMMANDS_TO_SUPER_RSB[i+" focus"] = []
     for j in range(len(d)):
-        SUPER_COMMANDS[i+" move"].append(("Shift+"+d[j],"move "+DIRECTIONS[j]))
-        SUPER_COMMANDS_TO_HOVER_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
+        MOD4_COMMANDS[i+" move"].append(("Shift+"+d[j],"move "+DIRECTIONS[j]))
+        MOD4_COMMANDS_TO_SUPER_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
 
 forall(ARROWS,move_and_focus)
 
 def split_move(d,i):
-    SUPER_CONTROL_COMMANDS[i+" split and move"] = []
+    MOD4_CONTROL_COMMANDS[i+" split and move"] = []
     for j in range(len(d)):
-        SUPER_CONTROL_COMMANDS[i+" split and move"].append(("Shift+"+d[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
+        MOD4_CONTROL_COMMANDS[i+" split and move"].append(("Shift+"+d[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
 
 forall(ARROWS,split_move)
 
-SUPER_COMMANDS_TO_HOVER_RSB["switch workspace"] = []
+MOD4_COMMANDS_TO_SUPER_RSB["switch workspace"] = []
 
 def switch_workspace(d,i):
     _, key = d
-    SUPER_COMMANDS_TO_HOVER_RSB["switch workspace"].append(
+    MOD4_COMMANDS_TO_SUPER_RSB["switch workspace"].append(
         (key,"workspace {}".format(i))
     )
 
 forall(WORKSPACES,switch_workspace)
 
-SUPER_COMMANDS_TO_WRITE = {
+MOD4_COMMANDS_RSB = {
+
+"where am i?":
+    ('x',"$border, $focus_one, fullscreen disable"),
+
+}
+
+MOD4_COMMANDS_TO_SUPER = {
+
+"here i am!":
+    ("Shift+x","$no_border"),
+
+"application menu":
+    ("Menu","exec morc_menu"),
+
+}
+
+MOD4_COMMANDS_TO_DEFLT = {
 
 "start dmenu for applications":
     ("Shift+exclam","$exec $dmenu"),
 
 "start dmenu for commands":
     ("control+e","$exec dmenu_run"),
-
-"write and touch":
-    ("Shift+x","$exec $touchpad_on"),
-}
-
-SUPER_COMMANDS_TO_HOVER = {
-
-"application menu":
-    ("Menu","exec morc_menu"),
 
 }
 

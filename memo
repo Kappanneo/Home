@@ -13,6 +13,8 @@ fix killall on start mode
 fix fullscrenn disable on new window
 fix autoscroll
 fix fn+F8
+screenshot folder
+Menu rebind
 
 Emacs:
 ctrl-del until line start

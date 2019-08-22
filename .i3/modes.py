@@ -3,10 +3,20 @@
 
 MODES = {
 
+"$def":
+    ('"default"',
+     ['Shift+"Super_L"','Shift+Menu'],
+     "$exec $alert $def & $touchpad_on",
+     "",
+     [],
+     "",
+     "",
+     ['BackSpace'],
+     []),
+
 "$pow":
     ('"POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"',
      ['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf (M-c M-q) set HandlePowerKey=ignore
-     "mode $pow",
      "$exec $alert $pow, fullscreen disable",
      "",
      [
@@ -23,9 +33,8 @@ MODES = {
 
 "$wrt":
     ('"WRITE: writing enabled"',
-     ['BackSpace','"Alt_L"'],
-     "mode $def",
-     "$exec $alert $wrt",
+     ['BackSpace'],
+     "$exec $alert $wrt & $touchpad_off",
      "",
      [],
      "",
@@ -36,19 +45,17 @@ MODES = {
 "$tch":
     ('"TOUCH: touchpad enabled  [space|esc] write mode"',
      ['Mod4+space'],
-     "mode $tch",
      "$exec $alert $tch & $touchpad_on",
      "$exec $touchpad_off",
      [],
      "",
      "",
-     ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','"Shift_L"','"Shift_R"',"Tab"],
+     ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','"Shift_L"','"Shift_R"'],
      ARROWS["default"]),
 
-"$hov":
-    ('"HOVER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
-     ['--release "Super_L"','Mod1+Menu','Menu'],
-     "mode $hov",
+"$sup":
+    ('"SUPER: writing disabled  [oklò] move cursor  [0] insert  [space|esc] write mode"',
+     ['--release "Super_L"','Menu'],
      "$exec $alert $hov & $oklò_enable",
      "$exec $oklò_disable",
      [],
@@ -60,7 +67,6 @@ MODES = {
 "$str":
     ('"START: [1|2] layouts  [spaec|esc] exit mode"',
      ['Mod4+z'],
-     "mode $str",
      "$exec $alert $str",
      "",
     [    
@@ -76,7 +82,6 @@ MODES = {
 "$red":
     ('"REDSH: [123] shift red level  [+] increase  [space|esc] exit mode"',
      ['Mod4+r'],
-     "mode $red",
      "$exec $alert $red",
      "",
      [    
@@ -100,7 +105,6 @@ MODES = {
 "$cnf":
     ('"CONFG: [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [space|esc] exit mode"',
      ['Mod4+c'],
-     "mode $cnf",
      "$exec $alert $cnf",
      "",
      [    
