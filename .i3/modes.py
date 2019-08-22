@@ -23,7 +23,7 @@ MODES = {
 
 "$wrt":
     ('"WRITE: writing enabled"',
-     ['Return','BackSpace','space','Delete','"Alt_L"'],
+     ['BackSpace','"Alt_L"'],
      "mode $def",
      "$exec $alert $wrt",
      "",
