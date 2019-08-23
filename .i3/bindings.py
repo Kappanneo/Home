@@ -117,11 +117,10 @@ def MAKE_MODE(mode_tag):
     string += BIND_TOP_COMMANDS(mode_tag)
     string += BIND_MOD1_COMMANDS(mode_tag)
     string += BIND_MOD4_COMMANDS(mode_tag)
+    string += LOCK(mode_tag,free_keys)
 
-    if mode_tag != "$wrt": # TODO: rethink key locking
-        string += LOCK(mode_tag,free_keys)
-        if len([x for x in ['"Shift_L"','"Shift_R"'] if x in free_keys]):
-            string += LOCK_SHIFT(mode_tag,free_shift_keys)
+    if len([x for x in ['"Shift_L"','"Shift_R"'] if x in free_keys]):
+        string += LOCK_SHIFT(mode_tag,free_shift_keys)
 
     string += " }"
     return string
