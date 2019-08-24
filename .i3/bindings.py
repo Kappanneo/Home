@@ -21,11 +21,17 @@ def BIND((x,y),current_mode=None,after_mode=None,modifier="",prefix="",postfix="
 
     if current_mode:
         if after_mode and current_mode != after_mode:
-            y = "mode " + after_mode + " " + y
-            _, _, entr_cmd, _, _, _, _, _, _ = MODES[after_mode]
-            _, _, _, exit_cmd, _, _, _, _, _ = MODES[current_mode]
-            if exit_cmd != "": y += "; " + exit_cmd
-            if entr_cmd != "": y += "; " + entr_cmd
+
+            _, _, _, _, exit_cmd, _, _, _, _, _ = MODES[current_mode]
+            _, _, s, entr_cmd, _, _, _, _, _, _ = MODES[after_mode]
+
+            if y != "": y = "mode " + after_mode + " " + y
+            else:       y = "mode " + after_mode
+            if s != "": y += ", " + s
+
+            y += "; $exec $alert " + after_mode
+            if exit_cmd != "": y += " && " + exit_cmd
+            if entr_cmd != "": y += " && " + entr_cmd
 
         USED_KEYS[current_mode].append(x)
 
@@ -77,7 +83,7 @@ def BIND_TO_MODE(mode,after_mode,current_mode="",modifier="",free_keys=[]):
     if current_mode == "" or current_mode == after_mode:
         return string
     else:
-        _, keys, _, _, _, _, _, _, _ = mode
+        _, keys, _, _, _, _, _, _, _, _ = mode
         for key in [x for x in keys if x not in free_keys]:
             if modifier != "":
                 key = modifier + "+" + key
@@ -107,7 +113,7 @@ def LOCK_SHIFT(mode,free_keys=[]):
     return string
 
 def MAKE_MODE(mode_tag):
-    _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys = MODES[mode_tag]
+    _, _, _, _, _, options, after_mode, modifier, free_keys, free_shift_keys = MODES[mode_tag]
     string = " mode "+mode_tag+" {\n\n"
 
     if len(options):
