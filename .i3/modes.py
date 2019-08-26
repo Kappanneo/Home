@@ -70,7 +70,7 @@ MODES = {
      ARROWS["default"]),
 
 "$str":
-    ('"START: [1|2] layouts  [super] super mode"',
+    ('"START: [super+] [1-2] layouts  [super] super mode"',
      ['Mod4+z'],
      "",
      "",
@@ -88,7 +88,7 @@ MODES = {
      []),
 
 "$red":
-    ('"REDSH: [123] shift red level  [+] increase  [super] super mode"',
+    ('"REDSH: [super+] [0-9] shift red level  [+] increase  [super] super mode"',
      ['Mod4+r'],
      "",
      "",
@@ -113,7 +113,7 @@ MODES = {
      []),
 
 "$cnf":
-    ('"CONFG: [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [super] super mode"',
+    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [super] super mode"',
      ['Mod4+c'],
      "",
      "",
