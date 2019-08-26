@@ -77,6 +77,43 @@ MOD4_COMMANDS = {
 
 }
 
+MOD4_COMMANDS_RSB = {
+
+"browse workspaces":[
+    ("Tab","workspace next"),
+    ("Shift+Tab","workspace prev"),
+    ("j","workspace prev"),
+    ("agrave","workspace next"),
+    ("Home","workspace prev"),
+    ("End","workspace next"),
+    ("ugrave","workspace back_and_forth"),
+],
+
+"where am i?":
+    ('Shift+x',"$border, $focus_one, fullscreen disable"),
+
+}
+
+MOD4_COMMANDS_TO_SUPER = {
+
+"here i am!":
+    ("x","$no_border"),
+
+"application menu":
+    ("Menu","exec morc_menu"),
+
+}
+
+MOD4_COMMANDS_TO_WRITE = {
+
+"start dmenu for applications":
+    ("Shift+exclam","$exec $dmenu"),
+
+"start dmenu for commands":
+    ("control+e","$exec dmenu_run"),
+
+}
+
 MOD4_CONTROL_COMMANDS = {
 
 "focus all":
@@ -125,18 +162,16 @@ MOD4_CONTROL_COMMANDS = {
 
 }
 
-MOD4_COMMANDS_TO_SUPER_RSB = {
+MOD4_CONTROL_COMMANDS_RSB = {
 
-"browse workspaces":[
-    ("Tab","workspace next"),
-    ("Shift+Tab","workspace prev"),
-    ("j","workspace prev"),
-    ("agrave","workspace next"),
-    ("Home","workspace prev"),
-    ("End","workspace next"),
-    ("ugrave","workspace back_and_forth"),
-],
+"kill":
+    ("w","kill"),
 
+"cut":
+    ("x","move container to workspace $wx"),
+
+"paste":
+    ("v",'$exec "i3-msg \'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx\'"')
 }
 
 MOD4_CONTROL_COMMANDS["move focused container to workspace and follow"] = []
@@ -149,26 +184,14 @@ def move_to_workspace(d,i):
 
 forall(WORKSPACES, move_to_workspace)
 
-MOD4_CONTROL_COMMANDS_TO_SUPER_RSB = {
-
-"kill":
-    ("w","kill"),
-
-"cut":
-    ("x","move container to workspace $wx"),
-
-"paste":
-    ("v",'$exec "i3-msg \'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx\'"')
-}
-
 DIRECTIONS = ["up","left","down","right"]
 
 def move_and_focus(d,i):
     MOD4_COMMANDS[i+" move"] = []
-    MOD4_COMMANDS_TO_SUPER_RSB[i+" focus"] = []
+    MOD4_COMMANDS_RSB[i+" focus"] = []
     for j in range(len(d)):
         MOD4_COMMANDS[i+" move"].append(("Shift+"+d[j],"move "+DIRECTIONS[j]))
-        MOD4_COMMANDS_TO_SUPER_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
+        MOD4_COMMANDS_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
 
 forall(ARROWS,move_and_focus)
 
@@ -179,41 +202,14 @@ def split_move(d,i):
 
 forall(ARROWS,split_move)
 
-MOD4_COMMANDS_TO_SUPER_RSB["switch workspace"] = []
+MOD4_COMMANDS_RSB["switch workspace"] = []
 
 def switch_workspace(d,i):
     _, key = d
-    MOD4_COMMANDS_TO_SUPER_RSB["switch workspace"].append(
+    MOD4_COMMANDS_RSB["switch workspace"].append(
         (key,"workspace {}".format(i))
     )
 
 forall(WORKSPACES,switch_workspace)
-
-MOD4_COMMANDS_RSB = {
-
-"where am i?":
-    ('x',"$border, $focus_one, fullscreen disable"),
-
-}
-
-MOD4_COMMANDS_TO_SUPER = {
-
-"here i am!":
-    ("Shift+x","$no_border"),
-
-"application menu":
-    ("Menu","exec morc_menu"),
-
-}
-
-MOD4_COMMANDS_TO_DEFLT = {
-
-"start dmenu for applications":
-    ("Shift+exclam","$exec $dmenu"),
-
-"start dmenu for commands":
-    ("control+e","$exec dmenu_run"),
-
-}
 
 #end python
