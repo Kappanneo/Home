@@ -74,7 +74,7 @@ def BIND_MOD4_COMMANDS(mode_tag,modifier="Mod4"):
     string += BINDBLOCKS(MOD4_COMMANDS_TO_WRITE,mode_tag,"$wrt",modifier=modifier)
     string += BINDBLOCKS(MOD4_COMMANDS_TO_SUPER,mode_tag,"$sup",modifier=modifier)
     string += BINDBLOCKS(MOD4_CONTROL_COMMANDS,mode_tag,modifier=modifier+"+control")
-    string += BINDBLOCKS(MOD4_CONTROL_COMMANDS_RSB,mode_tag,"$sup",modifier=modifier+"+control")
+    string += BINDBLOCKS(MOD4_CONTROL_COMMANDS_RSB,mode_tag,modifier=modifier+"+control")
     return string
 
 def BIND_TO_MODE(mode,after_mode,current_mode="",modifier="",free_keys=[]):
