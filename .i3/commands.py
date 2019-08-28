@@ -174,6 +174,8 @@ MOD4_CONTROL_COMMANDS_RSB = {
     ("v",'$exec "i3-msg \'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx\'"')
 }
 
+#TODO: maybe nested macros ar more readable?
+
 MOD4_CONTROL_COMMANDS["move focused container to workspace and follow"] = []
 
 def move_to_workspace(d,i):

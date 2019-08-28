@@ -12,7 +12,7 @@ MODES = {
      [],
      "",
      "",
-     ['BackSpace'], # SHOULD prevent mode trigger
+     [], # SHOULD prevent mode trigger
      []),
 
 "$pow":
