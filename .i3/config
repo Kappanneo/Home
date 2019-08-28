@@ -431,13 +431,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
 
 
@@ -456,7 +456,6 @@
 
  bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_on
 
- bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_off
 
 
 
@@ -685,13 +684,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
  bindsym Delete nop
@@ -974,13 +973,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
 
 
@@ -1200,13 +1199,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
  bindsym Delete nop
@@ -1872,13 +1871,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
  bindsym Delete nop
@@ -2168,13 +2167,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
  bindsym Delete nop
@@ -2473,13 +2472,13 @@
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
  # cut
- bindsym Mod4+control+x mode $sup move container to workspace $wx; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+x move container to workspace $wx
 
  # kill
- bindsym Mod4+control+w mode $sup kill; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+w kill
 
  # paste
- bindsym Mod4+control+v mode $sup $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $exec $alert $sup && $oklò_enable
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
  bindsym Delete nop
