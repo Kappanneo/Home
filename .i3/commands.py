@@ -92,19 +92,19 @@ MOD4_COMMANDS_RSB = {
 "where am i?":
     ('Shift+x',"$border, $focus_one, fullscreen disable"),
 
+"here i am!":
+    ("x","$no_border"),
+
 }
 
 MOD4_COMMANDS_TO_SUPER = {
-
-"here i am!":
-    ("x","$no_border"),
 
 "application menu":
     ("Menu","exec morc_menu"),
 
 }
 
-MOD4_COMMANDS_TO_WRITE = {
+MOD4_COMMANDS_TO_DEFLT = {
 
 "start dmenu for applications":
     ("Shift+exclam","$exec $dmenu"),

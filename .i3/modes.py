@@ -6,13 +6,13 @@ MODES = {
 "$def":
     ('"default"',
      ['Shift+"Super_L"','Shift+Menu'],
-     "",
+     "$no_border",
      "$touchpad_on",
      "",
      [],
      "",
      "",
-     [], # SHOULD prevent mode trigger
+     [],
      []),
 
 "$pow":
@@ -34,9 +34,9 @@ MODES = {
      []),
 
 "$wrt":
-    ('"WRITE: [super-space] touchpad mode  [super] super mode"',
-     ['BackSpace'],
-     "",
+    ('"WRITE: [super+space] super mode"',
+     ['BackSpace','mod4+BackSpace'],
+     "$no_border",
      "$touchpad_off",
      "",
      [],
@@ -45,23 +45,11 @@ MODES = {
      [],
      []),
 
-"$tch":
-    ('"TOUCH: [backspace] write mode  [super] super mode"',
-     ['Mod4+space'],
-     "",
-     "$touchpad_on",
-     "",
-     [],
-     "",
-     "",
-     ARROWS["default"]+['"Control_L"','"Control_R"','"Alt_L"','"Shift_L"','"Shift_R"'],
-     ARROWS["default"]),
-
 "$sup":
-    ('"SUPER: [shift-super] exit  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write mode  [super-space] touchpad mode  [super-c] config  [super-r] redshift  [super-z] layouts"',
-     ['--release "Super_L"','Menu'],
+    ('"SUPER: [shift+super] exit to default  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+c] config  [super+r] redshift  [super+z] layouts"',
+     ['--release "Super_L"','Menu','mod4+space'],
      "",
-     "$oklò_enable",
+     "$oklò_enable && $touchpad_on",
      "$oklò_disable",
      [],
      "",
@@ -70,7 +58,7 @@ MODES = {
      ARROWS["default"]),
 
 "$str":
-    ('"START: [super+] [1-2] layouts  [super] super mode"',
+    ('"START: [super+] [1-2] layouts  [space] super mode"',
      ['Mod4+z'],
      "",
      "",
@@ -88,7 +76,7 @@ MODES = {
      []),
 
 "$red":
-    ('"REDSH: [super+] [0-9] shift red level  [+] increase  [super] super mode"',
+    ('"REDSH: [super+] [0-9] shift red level  [+] increase  [space] super mode"',
      ['Mod4+r'],
      "",
      "",
@@ -113,7 +101,7 @@ MODES = {
      []),
 
 "$cnf":
-    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [super] super mode"',
+    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [space] super mode"',
      ['Mod4+c'],
      "",
      "",
