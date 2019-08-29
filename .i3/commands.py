@@ -75,6 +75,11 @@ MOD4_COMMANDS = {
     ("Shift+Next", "resize  grow  width  5 px or 5 ppt"),
 ],
 
+"touchpad":[
+    ("space","$exec $touchpad_on"),
+    ("Shift+space","$exec $touchpad_off"),
+],
+
 }
 
 MOD4_COMMANDS_RSB = {
@@ -89,12 +94,6 @@ MOD4_COMMANDS_RSB = {
     ("ugrave","workspace back_and_forth"),
 ],
 
-"where am i?":
-    ('Shift+x',"$border, $focus_one, fullscreen disable"),
-
-"here i am!":
-    ("x","$no_border"),
-
 }
 
 MOD4_COMMANDS_TO_SUPER = {
@@ -102,7 +101,12 @@ MOD4_COMMANDS_TO_SUPER = {
 "application menu":
     ("Menu","exec morc_menu"),
 
+"where am i?":
+    ("x","$border, $focus_one, fullscreen disable"),
+
 }
+
+MOD4_COMMANDS["here i am!"] = ('Shift+x',"$no_border")
 
 MOD4_COMMANDS_TO_DEFLT = {
 

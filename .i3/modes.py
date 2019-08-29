@@ -6,8 +6,8 @@ MODES = {
 "$def":
     ('"default"',
      ['Shift+"Super_L"','Shift+Menu'],
-     "$no_border",
-     "$touchpad_on",
+     "",
+     "",
      "",
      [],
      "",
@@ -35,10 +35,10 @@ MODES = {
 
 "$wrt":
     ('"WRITE: [super+space] super mode"',
-     ['BackSpace','mod4+BackSpace'],
-     "$no_border",
-     "$touchpad_off",
+     ['BackSpace'],
      "",
+     "$touchpad_off",
+     "$touchpad_on",
      [],
      "",
      "",
@@ -47,9 +47,9 @@ MODES = {
 
 "$sup":
     ('"SUPER: [shift+super] exit to default  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+c] config  [super+r] redshift  [super+z] layouts"',
-     ['--release "Super_L"','Menu','mod4+space'],
+     ['--release "Super_L"','Menu'],
      "",
-     "$oklò_enable && $touchpad_on",
+     "$oklò_enable",
      "$oklò_disable",
      [],
      "",
@@ -58,7 +58,7 @@ MODES = {
      ARROWS["default"]),
 
 "$str":
-    ('"START: [super+] [1-2] layouts  [space] super mode"',
+    ('"START: [super+] [1-2] layouts  [super] super mode"',
      ['Mod4+z'],
      "",
      "",
@@ -67,7 +67,6 @@ MODES = {
          ("1",'$exec "$layout_1; $fill_1"'),
          ("2",'$exec "$layout_2; $fill_2"'),
          ("3",'$exec "$layout_3; $fill_3"'),
-         ("Escape",""),
 
      ],
      "$sup",
@@ -76,7 +75,7 @@ MODES = {
      []),
 
 "$red":
-    ('"REDSH: [super+] [0-9] shift red level  [+] increase  [space] super mode"',
+    ('"REDSH: [super+] [0-9] shift red level  [+] increase  [super] super mode"',
      ['Mod4+r'],
      "",
      "",
@@ -93,7 +92,6 @@ MODES = {
          ("9","$exec redshift -P -O 5000K"),
          ("0","$exec redshift -P -O 6500K"),
          ("plus","$exec redshift -O 6400K"),
-         ("Escape","mode $sup"),
      ],
      "",
      "Mod4",
@@ -101,7 +99,7 @@ MODES = {
      []),
 
 "$cnf":
-    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [space] super mode"',
+    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [super] super mode"',
      ['Mod4+c'],
      "",
      "",
@@ -119,7 +117,6 @@ MODES = {
          ("z","$exec $emacs ~/.zshrc"),
          ("1","$exec $emacs ~/.workspaces/$w1.json"),
          ("2","$exec $emacs ~/.workspaces/$w2.json"),
-         ("Escape",""),
      ],
      "$sup",
      "Mod4",
