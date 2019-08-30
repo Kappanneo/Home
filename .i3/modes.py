@@ -34,8 +34,8 @@ MODES = {
      []),
 
 "$wrt":
-    ('"WRITE: [super+space] super mode"',
-     ['BackSpace'],
+    ('"WRITE: [super] super mode"',
+     ['BackSpace','Delete'],
      "",
      "$touchpad_off",
      "$touchpad_on",
@@ -58,16 +58,14 @@ MODES = {
      ARROWS["default"]),
 
 "$str":
-    ('"START: [super+] [1-2] layouts  [super] super mode"',
+    ('"START: [super+] [1-2] layouts"',
      ['Mod4+z'],
      "",
      "",
      "",
-    [    
+     [
          ("1",'$exec "$layout_1; $fill_1"'),
          ("2",'$exec "$layout_2; $fill_2"'),
-         ("3",'$exec "$layout_3; $fill_3"'),
-
      ],
      "$sup",
      "Mod4",
@@ -75,7 +73,7 @@ MODES = {
      []),
 
 "$red":
-    ('"REDSH: [super+] [0-9] shift red level  [+] increase  [super] super mode"',
+    ('"REDSH: [super+] [0-9] one shot red shift  [+] increase"',
      ['Mod4+r'],
      "",
      "",
@@ -99,7 +97,7 @@ MODES = {
      []),
 
 "$cnf":
-    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [super] super mode"',
+    ('"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh"',
      ['Mod4+c'],
      "",
      "",

@@ -146,13 +146,13 @@
  set $fill_3 code-oss & sleep 2; i3-msg [class='.?'] border none
  #                                    MODES                                    #
 
- set $cnf "CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [super] super mode"
+ set $cnf "CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh"
  set $def "default"
  set $pow "POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"
- set $red "REDSH: [super+] [0-9] shift red level  [+] increase  [super] super mode"
- set $str "START: [super+] [1-2] layouts  [super] super mode"
+ set $red "REDSH: [super+] [0-9] one shot red shift  [+] increase"
+ set $str "START: [super+] [1-2] layouts"
  set $sup "SUPER: [shift+super] exit to default  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+c] config  [super+r] redshift  [super+z] layouts"
- set $wrt "WRITE: [super+space] super mode"
+ set $wrt "WRITE: [super] super mode"
 
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -488,6 +488,7 @@
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable
 
  bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_off
+ bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_off
 
  # borders
  bindsym --border button2 $no_border
@@ -696,7 +697,6 @@
  bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -1006,6 +1006,7 @@
  bindsym Mod4+z mode $str; $exec $alert $str && $oklò_disable
 
  bindsym BackSpace mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off
+ bindsym Delete mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off
 
  # borders
  bindsym --border button2 $no_border
@@ -1214,7 +1215,6 @@
  bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -1349,6 +1349,7 @@
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable
 
  bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_off
+ bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_off
 
  # borders
  bindsym --border button2 $no_border
@@ -1557,7 +1558,6 @@
  bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -1631,7 +1631,6 @@
  # options
  bindsym Mod4+1 mode $sup $exec "$layout_1; $fill_1"; $exec $alert $sup && $oklò_enable
  bindsym Mod4+2 mode $sup $exec "$layout_2; $fill_2"; $exec $alert $sup && $oklò_enable
- bindsym Mod4+3 mode $sup $exec "$layout_3; $fill_3"; $exec $alert $sup && $oklò_enable
 
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
 
@@ -1646,6 +1645,7 @@
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable
 
  bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_off
+ bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_off
 
  # borders
  bindsym --border button2 $no_border
@@ -1854,7 +1854,6 @@
  bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
@@ -1952,6 +1951,7 @@
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable
 
  bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_off
+ bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_off
 
  # borders
  bindsym --border button2 $no_border
@@ -2160,7 +2160,6 @@
  bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
 
  # unused keys
- bindsym Delete nop
  bindsym backslash nop
  bindsym 1 nop
  bindsym 2 nop
