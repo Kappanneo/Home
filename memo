@@ -7,14 +7,12 @@
 
 
 i3:
-fix stamp selection
-oklò bindings via pym
-fix killall on start mode
 fix fullscrenn disable on new window
 fix autoscroll
 solve the mistery of fn+F8
-screenshot folder
-Menu rebind
+Menu key rebind ?
+super+q -> xkill (yet another mistery)
+brightness mode
 
 Emacs:
 ctrl-del until line start
