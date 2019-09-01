@@ -19,7 +19,7 @@ TOP_COMMANDS={
 "screenshot":[
     ("--release Print","$exec i3-scrot"),
     ("--release Mod4+Print","$exec i3-scrot -w"),
-    ("--release Mod4+Shift+Print","$exec i3-scrot -s"), # not working
+    ("--release Mod4+control+Print","$exec i3-scrot -s"),
 ],
 
 "display": #TODO
@@ -55,8 +55,8 @@ MOD4_COMMANDS = {
 ],
 
 "borders":[
-    ("b","$border"),
-    ("Shift+b","$no_border")
+    ("x","$border"),
+    ("Shift+x","$no_border")
 ],
 
 "focus group":[
@@ -80,6 +80,9 @@ MOD4_COMMANDS = {
     ("Shift+space","$exec $touchpad_off"),
 ],
 
+"mouse kill":
+    ("q --release","$exec xkill"),
+
 }
 
 MOD4_COMMANDS_RSB = {
@@ -101,12 +104,7 @@ MOD4_COMMANDS_TO_SUPER = {
 "application menu":
     ("Menu","exec morc_menu"),
 
-"where am i?":
-    ("x","$border, $focus_one, fullscreen disable"),
-
 }
-
-MOD4_COMMANDS["here i am!"] = ('Shift+x',"$no_border")
 
 MOD4_COMMANDS_TO_DEFLT = {
 
