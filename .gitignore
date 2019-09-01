@@ -37,6 +37,8 @@
 .config/redshift/*
 !.config/redshift/redshift.conf
 
+!.config/i3-scrot.conf
+
 !.workspaces/
 .workspaces/stamp.json
 
