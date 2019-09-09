@@ -54,7 +54,7 @@ MODES = {
      [],
      "",
      "",
-     ['"Control_L"','"Control_R"'],
+     ['"Control_L"','"Control_R"','"Alt_L"'],
      []),
 
 "$sup":
