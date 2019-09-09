@@ -87,7 +87,7 @@ def BIND_TO_MODE(mode,after_mode,current_mode="",modifier="",free_keys=[]):
             if modifier != "":
                 key = modifier + "+" + key
             string += BIND((key,""),current_mode,after_mode)
-        return string + "\n"
+        return string
 
 def BIND_MODES(mode_tag,free_keys=[]):
     return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag,free_keys=free_keys)

@@ -7,12 +7,12 @@
 
 
 i3:
-fix fullscrenn disable on new window
+fix fullscreen disable on new window
 fix autoscroll
 solve the mistery of fn+F8
-Menu key rebind ?
 super+q -> xkill (yet another mistery)
 brightness mode
+0 -> overwrite
 
 Emacs:
 ctrl-del until line start

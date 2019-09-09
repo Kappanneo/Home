@@ -75,11 +75,6 @@ MOD4_COMMANDS = {
     ("Shift+Next", "resize  grow  width  5 px or 5 ppt"),
 ],
 
-"touchpad":[
-    ("space","$exec $touchpad_on"),
-    ("Shift+space","$exec $touchpad_off"),
-],
-
 "mouse kill":
     ("q --release","$exec xkill"),
 
@@ -107,6 +102,9 @@ MOD4_COMMANDS_TO_SUPER = {
 }
 
 MOD4_COMMANDS_TO_DEFLT = {
+
+"touchpad disabled":
+    ("Shift+space","$exec $touchpad_off"),
 
 "start dmenu for applications":
     ("Shift+exclam","$exec $dmenu"),
