@@ -60,10 +60,10 @@
 (global-set-key (kbd "C-s") 'save-buffer)
 
 ;; personal preferences
-(global-set-key (kbd "C-f") 'find-file)
+(global-set-key (kbd "C-S-f") 'find-file)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
-(global-set-key (kbd "C-r") 'isearch-forward-regexp)
+(global-set-key (kbd "C-f") 'isearch-forward-regexp)
 
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
