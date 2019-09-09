@@ -188,12 +188,14 @@ forall(WORKSPACES, move_to_workspace)
 
 DIRECTIONS = ["up","left","down","right"]
 
+MOD4_COMMANDS_TO_SUPER_RSB = {}
+
 def move_and_focus(d,i):
     MOD4_COMMANDS[i+" move"] = []
-    MOD4_COMMANDS_RSB[i+" focus"] = []
+    MOD4_COMMANDS_TO_SUPER_RSB[i+" focus"] = []
     for j in range(len(d)):
         MOD4_COMMANDS[i+" move"].append(("Shift+"+d[j],"move "+DIRECTIONS[j]))
-        MOD4_COMMANDS_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
+        MOD4_COMMANDS_TO_SUPER_RSB[i+" focus"].append((d[j],"focus "+DIRECTIONS[j]))
 
 forall(ARROWS,move_and_focus)
 
