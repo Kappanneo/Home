@@ -63,8 +63,12 @@
 (global-set-key (kbd "C-S-f") 'find-file)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
-(global-set-key (kbd "C-f") 'isearch-repeat-forward)
-(global-set-key (kbd "C-f") 'isearch-repeat-backward)
+
+;; search
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
+(define-key isearch-mode-map [next] 'isearch-repeat-forward)
+(define-key isearch-mode-map [prior] 'isearch-repeat-backward)
 
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
