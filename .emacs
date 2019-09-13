@@ -71,6 +71,11 @@
 (define-key isearch-mode-map [S-return] 'isearch-repeat-backward)
 (define-key isearch-mode-map [backspace] 'isearch-del-char)
 
+;; replace
+(global-set-key (kbd "C-r") 'query-replace)
+(global-set-key (kbd "C-S-r") 'query-replace-regexp)
+
+;; unused
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
 (global-set-key (kbd "C-2") 'nil)
