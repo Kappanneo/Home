@@ -67,8 +67,9 @@
 ;; search
 (global-set-key (kbd "C-f") 'isearch-forward)
 (define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
-(define-key isearch-mode-map [next] 'isearch-repeat-forward)
-(define-key isearch-mode-map [prior] 'isearch-repeat-backward)
+(define-key isearch-mode-map [return] 'isearch-repeat-forward)
+(define-key isearch-mode-map [S-return] 'isearch-repeat-backward)
+(define-key isearch-mode-map [backspace] 'isearch-del-char)
 
 (global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
