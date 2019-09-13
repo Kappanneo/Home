@@ -60,13 +60,14 @@
 (global-set-key (kbd "C-s") 'save-buffer)
 
 ;; personal preferences
-(global-set-key (kbd "C-S-f") 'find-file)
+(global-set-key (kbd "M-C-f") 'find-file)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 
 ;; search
 (global-set-key (kbd "C-f") 'isearch-forward)
 (define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
+(define-key isearch-mode-map "\C-v" 'isearch-yank-pop)
 (define-key isearch-mode-map [return] 'isearch-repeat-forward)
 (define-key isearch-mode-map [S-return] 'isearch-repeat-backward)
 (define-key isearch-mode-map [backspace] 'isearch-del-char)
