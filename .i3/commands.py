@@ -55,8 +55,10 @@ MOD4_COMMANDS = {
 "open terminal":
     ("Return","exec gnome-terminal"),
 
-"open emacs":
-    ("e","exec $emacs"),
+"open emacs":[
+    ("e","$exec $emacs"),
+    ("Shift+e","$exec pkill emacs"),
+],
 
 "fullscreen":
     ("f","fullscreen toggle"),
