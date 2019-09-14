@@ -11,8 +11,8 @@
         "percent": 0.833768444948922,
         "type": "con",
         "nodes": [{
-            "border": "none",
-            "current_border_width": 0,
+            "border": "pixel",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                 "height": 1041,
@@ -34,8 +34,8 @@
         "percent": 0.166231555051078,
         "type": "con",
         "nodes": [{
-            "border": "none",
-            "current_border_width": 0,
+            "border": "pixel",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                 "height": 431,
@@ -66,8 +66,8 @@
         "percent": 0.333333333333333,
         "type": "con",
         "nodes": [{
-            "border": "none",
-            "current_border_width": 0,
+            "border": "pixel",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                 "height": 651,
@@ -89,8 +89,8 @@
         "percent": 0.333333333333333,
         "type": "con",
         "nodes": [{
-            "border": "none",
-            "current_border_width": 0,
+            "border": "pixel",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                 "height": 1041,
@@ -112,8 +112,8 @@
         "percent": 0.333333333333333,
         "type": "con",
         "nodes": [{
-            "border": "none",
-            "current_border_width": 0,
+            "border": "pixel",
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                 "height": 1041,

@@ -5,7 +5,7 @@
     "nodes": [
         {
 	    "border": "pixel",
-            "current_border_width": 0,
+            "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
@@ -33,7 +33,7 @@
     "nodes": [
         {
 	    "border": "pixel",
-	    "current_border_width": 0,
+	    "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
@@ -61,7 +61,7 @@
     "nodes": [
         {
 	    "border": "pixel",
-	    "current_border_width": 0,
+	    "current_border_width": 2,
             "floating": "auto_off",
             "geometry": {
                "height": 1041,
