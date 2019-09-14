@@ -3,7 +3,7 @@
 #include "workspaces.py"
 #begin python
 
-TOP_COMMANDS={
+TOP_COMMANDS = {
 
 "touchpad toggle":
     ("XF86TouchpadToggle","$exec $touchpad_toggle"),
@@ -25,12 +25,25 @@ TOP_COMMANDS={
 "display": #TODO
     ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred"),
 
-"borders":
+}
+
+TOP_COMMANDS_TO_DEFLT = {
+
+"middle mouse to default":
     ("--border button2","$no_border"),
 
 }
 
-MOD1_COMMANDS_RSB={
+TOP_COMMANDS_TO_WRITE = {
+
+"delete to write":[
+    ("Delete",''),
+    ("BackSpace",''),
+],
+
+}
+
+MOD1_COMMANDS_RSB = {
 
 "kill":
     ("F4","kill"),
@@ -55,8 +68,8 @@ MOD4_COMMANDS = {
 ],
 
 "borders":[
-    ("x","$border"),
-    ("Shift+x","$no_border")
+    ("x","$border $focus_one fullscreen disable"),
+    ("Shift+x","$no_border $focus_one")
 ],
 
 "focus group":[
@@ -75,8 +88,8 @@ MOD4_COMMANDS = {
     ("Shift+Next", "resize  grow  width  5 px or 5 ppt"),
 ],
 
-"mouse kill":
-    ("q --release","$exec xkill"),
+#"mouse kill":
+#    ("q --release","$exec xkill"),
 
 }
 
@@ -103,9 +116,6 @@ MOD4_COMMANDS_TO_SUPER = {
 
 MOD4_COMMANDS_TO_DEFLT = {
 
-"touchpad disabled":
-    ("Shift+space","$exec $touchpad_off"),
-
 "start dmenu for applications":
     ("Shift+exclam","$exec $dmenu"),
 
@@ -117,7 +127,7 @@ MOD4_COMMANDS_TO_DEFLT = {
 MOD4_CONTROL_COMMANDS = {
 
 "focus all":
-    ("a","$focus_all"),
+    ("a","fullscreen disable $focus_all"),
 
 "reload configuration":[
     ("r",'$exec "make -C ~/.i3 && i3-msg $no_border restart"'),
@@ -148,16 +158,6 @@ MOD4_CONTROL_COMMANDS = {
     ("plus","resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt"),
     ("Shift+minus","resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt"),
     ("Shift+plus","resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt"),
-],
-
-"move container while browsing workspaces":[
-    ("Tab","move container to workspace next; workspace next"),
-    ("Shift+Tab","move container to workspace prev; workspace prev"),
-    # ("j","move container to workspace prev; workspace prev"),
-    # ("agrave","move container to workspace next; workspace next"),
-    ("Home","move container to workspace prev; workspace prev"),
-    ("End","move container to workspace next; workspace next"),
-    ("ugrave","move container to workspace back_and_forth; workspace back_and_forth"),
 ],
 
 }

@@ -60,6 +60,8 @@ def BINDBLOCKS(blocks,current_mode=None,after_mode=None,modifier="",prefix="",po
 def BIND_TOP_COMMANDS(mode_tag):
     string = ""
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
+    string += BINDBLOCKS(TOP_COMMANDS_TO_DEFLT,mode_tag,"$def")
+    string += BINDBLOCKS(TOP_COMMANDS_TO_WRITE,mode_tag,"$wrt")
     return string
 
 def BIND_MOD1_COMMANDS(mode_tag,modifier="Mod1"):
@@ -91,7 +93,7 @@ def BIND_TO_MODE(mode,after_mode,current_mode="",modifier="",free_keys=[]):
         return string
 
 def BIND_MODES(mode_tag,free_keys=[]):
-    return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag,free_keys=free_keys)
+    return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag,free_keys=free_keys) + "\n"
 
 USED_KEYS = {}
 

@@ -5,7 +5,7 @@ MODES = {
 
 "$def":
     ('"default"',
-     ['Shift+"Super_L"','Shift+Menu'],
+     ['Mod4+q'],
      "",
      "$touchpad_on",
      "",
@@ -35,12 +35,14 @@ MODES = {
 
 "$wrt":
     ('"WRITE: [super] super mode"',
-     ['BackSpace','Delete'],
-     "",
-     "",
-     "",
      [],
      "",
+     "$touchpad_x_off",
+     "",
+     [
+         ('"Super_L"',""),
+     ],
+     "$sup",
      "",
      [],
      []),
@@ -49,19 +51,21 @@ MODES = {
     ('"TOUCH: [super] super mode"',
      ['Mod4+space'],
      "",
-     "$touchpad_on",
-     "$touchpad_off",
-     [],
-     "",
+     "$touchpad_x_on",
+     "$touchpad_x_off",
+     [
+         ('"Super_L"',""),
+     ],
+     "$sup",
      "",
      ['"Control_L"','"Control_R"','"Alt_L"'],
      []),
 
 "$sup":
-    ('"SUPER: [shift+super] exit to default  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+c] config  [super+r] redshift  [super+z] layouts"',
+    ('"SUPER: [super+q] exit super mode  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+c] config  [super+r] redshift  [super+z] layouts"',
      ['--release "Super_L"','Menu'],
      "",
-     "$oklò_enable",
+     "$oklò_enable && $touchpad_x_off",
      "$oklò_disable",
      [],
      "",
@@ -79,7 +83,7 @@ MODES = {
          ("1",'$exec "$layout_1; $fill_1"'),
          ("2",'$exec "$layout_2; $fill_2"'),
      ],
-     "$def",
+     "$sup",
      "Mod4",
      [],
      []),
@@ -153,7 +157,7 @@ MODES = {
          ("1","$exec $emacs ~/.workspaces/$w1.json"),
          ("2","$exec $emacs ~/.workspaces/$w2.json"),
      ],
-     "$def",
+     "$sup",
      "Mod4",
      [],
      [])
