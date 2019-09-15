@@ -102,14 +102,14 @@ for x in MODES.keys():
     USED_KEYS[x] = []
 
 def LOCK(mode,free_keys=[]):
-    F = USED_KEYS[mode] + free_keys 
+    F = USED_KEYS[mode] + free_keys
     string = "";
     U = [(x,"nop") for x in KEYS if x not in F]
     string += BINDBLOCKS({"unused keys":U})
     return string
 
 def LOCK_SHIFT(mode,free_keys=[]):
-    F = USED_KEYS[mode] + ['Shift'+y for y in free_keys] 
+    F = USED_KEYS[mode] + ['Shift'+y for y in free_keys]
     string = "";
     U = [(x,"nop") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in F]
     string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U})

@@ -164,7 +164,7 @@ MOD4_CONTROL_COMMANDS = {
     ("Shift+Prior","resize shrink width  1 px or 1 ppt"),
     ("Shift+Next", "resize  grow  width  1 px or 1 ppt"),
 ],
-    
+
 "resize (scale)":[
     ("minus","resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt"),
     ("plus","resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt"),

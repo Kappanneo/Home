@@ -92,7 +92,7 @@ MODES = {
      "",
      "",
      "",
-     [    
+     [
          ("1","$exec redshift -P -O 2100K"),
          ("2","$exec redshift -P -O 2300K"),
          ("3","$exec redshift -P -O 2500K"),
@@ -141,7 +141,7 @@ MODES = {
      "",
      "",
      "",
-     [    
+     [
          ("a","$exec $emacs /sudo::/usr/share/applications/"),
          ("b","$exec $emacs ~/.config/i3status/config"),
          ("c","$exec $emacs ~/.i3/"),
