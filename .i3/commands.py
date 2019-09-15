@@ -53,19 +53,17 @@ MOD1_COMMANDS_RSB = {
 MOD4_COMMANDS = {
 
 "open terminal":
-    ("Return","exec gnome-terminal"),
+    ("Return","$exec gnome-terminal"),
 
-"open emacs":[
+"open emacs":
     ("e","$exec $emacs"),
-    ("Shift+e","$exec pkill emacs"),
-],
 
 "fullscreen":
     ("f","fullscreen toggle"),
 
 "split orientation":[
-    ("v","split v; exec notify-send 'vertical'"),
-    ("h","split h; exec notify-send 'horizontal'"),
+    ("v","split v; $exec notify-send 'vertical'"),
+    ("h","split h; $exec notify-send 'horizontal'"),
     ("g","split v; focus parent; layout toggle split; focus child"),
 ],
 
@@ -146,13 +144,16 @@ MOD4_CONTROL_COMMANDS = {
     ("Shift+r", '$exec "make -C ~/.i3 stable && i3-msg $no_border restart"')
 ],
 
-"files":[
-    ("f","exec $fm"),
-    ("j","exec $fm Downloads")
+"shutdown emacs server":
+    ("Shift+e","$exec pkill emacs"),
+
+"file manager":[
+    ("f","$exec $fm"),
+    ("j","$exec $fm Downloads")
 ],
 
 "save layout":
-    ("s",'exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor=\'\' ~/.workspaces/stamp.json"'),
+    ("s",'$exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor=\'\' ~/.workspaces/stamp.json"'),
 
 "resize (precise)":[
     ("i","resize shrink height 1 px or 1 ppt"),
