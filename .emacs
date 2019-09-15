@@ -19,6 +19,7 @@
  '(indent-tabs-mode nil)
  '(tab-always-indent 'complete)
  '(pop-up-frames t)
+ '(delete-selection-mode t)
  '(truncate-lines t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -64,6 +65,22 @@
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
 
+;; delete
+(global-set-key (kbd "C-<backspace>") 'backward-delete-smart)
+
+(defun backward-delete-smart ()
+  (interactive)
+  (if (use-region-p)
+      (delete-region (region-beginning) (region-end))
+    (if (save-excursion (backward-char) (looking-at "[ \t\n]"))
+        (let ((p (point)))
+          (re-search-backward "[^ \t\n]" nil :no-error)
+          (forward-char)
+          (delete-region p (point)))
+      (let ((p (point)))
+        (re-search-backward "[ \t\n]" nil :no-error)
+        (delete-region p (point))))))
+
 ;; search
 (global-set-key (kbd "C-f") 'isearch-forward)
 (define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
@@ -102,6 +119,7 @@
 (global-set-key (kbd "<menu>") 'x-menu-bar-open)
 
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
+
 (defun un-indent-by-removing-4-spaces ()
   "remove 4 (or less) spaces from beginning of of line"
   (interactive)
@@ -113,6 +131,9 @@
         (untabify (match-beginning 0) (match-end 0)))
       (when (looking-at "^ \\{1,4\\}")
         (replace-match "")))))
+
 (put 'scroll-left 'disabled nil)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (server-start)
