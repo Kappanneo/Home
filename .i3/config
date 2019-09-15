@@ -1,20 +1,20 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               SETTINGS                                      #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- 
+
  # Set mod key (Mod1=<Alt>, Mod4=<Super>)
  set $mod Mod4
- 
+
  # set default desktop layout (default is tiling)
  # workspace_layout tabbed <stacking|tabbed>
- 
+
  # Configure border style <normal|1pixel|pixel xx|none|pixel>
  new_window pixel 2
  new_float normal 2
- 
+
  # Hide borders
  hide_edge_borders none
- 
+
  # Font for window titles. Will also be used by the bar unless a different font
  # is used in the bar {} block below.
  font pango:DejaVu Sans Mono 8
@@ -207,7 +207,7 @@
  $exec nitrogen --restore; sleep 1; compton -b
  $exec xfce4-power-manager
  $exec alttab -s 1 -d 1
- 
+
  # bar applications
  $exec nm-applet
  $exec pamac-tray
@@ -281,10 +281,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -297,8 +296,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -306,6 +305,7 @@
  bindsym Mod4+Shift+a move left
  bindsym Mod4+Shift+s move down
  bindsym Mod4+Shift+d move right
+
 
  # browse workspaces
  bindsym Mod4+Tab workspace next; $refresh_status_bar
@@ -327,32 +327,43 @@
  bindsym Mod4+8 workspace $w8; $refresh_status_bar
  bindsym Mod4+9 workspace $w9; $refresh_status_bar
 
+
  # start dmenu for applications
  bindsym Mod4+Shift+exclam $exec $dmenu
 
  # start dmenu for commands
  bindsym Mod4+control+e $exec dmenu_run
 
+
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu $exec morc_menu
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+
+ # enable touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+
 
  # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
+
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -360,9 +371,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -405,13 +416,17 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
+
 
  # cut
  bindsym Mod4+control+x move container to workspace $wx
@@ -433,7 +448,6 @@
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
 
 
@@ -459,7 +473,6 @@
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -514,10 +527,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -530,8 +542,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -567,7 +579,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
@@ -593,9 +611,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -638,7 +656,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -730,8 +751,9 @@
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
+
+ bindsym "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -785,10 +807,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -801,8 +822,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -838,7 +859,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
@@ -864,9 +891,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -909,7 +936,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -999,10 +1029,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -1015,8 +1044,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -1052,7 +1081,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_x_off && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
@@ -1078,9 +1113,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -1123,7 +1158,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -1213,7 +1251,6 @@
  bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow && $oklò_disable
  bindsym Mod4+r mode $red; $exec $alert $red && $oklò_disable
  bindsym Mod4+z mode $str; $exec $alert $str && $oklò_disable
- bindsym Mod4+space mode $tch; $exec $alert $tch && $oklò_disable && $touchpad_x_on
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1268,10 +1305,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -1284,8 +1320,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -1321,7 +1357,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $oklò_disable && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu exec morc_menu
+ bindsym Mod4+Menu $exec morc_menu
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $oklò_disable && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up focus up; $refresh_status_bar
@@ -1347,9 +1389,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -1392,7 +1434,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -1539,7 +1584,6 @@
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1594,10 +1638,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -1610,8 +1653,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -1647,7 +1690,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
@@ -1673,9 +1722,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -1718,7 +1767,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -1826,7 +1878,6 @@
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1881,10 +1932,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -1897,8 +1947,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -1934,7 +1984,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
@@ -1960,9 +2016,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -2005,7 +2061,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -2104,7 +2163,6 @@
  bindsym Mod4+r mode $red; $exec $alert $red
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -2159,10 +2217,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -2175,8 +2232,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -2212,7 +2269,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
@@ -2238,9 +2301,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -2283,7 +2346,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -2392,7 +2458,6 @@
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
  bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+space mode $tch; $exec $alert $tch && $touchpad_x_on
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -2447,10 +2512,9 @@
 
  # open emacs
  bindsym Mod4+e $exec $emacs
- bindsym Mod4+Shift+e $exec pkill emacs
 
  # open terminal
- bindsym Mod4+Return exec gnome-terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -2463,8 +2527,8 @@
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
  # split orientation
- bindsym Mod4+v split v; exec notify-send 'vertical'
- bindsym Mod4+h split h; exec notify-send 'horizontal'
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
  # wasd move
@@ -2500,7 +2564,13 @@
  bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
 
  # application menu
- bindsym Mod4+Menu mode $sup exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # disable_touchpad
+ bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+
+ # enable touchpad
+ bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
 
  # default focus
  bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
@@ -2526,9 +2596,9 @@
  bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
 
- # files
- bindsym Mod4+control+f exec $fm
- bindsym Mod4+control+j exec $fm Downloads
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
 
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
@@ -2571,7 +2641,10 @@
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # save layout
- bindsym Mod4+control+s exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
