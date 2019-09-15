@@ -8,7 +8,7 @@
  '(savehist-mode 1)
  '(blink-cursor-mode nil)
  '(column-number-mode t)
- '(cua-mode t nil (cua-base))
+ '(cua-mode nil)
  '(custom-enabled-themes (quote (deeper-blue)))
  '(global-linum-mode t)
  '(inhibit-startup-screen t)
@@ -54,12 +54,12 @@
 (global-set-key (kbd "C-c") 'xah-copy-line-or-region)
 
 (global-set-key (kbd "C-v") 'yank)
-(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-z") 'undo-only)
 (global-set-key (kbd "C-y") 'nil)
 (global-set-key (kbd "C-S-z") 'nil)
 (global-set-key (kbd "C-s") 'save-buffer)
 
-;; personal preferences
+;; file navigation
 (global-set-key (kbd "M-C-f") 'find-file)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
 (global-set-key [C-tab] 'switch-to-next-buffer)
