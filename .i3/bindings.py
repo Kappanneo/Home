@@ -75,6 +75,7 @@ def BIND_MOD4_COMMANDS(mode_tag,modifier="Mod4"):
     string += BINDBLOCKS(MOD4_COMMANDS_RSB,mode_tag,modifier=modifier,postfix="$refresh_status_bar")
     string += BINDBLOCKS(MOD4_COMMANDS_TO_DEFLT,mode_tag,"$def",modifier=modifier)
     string += BINDBLOCKS(MOD4_COMMANDS_TO_SUPER,mode_tag,"$sup",modifier=modifier)
+    string += BINDBLOCKS(MOD4_COMMANDS_TO_TOUCH,mode_tag,"$tch",modifier=modifier)
     string += BINDBLOCKS(MOD4_COMMANDS_TO_SUPER_RSB,mode_tag,"$sup",modifier=modifier,postfix="$refresh_status_bar")
     string += BINDBLOCKS(MOD4_CONTROL_COMMANDS,mode_tag,modifier=modifier+"+control")
     string += BINDBLOCKS(MOD4_CONTROL_COMMANDS_RSB,mode_tag,modifier=modifier+"+control")

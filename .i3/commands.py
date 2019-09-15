@@ -112,7 +112,17 @@ MOD4_COMMANDS_RSB = {
 MOD4_COMMANDS_TO_SUPER = {
 
 "application menu":
-    ("Menu","exec morc_menu"),
+    ("Menu","$exec morc_menu"),
+
+"disable_touchpad":
+    ("Shift+space","$exec $touchpad_x_off"),
+
+}
+
+MOD4_COMMANDS_TO_TOUCH = {
+
+"enable touchpad":
+    ("space","$exec $touchpad_x_on"),
 
 }
 

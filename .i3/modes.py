@@ -39,17 +39,15 @@ MODES = {
      "",
      "$touchpad_x_off",
      "",
-     [
-         ('"Super_L"',""),
-     ],
-     "$sup",
+     [],
+     "",
      "",
      [],
      []),
 
 "$tch":
     ('"TOUCH: [super] super mode"',
-     ['Mod4+space'],
+     [],
      "",
      "$touchpad_x_on",
      "$touchpad_x_off",
