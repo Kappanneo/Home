@@ -10,7 +10,7 @@ i3:
 fix fullscreen disable on new window
 fix autoscroll
 solve the mistery of fn+F8
-super+q -> xkill (yet another mistery)
+fix xkill (yet another mistery)
 0 -> overwrite
 auto super on oklò only
 rethink mode lock
@@ -19,9 +19,3 @@ screenshot mode
 Emacs:
 ctrl-del until line start
 goto line
-disable messages
-synchronize history
-fix i-search direction
-multiterm?
-query replace?
-emacsclient delete frame when done
