@@ -53,7 +53,6 @@
 ;; sanity preservers
 (global-set-key (kbd "C-x") 'xah-cut-line-or-region)
 (global-set-key (kbd "C-c") 'xah-copy-line-or-region)
-
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-z") 'undo-only)
 (global-set-key (kbd "C-y") 'nil)
@@ -178,5 +177,24 @@ Version 2016-07-18"
 (put 'scroll-left 'disabled nil)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(defvar safe-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-x") 'xah-cut-line-or-region)
+    (define-key map (kbd "C-c") 'xah-copy-line-or-region)
+    (define-key map (kbd "C-v") 'yank)
+    (define-key map (kbd "C-z") 'undo-only)
+    (define-key map (kbd "C-y") 'nil)
+    (define-key map (kbd "C-S-z") 'nil)
+    (define-key map (kbd "C-s") 'save-buffer)
+    map)
+  "safe-minor-mode keymap.")
+
+(define-minor-mode safe-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  :init-value t
+  :lighter " Safe")
+
+(safe-minor-mode 1)
 
 (server-start)
