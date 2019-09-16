@@ -120,6 +120,19 @@
 (define-key isearch-mode-map [S-return] 'isearch-repeat-backward)
 (define-key isearch-mode-map [backspace] 'isearch-del-char)
 
+(global-set-key (kbd "<mouse-3>") 'xah-mouse-click-to-search) ; right button
+(global-set-key (kbd "<S-mouse-4>") 'scroll-right)
+(global-set-key (kbd "<S-mouse-5>") 'scroll-left)
+
+(defun xah-mouse-click-to-search (@click)
+  "Mouse click to start `isearch-forward-symbol-at-point' (emacs 24.4) at clicked point.
+URL `http://ergoemacs.org/emacs/emacs_mouse_click_highlight_word.html'
+Version 2016-07-18"
+  (interactive "e")
+  (let ((p1 (posn-point (event-start @click))))
+    (goto-char p1)
+    (save-excursion (isearch-forward-symbol-at-point))))
+
 ;; replace
 (global-set-key (kbd "C-r") 'query-replace)
 (global-set-key (kbd "C-S-r") 'query-replace-regexp)
