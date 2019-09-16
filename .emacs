@@ -60,6 +60,12 @@
 (global-set-key (kbd "C-S-z") 'nil)
 (global-set-key (kbd "C-s") 'save-buffer)
 
+(global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+(global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-0") 'text-scale-adjust)
+
 ;; file navigation
 (global-set-key (kbd "M-C-f") 'find-file)
 (global-set-key [C-iso-lefttab] 'switch-to-prev-buffer)
@@ -94,7 +100,6 @@
 (global-set-key (kbd "C-S-r") 'query-replace-regexp)
 
 ;; unused
-(global-set-key (kbd "C-0") 'nil)
 (global-set-key (kbd "C-1") 'nil)
 (global-set-key (kbd "C-2") 'nil)
 (global-set-key (kbd "C-3") 'nil)
