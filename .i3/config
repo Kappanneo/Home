@@ -102,6 +102,8 @@
  set $enable_Caps setxkbmap -option
  set $oklò_disable ~/.bin/oklò.sh 0
  set $oklò_enable ~/.bin/oklò.sh 1
+ set $wasd_disable ~/.bin/wasd.sh 0
+ set $wasd_enable ~/.bin/wasd.sh 1
 
  #                              FUNCTIONALITIES                                #
 
@@ -147,15 +149,15 @@
  set $fill_2 nautilus -w & nautilus -w Downloads & emacsclient -create-frame --alternate-editor='' ~/memo & sleep 0.5; chromium --new-window --profile-directory=Default & gnome-terminal
  #                                    MODES                                    #
 
- set $brg "BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease"
- set $cnf "CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh"
+ set $brg "BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease  [q] quit"
+ set $cnf "CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [q] quit"
  set $def "default"
+ set $lft "LEFT: [wasd] arrows  [e] enter  [super+q] quit mode"
  set $pow "POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"
- set $red "REDSH: [super+] [0-9] one shot red shift  [+] increase"
+ set $red "REDSH: [super+] [0-9] one shot red shift  [+] increase  [q] quit"
+ set $rgh "RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+q] quit mode"
  set $str "START: [super+] [1-2] layouts"
- set $sup "SUPER: [super+q] exit super mode  [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+c] config  [super+r] redshift  [super+z] layouts"
- set $tch "TOUCH: [super] super mode"
- set $wrt "WRITE: [super] super mode"
+ set $wrt "WRITE: [super+q] quit mode"
 
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -192,7 +194,7 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
  # keybinding
- $exec $disable_Caps
+ $exec $disable_Caps && xmodmap -e "keycode 135 = Super_R NoSymbol Super_R NoSymbol Super_R"
 
  # middle-mouse scroll
  $exec $enable_autoscroll
@@ -212,6 +214,7 @@
  $exec nm-applet
  $exec pamac-tray
  $exec pa-applet
+ $exec clipit
 
  # reshift oneshot mode (to set starting temperature according to time)
  $exec redshift -o
@@ -256,6 +259,9 @@
 
  #                               SUPER-COMMANDS                                #
 
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
  bindsym Mod4+Shift+x $no_border $focus_one
@@ -266,6 +272,19 @@
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
 
+ # default split and move
+ bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
+
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
+
+ # focus all
+ bindsym Mod4+control+a fullscreen disable $focus_all
+
  # focus group
  bindsym Mod4+less focus child
  bindsym Mod4+Shift+greater focus parent
@@ -273,17 +292,54 @@
  # fullscreen
  bindsym Mod4+f fullscreen toggle
 
+ # move focused container to workspace and follow
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
  # oklò move
  bindsym Mod4+Shift+o move up
  bindsym Mod4+Shift+k move left
  bindsym Mod4+Shift+l move down
  bindsym Mod4+Shift+ograve move right
 
+ # oklò split and move
+ bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
  # open emacs
  bindsym Mod4+e $exec $emacs
 
  # open terminal
  bindsym Mod4+Return $exec gnome-terminal
+
+ # reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
+ bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
+
+ # resize (precise)
+ bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
+
+ # resize (scale)
+ bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
@@ -295,16 +351,32 @@
  bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
+ # save layout
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
+
  # split orientation
  bindsym Mod4+v split v; $exec notify-send 'vertical'
  bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
 
  # wasd move
  bindsym Mod4+Shift+w move up
  bindsym Mod4+Shift+a move left
  bindsym Mod4+Shift+s move down
  bindsym Mod4+Shift+d move right
+
+ # wasd split and move
+ bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
 
  # browse workspaces
@@ -316,6 +388,27 @@
  bindsym Mod4+End workspace next; $refresh_status_bar
  bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
 
+ # cut
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
+
+ # kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
+
+ # paste
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
  # switch workspace
  bindsym Mod4+1 workspace $w1; $refresh_status_bar
  bindsym Mod4+2 workspace $w2; $refresh_status_bar
@@ -326,37 +419,6 @@
  bindsym Mod4+7 workspace $w7; $refresh_status_bar
  bindsym Mod4+8 workspace $w8; $refresh_status_bar
  bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $dmenu
-
- # start dmenu for commands
- bindsym Mod4+control+e $exec dmenu_run
-
-
- # application menu
- bindsym Mod4+Menu $exec morc_menu
-
- # disable_touchpad
- bindsym Mod4+Shift+space $exec $touchpad_x_off
-
-
- # enable touchpad
- bindsym Mod4+space $exec $touchpad_x_on
-
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # wasd focus
  bindsym Mod4+w focus up; $refresh_status_bar
@@ -365,379 +427,22 @@
  bindsym Mod4+d focus right; $refresh_status_bar
 
 
- # default split and move
- bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
-
- # file manager
- bindsym Mod4+control+f $exec $fm
- bindsym Mod4+control+j $exec $fm Downloads
-
- # focus all
- bindsym Mod4+control+a fullscreen disable $focus_all
-
- # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
- # oklò split and move
- bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
-
- # reload configuration
- bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
- bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
-
- # resize (precise)
- bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
-
- # resize (scale)
- bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
- bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
- bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
-
- # save layout
- bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
-
- # shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs
-
- # wasd split and move
- bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
-
- # cut
- bindsym Mod4+control+x move container to workspace $wx
-
- # kill
- bindsym Mod4+control+w kill
-
- # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
-
-
 
  #                                   MODES                                     #
 
  bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
 
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                                   MODES                                     #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- #                               POWEROFF-MODE                                 #
-
- mode $pow {
-
- # options
- bindsym q mode $def $exec systemctl poweroff; $exec $alert $def && $touchpad_on
- bindsym r mode $def $exec systemctl reboot; $exec $alert $def && $touchpad_on
- bindsym s mode $def $exec systemctl suspend; $exec $alert $def && $touchpad_on
- bindsym h mode $def $exec systemctl hibernate; $exec $alert $def && $touchpad_on
- bindsym Escape mode $def; $exec $alert $def && $touchpad_on
-
- bindsym Mod4+b mode $brg; $exec $alert $brg
- bindsym Mod4+c mode $cnf; $exec $alert $cnf
- bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym Mod4+r mode $red; $exec $alert $red
- bindsym Mod4+z mode $str; $exec $alert $str
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # display
- bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # screen brightness controls
- bindsym XF86MonBrightnessUp $brightness_up
- bindsym XF86MonBrightnessDown $brightness_down
-
- # screen poweroff
- bindsym XF86ScreenSaver $exec xset dpms force off
-
- # screenshot
- bindsym --release Print $exec i3-scrot
- bindsym --release Mod4+Print $exec i3-scrot -w
- bindsym --release Mod4+control+Print $exec i3-scrot -s
-
- # touchpad toggle
- bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # middle mouse to default
- bindsym --border button2 mode $def $no_border; $exec $alert $def && $touchpad_on
-
- # delete to write
- bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_x_off
- bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_x_off
-
- # kill
- bindsym Mod1+F4 kill; $refresh_status_bar
-
- # borders
- bindsym Mod4+x $border $focus_one fullscreen disable
- bindsym Mod4+Shift+x $no_border $focus_one
-
- # default move
- bindsym Mod4+Shift+Up move up
- bindsym Mod4+Shift+Left move left
- bindsym Mod4+Shift+Down move down
- bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # default split and move
- bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
-
- # file manager
- bindsym Mod4+control+f $exec $fm
- bindsym Mod4+control+j $exec $fm Downloads
-
- # focus all
- bindsym Mod4+control+a fullscreen disable $focus_all
-
- # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
- # oklò split and move
- bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
-
- # reload configuration
- bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
- bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
-
- # resize (precise)
- bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
-
- # resize (scale)
- bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
- bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
- bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
-
- # save layout
- bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
-
- # shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs
-
- # wasd split and move
- bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # cut
- bindsym Mod4+control+x move container to workspace $wx
-
- # kill
- bindsym Mod4+control+w kill
-
- # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
-
- # unused keys
- bindsym backslash nop
- bindsym 1 nop
- bindsym 2 nop
- bindsym 3 nop
- bindsym 4 nop
- bindsym 5 nop
- bindsym 6 nop
- bindsym 7 nop
- bindsym 8 nop
- bindsym 9 nop
- bindsym 0 nop
- bindsym apostrophe nop
- bindsym igrave nop
- bindsym Tab nop
- bindsym w nop
- bindsym e nop
- bindsym t nop
- bindsym y nop
- bindsym u nop
- bindsym i nop
- bindsym o nop
- bindsym p nop
- bindsym egrave nop
- bindsym plus nop
- bindsym Return nop
- bindsym "Caps_Lock" nop
- bindsym a nop
- bindsym d nop
- bindsym f nop
- bindsym g nop
- bindsym j nop
- bindsym k nop
- bindsym l nop
- bindsym ograve nop
- bindsym agrave nop
- bindsym ugrave nop
- bindsym "Shift_L" nop
- bindsym less nop
- bindsym z nop
- bindsym x nop
- bindsym c nop
- bindsym v nop
- bindsym b nop
- bindsym n nop
- bindsym m nop
- bindsym comma nop
- bindsym period nop
- bindsym minus nop
- bindsym "Shift_R" nop
- bindsym "Control_L" nop
- bindsym "Super_L" nop
- bindsym "Alt_L" nop
- bindsym space nop
- bindsym $alt_gr nop
- bindsym "Control_R" nop
- bindsym Up nop
- bindsym Left nop
- bindsym Down nop
- bindsym Right nop
-
- }
 
  #                                WRITE-MODE                                   #
 
@@ -746,14 +451,12 @@
  bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
-
- bindsym "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -774,13 +477,12 @@
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
 
- # middle mouse to default
- bindsym --border button2 mode $def $no_border; $exec $alert $def && $touchpad_on
-
-
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
+
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
 
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
@@ -791,99 +493,6 @@
  bindsym Mod4+Shift+Left move left
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -898,22 +507,41 @@
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
 
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
  # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
 
  # oklò split and move
  bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # reload configuration
  bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
@@ -935,104 +563,6 @@
  bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
- # save layout
- bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
-
- # shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs
-
- # wasd split and move
- bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # cut
- bindsym Mod4+control+x move container to workspace $wx
-
- # kill
- bindsym Mod4+control+w kill
-
- # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
-
-
-
- }
-
- #                                TOUCH-MODE                                   #
-
- mode $tch {
-
- # options
- bindsym "Super_L" mode $sup; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- bindsym Mod4+b mode $brg; $exec $alert $brg && $touchpad_x_off
- bindsym Mod4+c mode $cnf; $exec $alert $cnf && $touchpad_x_off
- bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_x_off && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow && $touchpad_x_off
- bindsym Mod4+r mode $red; $exec $alert $red && $touchpad_x_off
- bindsym Mod4+z mode $str; $exec $alert $str && $touchpad_x_off
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- # display
- bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # screen brightness controls
- bindsym XF86MonBrightnessUp $brightness_up
- bindsym XF86MonBrightnessDown $brightness_down
-
- # screen poweroff
- bindsym XF86ScreenSaver $exec xset dpms force off
-
- # screenshot
- bindsym --release Print $exec i3-scrot
- bindsym --release Mod4+Print $exec i3-scrot -w
- bindsym --release Mod4+control+Print $exec i3-scrot -s
-
- # touchpad toggle
- bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # middle mouse to default
- bindsym --border button2 mode $def $no_border; $exec $alert $def && $touchpad_x_off && $touchpad_on
-
- # delete to write
- bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_x_off && $touchpad_x_off
- bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_x_off && $touchpad_x_off
-
- # kill
- bindsym Mod1+F4 kill; $refresh_status_bar
-
- # borders
- bindsym Mod4+x $border $focus_one fullscreen disable
- bindsym Mod4+Shift+x $no_border $focus_one
-
- # default move
- bindsym Mod4+Shift+Up move up
- bindsym Mod4+Shift+Left move left
- bindsym Mod4+Shift+Down move down
- bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
  # resize window
  bindsym Mod4+i resize shrink height 5 px or 5 ppt
  bindsym Mod4+p resize  grow  height 5 px or 5 ppt
@@ -1043,125 +573,26 @@
  bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
  bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
 
+ # save layout
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
+
  # split orientation
  bindsym Mod4+v split v; $exec notify-send 'vertical'
  bindsym Mod4+h split h; $exec notify-send 'horizontal'
  bindsym Mod4+g split v; focus parent; layout toggle split; focus child
 
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_x_off && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_x_off && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
+ # touchpad
  bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
 
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $touchpad_x_off && $oklò_enable && $touchpad_x_off
-
- # default split and move
- bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
-
- # file manager
- bindsym Mod4+control+f $exec $fm
- bindsym Mod4+control+j $exec $fm Downloads
-
- # focus all
- bindsym Mod4+control+a fullscreen disable $focus_all
-
- # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
-
- # oklò split and move
- bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
-
- # reload configuration
- bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
- bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
-
- # resize (precise)
- bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
-
- # resize (scale)
- bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
- bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
- bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
-
- # save layout
- bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
-
- # shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -1169,88 +600,75 @@
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam $exec $dmenu
+
+ # start dmenu for commands
+ bindsym Mod4+control+e $exec dmenu_run
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # kill
- bindsym Mod4+control+w kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
 
- # unused keys
- bindsym backslash nop
- bindsym 1 nop
- bindsym 2 nop
- bindsym 3 nop
- bindsym 4 nop
- bindsym 5 nop
- bindsym 6 nop
- bindsym 7 nop
- bindsym 8 nop
- bindsym 9 nop
- bindsym 0 nop
- bindsym apostrophe nop
- bindsym igrave nop
- bindsym Tab nop
- bindsym q nop
- bindsym w nop
- bindsym e nop
- bindsym r nop
- bindsym t nop
- bindsym y nop
- bindsym u nop
- bindsym i nop
- bindsym o nop
- bindsym p nop
- bindsym egrave nop
- bindsym plus nop
- bindsym Return nop
- bindsym "Caps_Lock" nop
- bindsym a nop
- bindsym s nop
- bindsym d nop
- bindsym f nop
- bindsym g nop
- bindsym h nop
- bindsym j nop
- bindsym k nop
- bindsym l nop
- bindsym ograve nop
- bindsym agrave nop
- bindsym ugrave nop
- bindsym "Shift_L" nop
- bindsym less nop
- bindsym z nop
- bindsym x nop
- bindsym c nop
- bindsym v nop
- bindsym b nop
- bindsym n nop
- bindsym m nop
- bindsym comma nop
- bindsym period nop
- bindsym minus nop
- bindsym "Shift_R" nop
- bindsym space nop
- bindsym $alt_gr nop
- bindsym Up nop
- bindsym Left nop
- bindsym Down nop
- bindsym Right nop
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
+
+
 
  }
 
- #                                SUPER-MODE                                   #
+ #                                RIGHT-MODE                                   #
 
- mode $sup {
+ mode $rgh {
 
  bindsym Mod4+b mode $brg; $exec $alert $brg && $oklò_disable
  bindsym Mod4+c mode $cnf; $exec $alert $cnf && $oklò_disable
  bindsym Mod4+q mode $def; $exec $alert $def && $oklò_disable && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow && $oklò_disable
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $oklò_disable && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow && $oklò_disable
  bindsym Mod4+r mode $red; $exec $alert $red && $oklò_disable
  bindsym Mod4+z mode $str; $exec $alert $str && $oklò_disable
+
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1277,8 +695,13 @@
  bindsym Delete mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
  bindsym BackSpace mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
 
+
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
+
+
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
 
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
@@ -1289,99 +712,6 @@
  bindsym Mod4+Shift+Left move left
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $oklò_disable && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $oklò_disable && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu $exec morc_menu
-
- # disable_touchpad
- bindsym Mod4+Shift+space $exec $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $oklò_disable && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -1396,22 +726,41 @@
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
 
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
  # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
 
  # oklò split and move
  bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # reload configuration
  bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
@@ -1433,11 +782,36 @@
  bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
  # save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
 
  # shutdown emacs server
  bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -1445,14 +819,59 @@
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # kill
- bindsym Mod4+control+w kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
+
 
  # unused keys
  bindsym backslash nop
@@ -1506,6 +925,7 @@
  bindsym minus nop
  bindsym "Super_L" nop
  bindsym $alt_gr nop
+
 
  # also Shift+ (since Shift is not locked)
  bindsym Shift+bar nop
@@ -1557,13 +977,625 @@
  bindsym Shift+colon nop
  bindsym Shift+underscore nop
 
+
+
+ }
+
+ #                                 LEFT-MODE                                   #
+
+ mode $lft {
+
+ bindsym Mod4+b mode $brg; $exec $alert $brg && $wasd_disable
+ bindsym Mod4+c mode $cnf; $exec $alert $cnf && $wasd_disable
+ bindsym Mod4+q mode $def; $exec $alert $def && $wasd_disable && $touchpad_on
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow && $wasd_disable
+ bindsym Mod4+r mode $red; $exec $alert $red && $wasd_disable
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $wasd_disable && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+z mode $str; $exec $alert $str && $wasd_disable
+
+
+ # display
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
+
+ # screen brightness controls
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
+
+ # screen poweroff
+ bindsym XF86ScreenSaver $exec xset dpms force off
+
+ # screenshot
+ bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+control+Print $exec i3-scrot -s
+
+ # touchpad toggle
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # middle mouse to default
+ bindsym --border button2 mode $def $no_border; $exec $alert $def && $wasd_disable && $touchpad_on
+
+ # delete to write
+ bindsym Delete mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
+ bindsym BackSpace mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
+
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
+
+
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
+ # borders
+ bindsym Mod4+x $border $focus_one fullscreen disable
+ bindsym Mod4+Shift+x $no_border $focus_one
+
+ # default move
+ bindsym Mod4+Shift+Up move up
+ bindsym Mod4+Shift+Left move left
+ bindsym Mod4+Shift+Down move down
+ bindsym Mod4+Shift+Right move right
+
+ # default split and move
+ bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
+
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
+
+ # focus all
+ bindsym Mod4+control+a fullscreen disable $focus_all
+
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
+ # move focused container to workspace and follow
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
+
+ # oklò split and move
+ bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
+
+ # reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
+ bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
+
+ # resize (precise)
+ bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
+
+ # resize (scale)
+ bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
+
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
+ # save layout
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
+ # wasd split and move
+ bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
+
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
+ # cut
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
+
+ # kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
+
+ # paste
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
+
+
+ # unused keys
+ bindsym backslash nop
+ bindsym 1 nop
+ bindsym 2 nop
+ bindsym 3 nop
+ bindsym 4 nop
+ bindsym 5 nop
+ bindsym 6 nop
+ bindsym 7 nop
+ bindsym 8 nop
+ bindsym 9 nop
+ bindsym 0 nop
+ bindsym apostrophe nop
+ bindsym igrave nop
+ bindsym q nop
+ bindsym w nop
+ bindsym e nop
+ bindsym r nop
+ bindsym t nop
+ bindsym y nop
+ bindsym u nop
+ bindsym i nop
+ bindsym o nop
+ bindsym p nop
+ bindsym egrave nop
+ bindsym plus nop
+ bindsym "Caps_Lock" nop
+ bindsym a nop
+ bindsym s nop
+ bindsym d nop
+ bindsym f nop
+ bindsym g nop
+ bindsym h nop
+ bindsym j nop
+ bindsym k nop
+ bindsym l nop
+ bindsym ograve nop
+ bindsym agrave nop
+ bindsym ugrave nop
+ bindsym less nop
+ bindsym z nop
+ bindsym x nop
+ bindsym c nop
+ bindsym v nop
+ bindsym b nop
+ bindsym n nop
+ bindsym m nop
+ bindsym comma nop
+ bindsym period nop
+ bindsym minus nop
+ bindsym "Super_L" nop
+ bindsym $alt_gr nop
+
+
+ # also Shift+ (since Shift is not locked)
+ bindsym Shift+bar nop
+ bindsym Shift+exclam nop
+ bindsym Shift+quotedbl nop
+ bindsym Shift+sterling nop
+ bindsym Shift+dollar nop
+ bindsym Shift+percent nop
+ bindsym Shift+ampersand nop
+ bindsym Shift+slash nop
+ bindsym Shift+parenleft nop
+ bindsym Shift+parenright nop
+ bindsym Shift+equal nop
+ bindsym Shift+question nop
+ bindsym Shift+asciicircum nop
+ bindsym Shift+q nop
+ bindsym Shift+w nop
+ bindsym Shift+e nop
+ bindsym Shift+r nop
+ bindsym Shift+t nop
+ bindsym Shift+y nop
+ bindsym Shift+u nop
+ bindsym Shift+i nop
+ bindsym Shift+o nop
+ bindsym Shift+p nop
+ bindsym Shift+eacute nop
+ bindsym Shift+asterisk nop
+ bindsym Shift+a nop
+ bindsym Shift+s nop
+ bindsym Shift+d nop
+ bindsym Shift+f nop
+ bindsym Shift+g nop
+ bindsym Shift+h nop
+ bindsym Shift+j nop
+ bindsym Shift+k nop
+ bindsym Shift+l nop
+ bindsym Shift+ccedilla nop
+ bindsym Shift+degree nop
+ bindsym Shift+section nop
+ bindsym Shift+greater nop
+ bindsym Shift+z nop
+ bindsym Shift+x nop
+ bindsym Shift+c nop
+ bindsym Shift+v nop
+ bindsym Shift+b nop
+ bindsym Shift+n nop
+ bindsym Shift+m nop
+ bindsym Shift+semicolon nop
+ bindsym Shift+colon nop
+ bindsym Shift+underscore nop
+
+
+
+ }
+
+ #                               POWEROFF-MODE                                 #
+
+ mode $pow {
+
+ # $pow
+ bindsym q $exec systemctl poweroff
+ bindsym r $exec systemctl reboot
+ bindsym s $exec systemctl suspend
+ bindsym h $exec systemctl hibernate
+
+ bindsym Mod4+b mode $brg; $exec $alert $brg
+ bindsym Mod4+c mode $cnf; $exec $alert $cnf
+ bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym Mod4+r mode $red; $exec $alert $red
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+z mode $str; $exec $alert $str
+
+ # display
+ bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
+
+ # screen brightness controls
+ bindsym XF86MonBrightnessUp $brightness_up
+ bindsym XF86MonBrightnessDown $brightness_down
+
+ # screen poweroff
+ bindsym XF86ScreenSaver $exec xset dpms force off
+
+ # screenshot
+ bindsym --release Print $exec i3-scrot
+ bindsym --release Mod4+Print $exec i3-scrot -w
+ bindsym --release Mod4+control+Print $exec i3-scrot -s
+
+ # touchpad toggle
+ bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # middle mouse to default
+ bindsym --border button2 mode $def $no_border; $exec $alert $def && $touchpad_on
+
+ # delete to write
+ bindsym Delete mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym BackSpace mode $wrt; $exec $alert $wrt && $touchpad_x_off
+
+ # kill
+ bindsym Mod1+F4 kill; $refresh_status_bar
+
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
+ # borders
+ bindsym Mod4+x $border $focus_one fullscreen disable
+ bindsym Mod4+Shift+x $no_border $focus_one
+
+ # default move
+ bindsym Mod4+Shift+Up move up
+ bindsym Mod4+Shift+Left move left
+ bindsym Mod4+Shift+Down move down
+ bindsym Mod4+Shift+Right move right
+
+ # default split and move
+ bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
+
+ # file manager
+ bindsym Mod4+control+f $exec $fm
+ bindsym Mod4+control+j $exec $fm Downloads
+
+ # focus all
+ bindsym Mod4+control+a fullscreen disable $focus_all
+
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
+ # move focused container to workspace and follow
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
+
+ # oklò split and move
+ bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
+
+ # reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
+ bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
+
+ # resize (precise)
+ bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
+ bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
+ bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
+
+ # resize (scale)
+ bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
+ bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
+ bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
+
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
+ # save layout
+ bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
+
+ # shutdown emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
+
+ # wasd split and move
+ bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
+ bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
+ bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
+ bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
+
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
+ # cut
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
+
+ # kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
+
+ # paste
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
+
+ # unused keys
+ bindsym backslash nop
+ bindsym 1 nop
+ bindsym 2 nop
+ bindsym 3 nop
+ bindsym 4 nop
+ bindsym 5 nop
+ bindsym 6 nop
+ bindsym 7 nop
+ bindsym 8 nop
+ bindsym 9 nop
+ bindsym 0 nop
+ bindsym apostrophe nop
+ bindsym igrave nop
+ bindsym Tab nop
+ bindsym q nop
+ bindsym w nop
+ bindsym e nop
+ bindsym r nop
+ bindsym t nop
+ bindsym y nop
+ bindsym u nop
+ bindsym i nop
+ bindsym o nop
+ bindsym p nop
+ bindsym egrave nop
+ bindsym plus nop
+ bindsym Return nop
+ bindsym "Caps_Lock" nop
+ bindsym a nop
+ bindsym s nop
+ bindsym d nop
+ bindsym f nop
+ bindsym g nop
+ bindsym h nop
+ bindsym j nop
+ bindsym k nop
+ bindsym l nop
+ bindsym ograve nop
+ bindsym agrave nop
+ bindsym ugrave nop
+ bindsym "Shift_L" nop
+ bindsym less nop
+ bindsym z nop
+ bindsym x nop
+ bindsym c nop
+ bindsym v nop
+ bindsym b nop
+ bindsym n nop
+ bindsym m nop
+ bindsym comma nop
+ bindsym period nop
+ bindsym minus nop
+ bindsym "Shift_R" nop
+ bindsym "Control_L" nop
+ bindsym "Super_L" nop
+ bindsym "Alt_L" nop
+ bindsym space nop
+ bindsym $alt_gr nop
+ bindsym Menu nop
+ bindsym "Control_R" nop
+ bindsym Up nop
+ bindsym Left nop
+ bindsym Down nop
+ bindsym Right nop
+
  }
 
  #                                BRIGHTNESS                                   #
 
  mode $brg {
 
- # options
+ # $brg
  bindsym Mod4+1 $exec xbacklight = 10
  bindsym Mod4+2 $exec xbacklight = 20
  bindsym Mod4+3 $exec xbacklight = 30
@@ -1579,11 +1611,11 @@
 
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1613,6 +1645,9 @@
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
  bindsym Mod4+Shift+x $no_border $focus_one
@@ -1622,99 +1657,6 @@
  bindsym Mod4+Shift+Left move left
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -1729,22 +1671,41 @@
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
 
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
  # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
 
  # oklò split and move
  bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # reload configuration
  bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
@@ -1766,11 +1727,36 @@
  bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
  # save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
 
  # shutdown emacs server
  bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -1778,14 +1764,58 @@
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # kill
- bindsym Mod4+control+w kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
 
  # unused keys
  bindsym backslash nop
@@ -1846,6 +1876,7 @@
  bindsym "Alt_L" nop
  bindsym space nop
  bindsym $alt_gr nop
+ bindsym Menu nop
  bindsym "Control_R" nop
  bindsym Up nop
  bindsym Left nop
@@ -1858,7 +1889,7 @@
 
  mode $red {
 
- # options
+ # $red
  bindsym Mod4+1 $exec redshift -P -O 2100K
  bindsym Mod4+2 $exec redshift -P -O 2300K
  bindsym Mod4+3 $exec redshift -P -O 2500K
@@ -1874,10 +1905,10 @@
  bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1907,6 +1938,9 @@
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
  bindsym Mod4+Shift+x $no_border $focus_one
@@ -1916,99 +1950,6 @@
  bindsym Mod4+Shift+Left move left
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -2023,22 +1964,41 @@
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
 
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
  # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
 
  # oklò split and move
  bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # reload configuration
  bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
@@ -2060,11 +2020,36 @@
  bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
  # save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
 
  # shutdown emacs server
  bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -2072,14 +2057,58 @@
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # kill
- bindsym Mod4+control+w kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
 
  # unused keys
  bindsym backslash nop
@@ -2140,6 +2169,7 @@
  bindsym "Alt_L" nop
  bindsym space nop
  bindsym $alt_gr nop
+ bindsym Menu nop
  bindsym "Control_R" nop
  bindsym Up nop
  bindsym Left nop
@@ -2152,17 +2182,17 @@
 
  mode $str {
 
- # options
- bindsym Mod4+1 mode $sup $exec "$layout_1; $fill_1"; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+2 mode $sup $exec "$layout_2; $fill_2"; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ # $str
+ bindsym Mod4+1 $exec "$layout_1; $fill_1"
+ bindsym Mod4+2 $exec "$layout_2; $fill_2"
 
  bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -2192,6 +2222,9 @@
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
  bindsym Mod4+Shift+x $no_border $focus_one
@@ -2201,99 +2234,6 @@
  bindsym Mod4+Shift+Left move left
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -2308,22 +2248,41 @@
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
 
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
  # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
 
  # oklò split and move
  bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # reload configuration
  bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
@@ -2345,11 +2304,36 @@
  bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
  # save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
 
  # shutdown emacs server
  bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -2357,14 +2341,58 @@
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # kill
- bindsym Mod4+control+w kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
 
  # unused keys
  bindsym backslash nop
@@ -2425,6 +2453,7 @@
  bindsym "Alt_L" nop
  bindsym space nop
  bindsym $alt_gr nop
+ bindsym Menu nop
  bindsym "Control_R" nop
  bindsym Up nop
  bindsym Left nop
@@ -2437,27 +2466,27 @@
 
  mode $cnf {
 
- # options
- bindsym Mod4+a mode $sup $exec $emacs /sudo::/usr/share/applications/; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+b mode $sup $exec $emacs ~/.config/i3status/config; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+c mode $sup $exec $emacs ~/.i3/; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+e mode $sup $exec $emacs ~/.emacs; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+g mode $sup $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup $exec $emacs ~/.workspaces/stamp.json; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+p mode $sup $exec $emacs /sudo::/etc/pamac.conf; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+r mode $sup $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup $exec $emacs /sudo::/etc/systemd/; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+z mode $sup $exec $emacs ~/.zshrc; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+1 mode $sup $exec $emacs ~/.workspaces/$w1.json; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+2 mode $sup $exec $emacs ~/.workspaces/$w2.json; $exec $alert $sup && $oklò_enable && $touchpad_x_off
+ # $cnf
+ bindsym Mod4+c $exec $emacs ~/.i3/
+ bindsym Mod4+a $exec $emacs /sudo::/usr/share/applications/
+ bindsym Mod4+b $exec $emacs ~/.config/i3status/config
+ bindsym Mod4+e $exec $emacs ~/.emacs
+ bindsym Mod4+g $exec chromium --new-window i3wm.org/docs/userguide.html
+ bindsym Mod4+l $exec $emacs ~/.workspaces/stamp.json
+ bindsym Mod4+p $exec $emacs /sudo::/etc/pamac.conf
+ bindsym Mod4+r $exec $emacs ~/.config/redshift/redshift.conf
+ bindsym Mod4+s $exec $emacs /sudo::/etc/systemd/
+ bindsym Mod4+z $exec $emacs ~/.zshrc
+ bindsym Mod4+1 $exec $emacs ~/.workspaces/$w1.json
+ bindsym Mod4+2 $exec $emacs ~/.workspaces/$w2.json
 
  bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym XF86PowerOff mode $pow, fullscreen disable; $exec $alert $pow
+ bindsym --release "Super_L" mode $lft; $exec $alert $lft && $wasd_enable && $touchpad_x_off
+ bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
+ bindsym --release Super_R mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
- bindsym --release "Super_L" mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Menu mode $sup; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -2487,6 +2516,9 @@
  # kill
  bindsym Mod1+F4 kill; $refresh_status_bar
 
+ # application menu
+ bindsym Mod4+Menu $exec morc_menu
+
  # borders
  bindsym Mod4+x $border $focus_one fullscreen disable
  bindsym Mod4+Shift+x $no_border $focus_one
@@ -2496,99 +2528,6 @@
  bindsym Mod4+Shift+Left move left
  bindsym Mod4+Shift+Down move down
  bindsym Mod4+Shift+Right move right
-
- # focus group
- bindsym Mod4+less focus child
- bindsym Mod4+Shift+greater focus parent
-
- # fullscreen
- bindsym Mod4+f fullscreen toggle
-
- # oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # open emacs
- bindsym Mod4+e $exec $emacs
-
- # open terminal
- bindsym Mod4+Return $exec gnome-terminal
-
- # resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # start dmenu for applications
- bindsym Mod4+Shift+exclam mode $def $exec $dmenu; $exec $alert $def && $touchpad_on
-
- # start dmenu for commands
- bindsym Mod4+control+e mode $def $exec dmenu_run; $exec $alert $def && $touchpad_on
-
- # application menu
- bindsym Mod4+Menu mode $sup $exec morc_menu; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # disable_touchpad
- bindsym Mod4+Shift+space mode $sup $exec $touchpad_x_off; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # enable touchpad
- bindsym Mod4+space mode $tch $exec $touchpad_x_on; $exec $alert $tch && $touchpad_x_on
-
- # default focus
- bindsym Mod4+Up mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Left mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Down mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+Right mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # oklò focus
- bindsym Mod4+o mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+k mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+l mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+ograve mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
-
- # wasd focus
- bindsym Mod4+w mode $sup focus up; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+a mode $sup focus left; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+s mode $sup focus down; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
- bindsym Mod4+d mode $sup focus right; $refresh_status_bar; $exec $alert $sup && $oklò_enable && $touchpad_x_off
 
  # default split and move
  bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
@@ -2603,22 +2542,41 @@
  # focus all
  bindsym Mod4+control+a fullscreen disable $focus_all
 
+ # focus group
+ bindsym Mod4+less focus child
+ bindsym Mod4+Shift+greater focus parent
+
+ # fullscreen
+ bindsym Mod4+f fullscreen toggle
+
  # move focused container to workspace and follow
- bindsym Mod4+control+1 move container to workspace $w1; workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2; workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3; workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4; workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5; workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6; workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7; workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8; workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9; workspace $w9
+ bindsym Mod4+control1 move container to workspace $w1; workspace $w1
+ bindsym Mod4+control2 move container to workspace $w2; workspace $w2
+ bindsym Mod4+control3 move container to workspace $w3; workspace $w3
+ bindsym Mod4+control4 move container to workspace $w4; workspace $w4
+ bindsym Mod4+control5 move container to workspace $w5; workspace $w5
+ bindsym Mod4+control6 move container to workspace $w6; workspace $w6
+ bindsym Mod4+control7 move container to workspace $w7; workspace $w7
+ bindsym Mod4+control8 move container to workspace $w8; workspace $w8
+ bindsym Mod4+control9 move container to workspace $w9; workspace $w9
+
+ # oklò move
+ bindsym Mod4+Shift+o move up
+ bindsym Mod4+Shift+k move left
+ bindsym Mod4+Shift+l move down
+ bindsym Mod4+Shift+ograve move right
 
  # oklò split and move
  bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
  bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
  bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
+
+ # open emacs
+ bindsym Mod4+e $exec $emacs
+
+ # open terminal
+ bindsym Mod4+Return $exec gnome-terminal
 
  # reload configuration
  bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
@@ -2640,11 +2598,36 @@
  bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
  bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
 
+ # resize window
+ bindsym Mod4+i resize shrink height 5 px or 5 ppt
+ bindsym Mod4+p resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
+ bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
+ bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
+ bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
+ bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
+
  # save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"
 
  # shutdown emacs server
  bindsym Mod4+control+Shift+e $exec pkill emacs
+
+ # split orientation
+ bindsym Mod4+v split v; $exec notify-send 'vertical'
+ bindsym Mod4+h split h; $exec notify-send 'horizontal'
+ bindsym Mod4+g split v; focus parent; layout toggle split; focus child
+
+ # touchpad
+ bindsym Mod4+space $exec $touchpad_x_on
+ bindsym Mod4+Shift+space $exec $touchpad_x_off
+
+ # wasd move
+ bindsym Mod4+Shift+w move up
+ bindsym Mod4+Shift+a move left
+ bindsym Mod4+Shift+s move down
+ bindsym Mod4+Shift+d move right
 
  # wasd split and move
  bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
@@ -2652,14 +2635,58 @@
  bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
  bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
 
+ # start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $wrt $exec $dmenu; $exec $alert $wrt && $touchpad_x_off
+
+ # start dmenu for commands
+ bindsym Mod4+control+e mode $wrt $exec dmenu_run; $exec $alert $wrt && $touchpad_x_off
+
+ # browse workspaces
+ bindsym Mod4+Tab workspace next; $refresh_status_bar
+ bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
+ bindsym Mod4+j workspace prev; $refresh_status_bar
+ bindsym Mod4+agrave workspace next; $refresh_status_bar
+ bindsym Mod4+Home workspace prev; $refresh_status_bar
+ bindsym Mod4+End workspace next; $refresh_status_bar
+ bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
+
  # cut
- bindsym Mod4+control+x move container to workspace $wx
+ bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
+
+ # default focus
+ bindsym Mod4+Up focus up; $refresh_status_bar
+ bindsym Mod4+Left focus left; $refresh_status_bar
+ bindsym Mod4+Down focus down; $refresh_status_bar
+ bindsym Mod4+Right focus right; $refresh_status_bar
 
  # kill
- bindsym Mod4+control+w kill
+ bindsym Mod4+control+w kill; $refresh_status_bar
+
+ # oklò focus
+ bindsym Mod4+o focus up; $refresh_status_bar
+ bindsym Mod4+k focus left; $refresh_status_bar
+ bindsym Mod4+l focus down; $refresh_status_bar
+ bindsym Mod4+ograve focus right; $refresh_status_bar
 
  # paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"
+ bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
+
+ # switch workspace
+ bindsym Mod4+1 workspace $w1; $refresh_status_bar
+ bindsym Mod4+2 workspace $w2; $refresh_status_bar
+ bindsym Mod4+3 workspace $w3; $refresh_status_bar
+ bindsym Mod4+4 workspace $w4; $refresh_status_bar
+ bindsym Mod4+5 workspace $w5; $refresh_status_bar
+ bindsym Mod4+6 workspace $w6; $refresh_status_bar
+ bindsym Mod4+7 workspace $w7; $refresh_status_bar
+ bindsym Mod4+8 workspace $w8; $refresh_status_bar
+ bindsym Mod4+9 workspace $w9; $refresh_status_bar
+
+ # wasd focus
+ bindsym Mod4+w focus up; $refresh_status_bar
+ bindsym Mod4+a focus left; $refresh_status_bar
+ bindsym Mod4+s focus down; $refresh_status_bar
+ bindsym Mod4+d focus right; $refresh_status_bar
 
  # unused keys
  bindsym backslash nop
@@ -2720,6 +2747,7 @@
  bindsym "Alt_L" nop
  bindsym space nop
  bindsym $alt_gr nop
+ bindsym Menu nop
  bindsym "Control_R" nop
  bindsym Up nop
  bindsym Left nop

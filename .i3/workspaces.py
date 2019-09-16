@@ -1,4 +1,3 @@
-#include "merge.py"
 #begin python
 
 WORKSPACES = {
@@ -16,7 +15,5 @@ WORKSPACES = {
 CUT_WORKSPACE = {
 "$wx":("X",        "x")
 }
-
-ALLWORKSPACES = merge(WORKSPACES,CUT_WORKSPACE)
 
 #end python
