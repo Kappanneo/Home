@@ -1,19 +1,18 @@
 #begin python
 
 WORKSPACES = {
-"$w1":("1nternet", "1"),
-"$w2":("2rectory", "2"),
-"$w3":("3code",    "3"),
-"$w4":("4terminl", "4"),
-"$w5":("5team",    "5"),
-"$w6":("6iscord",  "6"),
-"$w7":("7atex",    "7"),
-"$w8":("8volante", "8"),
-"$w9":("9imp",     "9")
+"$w1": { "name":"1nternet", "key":"1" },
+"$w2": { "name":"2rectory", "key":"2" },
+"$w3": { "name":"3code",    "key":"3" },
+"$w4": { "name":"4terminl", "key":"4" },
+"$w5": { "name":"5team",    "key":"5" },
+"$w6": { "name":"6iscord",  "key":"6" },
+"$w7": { "name":"7atex",    "key":"7" },
+"$w8": { "name":"8volante", "key":"8" },
+"$w9": { "name":"9imp",     "key":"9" }
 }
 
 CUT_WORKSPACE = {
-"$wx":("X",        "x")
-}
+"$wx": { "name":"X",        "key":"x" }}
 
 #end python

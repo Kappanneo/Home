@@ -11,5 +11,4 @@ fix fullscreen disable on new window
 fix autoscroll
 solve the mistery of fn+F8
 fix xkill (yet another mistery)
-rethink mode lock
 screenshot mode

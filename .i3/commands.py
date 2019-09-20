@@ -36,12 +36,29 @@ COMMANDS_TO_DEFLT = {
 
 COMMANDS_TO_WRITE = {
 
-"delete to write":[
-    ("Delete",''),
-    ("BackSpace",''),
+"write mode":[
+    ("$alt_gr",''),
+    ('"Alt_L"',''),
 ],
 
 }
+
+COMMANDS_TO_LEFT = {
+
+"left mode":
+    ('"Super_L"',''),
+
+}
+
+
+COMMANDS_TO_RIGHT = {
+
+"right mode":
+    ('"Super_R"',''),
+
+}
+
+MOD1_COMMANDS = {}
 
 MOD1_COMMANDS_RSB = {
 
@@ -50,24 +67,24 @@ MOD1_COMMANDS_RSB = {
 
 }
 
-MOD4_COMMANDS = {
+MOD4_COMMANDS = {}
 
-"application menu":
-    ("Mod4+Menu","$exec morc_menu"),
+MOD4_COMMANDS_RSB = {}
 
-"open terminal":
-    ("Mod4+Return","$exec gnome-terminal"),
+MOD4_COMMANDS_TO_WRITE = {
 
-"open emacs":
-    ("Mod4+e","$exec $emacs"),
+"start dmenu for applications":
+    ("Mod4+Shift+exclam","$exec $dmenu"),
+
+"start dmenu for commands":
+    ("Mod4+control+e","$exec dmenu_run"),
+
+}
+
+MOD4_COMMANDS_TO_LEFT = {
 
 "fullscreen":
     ("Mod4+f","fullscreen toggle"),
-
-"touchpad":[
-    ("Mod4+space","$exec $touchpad_x_on"),
-    ("Mod4+Shift+space","$exec $touchpad_x_off"),
-],
 
 "split orientation":[
     ("Mod4+v","split v; $exec notify-send 'vertical'"),
@@ -75,14 +92,74 @@ MOD4_COMMANDS = {
     ("Mod4+g","split v; focus parent; layout toggle split; focus child"),
 ],
 
-"borders":[
-    ("Mod4+x","$border $focus_one fullscreen disable"),
-    ("Mod4+Shift+x","$no_border $focus_one")
+"reload configuration":[
+    ("Mod4+control+r",'$exec "make -C ~/.i3 && i3-msg $no_border restart"'),
+    ("Mod4+control+Shift+r", '$exec "make -C ~/.i3 stable && i3-msg $no_border restart"')
+],
+
+}
+
+MOD4_COMMANDS_TO_LEFT_RSB = {
+
+"kill":
+    ("Mod4+control+w","kill"),
+
+"cut":
+    ("Mod4+control+x","move container to workspace $wx"),
+
+"paste":
+    ("Mod4+control+v",'$exec "i3-msg \'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx\'"'),
+
+"browse workspaces":[
+    ("Mod4+Tab","workspace next"),
+    ("Mod4+Shift+Tab","workspace prev"),
+    ("Mod4+j","workspace prev"),
+    ("Mod4+agrave","workspace next"),
+    ("Mod4+Home","workspace prev"),
+    ("Mod4+End","workspace next"),
+    ("Mod4+ugrave","workspace back_and_forth"),
 ],
 
 "focus group":[
     ("Mod4+less","focus child"),
     ("Mod4+Shift+greater","focus parent")
+],
+
+"focus all":
+    ("Mod4+control+a","fullscreen disable $focus_all"),
+
+"borders":[
+    ("Mod4+x","$border $focus_one fullscreen disable"),
+    ("Mod4+Shift+x","$no_border $focus_one")
+],
+
+"open emacs":
+    ("Mod4+e","$exec $emacs"),
+
+"shutdown emacs server":
+    ("Mod4+control+Shift+e","$exec pkill emacs"),
+
+"file manager":[
+    ("Mod4+control+f","$exec $fm"),
+    ("Mod4+control+j","$exec $fm Downloads")
+],
+
+"save layout":
+    ("Mod4+control+s",'$exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor=\'\' ~/.workspaces/stamp.json"'),
+
+}
+
+MOD4_COMMANDS_TO_RIGHT = {
+
+"application menu":
+    ("Mod4+Menu","$exec morc_menu"),
+
+"open terminal":
+    ("Mod4+Return","$exec gnome-terminal"),
+
+"touchpad":[
+    ("Mod4+space","$exec $touchpad_x_on"),
+    ("Mod4+Shift+space","$exec $touchpad_x_off"),
 ],
 
 "resize window":[
@@ -95,25 +172,6 @@ MOD4_COMMANDS = {
     ("Mod4+Shift+Prior","resize shrink width  5 px or 5 ppt"),
     ("Mod4+Shift+Next", "resize  grow  width  5 px or 5 ppt"),
 ],
-
-"focus all":
-    ("Mod4+control+a","fullscreen disable $focus_all"),
-
-"reload configuration":[
-    ("Mod4+control+r",'$exec "make -C ~/.i3 && i3-msg $no_border restart"'),
-    ("Mod4+control+Shift+r", '$exec "make -C ~/.i3 stable && i3-msg $no_border restart"')
-],
-
-"shutdown emacs server":
-    ("Mod4+control+Shift+e","$exec pkill emacs"),
-
-"file manager":[
-    ("Mod4+control+f","$exec $fm"),
-    ("Mod4+control+j","$exec $fm Downloads")
-],
-
-"save layout":
-    ("Mod4+control+s",'$exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor=\'\' ~/.workspaces/stamp.json"'),
 
 "resize (precise)":[
     ("Mod4+control+i","resize shrink height 1 px or 1 ppt"),
@@ -135,61 +193,48 @@ MOD4_COMMANDS = {
 
 }
 
-MOD4_COMMANDS_RSB = {
-
-"kill":
-    ("Mod4+control+w","kill"),
-
-"cut":
-    ("Mod4+control+x","move container to workspace $wx"),
-
-"paste":
-    ("Mod4+control+v",'$exec "i3-msg \'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx\'"'),
-
-"browse workspaces":[
-    ("Mod4+Tab","workspace next"),
-    ("Mod4+Shift+Tab","workspace prev"),
-    ("Mod4+j","workspace prev"),
-    ("Mod4+agrave","workspace next"),
-    ("Mod4+Home","workspace prev"),
-    ("Mod4+End","workspace next"),
-    ("Mod4+ugrave","workspace back_and_forth"),
-],
-
-}
-
-
-MOD4_COMMANDS_TO_WRITE = {
-
-"start dmenu for applications":
-    ("Mod4+Shift+exclam","$exec $dmenu"),
-
-"start dmenu for commands":
-    ("Mod4+control+e","$exec dmenu_run"),
-
-}
+MOD4_COMMANDS_TO_RIGHT_RSB = {}
 
 MOD4_COMMANDS["move focused container to workspace and follow"] = []
 MOD4_COMMANDS_RSB["switch workspace"] = []
 
-def workspace_commands(d,i):
-    _, key = d
-    MOD4_COMMANDS["move focused container to workspace and follow"].append(("Mod4+control"+key,"move container to workspace {}; workspace {}".format(i,i)))
+def workspace_commands(X,i):
+    key = X["key"]
+    MOD4_COMMANDS["move focused container to workspace and follow"].append(("Mod4+control+"+key,"move container to workspace {}; workspace {}".format(i,i)))
     MOD4_COMMANDS_RSB["switch workspace"].append(("Mod4+"+key,"workspace {}".format(i)))
 
 forall(WORKSPACES,workspace_commands)
 
 DIRECTIONS = ["up","left","down","right"]
 
-def arrow_commands(d,i):
-    MOD4_COMMANDS_RSB[i+" focus"] = []
-    MOD4_COMMANDS[i+" move"] = []
-    MOD4_COMMANDS[i+" split and move"] = []
-    for j in range(len(d)):
-        MOD4_COMMANDS_RSB[i+" focus"].append(("Mod4+"+d[j],"focus "+DIRECTIONS[j]))
-        MOD4_COMMANDS[i+" move"].append(("Mod4+Shift+"+d[j],"move "+DIRECTIONS[j]))
-        MOD4_COMMANDS[i+" split and move"].append(("Mod4+control+Shift+"+d[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
+DEFLT = ARROW_SETS["default"]
+LEFT = ARROW_SETS["wasd"]
+RIGHT = ARROW_SETS["oklò"]
 
-forall(ARROW_SETS,arrow_commands)
+MOD4_COMMANDS["default move"] = []
+MOD4_COMMANDS["default split and move"] = []
+MOD4_COMMANDS_RSB["default focus"] = []
+
+MOD4_COMMANDS_TO_LEFT["wasd move"] = []
+MOD4_COMMANDS_TO_LEFT["wasd split and move"] = []
+MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"] = []
+
+MOD4_COMMANDS_TO_RIGHT["oklò move"] = []
+MOD4_COMMANDS_TO_RIGHT["oklò split and move"] = []
+MOD4_COMMANDS_TO_RIGHT_RSB["oklò focus"] = []
+
+for i in range(len(DIRECTIONS)):
+
+    MOD4_COMMANDS["default move"].append(("Mod4+Shift+"+DEFLT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS["default split and move"].append(("Mod4+control+Shift+"+DEFLT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_RSB["default focus"].append(("Mod4+"+DEFLT[i],"focus "+DIRECTIONS[i]))
+
+    MOD4_COMMANDS_TO_LEFT["wasd move"].append(("Mod4+Shift+"+LEFT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS_TO_LEFT["wasd split and move"].append(("Mod4+control+Shift+"+LEFT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"].append(("Mod4+"+LEFT[i],"focus "+DIRECTIONS[i]))
+
+    MOD4_COMMANDS_TO_RIGHT["oklò move"].append(("Mod4+Shift+"+RIGHT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS_TO_RIGHT["oklò split and move"].append(("Mod4+control+Shift+"+RIGHT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_TO_RIGHT_RSB["oklò focus"].append(("Mod4+"+RIGHT[i],"focus "+DIRECTIONS[i]))
 
 #end python

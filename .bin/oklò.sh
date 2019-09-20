@@ -12,8 +12,8 @@ then
     xmodmap -e "keycode  31 = i I i I rightarrow idotless rightarrow"
     xmodmap -e "keycode  33 = p P p P thorn THORN thorn"
 
-    xmodmap -e "keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift"
     xmodmap -e "keycode  58 = m M m M mu masculine mu masculine m M mu masculine"
+    xmodmap -e "keycode  59 = comma semicolon comma semicolon dead_acute multiply dead_acute multiply"
 
 elif [ $1 -eq "1" ]
 then
@@ -28,6 +28,6 @@ then
     xmodmap -e "keycode  31 = Prior NoSymbol Prior NoSymbol Prior"
     xmodmap -e "keycode  33 = Next NoSymbol Next NoSymbol Next"
 
-    xmodmap -e "keycode 108 = Escape NoSymbol Escape NoSymbol Escape"
     xmodmap -e "keycode  58 = Menu NoSymbol Menu NoSymbol Menu"
+    xmodmap -e "keycode  59 = Escape NoSymbol Escape NoSymbol Escape"
 fi
