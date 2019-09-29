@@ -108,6 +108,7 @@
       (if (save-excursion (backward-char) (looking-at "[[:word:]]"))
           (let ((p (point)))
             (re-search-backward "[^[:word:]]" nil :no-error)
+            (forward-char)
             (delete-region p (point)))
         (delete-char -1)))))
 
@@ -183,7 +184,7 @@ Version 2016-07-18"
     (define-key map (kbd "C-x") 'xah-cut-line-or-region)
     (define-key map (kbd "C-c") 'xah-copy-line-or-region)
     (define-key map (kbd "C-v") 'yank)
-    (define-key map (kbd "C-z") 'undo-only)
+    (define-key map (kbd "C-z") 'undo)
     (define-key map (kbd "C-y") 'nil)
     (define-key map (kbd "C-S-z") 'nil)
     (define-key map (kbd "C-s") 'save-buffer)

@@ -5,46 +5,56 @@ MODES = {
 
 "$def": {
     "name":'"default"',
-    "keys":["Mod4+q"],
+    "keys":['"Super_L"',"Mod4+q"],
     "exec_on_enter":"$touchpad_on",
 },
 
 "$pow": {
-    "name":'"POWER: [q]uit  [r]estart  [s]uspend  [h]ibernate  [esc]"',
+    "name":'"POWER: [q] power off  [r]estart  [s]uspend  [h]ibernate  [l]ock  [x] turn off screen  [esc] do nothing"',
     "keys":['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf (M-c M-q) set HandlePowerKey=ignore
     "options":[
         ("q","$exec systemctl poweroff"),
         ("r","$exec systemctl reboot"),
         ("s","$exec systemctl suspend"),
         ("h","$exec systemctl hibernate"),
-        ("Escape",""),
+        ("x","$exec $lock && $screen_off"),
+        ("l","$exec $lock"),
+        ("Escape","nop"),
     ],
     "after_mode":"$def",
 },
 
+"$tmp": {
+    "name":'"STAMP: [space] print screen  [w]indow  [s]elect  [o]pen  [esc]"',
+    "keys":["Mod4+Print"],
+    "options":[
+        ("space","$exec i3-scrot"),
+        ("w","$exec i3-scrot -w"),
+        ("--release s","$exec i3-scrot -s"),
+        ("o","$exec $fm ~/Pictures/Screenshots/"),
+        ("Escape","mode $def"),
+    ],
+},
+
 "$wrt": {
+    "keys":["$alt_gr"],
     "name":'"WRITE: [super+q] quit mode"',
     "exec_on_enter":"$touchpad_x_off",
-     },
+},
 
 "$rgh": {
+    "keys":['"Super_R"'],
     "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+q] quit mode"',
     "exec_on_enter":"$oklò_enable && $touchpad_x_off",
     "exec_on_exit":"$oklò_disable",
 },
-
-"$lft": {
-    "name":'"LEFT: [wasd] arrows  [e] enter  [super+q] quit mode"',
-    "exec_on_enter":"$touchpad_x_off",
-},
-
 
 "$str": {
     "name":'"START: [super+] [1-2] layouts"',
     "keys":['Mod4+z'],
     "options":[
         ("Mod4+1",'$exec "$layout_1; $fill_1"'),
-        ("Mod4+2",'$exec "$layout_2; $fill_2"'),
+        ("Mod4+2",'$exec "$layout_2; $fill_2 & sleep 1.5; $update_startup_lockscreen"'),
     ],
     "after_mode":"$def",
 },
@@ -87,12 +97,12 @@ MODES = {
 },
 
 "$cnf": {
-    "name":'"CONFG: [super+] [c]onfigure i3  [a]pplications  status[b]ar  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [q] quit"',
+    "name":'"CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [q] quit"',
     "keys":['Mod4+c'],
     "options":[
         ("Mod4+c","$exec $emacs ~/.i3/"),
         ("Mod4+a","$exec $emacs /sudo::/usr/share/applications/"),
-        ("Mod4+b","$exec $emacs ~/.config/i3status/config"),
+        ("Mod4+b","$exec $emacs /sudo::/etc/default/grub"),
         ("Mod4+e","$exec $emacs ~/.emacs"),
         ("Mod4+g","$exec chromium --new-window i3wm.org/docs/userguide.html"),
         ("Mod4+l","$exec $emacs ~/.workspaces/stamp.json"),

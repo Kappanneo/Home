@@ -58,11 +58,10 @@ def BINDBLOCKS(blocks,current_mode=None,after_mode=None,postfix=None):
 
 def BIND_COMMANDS(mode_tag):
     string = ""
-    string += BINDBLOCKS(COMMANDS,mode_tag)
+    string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
     string += BINDBLOCKS(COMMANDS_TO_DEFLT,mode_tag,"$def")
     string += BINDBLOCKS(COMMANDS_TO_WRITE,mode_tag,"$wrt")
     string += BINDBLOCKS(COMMANDS_TO_RIGHT,mode_tag,"$rgh")
-    string += BINDBLOCKS(COMMANDS_TO_LEFT,mode_tag,"$lft")
     return string
 
 def BIND_MOD1_COMMANDS(mode_tag):
@@ -76,21 +75,19 @@ def BIND_MOD4_COMMANDS(mode_tag):
     string += BINDBLOCKS(MOD4_COMMANDS,mode_tag)
     string += BINDBLOCKS(MOD4_COMMANDS_RSB,mode_tag,postfix="$refresh_status_bar")
     string += BINDBLOCKS(MOD4_COMMANDS_TO_WRITE,mode_tag,"$wrt")
-    string += BINDBLOCKS(MOD4_COMMANDS_TO_LEFT,mode_tag,"$lft")
-    string += BINDBLOCKS(MOD4_COMMANDS_TO_LEFT_RSB,mode_tag,"$lft",postfix="$refresh_status_bar")
     string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT,mode_tag,"$rgh")
     string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT_RSB,mode_tag,"$rgh",postfix="$refresh_status_bar")
     return string
 
-def BIND_TO_MODE(mode,after_mode,current_mode=None):
+def BIND_TO_MODE(AFTER_MODE,after_mode,current_mode=None):
     string = ""
-    if current_mode and current_mode != after_mode and "keys" in MODES[after_mode]:
-        for key in MODES[after_mode]["keys"]:
+    if current_mode and current_mode != after_mode and "keys" in AFTER_MODE:
+        for key in AFTER_MODE["keys"]:
             string += BIND((key,""),current_mode,after_mode)
     return string
 
 def BIND_MODES(mode_tag):
-    return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag) + "\n"
+    return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag)
 
 USED_KEYS = {}
 
@@ -111,7 +108,7 @@ def LOCK_SHIFT(mode,free_keys=[]):
     string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U})
     return string
 
-def MAKE_MODE(mode_tag):
+def MAKE_MODE(mode_tag,mode_list=None):
 
     string = " mode "+mode_tag+" {\n\n"
 
@@ -124,7 +121,14 @@ def MAKE_MODE(mode_tag):
 
         string += BINDBLOCK(MODES[mode_tag]["options"],"options",mode_tag,after_mode)
 
-    string += BIND_MODES(mode_tag)
+    if mode_list:
+        for after_mode in mode_list:
+            string += BIND_TO_MODE(MODES[after_mode],after_mode,current_mode=mode_tag)
+    else:
+        string += BIND_MODES(mode_tag)
+
+    string += "\n"
+
     string += BIND_COMMANDS(mode_tag)
     string += BIND_MOD1_COMMANDS(mode_tag)
     string += BIND_MOD4_COMMANDS(mode_tag)

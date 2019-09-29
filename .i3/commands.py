@@ -3,7 +3,7 @@
 #include "workspaces.py"
 #begin python
 
-COMMANDS = {
+TOP_COMMANDS = {
 
 "touchpad toggle":
     ("XF86TouchpadToggle","$exec $touchpad_toggle"),
@@ -14,13 +14,10 @@ COMMANDS = {
 ],
 
 "screen poweroff":
-    ("XF86ScreenSaver","$exec xset dpms force off"),
+    ("XF86ScreenSaver","$exec $screen_off"),
 
-"screenshot":[
-    ("--release Print","$exec i3-scrot"),
-    ("--release Mod4+Print","$exec i3-scrot -w"),
-    ("--release Mod4+control+Print","$exec i3-scrot -s"),
-],
+"screenshot":
+    ("Print","$exec i3-scrot"),
 
 "display": #TODO
     ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred"),
@@ -34,29 +31,9 @@ COMMANDS_TO_DEFLT = {
 
 }
 
-COMMANDS_TO_WRITE = {
+COMMANDS_TO_WRITE = {}
 
-"write mode":[
-    ("$alt_gr",''),
-    ('"Alt_L"',''),
-],
-
-}
-
-COMMANDS_TO_LEFT = {
-
-"left mode":
-    ('"Super_L"',''),
-
-}
-
-
-COMMANDS_TO_RIGHT = {
-
-"right mode":
-    ('"Super_R"',''),
-
-}
+COMMANDS_TO_RIGHT = {}
 
 MOD1_COMMANDS = {}
 
@@ -67,21 +44,12 @@ MOD1_COMMANDS_RSB = {
 
 }
 
-MOD4_COMMANDS = {}
+MOD4_COMMANDS = {
 
-MOD4_COMMANDS_RSB = {}
-
-MOD4_COMMANDS_TO_WRITE = {
-
-"start dmenu for applications":
-    ("Mod4+Shift+exclam","$exec $dmenu"),
-
-"start dmenu for commands":
-    ("Mod4+control+e","$exec dmenu_run"),
-
-}
-
-MOD4_COMMANDS_TO_LEFT = {
+"touchpad":[
+    ("Mod4+space","$exec $touchpad_x_on"),
+    ("Mod4+Shift+space","$exec $touchpad_x_off"),
+],
 
 "fullscreen":
     ("Mod4+f","fullscreen toggle"),
@@ -99,7 +67,7 @@ MOD4_COMMANDS_TO_LEFT = {
 
 }
 
-MOD4_COMMANDS_TO_LEFT_RSB = {
+MOD4_COMMANDS_RSB = {
 
 "kill":
     ("Mod4+control+w","kill"),
@@ -149,6 +117,16 @@ MOD4_COMMANDS_TO_LEFT_RSB = {
 
 }
 
+MOD4_COMMANDS_TO_WRITE = {
+
+"start dmenu for applications":
+    ("Mod4+Shift+exclam","$exec $dmenu"),
+
+"start dmenu for commands":
+    ("Mod4+control+e","$exec dmenu_run"),
+
+}
+
 MOD4_COMMANDS_TO_RIGHT = {
 
 "application menu":
@@ -156,11 +134,6 @@ MOD4_COMMANDS_TO_RIGHT = {
 
 "open terminal":
     ("Mod4+Return","$exec gnome-terminal"),
-
-"touchpad":[
-    ("Mod4+space","$exec $touchpad_x_on"),
-    ("Mod4+Shift+space","$exec $touchpad_x_off"),
-],
 
 "resize window":[
     ("Mod4+i","resize shrink height 5 px or 5 ppt"),
@@ -215,9 +188,9 @@ MOD4_COMMANDS["default move"] = []
 MOD4_COMMANDS["default split and move"] = []
 MOD4_COMMANDS_RSB["default focus"] = []
 
-MOD4_COMMANDS_TO_LEFT["wasd move"] = []
-MOD4_COMMANDS_TO_LEFT["wasd split and move"] = []
-MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"] = []
+MOD4_COMMANDS["wasd move"] = []
+MOD4_COMMANDS["wasd split and move"] = []
+MOD4_COMMANDS_RSB["wasd focus"] = []
 
 MOD4_COMMANDS_TO_RIGHT["oklò move"] = []
 MOD4_COMMANDS_TO_RIGHT["oklò split and move"] = []
@@ -229,9 +202,9 @@ for i in range(len(DIRECTIONS)):
     MOD4_COMMANDS["default split and move"].append(("Mod4+control+Shift+"+DEFLT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
     MOD4_COMMANDS_RSB["default focus"].append(("Mod4+"+DEFLT[i],"focus "+DIRECTIONS[i]))
 
-    MOD4_COMMANDS_TO_LEFT["wasd move"].append(("Mod4+Shift+"+LEFT[i],"move "+DIRECTIONS[i]))
-    MOD4_COMMANDS_TO_LEFT["wasd split and move"].append(("Mod4+control+Shift+"+LEFT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
-    MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"].append(("Mod4+"+LEFT[i],"focus "+DIRECTIONS[i]))
+    MOD4_COMMANDS["wasd move"].append(("Mod4+Shift+"+LEFT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS["wasd split and move"].append(("Mod4+control+Shift+"+LEFT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_RSB["wasd focus"].append(("Mod4+"+LEFT[i],"focus "+DIRECTIONS[i]))
 
     MOD4_COMMANDS_TO_RIGHT["oklò move"].append(("Mod4+Shift+"+RIGHT[i],"move "+DIRECTIONS[i]))
     MOD4_COMMANDS_TO_RIGHT["oklò split and move"].append(("Mod4+control+Shift+"+RIGHT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
