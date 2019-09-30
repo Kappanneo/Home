@@ -160,6 +160,7 @@ Version 2016-07-18"
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "<menu>") 'x-menu-bar-open)
+(global-set-key (kbd "M-f") 'x-menu-bar-open)
 
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
 
