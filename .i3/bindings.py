@@ -68,7 +68,7 @@ def BIND_TOP_COMMANDS(mode_tag):
 
 def BIND_MOD1_COMMANDS(mode_tag):
     string = ""
-    string += BINDBLOCKS(MOD1_COMMANDS,mode_tag)
+    string += BINDBLOCKS(MOD1_COMMANDS_TO_DEFLT,mode_tag,"$def")
     string += BINDBLOCKS(MOD1_COMMANDS_RSB,mode_tag,postfix="$refresh_status_bar")
     return string
 
@@ -81,7 +81,7 @@ def BIND_MOD4_COMMANDS(mode_tag):
     string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT_RSB,mode_tag,"$rgh",postfix="$refresh_status_bar")
     return string
 
-def BIND_TO_MODE(AFTER_MODE,after_mode,current_mode=None):
+def TO_MODE(AFTER_MODE,after_mode,current_mode=None):
     string = ""
     if current_mode and current_mode != after_mode and "keys" in AFTER_MODE:
         for key in AFTER_MODE["keys"]:
@@ -90,7 +90,7 @@ def BIND_TO_MODE(AFTER_MODE,after_mode,current_mode=None):
 
 def BIND_MODES(mode_tag):
     string = " # {}: exit to other mode\n".format(mode_tag)
-    string += BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag)
+    string += BINDALL(MODES,TO_MODE,current_mode=mode_tag)
     string += "\n"
     return string
 

@@ -5,7 +5,7 @@ MODES = {
 
 "$def": {
     "name":'"default"',
-    "keys":['"Super_L"',"Mod4+q"],
+    "keys":['"Super_L"',"Mod4+q","$alt_gr"],
     "exec_on_enter":"$touchpad_on",
 },
 
@@ -23,14 +23,19 @@ MODES = {
     ],
 },
 
-"$wrt": {
-    "keys":["$alt_gr"],
-    "name":'"WRITE: [super+q] quit mode"',
-    "exec_on_enter":"$touchpad_x_off",
+"$tmp": {
+    "name":'"STAMP: [super+] [t]ake screenshot  [w]indow  [s]elect  [o]pen screenshot folder  [q]uit"',
+    "keys":["Mod4+t"],
+    "options":[
+        ("Mod4+t","$exec i3-scrot"),
+        ("Mod4+w","$exec i3-scrot -w"),
+        ("--release Mod4+s","$exec i3-scrot -s"),
+        ("Mod4+o","$exec $fm ~/Pictures/Screenshots/"),
+    ],
 },
 
 "$rgh": {
-    "keys":['"Super_R"'],
+    "keys":['"Super_R"','Mod4+"Super_R"'],
     "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+q] quit mode"',
     "exec_on_enter":"$oklò_enable && $touchpad_x_off",
     "exec_on_exit":"$oklò_disable",
@@ -101,17 +106,6 @@ MODES = {
         ("Mod4+2","$exec $emacs ~/.workspaces/$w2.json"),
     ],
     "after_mode":"$def",
-},
-
-"$tmp": {
-    "name":'"STAMP: [super+] [t]ake screenshot  [w]indow  [s]elect  [o]pen screenshot folder  [q]uit"',
-    "keys":["Mod4+t"],
-    "options":[
-        ("Mod4+t","$exec i3-scrot"),
-        ("Mod4+w","$exec i3-scrot -w"),
-        ("--release Mod4+s","$exec i3-scrot -s"),
-        ("Mod4+o","$exec $fm ~/Pictures/Screenshots/"),
-    ],
 },
 
 }

@@ -27,7 +27,12 @@ TOP_COMMANDS = {
 
 }
 
-MOD1_COMMANDS = {}
+MOD1_COMMANDS_TO_DEFLT = {
+
+"disable touchpad":
+    ("Mod1+$alt_gr","$exec $touchpad_x_off"),
+
+}
 
 MOD1_COMMANDS_RSB = {
 
