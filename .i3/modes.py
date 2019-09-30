@@ -11,27 +11,14 @@ MODES = {
 
 "$pow": {
     "name":'"POWER: [q] power off  [r]estart  [s]uspend  [h]ibernate  [l]ock  [x] turn off screen  [esc] do nothing"',
-    "keys":['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf (M-c M-q) set HandlePowerKey=ignore
+    "keys":['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
     "options":[
         ("q","$exec systemctl poweroff"),
         ("r","$exec systemctl reboot"),
-        ("s","$exec systemctl suspend"),
+        ("s","$exec systemctl suspend"), # auto lock via service: write /etc/systemd/system/lock.service
         ("h","$exec systemctl hibernate"),
+        ("l","$exec $lock"), # lock.sh does set defaut mode
         ("x","$exec $lock && $screen_off"),
-        ("l","$exec $lock"),
-        ("Escape","nop"),
-    ],
-    "after_mode":"$def",
-},
-
-"$tmp": {
-    "name":'"STAMP: [space] print screen  [w]indow  [s]elect  [o]pen  [esc]"',
-    "keys":["Mod4+Print"],
-    "options":[
-        ("space","$exec i3-scrot"),
-        ("w","$exec i3-scrot -w"),
-        ("--release s","$exec i3-scrot -s"),
-        ("o","$exec $fm ~/Pictures/Screenshots/"),
         ("Escape","mode $def"),
     ],
 },
@@ -50,7 +37,7 @@ MODES = {
 },
 
 "$str": {
-    "name":'"START: [super+] [1-2] layouts"',
+    "name":'"START: [super+] [1-2] layouts  [q] quit"',
     "keys":['Mod4+z'],
     "options":[
         ("Mod4+1",'$exec "$layout_1; $fill_1"'),
@@ -60,7 +47,7 @@ MODES = {
 },
 
 "$red": {
-    "name":'"REDSH: [super+] [0-9] one shot red shift  [+] increase  [q] quit"',
+    "name":'"REDSH: [super+] [0-9] one shot red shift  [+] increase  [q]uit"',
     "keys":['Mod4+r'],
     "options":[
         ("Mod4+1","$exec redshift -P -O 2100K"),
@@ -78,7 +65,7 @@ MODES = {
 },
 
 "$brg": {
-    "name":'"BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease  [q] quit"',
+    "name":'"BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease  [q]uit"',
     "keys":['Mod4+b'],
     "options":[
         ("Mod4+1","$exec xbacklight = 10"),
@@ -97,7 +84,7 @@ MODES = {
 },
 
 "$cnf": {
-    "name":'"CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [q] quit"',
+    "name":'"CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [q]uit"',
     "keys":['Mod4+c'],
     "options":[
         ("Mod4+c","$exec $emacs ~/.i3/"),
@@ -114,6 +101,17 @@ MODES = {
         ("Mod4+2","$exec $emacs ~/.workspaces/$w2.json"),
     ],
     "after_mode":"$def",
+},
+
+"$tmp": {
+    "name":'"STAMP: [super+] [t]ake screenshot  [w]indow  [s]elect  [o]pen screenshot folder  [q]uit"',
+    "keys":["Mod4+t"],
+    "options":[
+        ("Mod4+t","$exec i3-scrot"),
+        ("Mod4+w","$exec i3-scrot -w"),
+        ("--release Mod4+s","$exec i3-scrot -s"),
+        ("Mod4+o","$exec $fm ~/Pictures/Screenshots/"),
+    ],
 },
 
 }

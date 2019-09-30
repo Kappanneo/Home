@@ -22,18 +22,10 @@ TOP_COMMANDS = {
 "display": #TODO
     ("XF86Display", "$exec xrandr --output eDP1 --mode 1920x1080 --preferred"),
 
-}
-
-COMMANDS_TO_DEFLT = {
-
-"middle mouse to default":
+"middle mouse no border":
     ("--border button2","$no_border"),
 
 }
-
-COMMANDS_TO_WRITE = {}
-
-COMMANDS_TO_RIGHT = {}
 
 MOD1_COMMANDS = {}
 
@@ -117,7 +109,7 @@ MOD4_COMMANDS_RSB = {
 
 }
 
-MOD4_COMMANDS_TO_WRITE = {
+MOD4_COMMANDS_TO_DEFLT = {
 
 "start dmenu for applications":
     ("Mod4+Shift+exclam","$exec $dmenu"),

@@ -32,12 +32,17 @@ def BIND((x,y),current_mode=None,after_mode=None,postfix=None):
             if "exec_on_enter" in MODES[after_mode]:
                 y += " && " + MODES[after_mode]["exec_on_enter"]
 
-        USED_KEYS[current_mode].append(x)
+        if x not in USED_KEYS[current_mode]: USED_KEYS[current_mode] += [x]
+
+        else: return "# WARNING: key already taken for command:\n# bindsym {} {}\n".format(x,y)
 
     return " bindsym {} {}\n".format(x,y)
 
 def BINDBLOCK(d,name,current_mode=None,after_mode=None,postfix=None):
-    string = " # {}\n".format(name)
+    if current_mode:
+        string = " # {}: {}\n".format(current_mode,name)
+    else:
+        string = " # {}\n".format(name)
     if type(d) == tuple:
         string += BIND(d,current_mode,after_mode,postfix)
     elif type(d) == list:
@@ -56,12 +61,9 @@ def BINDALL(obj,fun,**kwargs):
 def BINDBLOCKS(blocks,current_mode=None,after_mode=None,postfix=None):
     return BINDALL(blocks,BINDBLOCK,current_mode=current_mode,after_mode=after_mode,postfix=postfix)
 
-def BIND_COMMANDS(mode_tag):
+def BIND_TOP_COMMANDS(mode_tag):
     string = ""
     string += BINDBLOCKS(TOP_COMMANDS,mode_tag)
-    string += BINDBLOCKS(COMMANDS_TO_DEFLT,mode_tag,"$def")
-    string += BINDBLOCKS(COMMANDS_TO_WRITE,mode_tag,"$wrt")
-    string += BINDBLOCKS(COMMANDS_TO_RIGHT,mode_tag,"$rgh")
     return string
 
 def BIND_MOD1_COMMANDS(mode_tag):
@@ -74,7 +76,7 @@ def BIND_MOD4_COMMANDS(mode_tag):
     string = ""
     string += BINDBLOCKS(MOD4_COMMANDS,mode_tag)
     string += BINDBLOCKS(MOD4_COMMANDS_RSB,mode_tag,postfix="$refresh_status_bar")
-    string += BINDBLOCKS(MOD4_COMMANDS_TO_WRITE,mode_tag,"$wrt")
+    string += BINDBLOCKS(MOD4_COMMANDS_TO_DEFLT,mode_tag,"$def")
     string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT,mode_tag,"$rgh")
     string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT_RSB,mode_tag,"$rgh",postfix="$refresh_status_bar")
     return string
@@ -87,28 +89,37 @@ def BIND_TO_MODE(AFTER_MODE,after_mode,current_mode=None):
     return string
 
 def BIND_MODES(mode_tag):
-    return BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag)
+    string = " # {}: exit to other mode\n".format(mode_tag)
+    string += BINDALL(MODES,BIND_TO_MODE,current_mode=mode_tag)
+    string += "\n"
+    return string
 
 USED_KEYS = {}
 
 for x in MODES.keys():
     USED_KEYS[x] = []
 
-def LOCK(mode,free_keys=[]):
-    F = USED_KEYS[mode] + free_keys
+def LOCK(mode):
     string = "";
-    U = [(x,"nop") for x in KEYS if x not in F]
-    string += BINDBLOCKS({"unused keys":U})
+    U = [(x,"nop") for x in KEYS if x not in USED_KEYS[mode]]
+    if len(U): string += BINDBLOCKS({"{}: lock unused keys".format(mode):U})
     return string
 
-def LOCK_SHIFT(mode,free_keys=[]):
-    F = USED_KEYS[mode] + ['Shift'+y for y in free_keys]
+def FREE(mode,free_keys):
+    USED_KEYS[mode] += free_keys
+    return ""
+
+def LOCK_SHIFT(mode):
     string = "";
-    U = [(x,"nop") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in F]
-    string += BINDBLOCKS({"also Shift+ (since Shift is not locked)":U})
+    U = [(x,"nop") for x in SHIFT_KEYS if x not in USED_KEYS[mode]]
+    if len(U): string += BINDBLOCKS({"{}: lock unused Shift+keys (since Shift is free)".format(mode):U})
     return string
 
-def MAKE_MODE(mode_tag,mode_list=None):
+def FREE_SHIFT(mode,free_keys):
+    USED_KEYS[mode] += ['Shift'+y for y in free_keys]
+    return ""
+
+def MAKE_MODE(mode_tag):
 
     string = " mode "+mode_tag+" {\n\n"
 
@@ -121,17 +132,9 @@ def MAKE_MODE(mode_tag,mode_list=None):
 
         string += BINDBLOCK(MODES[mode_tag]["options"],"options",mode_tag,after_mode)
 
-    if mode_list:
-        for after_mode in mode_list:
-            string += BIND_TO_MODE(MODES[after_mode],after_mode,current_mode=mode_tag)
-    else:
-        string += BIND_MODES(mode_tag)
-
-    string += "\n"
-
-    string += BIND_COMMANDS(mode_tag)
+    string += BIND_MODES(mode_tag)
+    string += BIND_TOP_COMMANDS(mode_tag)
     string += BIND_MOD1_COMMANDS(mode_tag)
-    string += BIND_MOD4_COMMANDS(mode_tag)
     string += LOCK(mode_tag)
 
     string += " }"
