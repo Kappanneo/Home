@@ -101,7 +101,7 @@ for x in MODES.keys():
 
 def LOCK(mode):
     string = "";
-    U = [(x,"nop") for x in KEYS if x not in USED_KEYS[mode]]
+    U = [(x,"$exec $alert nope") for x in KEYS if x not in USED_KEYS[mode]]
     if len(U): string += BINDBLOCKS({"{}: lock unused keys".format(mode):U})
     return string
 
@@ -111,7 +111,7 @@ def FREE(mode,free_keys):
 
 def LOCK_SHIFT(mode):
     string = "";
-    U = [(x,"nop") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in USED_KEYS[mode]]
+    U = [(x,"$exec $alert nope") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in USED_KEYS[mode]]
     if len(U): string += BINDBLOCKS({"{}: lock unused Shift+keys (since Shift is free)".format(mode):U})
     return string
 
