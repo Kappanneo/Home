@@ -163,7 +163,6 @@
  set $rgh "RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+q] quit mode"
  set $str "START: [super+] [1-2] layouts  [q] quit"
  set $tmp "STAMP: [super+] [t]ake screenshot  [w]indow  [s]elect  [o]pen screenshot folder  [q]uit"
- set $wrt "WRITE: [super+q] quit mode"
 
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -261,6 +260,9 @@
 
 
  #                                ALT-COMMANDS                                 #
+
+ # $def: disbale touchpad to default
+ bindsym Mod1+$alt_gr $exec $touchpad_x_off
 
  # $def: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -452,10 +454,9 @@
  bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
-# WARNING: key already taken for command:
-# bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
 
 
@@ -481,11 +482,12 @@
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+r mode $red; $exec $alert $red
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
  # $pow: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -505,6 +507,9 @@
 
  # $pow: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # $pow: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $touchpad_on
 
  # $pow: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -586,11 +591,12 @@
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $touchpad_on
  bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
  # $tmp: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -610,6 +616,9 @@
 
  # $tmp: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # $tmp: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $touchpad_on
 
  # $tmp: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -682,45 +691,6 @@
 
  }
 
- #                                WRITE-MODE                                   #
-
-
- mode $wrt {
-
- # $wrt: exit to other mode
- bindsym Mod4+b mode $brg; $exec $alert $brg
- bindsym Mod4+c mode $cnf; $exec $alert $cnf
- bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
- bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
- bindsym XF86PowerOff mode $pow; $exec $alert $pow
- bindsym Mod4+r mode $red; $exec $alert $red
- bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
- bindsym Mod4+z mode $str; $exec $alert $str
- bindsym Mod4+t mode $tmp; $exec $alert $tmp
-
- # $wrt: display
- bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
-
- # $wrt: middle mouse no border
- bindsym --border button2 $no_border
-
- # $wrt: screen brightness controls
- bindsym XF86MonBrightnessUp $brightness_up
- bindsym XF86MonBrightnessDown $brightness_down
-
- # $wrt: screen poweroff
- bindsym XF86ScreenSaver $exec $screen_off
-
- # $wrt: screenshot
- bindsym Print $exec i3-scrot
-
- # $wrt: touchpad toggle
- bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $wrt: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
-
- }
 
  #                                RIGHT-MODE                                   #
 
@@ -731,11 +701,11 @@
  bindsym Mod4+c mode $cnf; $exec $alert $cnf && $oklò_disable
  bindsym "Super_L" mode $def; $exec $alert $def && $oklò_disable && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $oklò_disable && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $oklò_disable && $touchpad_on
  bindsym XF86PowerOff mode $pow; $exec $alert $pow && $oklò_disable
  bindsym Mod4+r mode $red; $exec $alert $red && $oklò_disable
  bindsym Mod4+z mode $str; $exec $alert $str && $oklò_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $oklò_disable
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
 
 
  # $rgh: display
@@ -757,6 +727,9 @@
  # $rgh: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
 
+
+ # $rgh: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $oklò_disable && $touchpad_on
 
  # $rgh: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -953,6 +926,7 @@
  bindsym apostrophe nop
  bindsym igrave nop
  bindsym BackSpace nop
+ bindsym Tab nop
  bindsym q nop
  bindsym w nop
  bindsym e nop
@@ -965,6 +939,7 @@
  bindsym p nop
  bindsym egrave nop
  bindsym plus nop
+ bindsym Return nop
  bindsym "Caps_Lock" nop
  bindsym a nop
  bindsym s nop
@@ -989,6 +964,7 @@
  bindsym comma nop
  bindsym period nop
  bindsym minus nop
+ bindsym space nop
 
 
 
@@ -1069,12 +1045,13 @@
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $touchpad_on
  bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
  # $brg: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1094,6 +1071,9 @@
 
  # $brg: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # $brg: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $touchpad_on
 
  # $brg: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1188,11 +1168,12 @@
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $touchpad_on
  bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+z mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
  # $red: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1212,6 +1193,9 @@
 
  # $red: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # $red: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $touchpad_on
 
  # $red: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1297,11 +1281,12 @@
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
  bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $touchpad_on
  bindsym XF86PowerOff mode $pow; $exec $alert $pow
  bindsym Mod4+r mode $red; $exec $alert $red
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
  # $str: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1321,6 +1306,9 @@
 
  # $str: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # $str: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $touchpad_on
 
  # $str: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
@@ -1416,14 +1404,15 @@
 # bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym "Super_L" mode $def; $exec $alert $def && $touchpad_on
  bindsym Mod4+q mode $def; $exec $alert $def && $touchpad_on
+ bindsym $alt_gr mode $def; $exec $alert $def && $touchpad_on
  bindsym XF86PowerOff mode $pow; $exec $alert $pow
 # WARNING: key already taken for command:
 # bindsym Mod4+r mode $red; $exec $alert $red
  bindsym "Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
+ bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable && $touchpad_x_off
 # WARNING: key already taken for command:
 # bindsym Mod4+z mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
 
  # $cnf: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1443,6 +1432,9 @@
 
  # $cnf: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
+
+ # $cnf: disbale touchpad to default
+ bindsym Mod1+$alt_gr mode $def $exec $touchpad_x_off; $exec $alert $def && $touchpad_on
 
  # $cnf: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
