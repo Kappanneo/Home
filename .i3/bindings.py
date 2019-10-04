@@ -32,6 +32,12 @@ def BIND((x,y),current_mode=None,after_mode=None,postfix=None):
             if "exec_on_enter" in MODES[after_mode]:
                 y += " && " + MODES[after_mode]["exec_on_enter"]
 
+            if "on_exit" in  MODES[current_mode]:
+                y += ", " + MODES[current_mode]["on_exit"]
+
+            if "on_enter" in MODES[after_mode]:
+                y += ", " + MODES[after_mode]["on_enter"]
+
         if x not in USED_KEYS[current_mode]: USED_KEYS[current_mode] += [x]
 
         else: return "# WARNING: key already taken for command:\n# bindsym {} {}\n".format(x,y)

@@ -5,38 +5,25 @@ MODES = {
 
 "$def": {
     "name":'"default"',
-    "keys":['"Super_L"',"Mod4+q","$alt_gr"],
-    "exec_on_enter":"$touchpad_on",
+    "keys":['"Super_L"','"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
 },
 
 "$pow": {
-    "name":'"POWER: [q] power off  [r]estart  [s]uspend  [h]ibernate  [l]ock  [x] turn off screen  [esc] do nothing"',
+    "name":'"POWER: [q] power off  [r]estart  [s]uspend  [h]ibernate  [x] turn off screen  [esc] do nothing"',
     "keys":['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
     "options":[
         ("q","$exec systemctl poweroff"),
         ("r","$exec systemctl reboot"),
-        ("s","$exec systemctl suspend"), # auto lock via service: write /etc/systemd/system/lock.service
-        ("h","$exec systemctl hibernate"),
-        ("l","$exec $lock"), # lock.sh does set defaut mode
-        ("x","$exec $lock && $screen_off"),
-        ("Escape","mode $def"),
+        ("s","$exec systemctl suspend"), # auto locks via service: write /etc/systemd/system/lock.service (https://gist.github.com/Kappanneo/8a9da9e6d23b9f38bc7cf33eb071cca5)
+        ("h","$exec systemctl hibernate"), # also auto locks
+        ("x","$exec $lock && $screen_off"), # lock script sets the defaut mode and keybinding: (.bin/lock.sh)
     ],
-},
-
-"$tmp": {
-    "name":'"STAMP: [super+] [t]ake screenshot  [w]indow  [s]elect  [o]pen screenshot folder  [q]uit"',
-    "keys":["Mod4+t"],
-    "options":[
-        ("Mod4+t","$exec i3-scrot"),
-        ("Mod4+w","$exec i3-scrot -w"),
-        ("--release Mod4+s","$exec i3-scrot -s"),
-        ("Mod4+o","$exec $fm ~/Pictures/Screenshots/"),
-    ],
+    "on_enter":"fullscreen disable"
 },
 
 "$rgh": {
+    "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [period] menu  [comma] escape"',
     "keys":['"Super_R"','Mod4+"Super_R"'],
-    "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [alt_gr] escape  [backspace] write  [super+q] quit mode"',
     "exec_on_enter":"$oklò_enable && $touchpad_x_off",
     "exec_on_exit":"$oklò_disable",
 },
