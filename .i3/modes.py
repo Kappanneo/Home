@@ -39,7 +39,7 @@ MODES = {
 },
 
 "$red": {
-    "name":'"REDSH: [super+] [0-9] one shot red shift  [+] increase  [q]uit"',
+    "name":'"REDSH: [super+] [0-9] one shot red shift  [+] increase"',
     "keys":['Mod4+r'],
     "options":[
         ("Mod4+1","$exec redshift -P -O 2100K"),
@@ -57,7 +57,7 @@ MODES = {
 },
 
 "$brg": {
-    "name":'"BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease  [q]uit"',
+    "name":'"BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease"',
     "keys":['Mod4+b'],
     "options":[
         ("Mod4+1","$exec xbacklight = 10"),
@@ -76,7 +76,7 @@ MODES = {
 },
 
 "$cnf": {
-    "name":'"CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh  [q]uit"',
+    "name":'"CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh"',
     "keys":['Mod4+c'],
     "options":[
         ("Mod4+c","$exec $emacs ~/.i3/"),
@@ -94,6 +94,17 @@ MODES = {
     ],
     "after_mode":"$def",
 },
+
+"$tmp": {
+    "name":'"STAMP: [super+] [t]ake screenshot [w]indow [s]elect [o]pen screenshot folder"',
+    "keys":['Mod4+t'],
+    "options":[
+        ("Mod4+t","$exec i3-scrot"),
+        ("Mod4+w","$exec i3-scrot -w"),
+        ("Mod4+s --release","$exec i3-scrot -s"),
+        ("Mod4+o","$exec $fm ~/Pictures/Screenshots"),
+    ],
+}
 
 }
 

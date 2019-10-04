@@ -175,9 +175,9 @@ def arrow_commands(X,i):
     MOD4_COMMANDS[i+" split and move"] = []
     MOD4_COMMANDS_RSB[i+" focus"] = []
     for j in range(len(DIRECTIONS)):
-        MOD4_COMMANDS[i+" move"].append(("Shift+"+X[j],"move "+DIRECTIONS[j]))
-        MOD4_COMMANDS[i+" split and move"].append(("control+Shift+"+X[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
-        MOD4_COMMANDS_RSB[i+" focus"].append((""+X[j],"focus "+DIRECTIONS[j]))
+        MOD4_COMMANDS[i+" move"].append(("Mod4+Shift+"+X[j],"move "+DIRECTIONS[j]))
+        MOD4_COMMANDS[i+" split and move"].append(("Mod4+control+Shift+"+X[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
+        MOD4_COMMANDS_RSB[i+" focus"].append(("Mod4+"+X[j],"focus "+DIRECTIONS[j]))
 
 forall(ARROW_SETS,arrow_commands)
 
