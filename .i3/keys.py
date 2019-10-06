@@ -64,10 +64,10 @@ KEYS = [
 'Menu',
 #'"Super_R"',
 '"Control_R"',
-'Up',
-'Left',
-'Down',
-'Right'
+#'Up',
+#'Left',
+#'Down',
+#'Right'
 ]
 
 SHIFT_KEYS = [

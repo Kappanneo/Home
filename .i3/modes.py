@@ -5,7 +5,7 @@ MODES = {
 
 "$def": {
     "name":'"default"',
-    "keys":['"Super_L"','"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
+    "keys":['Escape','"Super_L"','"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
 },
 
 "$pow": {
@@ -101,7 +101,7 @@ MODES = {
     "options":[
         ("Mod4+t","$exec i3-scrot"),
         ("Mod4+w","$exec i3-scrot -w"),
-        ("Mod4+s --release","$exec i3-scrot -s"),
+        ("--release Mod4+s","$exec i3-scrot -s"),
         ("Mod4+o","$exec $fm ~/Pictures/Screenshots"),
     ],
 }
