@@ -74,6 +74,7 @@ def BIND_TOP_COMMANDS(mode_tag):
 
 def BIND_MOD1_COMMANDS(mode_tag):
     string = ""
+    string += BINDBLOCKS(MOD1_COMMANDS,mode_tag)
     string += BINDBLOCKS(MOD1_COMMANDS_RSB,mode_tag,postfix="$refresh_status_bar")
     return string
 
