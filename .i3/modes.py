@@ -22,7 +22,7 @@ MODES = {
 },
 
 "$lft": {
-    "name":'"LEFT: [wasd] arrows  [q-e] page up-down  [r]eturn"',
+    "name":'"LEFT: [wasd] arrows  [q-e] page up-down  [r]eturn  [z] menu  [x] escape"',
     "keys":['--release "Super_L"'],
     "exec_on_enter":"$wasd_enable",
     "exec_on_exit":"$wasd_disable",

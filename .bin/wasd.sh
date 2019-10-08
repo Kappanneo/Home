@@ -11,6 +11,8 @@ then
 
     xmodmap -e "keycode  27 = r R r R paragraph registered paragraph registered r R paragraph registered"
 
+    xmodmap -e "keycode  52 = z Z z Z guillemotleft less guillemotleft less z Z guillemotleft less"
+    xmodmap -e "keycode  53 = x X x X guillemotright greater guillemotright greater x X guillemotright greater"
 
 elif [ $1 -eq "1" ]
 then
@@ -23,4 +25,7 @@ then
     xmodmap -e "keycode  26 = Next NoSymbol Next NoSymbol Next"
 
     xmodmap -e "keycode  27 = Return NoSymbol Return NoSymbol Return"
+
+    xmodmap -e "keycode  52 = Escape NoSymbol Escape NoSymbol Escape"
+    xmodmap -e "keycode  53 = Menu NoSymbol Menu NoSymbol Menu"
 fi
