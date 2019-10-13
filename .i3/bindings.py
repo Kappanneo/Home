@@ -82,9 +82,6 @@ def BIND_MOD4_COMMANDS(mode_tag):
     string = ""
     string += BINDBLOCKS(MOD4_COMMANDS,mode_tag)
     string += BINDBLOCKS(MOD4_COMMANDS_RSB,mode_tag,postfix="$refresh_status_bar")
-    string += BINDBLOCKS(MOD4_COMMANDS_TO_DEFLT,mode_tag,"$def")
-    string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT,mode_tag,"$rgh")
-    string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT_RSB,mode_tag,"$rgh",postfix="$refresh_status_bar")
     return string
 
 def TO_MODE(AFTER_MODE,after_mode,current_mode=None):

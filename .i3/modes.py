@@ -5,7 +5,7 @@ MODES = {
 
 "$def": {
     "name":'"default"',
-    "keys":['Shift+"Super_L"','Shift+"Super_R"','Escape',"Mod1+$alt_gr"],
+    "keys":['Escape','Mod4+Shift+Escape','"Super_L"','"Super_R"','"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
 },
 
 "$pow": {
@@ -23,15 +23,15 @@ MODES = {
 
 "$lft": {
     "name":'"LEFT: [wasd] arrows  [q-e] page up-down  [r]eturn  [z] menu  [x] escape"',
-    "keys":['--release "Super_L"'],
+    "keys":['Mod4+x'],
     "exec_on_enter":"$wasd_enable",
     "exec_on_exit":"$wasd_disable",
 },
 
 "$rgh": {
     "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [period] menu  [comma] escape"',
-    "keys":['--release "Super_R"'],
-    "exec_on_enter":"$oklò_enable",
+    "keys":['Mod4+comma','Mod4+"Super_R"'],
+    "exec_on_enter":"$oklò_enable && $touchpad_x_off",
     "exec_on_exit":"$oklò_disable",
 },
 

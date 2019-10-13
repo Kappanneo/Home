@@ -128,6 +128,9 @@ SPECIAL_KEYS = [
 '"Alt_R"',
 '"Shift_L"',
 '"Shift_R"',
+'Return',
+'Escape',
+'Menu',
 ]
 
 #end python

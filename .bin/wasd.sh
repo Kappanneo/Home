@@ -6,6 +6,9 @@ then
     xmodmap -e "keycode  39 = s S s S ssharp section ssharp section s S ssharp section"
     xmodmap -e "keycode  40 = d D d D eth ETH eth ETH d D eth ETH"
 
+    xmodmap -e "keycode  94 = less greater less greater guillemotleft guillemotright guillemotleft guillemotright less greater guillemotleft guillemotright"
+    xmodmap -e "keycode  41 = f F f F dstroke ordfeminine dstroke ordfeminine f F dstroke ordfeminine"
+
     xmodmap -e "keycode  24 = q Q q Q at Greek_OMEGA at Greek_OMEGA q Q at Greek_OMEGA"
     xmodmap -e "keycode  26 = e E e E EuroSign cent EuroSign cent e E EuroSign cent"
 
@@ -21,11 +24,14 @@ then
     xmodmap -e "keycode  39 = Down Down Down"
     xmodmap -e "keycode  40 = Right Right Right"
 
+    xmodmap -e "keycode  94 = Home Home Home"
+    xmodmap -e "keycode  41 = End End End"
+
     xmodmap -e "keycode  24 = Prior NoSymbol Prior NoSymbol Prior"
     xmodmap -e "keycode  26 = Next NoSymbol Next NoSymbol Next"
 
     xmodmap -e "keycode  27 = Return NoSymbol Return NoSymbol Return"
 
-    xmodmap -e "keycode  52 = Escape NoSymbol Escape NoSymbol Escape"
-    xmodmap -e "keycode  53 = Menu NoSymbol Menu NoSymbol Menu"
+    xmodmap -e "keycode  52 = Menu NoSymbol Menu NoSymbol Menu"
+    xmodmap -e "keycode  53 = Escape NoSymbol Escape NoSymbol Escape"
 fi
