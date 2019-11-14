@@ -82,6 +82,10 @@ def BIND_MOD4_COMMANDS(mode_tag):
     string = ""
     string += BINDBLOCKS(MOD4_COMMANDS,mode_tag)
     string += BINDBLOCKS(MOD4_COMMANDS_RSB,mode_tag,postfix="$refresh_status_bar")
+    string += BINDBLOCKS(MOD4_COMMANDS_TO_LEFT,"$lft",mode_tag)
+    string += BINDBLOCKS(MOD4_COMMANDS_TO_LEFT_RSB,mode_tag,"$lft",postfix="$refresh_status_bar")
+    string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT,mode_tag,"$rgh")
+    string += BINDBLOCKS(MOD4_COMMANDS_TO_RIGHT_RSB,mode_tag,"$rgh",postfix="$refresh_status_bar")
     return string
 
 def TO_MODE(AFTER_MODE,after_mode,current_mode=None):
@@ -102,24 +106,14 @@ USED_KEYS = {}
 for x in MODES.keys():
     USED_KEYS[x] = []
 
-def LOCK(mode):
+def LOCK(mode,lock_keys):
     string = "";
-    U = [(x,"$exec $alert nope") for x in KEYS if x not in USED_KEYS[mode]]
-    if len(U): string += BINDBLOCKS({"{}: lock unused keys".format(mode):U})
+    U = [(x,"$exec $alert nope") for x in lock_keys if x not in USED_KEYS[mode]]
+    if len(U): string += BINDBLOCKS({"{}: disabled keys".format(mode):U})
     return string
 
 def FREE(mode,free_keys):
     USED_KEYS[mode] += free_keys
-    return ""
-
-def LOCK_SHIFT(mode):
-    string = "";
-    U = [(x,"$exec $alert nope") for x in ['Shift+'+y for y in SHIFT_KEYS] if x not in USED_KEYS[mode]]
-    if len(U): string += BINDBLOCKS({"{}: lock unused Shift+keys (since Shift is free)".format(mode):U})
-    return string
-
-def FREE_SHIFT(mode,free_keys):
-    USED_KEYS[mode] += ['Shift'+y for y in free_keys]
     return ""
 
 def MAKE_MODE(mode_tag):
@@ -138,7 +132,7 @@ def MAKE_MODE(mode_tag):
     string += BIND_MODES(mode_tag)
     string += BIND_TOP_COMMANDS(mode_tag)
     string += BIND_MOD1_COMMANDS(mode_tag)
-    string += LOCK(mode_tag)
+    string += LOCK(mode_tag,KEYS)
 
     string += " }"
 

@@ -2,9 +2,9 @@
 
 # reset default
 /home/claudio/.bin/oklò.sh 0
+/home/claudio/.bin/wasd.sh 0
 /home/claudio/.bin/touchpad_toggle.sh 1
 i3-msg mode default
-notify-send default
 
 # set the icon and a temporary location for the screenshot to be stored
 tmpbg='/tmp/screen.png'

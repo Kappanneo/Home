@@ -137,6 +137,9 @@ Version 2016-07-18"
 (global-set-key (kbd "C-r") 'query-replace)
 (global-set-key (kbd "C-S-r") 'query-replace-regexp)
 
+;; exec
+(global-set-key (kbd "C-e") 'shell-command)
+
 ;; unused
 (global-set-key (kbd "C-1") 'nil)
 (global-set-key (kbd "C-2") 'nil)

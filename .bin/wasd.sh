@@ -12,10 +12,11 @@ then
     xmodmap -e "keycode  24 = q Q q Q at Greek_OMEGA at Greek_OMEGA q Q at Greek_OMEGA"
     xmodmap -e "keycode  26 = e E e E EuroSign cent EuroSign cent e E EuroSign cent"
 
-    xmodmap -e "keycode  27 = r R r R paragraph registered paragraph registered r R paragraph registered"
-
     xmodmap -e "keycode  52 = z Z z Z guillemotleft less guillemotleft less z Z guillemotleft less"
     xmodmap -e "keycode  53 = x X x X guillemotright greater guillemotright greater x X guillemotright greater"
+
+    xmodmap -e "keycode  27 = r R r R paragraph registered paragraph registered r R paragraph registered"
+    xmodmap -e "keycode  54 = c C c C cent copyright cent copyright c C cent copyright"
 
 elif [ $1 -eq "1" ]
 then
@@ -30,8 +31,9 @@ then
     xmodmap -e "keycode  24 = Prior NoSymbol Prior NoSymbol Prior"
     xmodmap -e "keycode  26 = Next NoSymbol Next NoSymbol Next"
 
-    xmodmap -e "keycode  27 = Return NoSymbol Return NoSymbol Return"
-
     xmodmap -e "keycode  52 = Menu NoSymbol Menu NoSymbol Menu"
     xmodmap -e "keycode  53 = Escape NoSymbol Escape NoSymbol Escape"
+
+    xmodmap -e "keycode  27 = Return NoSymbol Return NoSymbol Return"
+    xmodmap -e "keycode  54 = BackSpace Delete BackSpace BackSpace NoSymbol NoSymbol Terminate_Server NoSymbol NoSymbol Terminate_Server BackSpace BackSpace NoSymbol NoSymbol Terminate_Server"
 fi

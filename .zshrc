@@ -101,9 +101,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias update="pamac checkupdates --aur --quiet | grep . && yay ; pkill pamac-tray"
-alias open_default="xdg-open"
-
 export PATH=/home/claudio/bin:$PATH
 export VISUAL="emacsclient -create-frame --alternate-editor=''"
 export EDITOR="emacsclient -create-frame --alternate-editor=''"

@@ -26,12 +26,7 @@ TOP_COMMANDS = {
     ("--border button2","$no_border"),
 }
 
-MOD1_COMMANDS = {
-
-"disable touchpad":
-    ("Mod1+$alt_gr","$exec $touchpad_x_off"),
-
-}
+MOD1_COMMANDS = {}
 
 MOD1_COMMANDS_RSB = {
 
@@ -57,6 +52,9 @@ MOD4_COMMANDS_DEFLT = {
 
 MOD4_COMMANDS = {
 
+"xkill":
+    ("Mod4+q","--release $exec xkill"),
+
 "touchpad":[
     ("Mod4+space","$exec $touchpad_x_on"),
     ("Mod4+Shift+space","$exec $touchpad_x_off"),
@@ -65,12 +63,8 @@ MOD4_COMMANDS = {
 "fullscreen":
     ("Mod4+f","fullscreen toggle"),
 
-"borders":[
-    ("Mod4+Escape","$border"),
-    ("Mod4+Shift+x","$no_border"),
-    ("Mod4+Shift+comma","$no_border"),
-    ("Mod4+Shift+Escape","$no_border"),
-],
+"floating":
+    ("Mod4+y","floating toggle"),
 
 "split orientation":[
     ("Mod4+v","split v; $exec notify-send 'vertical'"),
@@ -136,13 +130,13 @@ MOD4_COMMANDS_RSB = {
     ("Mod4+ugrave","workspace back_and_forth"),
 ],
 
-"focus group":[
+"focus and border":[
+    ("Mod4+x","fullscreen disable $border $focus_one"),
+    ("Mod4+Shift+x","$no_border"),
     ("Mod4+less","focus child"),
-    ("Mod4+Shift+greater","focus parent")
-],
-
-"focus all":
+    ("Mod4+Shift+greater","focus parent"),
     ("Mod4+control+a","fullscreen disable $focus_all"),
+],
 
 "open emacs":
     ("Mod4+e","$exec $emacs"),
@@ -160,27 +154,51 @@ MOD4_COMMANDS_RSB = {
 
 }
 
-MOD4_COMMANDS["move focused container to workspace and follow"] = []
+MOD4_COMMANDS["move focused container to workspace"] = []
 MOD4_COMMANDS_RSB["switch workspace"] = []
 
 def workspace_commands(X,i):
     key = X["key"]
-    MOD4_COMMANDS["move focused container to workspace and follow"].append(("Mod4+control+"+key,"move container to workspace {}; workspace {}".format(i,i)))
+    MOD4_COMMANDS["move focused container to workspace"].append(("Mod4+control+"+key,"move container to workspace {}".format(i)))
     MOD4_COMMANDS_RSB["switch workspace"].append(("Mod4+"+key,"workspace {}".format(i)))
 
 forall(WORKSPACES,workspace_commands)
 
 DIRECTIONS = ["up","left","down","right"]
 
-def arrow_commands(X,i):
-    MOD4_COMMANDS[i+" move"] = []
-    MOD4_COMMANDS[i+" split and move"] = []
-    MOD4_COMMANDS_RSB[i+" focus"] = []
-    for j in range(len(DIRECTIONS)):
-        MOD4_COMMANDS[i+" move"].append(("Mod4+Shift+"+X[j],"move "+DIRECTIONS[j]))
-        MOD4_COMMANDS[i+" split and move"].append(("Mod4+control+Shift+"+X[j],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[j],DIRECTIONS[(j+2)%4],DIRECTIONS[j])))
-        MOD4_COMMANDS_RSB[i+" focus"].append(("Mod4+"+X[j],"focus "+DIRECTIONS[j]))
+DEFLT = ARROW_SETS["default"]
+LEFT = ARROW_SETS["wasd"]
+RIGHT = ARROW_SETS["oklò"]
 
-forall(ARROW_SETS,arrow_commands)
+MOD4_COMMANDS_TO_LEFT = {}
+MOD4_COMMANDS_TO_LEFT_RSB = {}
+MOD4_COMMANDS_TO_RIGHT = {}
+MOD4_COMMANDS_TO_RIGHT_RSB = {}
+
+MOD4_COMMANDS["default move"] = []
+MOD4_COMMANDS["default split and move"] = []
+MOD4_COMMANDS_RSB["default focus"] = []
+
+MOD4_COMMANDS_TO_LEFT["wasd move"] = []
+MOD4_COMMANDS_TO_LEFT["wasd split and move"] = []
+MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"] = []
+
+MOD4_COMMANDS_TO_RIGHT["oklò move"] = []
+MOD4_COMMANDS_TO_RIGHT["oklò split and move"] = []
+MOD4_COMMANDS_TO_RIGHT_RSB["oklò focus"] = []
+
+for i in range(len(DIRECTIONS)):
+
+    MOD4_COMMANDS["default move"].append(("Mod4+Shift+"+DEFLT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS["default split and move"].append(("Mod4+control+Shift+"+DEFLT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_RSB["default focus"].append(("Mod4+"+DEFLT[i],"focus "+DIRECTIONS[i]))
+
+    MOD4_COMMANDS_TO_LEFT["wasd move"].append(("Mod4+Shift+"+LEFT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS_TO_LEFT["wasd split and move"].append(("Mod4+control+Shift+"+LEFT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"].append(("Mod4+"+LEFT[i],"focus "+DIRECTIONS[i]))
+
+    MOD4_COMMANDS_TO_RIGHT["oklò move"].append(("Mod4+Shift+"+RIGHT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS_TO_RIGHT["oklò split and move"].append(("Mod4+control+Shift+"+RIGHT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_TO_RIGHT_RSB["oklò focus"].append(("Mod4+"+RIGHT[i],"focus "+DIRECTIONS[i]))
 
 #end python

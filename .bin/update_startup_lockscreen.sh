@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # location of the screenshot for startup lockscreen
-tmpbg='/home/claudio/Pictures/Screenshots/startup_lockscreen.png'
+tmpbg='/home/claudio/Pictures/startup_lockscreen.png'
 
 # take a screenshot
 scrot -o "$tmpbg"
