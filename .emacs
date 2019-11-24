@@ -104,6 +104,7 @@
     (if (save-excursion (backward-char) (looking-at "[[:blank:]]"))
         (let ((p (point)))
           (re-search-backward "[^[:blank:]]" nil :no-error)
+          (forward-char)
           (delete-region p (point)))
       (if (save-excursion (backward-char) (looking-at "[[:word:]]"))
           (let ((p (point)))
