@@ -3,8 +3,6 @@
 !.gitignore
 !.gitconfig
 
-!memo
-
 !.zshrc
 
 !.emacs
