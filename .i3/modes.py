@@ -43,12 +43,13 @@ MODES = {
 },
 
 "$str": {
-    "name":'"START: [super+] [1-2] layouts  [q] quit"',
+    "name":'"START: [super+] [1-2] layouts [u]pdate startup lockscreen"',
     "keys":['Mod4+backslash'],
     "options":[
         ("Mod4+1",'$exec "$layout_1; $fill_1"'),
         ("Mod4+2",'$exec "$layout_2; $fill_2"'),
-    ],
+        ("Mod4+u",'$exec "$layout_2; $fill_2; sleep 1.6; $update_startup_lockscreen"')
+        ],
     "after_mode":"$def",
 },
 
