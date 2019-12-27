@@ -68,7 +68,7 @@ fi
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git thefuck)
+# plugins=(git thefuck)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,8 +101,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias update="pamac checkupdates -q | grep . && yay -Syu; pkill pamac-tray; clear"
+
 export PATH=/home/claudio/bin:$PATH
 export VISUAL="emacsclient -create-frame --alternate-editor=''"
 export EDITOR="emacsclient -create-frame --alternate-editor=''"
-
-eval $(thefuck --alias)

@@ -32,7 +32,6 @@ MOD1_COMMANDS_RSB = {
 
 "kill":
     ("Mod1+F4","kill"),
-
 }
 
 MOD4_COMMANDS_DEFLT = {
@@ -60,11 +59,10 @@ MOD4_COMMANDS = {
     ("Mod4+Shift+space","$exec $touchpad_x_off"),
 ],
 
-"fullscreen":
+"fullscreen":[
     ("Mod4+f","fullscreen toggle"),
-
-"floating":
-    ("Mod4+y","floating toggle"),
+    ("Mod4+Shift+f",'$exec "sleep 0.5; xdotool key F11"'),
+],
 
 "split orientation":[
     ("Mod4+v","split v; $exec notify-send 'vertical'"),
@@ -74,9 +72,6 @@ MOD4_COMMANDS = {
 
 "application menu":
     ("Mod4+Menu","$exec morc_menu"),
-
-"open terminal":
-    ("Mod4+Return","$exec gnome-terminal"),
 
 "resize window":[
     ("Mod4+i","resize shrink height 5 px or 5 ppt"),
@@ -138,6 +133,9 @@ MOD4_COMMANDS_RSB = {
     ("Mod4+control+a","fullscreen disable $focus_all"),
 ],
 
+"open terminal":
+    ("Mod4+Return","$exec gnome-terminal"),
+
 "open emacs":
     ("Mod4+e","$exec $emacs"),
 
@@ -167,25 +165,20 @@ forall(WORKSPACES,workspace_commands)
 DIRECTIONS = ["up","left","down","right"]
 
 DEFLT = ARROW_SETS["default"]
-LEFT = ARROW_SETS["wasd"]
+LEFT  = ARROW_SETS["wasd"]
 RIGHT = ARROW_SETS["oklò"]
-
-MOD4_COMMANDS_TO_LEFT = {}
-MOD4_COMMANDS_TO_LEFT_RSB = {}
-MOD4_COMMANDS_TO_RIGHT = {}
-MOD4_COMMANDS_TO_RIGHT_RSB = {}
 
 MOD4_COMMANDS["default move"] = []
 MOD4_COMMANDS["default split and move"] = []
 MOD4_COMMANDS_RSB["default focus"] = []
 
-MOD4_COMMANDS_TO_LEFT["wasd move"] = []
-MOD4_COMMANDS_TO_LEFT["wasd split and move"] = []
-MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"] = []
+MOD4_COMMANDS["wasd move"] = []
+MOD4_COMMANDS["wasd split and move"] = []
+MOD4_COMMANDS_RSB["wasd focus"] = []
 
-MOD4_COMMANDS_TO_RIGHT["oklò move"] = []
-MOD4_COMMANDS_TO_RIGHT["oklò split and move"] = []
-MOD4_COMMANDS_TO_RIGHT_RSB["oklò focus"] = []
+MOD4_COMMANDS["oklò move"] = []
+MOD4_COMMANDS["oklò split and move"] = []
+MOD4_COMMANDS_RSB["oklò focus"] = []
 
 for i in range(len(DIRECTIONS)):
 
@@ -193,12 +186,12 @@ for i in range(len(DIRECTIONS)):
     MOD4_COMMANDS["default split and move"].append(("Mod4+control+Shift+"+DEFLT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
     MOD4_COMMANDS_RSB["default focus"].append(("Mod4+"+DEFLT[i],"focus "+DIRECTIONS[i]))
 
-    MOD4_COMMANDS_TO_LEFT["wasd move"].append(("Mod4+Shift+"+LEFT[i],"move "+DIRECTIONS[i]))
-    MOD4_COMMANDS_TO_LEFT["wasd split and move"].append(("Mod4+control+Shift+"+LEFT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
-    MOD4_COMMANDS_TO_LEFT_RSB["wasd focus"].append(("Mod4+"+LEFT[i],"focus "+DIRECTIONS[i]))
+    MOD4_COMMANDS["wasd move"].append(("Mod4+Shift+"+LEFT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS["wasd split and move"].append(("Mod4+control+Shift+"+LEFT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_RSB["wasd focus"].append(("Mod4+"+LEFT[i],"focus "+DIRECTIONS[i]))
 
-    MOD4_COMMANDS_TO_RIGHT["oklò move"].append(("Mod4+Shift+"+RIGHT[i],"move "+DIRECTIONS[i]))
-    MOD4_COMMANDS_TO_RIGHT["oklò split and move"].append(("Mod4+control+Shift+"+RIGHT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
-    MOD4_COMMANDS_TO_RIGHT_RSB["oklò focus"].append(("Mod4+"+RIGHT[i],"focus "+DIRECTIONS[i]))
+    MOD4_COMMANDS["oklò move"].append(("Mod4+Shift+"+RIGHT[i],"move "+DIRECTIONS[i]))
+    MOD4_COMMANDS["oklò split and move"].append(("Mod4+control+Shift+"+RIGHT[i],"focus {}; split v; focus {}; move {}".format(DIRECTIONS[i],DIRECTIONS[(i+2)%4],DIRECTIONS[i])))
+    MOD4_COMMANDS_RSB["oklò focus"].append(("Mod4+"+RIGHT[i],"focus "+DIRECTIONS[i]))
 
 #end python

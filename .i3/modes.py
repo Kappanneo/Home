@@ -3,9 +3,9 @@
 
 MODES = {
 
-"$def": {
-    "name":'"default"',
-    "keys":['Escape','Mod4+Escape','"Super_L"','"Super_R"'],
+"$sup": {
+    "name":'"SUPER"',
+    "keys":['"Super_L"','"Super_R"'],
 },
 
 "$pow": {
@@ -23,8 +23,8 @@ MODES = {
 },
 
 "$wrt": {
-    "name":'"WRITE"',
-    "keys":['"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
+    "name":'"default"',
+    "keys":["Escape",'"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
     "exec_on_enter":"$touchpad_x_off",
 },
 
@@ -50,7 +50,7 @@ MODES = {
         ("Mod4+2",'$exec "$layout_2; $fill_2"'),
         ("Mod4+u",'$exec "$layout_2; $fill_2; sleep 1.6; $update_startup_lockscreen"')
         ],
-    "after_mode":"$def",
+    "after_mode":"$wrt",
 },
 
 "$red": {
@@ -104,10 +104,10 @@ MODES = {
         ("Mod4+r","$exec $emacs ~/.config/redshift/redshift.conf"),
         ("Mod4+s","$exec $emacs /sudo::/etc/systemd/"),
         ("Mod4+z","$exec $emacs ~/.zshrc"),
-        ("Mod4+1","$exec $emacs ~/.workspaces/$w1.json"),
-        ("Mod4+2","$exec $emacs ~/.workspaces/$w2.json"),
+        ("Mod4+1","$exec $emacs ~/.workspaces/1.json"),
+        ("Mod4+2","$exec $emacs ~/.workspaces/2.json"),
     ],
-    "after_mode":"$def",
+    "after_mode":"$wrt",
 },
 
 "$tmp": {
