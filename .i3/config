@@ -399,8 +399,6 @@
 
  mode $sup {
 
-
-
  # $sup: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
 
@@ -623,6 +621,7 @@
 
 
  # $sup: disabled keys
+ bindsym Delete $exec $alert nope
  bindsym backslash $exec $alert nope
  bindsym 1 $exec $alert nope
  bindsym 2 $exec $alert nope
@@ -636,6 +635,8 @@
  bindsym 0 $exec $alert nope
  bindsym apostrophe $exec $alert nope
  bindsym igrave $exec $alert nope
+ bindsym BackSpace $exec $alert nope
+ bindsym Tab $exec $alert nope
  bindsym q $exec $alert nope
  bindsym w $exec $alert nope
  bindsym e $exec $alert nope
@@ -648,6 +649,7 @@
  bindsym p $exec $alert nope
  bindsym egrave $exec $alert nope
  bindsym plus $exec $alert nope
+ bindsym Return $exec $alert nope
  bindsym "Caps_Lock" $exec $alert nope
  bindsym a $exec $alert nope
  bindsym s $exec $alert nope
@@ -661,6 +663,7 @@
  bindsym ograve $exec $alert nope
  bindsym agrave $exec $alert nope
  bindsym ugrave $exec $alert nope
+ bindsym "Shift_L" $exec $alert nope
  bindsym less $exec $alert nope
  bindsym z $exec $alert nope
  bindsym x $exec $alert nope
@@ -672,55 +675,11 @@
  bindsym comma $exec $alert nope
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
+ bindsym "Shift_R" $exec $alert nope
+ bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
- bindsym Shift+bar $exec $alert nope
- bindsym Shift+exclam $exec $alert nope
- bindsym Shift+quotedbl $exec $alert nope
- bindsym Shift+sterling $exec $alert nope
- bindsym Shift+dollar $exec $alert nope
- bindsym Shift+percent $exec $alert nope
- bindsym Shift+ampersand $exec $alert nope
- bindsym Shift+slash $exec $alert nope
- bindsym Shift+parenleft $exec $alert nope
- bindsym Shift+parenright $exec $alert nope
- bindsym Shift+equal $exec $alert nope
- bindsym Shift+question $exec $alert nope
- bindsym Shift+asciicircum $exec $alert nope
- bindsym Shift+q $exec $alert nope
- bindsym Shift+w $exec $alert nope
- bindsym Shift+e $exec $alert nope
- bindsym Shift+r $exec $alert nope
- bindsym Shift+t $exec $alert nope
- bindsym Shift+y $exec $alert nope
- bindsym Shift+u $exec $alert nope
- bindsym Shift+i $exec $alert nope
- bindsym Shift+o $exec $alert nope
- bindsym Shift+p $exec $alert nope
- bindsym Shift+eacute $exec $alert nope
- bindsym Shift+asterisk $exec $alert nope
- bindsym Shift+a $exec $alert nope
- bindsym Shift+s $exec $alert nope
- bindsym Shift+d $exec $alert nope
- bindsym Shift+f $exec $alert nope
- bindsym Shift+g $exec $alert nope
- bindsym Shift+h $exec $alert nope
- bindsym Shift+j $exec $alert nope
- bindsym Shift+k $exec $alert nope
- bindsym Shift+l $exec $alert nope
- bindsym Shift+ccedilla $exec $alert nope
- bindsym Shift+degree $exec $alert nope
- bindsym Shift+section $exec $alert nope
- bindsym Shift+greater $exec $alert nope
- bindsym Shift+z $exec $alert nope
- bindsym Shift+x $exec $alert nope
- bindsym Shift+c $exec $alert nope
- bindsym Shift+v $exec $alert nope
- bindsym Shift+b $exec $alert nope
- bindsym Shift+n $exec $alert nope
- bindsym Shift+m $exec $alert nope
- bindsym Shift+semicolon $exec $alert nope
- bindsym Shift+colon $exec $alert nope
- bindsym Shift+underscore $exec $alert nope
+ bindsym Menu $exec $alert nope
+ bindsym "Control_R" $exec $alert nope
 
 
 
@@ -744,7 +703,8 @@
  bindsym "Super_R" mode $sup; $exec $alert $sup && $wasd_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $wasd_disable
  bindsym Escape mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
- bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
+# WARNING: key already taken for command:
+# bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
 
