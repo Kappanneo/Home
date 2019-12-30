@@ -47,32 +47,6 @@
  client.background       #222222
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
- #                               STATUS-BAR                                    #
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
- bar {
-        status_command    ./.bin/my_status.sh
-        position          bottom
-        mode              dock
-        workspace_buttons yes
-        colors {
-                   background #000000
-                   statusline #999999
-                   focused_workspace  #ffffff #000000
-                   active_workspace   #ffffff #000000
-                   inactive_workspace #888888 #000000
-                   urgent_workspace   #ffffff #000000
-               }
-
-     # disable scrolling on status bar
-        bindsym button4 nop # scroll wheel up
-        bindsym button5 nop # scroll wheel down
-
-     # no border on middle mouse (never change mode here)
-        bindsym button2 $no_border
- }
-
- # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  #                               DEFINITIONS                                   #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -128,6 +102,32 @@
 
  # screen saver
  set $screen_off xset dpms force off
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ #                               STATUS-BAR                                    #
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+ bar {
+        status_command    ./.bin/my_status.sh
+        position          bottom
+        mode              dock
+        workspace_buttons yes
+        colors {
+                   background #000000
+                   statusline #999999
+                   focused_workspace  #ffffff #000000
+                   active_workspace   #ffffff #000000
+                   inactive_workspace #888888 #000000
+                   urgent_workspace   #ffffff #000000
+               }
+
+     # disable scrolling on status bar
+        bindsym button4 nop # scroll wheel up
+        bindsym button5 nop # scroll wheel down
+
+     # no border on middle mouse (never change mode here)
+        bindsym button2 $no_border
+ }
 
  #                                 WORKSPACES                                  #
 
