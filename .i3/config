@@ -194,8 +194,8 @@
  #                                ON-NEW-WINDOW                                #
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
- for_window [class=".?" title=".?"] split toggle, fullscreen disable, $border
-
+ for_window $border
+ for_window [class=".?" title=".?"] split toggle, fullscreen disable
  for_window [floating] split toggle, floating disable, fullscreen disable
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -280,6 +280,7 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
 
 
@@ -310,8 +311,9 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -334,9 +336,6 @@
 
  # $pow: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $pow: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
  # $pow: disabled keys
  bindsym Delete $exec $alert nope
@@ -388,7 +387,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
@@ -421,17 +419,6 @@
 
  # $sup: kill
  bindsym Mod1+F4 kill; $refresh_status_bar
-
-
- # $sup: reload configuration
- bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
- bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
-
- # $sup: start dmenu for applications
- bindsym Mod4+Shift+exclam $exec $dmenu
-
- # $sup: start dmenu for commands
- bindsym Mod4+control+e $exec dmenu_run
 
 
  # $sup: application menu
@@ -598,6 +585,18 @@
 
 
 
+ # $sup: reload configuration
+ bindsym Mod4+control+r $exec "make -C ~/.i3 && i3-msg $no_border restart"
+ bindsym Mod4+control+Shift+r $exec "make -C ~/.i3 stable && i3-msg $no_border restart"
+
+ # $sup: start dmenu for applications
+ bindsym Mod4+Shift+exclam $exec $dmenu
+
+ # $sup: start dmenu for commands
+ bindsym Mod4+control+e $exec dmenu_run
+
+
+
  # $sup: exit to other mode
  bindsym Mod4+b mode $brg; $exec $alert $brg
  bindsym Mod4+c mode $cnf; $exec $alert $cnf
@@ -608,7 +607,7 @@
  bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -676,7 +675,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
@@ -701,8 +699,10 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str && $wasd_disable
  bindsym "Super_L" mode $sup; $exec $alert $sup && $wasd_disable
  bindsym "Super_R" mode $sup; $exec $alert $sup && $wasd_disable
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup && $wasd_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $wasd_disable
- bindsym Escape mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
+# WARNING: key already taken for command:
+# bindsym "Control_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
 # WARNING: key already taken for command:
 # bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_x_off
@@ -728,173 +728,6 @@
 
  # $lft: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
-
- # $lft: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
-
-
- # $lft: application menu
- bindsym Mod4+Menu $exec morc_menu
-
- # $lft: default move
- bindsym Mod4+Shift+Up move up
- bindsym Mod4+Shift+Left move left
- bindsym Mod4+Shift+Down move down
- bindsym Mod4+Shift+Right move right
-
- # $lft: default split and move
- bindsym Mod4+control+Shift+Up focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+Left focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+Down focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+Right focus right; split v; focus left; move right
-
- # $lft: fullscreen
- bindsym Mod4+f fullscreen toggle
- bindsym Mod4+Shift+f $exec "sleep 0.5; xdotool key F11"
-
- # $lft: move focused container to workspace
- bindsym Mod4+control+1 move container to workspace $w1
- bindsym Mod4+control+2 move container to workspace $w2
- bindsym Mod4+control+3 move container to workspace $w3
- bindsym Mod4+control+4 move container to workspace $w4
- bindsym Mod4+control+5 move container to workspace $w5
- bindsym Mod4+control+6 move container to workspace $w6
- bindsym Mod4+control+7 move container to workspace $w7
- bindsym Mod4+control+8 move container to workspace $w8
- bindsym Mod4+control+9 move container to workspace $w9
-
- # $lft: oklò move
- bindsym Mod4+Shift+o move up
- bindsym Mod4+Shift+k move left
- bindsym Mod4+Shift+l move down
- bindsym Mod4+Shift+ograve move right
-
- # $lft: oklò split and move
- bindsym Mod4+control+Shift+o focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+k focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+l focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+ograve focus right; split v; focus left; move right
-
- # $lft: resize (precise)
- bindsym Mod4+control+i resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+p resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Prior resize shrink height 1 px or 1 ppt
- bindsym Mod4+control+Next resize  grow  height 1 px or 1 ppt
- bindsym Mod4+control+Shift+i resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+p resize  grow  width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Prior resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+Next resize  grow  width  1 px or 1 ppt
-
- # $lft: resize (scale)
- bindsym Mod4+control+minus resize shrink height 5 px or 5 ppt; resize shrink width  5 px or 5 ppt
- bindsym Mod4+control+plus resize  grow  height 5 px or 5 ppt; resize  grow  width  5 px or 5 ppt
- bindsym Mod4+control+Shift+minus resize shrink height 1 px or 1 ppt; resize shrink width  1 px or 1 ppt
- bindsym Mod4+control+Shift+plus resize  grow  height 1 px or 1 ppt; resize  grow  width  1 px or 1 ppt
-
- # $lft: resize window
- bindsym Mod4+i resize shrink height 5 px or 5 ppt
- bindsym Mod4+p resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Prior resize shrink height 5 px or 5 ppt
- bindsym Mod4+Next resize  grow  height 5 px or 5 ppt
- bindsym Mod4+Shift+i resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+p resize  grow  width  5 px or 5 ppt
- bindsym Mod4+Shift+Prior resize shrink width  5 px or 5 ppt
- bindsym Mod4+Shift+Next resize  grow  width  5 px or 5 ppt
-
- # $lft: split orientation
- bindsym Mod4+v split v; $exec notify-send 'vertical'
- bindsym Mod4+h split h; $exec notify-send 'horizontal'
- bindsym Mod4+g split v; focus parent; layout toggle split; focus child
-
- # $lft: touchpad
- bindsym Mod4+space $exec $touchpad_x_on
- bindsym Mod4+Shift+space $exec $touchpad_x_off
-
- # $lft: wasd move
- bindsym Mod4+Shift+w move up
- bindsym Mod4+Shift+a move left
- bindsym Mod4+Shift+s move down
- bindsym Mod4+Shift+d move right
-
- # $lft: wasd split and move
- bindsym Mod4+control+Shift+w focus up; split v; focus down; move up
- bindsym Mod4+control+Shift+a focus left; split v; focus right; move left
- bindsym Mod4+control+Shift+s focus down; split v; focus up; move down
- bindsym Mod4+control+Shift+d focus right; split v; focus left; move right
-
- # $lft: xkill
- bindsym Mod4+q --release $exec xkill
-
- # $lft: browse workspaces
- bindsym Mod4+Tab workspace next; $refresh_status_bar
- bindsym Mod4+Shift+Tab workspace prev; $refresh_status_bar
- bindsym Mod4+j workspace prev; $refresh_status_bar
- bindsym Mod4+agrave workspace next; $refresh_status_bar
- bindsym Mod4+Home workspace prev; $refresh_status_bar
- bindsym Mod4+End workspace next; $refresh_status_bar
- bindsym Mod4+ugrave workspace back_and_forth; $refresh_status_bar
-
- # $lft: cut
- bindsym Mod4+control+x move container to workspace $wx; $refresh_status_bar
-
- # $lft: default focus
- bindsym Mod4+Up focus up; $refresh_status_bar
- bindsym Mod4+Left focus left; $refresh_status_bar
- bindsym Mod4+Down focus down; $refresh_status_bar
- bindsym Mod4+Right focus right; $refresh_status_bar
-
- # $lft: file manager
- bindsym Mod4+control+f $exec $fm; $refresh_status_bar
- bindsym Mod4+control+j $exec $fm Downloads; $refresh_status_bar
-
- # $lft: focus and border
- bindsym Mod4+x fullscreen disable $border $focus_one; $refresh_status_bar
- bindsym Mod4+Shift+x $no_border; $refresh_status_bar
- bindsym Mod4+less focus child; $refresh_status_bar
- bindsym Mod4+Shift+greater focus parent; $refresh_status_bar
- bindsym Mod4+control+a fullscreen disable $focus_all; $refresh_status_bar
-
- # $lft: kill
- bindsym Mod4+control+w kill; $refresh_status_bar
-
- # $lft: oklò focus
- bindsym Mod4+o focus up; $refresh_status_bar
- bindsym Mod4+k focus left; $refresh_status_bar
- bindsym Mod4+l focus down; $refresh_status_bar
- bindsym Mod4+ograve focus right; $refresh_status_bar
-
- # $lft: open emacs
- bindsym Mod4+e $exec $emacs; $refresh_status_bar
-
- # $lft: open terminal
- bindsym Mod4+Return $exec gnome-terminal; $refresh_status_bar
-
- # $lft: paste
- bindsym Mod4+control+v $exec "i3-msg 'workspace --no-auto-back-and-forth $wx; move container to workspace $wx; workspace $wx'"; $refresh_status_bar
-
- # $lft: save layout
- bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"; $refresh_status_bar
-
- # $lft: shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs; $refresh_status_bar
-
- # $lft: switch workspace
- bindsym Mod4+1 workspace $w1; $refresh_status_bar
- bindsym Mod4+2 workspace $w2; $refresh_status_bar
- bindsym Mod4+3 workspace $w3; $refresh_status_bar
- bindsym Mod4+4 workspace $w4; $refresh_status_bar
- bindsym Mod4+5 workspace $w5; $refresh_status_bar
- bindsym Mod4+6 workspace $w6; $refresh_status_bar
- bindsym Mod4+7 workspace $w7; $refresh_status_bar
- bindsym Mod4+8 workspace $w8; $refresh_status_bar
- bindsym Mod4+9 workspace $w9; $refresh_status_bar
-
- # $lft: wasd focus
- bindsym Mod4+w focus up; $refresh_status_bar
- bindsym Mod4+a focus left; $refresh_status_bar
- bindsym Mod4+s focus down; $refresh_status_bar
- bindsym Mod4+d focus right; $refresh_status_bar
 
 
 
@@ -948,7 +781,6 @@
  bindsym comma $exec $alert nope
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
- bindsym space $exec $alert nope
  bindsym Shift+bar $exec $alert nope
  bindsym Shift+exclam $exec $alert nope
  bindsym Shift+quotedbl $exec $alert nope
@@ -1015,10 +847,14 @@
  bindsym XF86PowerOff mode $pow; $exec $alert $pow && $oklò_disable, fullscreen disable
  bindsym Mod4+r mode $red; $exec $alert $red && $oklò_disable
  bindsym Mod4+backslash mode $str; $exec $alert $str && $oklò_disable
- bindsym "Super_L" mode $sup; $exec $alert $sup && $oklò_disable
- bindsym "Super_R" mode $sup; $exec $alert $sup && $oklò_disable
+# WARNING: key already taken for command:
+# bindsym "Super_L" mode $sup; $exec $alert $sup && $oklò_disable
+# WARNING: key already taken for command:
+# bindsym "Super_R" mode $sup; $exec $alert $sup && $oklò_disable
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup && $oklò_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $oklò_disable
- bindsym Escape mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
+# WARNING: key already taken for command:
+# bindsym "Control_L" mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
 # WARNING: key already taken for command:
 # bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_x_off
@@ -1214,6 +1050,18 @@
 
 
 
+ # $rgh: reload configuration
+ bindsym Mod4+control+r mode $sup $exec "make -C ~/.i3 && i3-msg $no_border restart"; $exec $alert $sup && $oklò_disable
+ bindsym Mod4+control+Shift+r mode $sup $exec "make -C ~/.i3 stable && i3-msg $no_border restart"; $exec $alert $sup && $oklò_disable
+
+ # $rgh: start dmenu for applications
+ bindsym Mod4+Shift+exclam mode $sup $exec $dmenu; $exec $alert $sup && $oklò_disable
+
+ # $rgh: start dmenu for commands
+ bindsym Mod4+control+e mode $sup $exec dmenu_run; $exec $alert $sup && $oklò_disable
+
+
+
  # $rgh: disabled keys
  bindsym backslash $exec $alert nope
  bindsym 1 $exec $alert nope
@@ -1264,7 +1112,6 @@
  bindsym comma $exec $alert nope
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
- bindsym space $exec $alert nope
  bindsym Shift+bar $exec $alert nope
  bindsym Shift+exclam $exec $alert nope
  bindsym Shift+quotedbl $exec $alert nope
@@ -1346,8 +1193,9 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -1370,9 +1218,6 @@
 
  # $brg: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $brg: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
  # $brg: disabled keys
  bindsym Delete $exec $alert nope
@@ -1430,7 +1275,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
@@ -1464,8 +1308,9 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -1488,9 +1333,6 @@
 
  # $red: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $red: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
  # $red: disabled keys
  bindsym Delete $exec $alert nope
@@ -1548,7 +1390,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
@@ -1574,8 +1415,9 @@
  bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -1598,9 +1440,6 @@
 
  # $str: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $str: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
  # $str: disabled keys
  bindsym Delete $exec $alert nope
@@ -1658,7 +1497,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
@@ -1696,8 +1534,9 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -1720,9 +1559,6 @@
 
  # $cnf: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $cnf: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
  # $cnf: disabled keys
  bindsym Delete $exec $alert nope
@@ -1780,7 +1616,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
@@ -1808,7 +1643,8 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
- bindsym Escape mode $wrt; $exec $alert $wrt && $touchpad_x_off
+ bindsym Mod4+$alt_gr mode $sup; $exec $alert $sup
+ bindsym "Control_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym "Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym $alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_x_off
@@ -1831,9 +1667,6 @@
 
  # $tmp: touchpad toggle
  bindsym XF86TouchpadToggle $exec $touchpad_toggle
-
- # $tmp: kill
- bindsym Mod1+F4 kill; $refresh_status_bar
 
  # $tmp: disabled keys
  bindsym Delete $exec $alert nope
@@ -1891,7 +1724,6 @@
  bindsym period $exec $alert nope
  bindsym minus $exec $alert nope
  bindsym "Shift_R" $exec $alert nope
- bindsym "Control_L" $exec $alert nope
  bindsym space $exec $alert nope
  bindsym Menu $exec $alert nope
  bindsym "Control_R" $exec $alert nope
