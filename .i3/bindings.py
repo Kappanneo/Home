@@ -127,7 +127,6 @@ def MAKE_MODE(mode_tag):
 
     string += BIND_MODES(mode_tag)
     string += BIND_TOP_COMMANDS(mode_tag)
-    string += BIND_MOD1_COMMANDS(mode_tag)
     string += LOCK(mode_tag,KEYS)
 
     string += " }"
