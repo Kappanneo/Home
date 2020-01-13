@@ -101,6 +101,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+eval $(thefuck --alias)
+
 alias update="pamac checkupdates -q | grep . && yay -Syu; pkill pamac-tray; clear"
 
 export PATH=/home/claudio/bin:$PATH
