@@ -5,7 +5,7 @@ MODES = {
 
 "$sup": {
     "name":'"SUPER"',
-    "keys":['"Super_L"','"Super_R"'],
+    "keys":['"Super_L"','"Super_R"',"Mod4+$alt_gr"],
 },
 
 "$pow": {

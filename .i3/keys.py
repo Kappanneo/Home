@@ -127,6 +127,7 @@ SPECIAL_KEYS = [
 'Return',
 'Menu',
 'Tab',
+'space',
 ]
 
 #end python
