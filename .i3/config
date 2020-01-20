@@ -422,7 +422,7 @@
 
 
  # $sup: application menu
- bindsym Mod4+Menu $exec morc_menu
+ bindsym Mod4+Shift+Menu $exec morc_menu
 
  # $sup: default move
  bindsym Mod4+Shift+Up move up
@@ -887,7 +887,7 @@
 
 
  # $rgh: application menu
- bindsym Mod4+Menu $exec morc_menu
+ bindsym Mod4+Shift+Menu $exec morc_menu
 
  # $rgh: default move
  bindsym Mod4+Shift+Up move up
