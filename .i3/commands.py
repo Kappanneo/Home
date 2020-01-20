@@ -71,7 +71,7 @@ MOD4_COMMANDS = {
 ],
 
 "application menu":
-    ("Mod4+Menu","$exec morc_menu"),
+    ("Mod4+Shift+Menu","$exec morc_menu"),
 
 "resize window":[
     ("Mod4+i","resize shrink height 5 px or 5 ppt"),
