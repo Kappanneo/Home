@@ -54,9 +54,11 @@ MOD4_COMMANDS = {
 "xkill":
     ("Mod4+q","--release $exec xkill"),
 
-"touchpad":[
-    ("Mod4+space","$exec $touchpad_x_on"),
-    ("Mod4+Shift+space","$exec $touchpad_x_off"),
+"touchpad and mouse":[
+    ('Mod4+z',"$exec $mouse_on && $pointer_show"),
+    ('Mod4+Shift+z',"$exec $mouse_off && $pointer_hide"),
+    ("Mod4+space","$exec $touchpad_on && $pointer_show"),
+    ("Mod4+Shift+space","$exec $touchpad_off && $pointer_hide"),
 ],
 
 "fullscreen":[

@@ -5,7 +5,7 @@ MODES = {
 
 "$sup": {
     "name":'"SUPER"',
-    "keys":['"Super_L"','"Super_R"',"Mod4+$alt_gr"],
+    "keys":['"Super_L"','"Super_R"'],
 },
 
 "$pow": {
@@ -19,25 +19,25 @@ MODES = {
         ("x","$exec $lock && $screen_off"),
         ("l","$exec $lock"), # lock script sets the defaut mode and keybinding: (.bin/lock.sh)
     ],
-    "on_enter":"fullscreen disable"
+    "on_enter":"fullscreen disable",
 },
 
 "$wrt": {
     "name":'"default"',
-    "keys":['"Control_L"','"Alt_L"',"$alt_gr","Mod1+$alt_gr"],
-    "exec_on_enter":"$touchpad_x_off",
+    "keys":['control+"Alt_L"',"control+$alt_gr","Mod1+$alt_gr"],
+    "exec_on_enter":"$touchpad_off && $pointer_hide",
 },
 
 "$lft": {
     "name":'"LEFT: [wasd] arrows  [q-e] page up-down  [r]eturn  [z] menu  [x] escape"',
-    "keys":['Mod4+z'],
+    "keys":['control+"Super_L"'],
     "exec_on_enter":"$wasd_enable",
     "exec_on_exit":"$wasd_disable",
 },
 
 "$rgh": {
     "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [period] menu  [comma] escape"',
-    "keys":['Mod4+period','Mod4+"Super_R"'],
+    "keys":['control+"Super_R"','Mod4+"Super_R"'],
     "exec_on_enter":"$oklò_enable",
     "exec_on_exit":"$oklò_disable",
 },

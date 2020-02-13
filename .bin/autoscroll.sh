@@ -1,5 +1,5 @@
 #!/bin/sh
-mouse=$(xinput list --name-only | grep "Mouse")
+mouse=$(xinput list --name-only | grep -i "mouse")
 if [ $1 -eq "0" ]
 then
     xinput --set-prop "$mouse" "libinput Scroll Method Enabled" 0, 0, 0
