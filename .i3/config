@@ -500,8 +500,8 @@
  # $sup: touchpad and mouse
  bindsym Mod4+z $exec $mouse_on
  bindsym Mod4+space $exec $touchpad_on && $pointer_show
- bindsym Mod4+Shift+z $exec $mouse_off && $touchpad_on && $pointer_hide
- bindsym Mod4+Shift+space $exec $touchpad_off && $mouse_off && $pointer_hide
+ bindsym Mod4+Shift+z $exec $mouse_off && $touchpad_off && $pointer_hide
+ bindsym Mod4+Shift+space $exec $mouse_off && $touchpad_off && $pointer_hide
 
  # $sup: wasd move
  bindsym Mod4+Shift+w move up
@@ -962,8 +962,8 @@
  # $rgh: touchpad and mouse
  bindsym Mod4+z $exec $mouse_on
  bindsym Mod4+space $exec $touchpad_on && $pointer_show
- bindsym Mod4+Shift+z $exec $mouse_off && $touchpad_on && $pointer_hide
- bindsym Mod4+Shift+space $exec $touchpad_off && $mouse_off && $pointer_hide
+ bindsym Mod4+Shift+z $exec $mouse_off && $touchpad_off && $pointer_hide
+ bindsym Mod4+Shift+space $exec $mouse_off && $touchpad_off && $pointer_hide
 
  # $rgh: wasd move
  bindsym Mod4+Shift+w move up

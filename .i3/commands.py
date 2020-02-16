@@ -57,8 +57,8 @@ MOD4_COMMANDS = {
 "touchpad and mouse":[
     ('Mod4+z',"$exec $mouse_on"),
     ("Mod4+space","$exec $touchpad_on && $pointer_show"),
-    ('Mod4+Shift+z',"$exec $mouse_off && $touchpad_on && $pointer_hide"),
-    ("Mod4+Shift+space","$exec $touchpad_off && $mouse_off && $pointer_hide"),
+    ('Mod4+Shift+z',"$exec $mouse_off && $touchpad_off && $pointer_hide"),
+    ("Mod4+Shift+space","$exec $mouse_off && $touchpad_off && $pointer_hide"),
 ],
 
 "fullscreen":[
