@@ -25,7 +25,7 @@ MODES = {
 "$wrt": {
     "name":'"default"',
     "keys":['control+"Alt_L"',"control+$alt_gr","Mod1+$alt_gr"],
-    "exec_on_enter":"$touchpad_off && $pointer_hide",
+    "exec_on_enter":"$mouse_off && $touchpad_off && $pointer_hide",
 },
 
 "$lft": {

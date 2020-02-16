@@ -55,10 +55,10 @@ MOD4_COMMANDS = {
     ("Mod4+q","--release $exec xkill"),
 
 "touchpad and mouse":[
-    ('Mod4+z',"$exec $mouse_on && $pointer_show"),
-    ('Mod4+Shift+z',"$exec $mouse_off && $pointer_hide"),
+    ('Mod4+z',"$exec $mouse_on"),
     ("Mod4+space","$exec $touchpad_on && $pointer_show"),
-    ("Mod4+Shift+space","$exec $touchpad_off && $pointer_hide"),
+    ('Mod4+Shift+z',"$exec $mouse_off && $touchpad_on && $pointer_hide"),
+    ("Mod4+Shift+space","$exec $touchpad_off && $mouse_off && $pointer_hide"),
 ],
 
 "fullscreen":[
@@ -154,12 +154,12 @@ MOD4_COMMANDS_RSB = {
 
 }
 
-MOD4_COMMANDS["move focused container to workspace"] = []
+MOD4_COMMANDS["move focused container to workspace and follow"] = []
 MOD4_COMMANDS_RSB["switch workspace"] = []
 
 def workspace_commands(X,i):
     key = X["key"]
-    MOD4_COMMANDS["move focused container to workspace"].append(("Mod4+control+"+key,"move container to workspace {}".format(i)))
+    MOD4_COMMANDS["move focused container to workspace and follow"].append(("Mod4+control+"+key,"move container to workspace {}; workspace --no-auto-back-and-forth {}".format(i,i)))
     MOD4_COMMANDS_RSB["switch workspace"].append(("Mod4+"+key,"workspace {}".format(i)))
 
 forall(WORKSPACES,workspace_commands)
