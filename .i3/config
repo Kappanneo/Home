@@ -314,9 +314,9 @@
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $pow: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -612,9 +612,9 @@
  bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
 
  # $sup: kill
@@ -707,9 +707,9 @@
  bindsym "Super_L" mode $sup; $exec $alert $sup && $wasd_disable
  bindsym "Super_R" mode $sup; $exec $alert $sup && $wasd_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $wasd_disable
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
 
 
 
@@ -856,9 +856,9 @@
 # WARNING: key already taken for command:
 # bindsym "Super_R" mode $sup; $exec $alert $sup && $oklò_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $oklò_disable
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $oklò_disable && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
 
 
 
@@ -1197,9 +1197,9 @@
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $brg: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1313,9 +1313,9 @@
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $red: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1406,9 +1406,9 @@
  mode $str {
 
  # $str: options
- bindsym Mod4+1 mode $wrt $exec "$layout_1; $fill_1"; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+2 mode $wrt $exec "$layout_2; $fill_2"; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+u mode $wrt $exec "$layout_2; $fill_2; sleep 1.6; $update_startup_lockscreen"; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym Mod4+1 mode $wrt $exec "$layout_1; $fill_1"; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+2 mode $wrt $exec "$layout_2; $fill_2"; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+u mode $wrt $exec "$layout_2; $fill_2; sleep 1.6; $update_startup_lockscreen"; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $str: exit to other mode
  bindsym Mod4+b mode $brg; $exec $alert $brg
@@ -1421,9 +1421,9 @@
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $str: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1514,18 +1514,18 @@
  mode $cnf {
 
  # $cnf: options
- bindsym Mod4+c mode $wrt $exec $emacs ~/.i3/; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+a mode $wrt $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+b mode $wrt $exec $emacs /sudo::/etc/default/grub; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+e mode $wrt $exec $emacs ~/.emacs; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+g mode $wrt $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+l mode $wrt $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+p mode $wrt $exec $emacs /sudo::/etc/pamac.conf; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+r mode $wrt $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+s mode $wrt $exec $emacs /sudo::/etc/systemd/; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+z mode $wrt $exec $emacs ~/.zshrc; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+1 mode $wrt $exec $emacs ~/.workspaces/1.json; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod4+2 mode $wrt $exec $emacs ~/.workspaces/2.json; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym Mod4+c mode $wrt $exec $emacs ~/.i3/; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+a mode $wrt $exec $emacs /sudo::/usr/share/applications/; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+b mode $wrt $exec $emacs /sudo::/etc/default/grub; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+e mode $wrt $exec $emacs ~/.emacs; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+g mode $wrt $exec chromium --new-window i3wm.org/docs/userguide.html; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+l mode $wrt $exec $emacs ~/.workspaces/stamp.json; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+p mode $wrt $exec $emacs /sudo::/etc/pamac.conf; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+r mode $wrt $exec $emacs ~/.config/redshift/redshift.conf; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+s mode $wrt $exec $emacs /sudo::/etc/systemd/; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+z mode $wrt $exec $emacs ~/.zshrc; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+1 mode $wrt $exec $emacs ~/.workspaces/1.json; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod4+2 mode $wrt $exec $emacs ~/.workspaces/2.json; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $cnf: exit to other mode
 # WARNING: key already taken for command:
@@ -1540,9 +1540,9 @@
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $cnf: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1649,9 +1649,9 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
- bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
- bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $mouse_off && $touchpad_off && $pointer_hide
+ bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $tmp: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
