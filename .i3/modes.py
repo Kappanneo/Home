@@ -5,7 +5,12 @@ MODES = {
 
 "$sup": {
     "name":'"SUPER"',
-    "keys":['"Super_L"','"Super_R"','control+Shift+"Super_L"','control+Shift+"Super_R"'],
+    "keys":['"Super_L"','"Super_R"'],
+},
+
+"$dup": {
+    "name":"DUPER",
+    "keys":['control+Shift+"Super_L"','control+Shift+"Super_R"'],
 },
 
 "$pow": {
