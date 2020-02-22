@@ -116,6 +116,8 @@ SHIFT_KEYS = [
 ]
 
 SPECIAL_KEYS = [
+'"Super_L"',
+'"Super_R"',
 '"Control_L"',
 '"Control_R"',
 '"Alt_L"',

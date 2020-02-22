@@ -16,15 +16,14 @@ MODES = {
         ("r","$exec systemctl reboot"),
         ("s","$exec systemctl suspend"), # auto locks via service: write /etc/systemd/system/lock.service (https://gist.github.com/Kappanneo/8a9da9e6d23b9f38bc7cf33eb071cca5)
         ("h","$exec systemctl hibernate"), # also auto locks
-        ("x","$exec $lock && $screen_off"),
-        ("l","$exec $lock"), # lock script sets the defaut mode and keybinding: (.bin/lock.sh)
+        ("x","$exec $lock"), # the lock script (.bin/lock.sh) sets the defaut mode and keybindings (it also turns off the screen)
     ],
     "on_enter":"fullscreen disable",
 },
 
 "$wrt": {
     "name":'"default"',
-    "keys":['control+"Alt_L"',"control+$alt_gr","Mod1+$alt_gr"],
+    "keys":['control+c','control+"Alt_L"',"control+$alt_gr","Mod1+$alt_gr"],
     "exec_on_enter":"$touchpad_off && $pointer_hide",
 },
 

@@ -21,3 +21,6 @@ convert "$tmpbg" -filter Gaussian -thumbnail 20% -sample 500% "$tmpbg"
 
 # lock the screen with the blurred screenshot
 i3lock -ui "$tmpbg"
+
+# turns off screen
+xset dpms force off
