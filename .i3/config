@@ -178,6 +178,7 @@
  # discord and skype
  assign [class="discord"] $w6
  assign [title="Skype"] $w6
+ for_window [title="Unlock Keyring"] $exec $touchpad_off && $mouse_off && $pointer_hide
 
  # code
  assign [class="code-oss"] $w7
@@ -221,7 +222,7 @@
  $exec_always $enable_autoscroll
  $exec_always nitrogen --restore
  $exec_always fix_xcursor
- $exec_always xautolock -detectsleep -time 3 -locker $lock -notify 30 -notifier "notify-send -t 29000 -- 'XLOCK: 30 seconds left'"
+ $exec_always xautolock -detectsleep -time 3 -locker $lock -notify 60 -notifier "notify-send -t 59000 -- 'XLOCK: 60 seconds left'"
 
  # background applications
  $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -284,6 +285,8 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
 
 
@@ -314,11 +317,14 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $pow: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -617,10 +623,11 @@
  bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
 
  # $sup: kill
@@ -714,11 +721,14 @@
 # bindsym "Super_L" mode $sup; $exec $alert $sup && $wasd_disable
 # WARNING: key already taken for command:
 # bindsym "Super_R" mode $sup; $exec $alert $sup && $wasd_disable
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup && $wasd_disable
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup && $wasd_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $wasd_disable
- bindsym control+c mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $wasd_disable && $touchpad_off && $pointer_hide
 
 
 
@@ -1036,11 +1046,14 @@
 # bindsym "Super_L" mode $sup; $exec $alert $sup && $oklò_disable
 # WARNING: key already taken for command:
 # bindsym "Super_R" mode $sup; $exec $alert $sup && $oklò_disable
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup && $oklò_disable
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup && $oklò_disable
  bindsym Mod4+t mode $tmp; $exec $alert $tmp && $oklò_disable
- bindsym control+c mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $oklò_disable && $touchpad_off && $pointer_hide
 
 
 
@@ -1381,11 +1394,14 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $brg: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1498,11 +1514,14 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $red: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1607,11 +1626,14 @@
  bindsym Mod4+"Super_R" mode $rgh; $exec $alert $rgh && $oklò_enable
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $str: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1727,11 +1749,14 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym Mod4+t mode $tmp; $exec $alert $tmp
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $cnf: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred
@@ -1838,10 +1863,13 @@
  bindsym Mod4+backslash mode $str; $exec $alert $str
  bindsym "Super_L" mode $sup; $exec $alert $sup
  bindsym "Super_R" mode $sup; $exec $alert $sup
- bindsym control+c mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym control+Shift+"Super_L" mode $sup; $exec $alert $sup
+ bindsym control+Shift+"Super_R" mode $sup; $exec $alert $sup
  bindsym control+"Alt_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym control+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
  bindsym Mod1+$alt_gr mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_L" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
+ bindsym Shift+"Super_R" mode $wrt; $exec $alert $wrt && $touchpad_off && $pointer_hide
 
  # $tmp: display
  bindsym XF86Display $exec xrandr --output eDP1 --mode 1920x1080 --preferred

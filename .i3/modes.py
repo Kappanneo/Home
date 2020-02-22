@@ -5,7 +5,7 @@ MODES = {
 
 "$sup": {
     "name":'"SUPER"',
-    "keys":['"Super_L"','"Super_R"'],
+    "keys":['"Super_L"','"Super_R"','control+Shift+"Super_L"','control+Shift+"Super_R"'],
 },
 
 "$pow": {
@@ -24,7 +24,7 @@ MODES = {
 
 "$wrt": {
     "name":'"default"',
-    "keys":['control+c','control+"Alt_L"',"control+$alt_gr","Mod1+$alt_gr"],
+    "keys":['control+"Alt_L"','control+$alt_gr',"Mod1+$alt_gr",'Shift+"Super_L"','Shift+"Super_R"'],
     "exec_on_enter":"$touchpad_off && $pointer_hide",
 },
 
