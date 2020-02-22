@@ -141,8 +141,11 @@ MOD4_COMMANDS_RSB = {
 "open emacs":
     ("Mod4+e","$exec $emacs"),
 
-"shutdown emacs server":
-    ("Mod4+control+Shift+e","$exec pkill emacs"),
+"kill emacs server":
+    ("Mod4+control+Shift+e",'$exec pkill emacs && notify-send "EMACS: server down"'),
+
+"kill xautolock":
+    ("Mod4+control+Shift+x",'$exec pkill xautolock && notify-send "XLOCK: disabled"'),
 
 "file manager":[
     ("Mod4+control+f","$exec $fm"),

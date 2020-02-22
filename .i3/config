@@ -159,15 +159,15 @@
 
  #                                    MODES                                    #
 
- set $brg "BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease"
- set $cnf "CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh"
- set $lft "LEFT: [wasd] arrows  [q-e] page up-down  [r]eturn  [z] menu  [x] escape"
- set $pow "POWER: [q] power off  [r]estart  [s]uspend  [h]ibernate  [x] turn off screen  [l]ock  [esc] do nothing"
- set $red "REDSH: [super+] [0-9] one shot red shift  [+] increase"
- set $rgh "RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [period] menu  [comma] escape"
- set $str "START: [super+] [1-2] layouts [u]pdate startup lockscreen"
+ set $brg "BRGHT: [super+] [0-9] [+] [-]"
+ set $cnf "CONFG: [super+] [c]onfig [a]pps gru[b] [e]macs [g]uide [1-2|l]ayouts [p]amac [r]edshift [s]ystemd [z]sh"
+ set $lft "LEFT: [wasd] -> arrows  [q-e] -> page up-down  [r] -> return  [z] -> menu  [x] -> escape"
+ set $pow "POWER: [q]oweroff [r]estart [s]uspend [h]ibernate [e]xit [x]creenlock"
+ set $red "REDSH: [super+] [0-9] [+]"
+ set $rgh "RIGHT: [oklò] -> arrows  [j-à] -> home-end  [i-p] -> page up-down  [period] -> menu  [comma] -> escape"
+ set $str "START: [super+] [1]st_layout [2]nd_layout [u]pdate_startup_lockscreen"
  set $sup "SUPER"
- set $tmp "STAMP: [super+] [t]ake screenshot [w]indow [s]elect [o]pen screenshot folder"
+ set $tmp "STAMP: [super+] [t]ake_screenshot [w]indow [s]elect [o]pen_screenshot_folder"
  set $wrt "default"
 
 
@@ -221,12 +221,12 @@
  $exec_always $enable_autoscroll
  $exec_always nitrogen --restore
  $exec_always fix_xcursor
+ $exec_always xautolock -detectsleep -time 3 -locker $lock -notify 30 -notifier "notify-send -t 29000 -- 'XLOCK: 30 seconds left'"
 
  # background applications
  $exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
  $exec nitrogen --restore; sleep 1; compton -b
  $exec xfce4-power-manager
- $exec xautolock -time 3 -locker $lock -notify 30 -notifier "notify-send -t 30000 -- 'LOCKING screen in 30 seconds'"
  $exec alttab -s 1 -d 1
 
  # bar applications
@@ -301,6 +301,7 @@
  bindsym r $exec systemctl reboot
  bindsym s $exec systemctl suspend
  bindsym h $exec systemctl hibernate
+ bindsym e $exec i3-msg exit
  bindsym x $exec $lock
 
  # $pow: exit to other mode
@@ -356,7 +357,6 @@
  bindsym BackSpace $exec $alert nope
  bindsym Tab $exec $alert nope
  bindsym w $exec $alert nope
- bindsym e $exec $alert nope
  bindsym t $exec $alert nope
  bindsym y $exec $alert nope
  bindsym u $exec $alert nope
@@ -552,6 +552,12 @@
  # $sup: kill
  bindsym Mod4+control+w kill; $refresh_status_bar
 
+ # $sup: kill emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs && notify-send "EMACS: server down"; $refresh_status_bar
+
+ # $sup: kill xautolock
+ bindsym Mod4+control+Shift+x $exec pkill xautolock && notify-send "XLOCK: disabled"; $refresh_status_bar
+
  # $sup: oklò focus
  bindsym Mod4+o focus up; $refresh_status_bar
  bindsym Mod4+k focus left; $refresh_status_bar
@@ -569,9 +575,6 @@
 
  # $sup: save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"; $refresh_status_bar
-
- # $sup: shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs; $refresh_status_bar
 
  # $sup: switch workspace
  bindsym Mod4+1 workspace $w1; $refresh_status_bar
@@ -869,6 +872,12 @@
  # $lft: kill
  bindsym Mod4+control+w kill; $refresh_status_bar
 
+ # $lft: kill emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs && notify-send "EMACS: server down"; $refresh_status_bar
+
+ # $lft: kill xautolock
+ bindsym Mod4+control+Shift+x $exec pkill xautolock && notify-send "XLOCK: disabled"; $refresh_status_bar
+
  # $lft: oklò focus
  bindsym Mod4+o focus up; $refresh_status_bar
  bindsym Mod4+k focus left; $refresh_status_bar
@@ -886,9 +895,6 @@
 
  # $lft: save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"; $refresh_status_bar
-
- # $lft: shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs; $refresh_status_bar
 
  # $lft: switch workspace
  bindsym Mod4+1 workspace $w1; $refresh_status_bar
@@ -1188,6 +1194,12 @@
  # $rgh: kill
  bindsym Mod4+control+w kill; $refresh_status_bar
 
+ # $rgh: kill emacs server
+ bindsym Mod4+control+Shift+e $exec pkill emacs && notify-send "EMACS: server down"; $refresh_status_bar
+
+ # $rgh: kill xautolock
+ bindsym Mod4+control+Shift+x $exec pkill xautolock && notify-send "XLOCK: disabled"; $refresh_status_bar
+
  # $rgh: oklò focus
  bindsym Mod4+o focus up; $refresh_status_bar
  bindsym Mod4+k focus left; $refresh_status_bar
@@ -1205,9 +1217,6 @@
 
  # $rgh: save layout
  bindsym Mod4+control+s $exec "i3-save-tree > ~/.workspaces/stamp.json; emacsclient -create-frame --alternate-editor='' ~/.workspaces/stamp.json"; $refresh_status_bar
-
- # $rgh: shutdown emacs server
- bindsym Mod4+control+Shift+e $exec pkill emacs; $refresh_status_bar
 
  # $rgh: switch workspace
  bindsym Mod4+1 workspace $w1; $refresh_status_bar

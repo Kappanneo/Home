@@ -9,13 +9,14 @@ MODES = {
 },
 
 "$pow": {
-    "name":'"POWER: [q] power off  [r]estart  [s]uspend  [h]ibernate  [x] turn off screen  [l]ock  [esc] do nothing"',
+    "name":'"POWER: [q]oweroff [r]estart [s]uspend [h]ibernate [e]xit [x]creenlock"',
     "keys":['XF86PowerOff'], # to disable standard poweroff: in /etc/systemd/logind.conf set HandlePowerKey=ignore
     "options":[
         ("q","$exec systemctl poweroff"),
         ("r","$exec systemctl reboot"),
         ("s","$exec systemctl suspend"), # auto locks via service: write /etc/systemd/system/lock.service (https://gist.github.com/Kappanneo/8a9da9e6d23b9f38bc7cf33eb071cca5)
         ("h","$exec systemctl hibernate"), # also auto locks
+        ("e","$exec i3-msg exit"),
         ("x","$exec $lock"), # the lock script (.bin/lock.sh) sets the defaut mode and keybindings (it also turns off the screen)
     ],
     "on_enter":"fullscreen disable",
@@ -28,21 +29,21 @@ MODES = {
 },
 
 "$lft": {
-    "name":'"LEFT: [wasd] arrows  [q-e] page up-down  [r]eturn  [z] menu  [x] escape"',
+    "name":'"LEFT: [wasd] -> arrows  [q-e] -> page up-down  [r] -> return  [z] -> menu  [x] -> escape"',
     "keys":['control+"Super_L"'],
     "exec_on_enter":"$wasd_enable",
     "exec_on_exit":"$wasd_disable",
 },
 
 "$rgh": {
-    "name":'"RIGHT: [oklò] arrows  [j-à] home-end  [i-p] page up-down  [period] menu  [comma] escape"',
+    "name":'"RIGHT: [oklò] -> arrows  [j-à] -> home-end  [i-p] -> page up-down  [period] -> menu  [comma] -> escape"',
     "keys":['control+"Super_R"','Mod4+"Super_R"'],
     "exec_on_enter":"$oklò_enable",
     "exec_on_exit":"$oklò_disable",
 },
 
 "$str": {
-    "name":'"START: [super+] [1-2] layouts [u]pdate startup lockscreen"',
+    "name":'"START: [super+] [1]st_layout [2]nd_layout [u]pdate_startup_lockscreen"',
     "keys":['Mod4+backslash'],
     "options":[
         ("Mod4+1",'$exec "$layout_1; $fill_1"'),
@@ -53,7 +54,7 @@ MODES = {
 },
 
 "$red": {
-    "name":'"REDSH: [super+] [0-9] one shot red shift  [+] increase"',
+    "name":'"REDSH: [super+] [0-9] [+]"',
     "keys":['Mod4+r'],
     "options":[
         ("Mod4+1","$exec redshift -P -O 2100K"),
@@ -71,7 +72,7 @@ MODES = {
 },
 
 "$brg": {
-    "name":'"BRGHT: [super+] [0-9] set brightness level  [+] increase  [-] decrease"',
+    "name":'"BRGHT: [super+] [0-9] [+] [-]"',
     "keys":['Mod4+b'],
     "options":[
         ("Mod4+1","$exec xbacklight = 10"),
@@ -90,7 +91,7 @@ MODES = {
 },
 
 "$cnf": {
-    "name":'"CONFG: [super+] [c]onfig  [a]pps  gru[b]  [e]macs  [g]uide  [1-2|l]ayouts  [p]amac  [r]edshift  [s]ystemd  [z]sh"',
+    "name":'"CONFG: [super+] [c]onfig [a]pps gru[b] [e]macs [g]uide [1-2|l]ayouts [p]amac [r]edshift [s]ystemd [z]sh"',
     "keys":['Mod4+c'],
     "options":[
         ("Mod4+c","$exec $emacs ~/.i3/"),
@@ -110,7 +111,7 @@ MODES = {
 },
 
 "$tmp": {
-    "name":'"STAMP: [super+] [t]ake screenshot [w]indow [s]elect [o]pen screenshot folder"',
+    "name":'"STAMP: [super+] [t]ake_screenshot [w]indow [s]elect [o]pen_screenshot_folder"',
     "keys":['Mod4+t'],
     "options":[
         ("Mod4+t","$exec i3-scrot"),
